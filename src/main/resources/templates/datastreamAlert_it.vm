@@ -1,0 +1,16 @@
+<div style="font-family:'Arial';font-size:16px;color:#333;margin-left:20px;">
+	<p>Salve,</p>
+
+	<p>Di seguito sono riportati i dettagli del flusso informativo ricevuto.</p>
+	
+	<p><b>Data Ricezione:</b> ${receivedTime}</p>
+
+    <p><b>Schema:</b><a href=${schema}> ${schemaName}</a> </p>
+
+	<p><b>Stato:</b> ${streamStatus}</p>
+	
+	<p><b>Messaggio:</b> ${message}</p>
+	
+	<p> Grazie,</p>
+	<p> Assistenza Clienti </p>	
+</div>

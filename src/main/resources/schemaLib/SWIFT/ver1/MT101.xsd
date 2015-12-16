@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+xmlns="urn:DataCruncher:swift:v1" targetNamespace="urn:DataCruncher:swift:v1" 
+elementFormDefault="qualified" attributeFormDefault="unqualified">
+<xs:include schemaLocation="TypeDictionary.xsd"/>
+<xs:element name="CMFXML">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="ApplicationMessage">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="Header" type="THeader" minOccurs="0"/>
+<xs:element name="RequestForTransfer">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="GeneralInformation" type="TGeneralInformation"/>
+<xs:element name="TransactionDetails" type="TTransactionDetails" maxOccurs="unbounded"/>
+</xs:sequence>
+
+</xs:complexType>
+</xs:element>
+<xs:element name="Trailer" type="TTrailer" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:complexType name="TGeneralInformation">
+<xs:sequence>
+<xs:element name="SendersReference" type="TReference-20x-01"/>
+<xs:element name="CustomersSpecifiedReference" type="TReference-21R-01" minOccurs="0"/>
+<xs:element name="MessageIndexTotal" type="TNumberCount-28D-01"/>
+<xs:element name="InstructingParty" type="TParty-50CL-01" minOccurs="0"/>
+<xs:element name="OrderingCustomer" type="TParty-50GHF-01" minOccurs="0"/>
+<xs:element name="AccountServicingInstitution" type="TParty-52AC-01" minOccurs="0"/>
+<xs:element name="SendingInstitution" type="TParty-51A-01" minOccurs="0"/>
+<xs:element name="RequestedExecutionDate" type="TDate-30x-01"/>
+<xs:element name="Authorisation" type="TCode-25x-01" minOccurs="0"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TTransactionDetails">
+<xs:sequence>
+<xs:element name="TransactionReference" type="TReference-21x-01"/>
+<xs:element name="FXDealReference" type="TReference-21F-01" minOccurs="0"/>
+<xs:element name="InstructionCode" type="TCode-23E-01" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="TransactionAmount" type="TAmount-32B-01"/>
+<xs:element name="InstructingParty" type="TParty-50CL-01" minOccurs="0"/>
+<xs:element name="OrderingCustomer" type="TParty-50GHF-01" minOccurs="0"/>
+<xs:element name="AccountServicingInstitution" type="TParty-52AC-01" minOccurs="0"/>
+<xs:element name="Intermediary" type="TParty-56ACD-01" minOccurs="0"/>
+<xs:element name="AccountWithInstitution" type="TParty-57ACD-01" minOccurs="0"/>
+<xs:element name="Beneficiary" type="TParty-59Ax-01"/>
+<xs:element name="RemittanceInformation" type="TNarrative-70x-01" minOccurs="0"/>
+<xs:element name="RegulatoryReporting" type="TNarrative-77B-01" minOccurs="0"/>
+<xs:element name="OriginalOrderedAmount" type="TAmount-33B-01" minOccurs="0"/>
+<xs:element name="DetailsOfCharges" type="TCode-71A-01"/>
+<xs:element name="ChargesAccount" type="TAccount-25A-01" minOccurs="0"/>
+<xs:element name="ExchangeRate" type="TRate-36x-01" minOccurs="0"/>
+</xs:sequence>
+
+</xs:complexType>
+</xs:schema>

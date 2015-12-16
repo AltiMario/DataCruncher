@@ -1,0 +1,602 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:amq="http://activemq.apache.org/schema/core"
+       xmlns:jms="http://www.springframework.org/schema/jms"
+       xmlns:ftp="http://mina.apache.org/ftpserver/spring/v1"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:camel="http://camel.apache.org/schema/spring"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	   					   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	   					   http://www.springframework.org/schema/context
+	   					   http://www.springframework.org/schema/context/spring-context-3.0.xsd
+	   					   http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core-5.2.0.xsd
+	   					   http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms-3.0.xsd
+	   					   http://mina.apache.org/ftpserver/spring/v1
+	   					   http://mina.apache.org/ftpserver/ftpserver-1.0.xsd
+	   					   http://www.springframework.org/schema/tx
+	   					   http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+	   					   http://www.springframework.org/schema/mvc
+         				   http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+	   					   http://camel.apache.org/schema/spring
+       					   http://camel.apache.org/schema/spring/camel-spring.xsd"
+        >
+    <!-- Application Context -->
+    <bean id="contextApplicationContextProvider" class="com.seer.datacruncher.spring.AppContext"/>
+
+    <bean id="propertyConfigurer"
+          class="com.seer.datacruncher.utils.generic.JVPropertyPlaceholderConfigurer">
+        <property name="ignoreUnresolvablePlaceholders" value="true"/>
+        <property name="locations">
+            <list>
+                <value>classpath:ftp.properties</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean name="systemSchemas" class="com.seer.datacruncher.spring.SystemSchemas" depends-on="DaoServices">
+        <property name="path" value="classpath:schemaLib/system/*.xsd"/>
+    </bean>
+
+    <mvc:annotation-driven/>
+
+    <bean name="/language.json" class="com.seer.datacruncher.spring.LanguageController"/>
+    <!--login.json is overridden in other submodules -->
+    <bean name="/login.json" class="com.seer.datacruncher.spring.LoginController"/>
+    <bean name="/logout.json" class="com.seer.datacruncher.spring.LogoutController"/>
+    <bean name="/captcha.json" class="com.seer.datacruncher.spring.CaptchaController"/>
+    <bean name="/forgetPassword.json" class="com.seer.datacruncher.spring.ForgetPasswordController">
+        <property name="mailFrom" value="info@see-r.com"/>
+        <property name="mailSubject" value="SEE-R - Forget Password"/>
+        <property name="velocityEngine" ref="velocityEngine"/>
+        <property name="mailTemplate" value="templates/forget_password"/>
+    </bean>
+    <bean name="/emailError.json" class="com.seer.datacruncher.spring.EmailErrorController"/>
+
+    <bean id="DaoServices" class="com.seer.datacruncher.jpa.dao.DaoServices">
+        <property name="activityDao" ref="ActivityDao"/>
+        <property name="alertsDao" ref="AlertsDao"/>
+        <property name="alertsAuditDao" ref="AlertsAuditDao"/>
+        <property name="alphaFieldDao" ref="AlphanumericFieldValuesDao"/>
+        <property name="applicationsDao" ref="ApplicationsDao"/>
+        <property name="checksTypeDao" ref="ChecksTypeDao"/>
+        <property name="schemaLibDao" ref="SchemaLibDao"/>
+        <property name="connectionsDao" ref="ConnectionsDao"/>
+        <property name="contactsDao" ref="ContactsDao"/>
+        <property name="dbDao" ref="DatabasesDao"/>
+        <property name="datastreamDao" ref="DatastreamsDao"/>
+        <property name="fileDao" ref="FileDao"/>
+        <property name="jobsDao" ref="JobsDao"/>
+        <property name="numericFieldDao" ref="NumericFieldValuesDao"/>
+        <property name="creditsDao" ref="CreditsDao"/>
+        <property name="roleActivityDao" ref="RoleActivityDao"/>
+        <property name="roleDao" ref="RoleDao"/>
+        <property name="schemaFieldsDao" ref="SchemaFieldsDao"/>
+        <property name="schemasDao" ref="SchemasDao"/>
+        <property name="schemasXSDDao" ref="SchemasXSDDao"/>
+        <property name="serversDao" ref="ServersDao"/>
+        <property name="tasksDao" ref="TasksDao"/>
+        <property name="userAppDao" ref="UserApplicationsDao"/>
+        <property name="userSchemasDao" ref="UserSchemasDao"/>
+        <property name="usersDao" ref="UsersDao"/>
+        <property name="eventTriggerDao" ref="EventTriggerDao"/>
+        <property name="schemaTriggerStatusDao" ref="SchemaTriggerStatusDao"/>
+        <property name="entityManager" ref="entityManagerFactory"/>
+        <property name="applicationConfigDao" ref="ApplicationConfigDao"/>
+        <property name="schemaSQLDao" ref="SchemaSQLDao"/>
+        <property name="logDao" ref="LogDao"/>
+        <property name="forecastDao" ref="ForecastDao"/>
+    </bean>
+
+    <bean id="messageSource"
+          class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="defaultEncoding" value="UTF-8"/>
+        <property name="basenames">
+            <list>
+                <value>classpath:locale/messages</value>
+                <value>classpath:locale/messagesEE</value>
+                <value>classpath:locale/messagesLicense</value>
+            </list>
+        </property>
+    </bean>
+
+    <!-- Beans that are overridden in other modules -->
+    <bean id="appInfoBean" class="com.seer.datacruncher.spring.AppInfoBean"/>
+    <bean id="CreateXSDJAXB" class="com.seer.datacruncher.datastreams.CreateXSDJAXB"/>
+    <bean name="FormalValidation" class="com.seer.datacruncher.validation.Formal"/>
+    <bean id="MacroRulesValidation" class="com.seer.datacruncher.validation.MacroRulesValidation"/>
+
+    <!--  Reports -->
+    <bean name="/realTimeGraph.json" class="com.seer.datacruncher.spring.RealTimeGraphController"/>
+    <bean name="/stateGraph.json" class="com.seer.datacruncher.spring.StateGraphController">
+        <property name="startingYear" value="2010"/>
+    </bean>
+    <bean name="/stateGraphBarChart.json" class="com.seer.datacruncher.spring.StateGraphBarChartController">
+        <property name="startingYear" value="2010"/>
+    </bean>
+
+    <!-- Applications -->
+    <bean name="/applicationsRead.json" class="com.seer.datacruncher.spring.ApplicationsReadController"/>
+    <bean name="/applicationsCreate.json" class="com.seer.datacruncher.spring.ApplicationsCreateController"/>
+    <bean name="/applicationsUpdate.json" class="com.seer.datacruncher.spring.ApplicationsUpdateController"/>
+    <bean name="/applicationsDestroy.json" class="com.seer.datacruncher.spring.ApplicationsDestroyController"/>
+    <bean name="/applicationIsActive.json" class="com.seer.datacruncher.spring.ApplicationIsActiveController"/>
+    <!-- Contact us -->
+    <bean name="/contactsCreate.json" class="com.seer.datacruncher.spring.ContactsCreateController">
+        <property name="mailFrom" value="info@see-r.com"/>
+        <property name="mailTo" value="info@see-r.com"/>
+        <property name="mailSubject" value="DataCruncher - Contactus Form"/>
+        <property name="velocityEngine" ref="velocityEngine"/>
+        <property name="mailTemplate" value="templates/contact_us"/>
+    </bean>
+    <bean name="/contactsRead.json" class="com.seer.datacruncher.spring.ContactsReadController"/>
+    <bean name="/contactsUpdate.json" class="com.seer.datacruncher.spring.ContactsUpdateController">
+        <property name="mailFrom" value="info@see-r.com"/>
+        <property name="mailTo" value="info@see-r.com"/>
+        <property name="mailSubject" value="DataCruncher - Contactus Form"/>
+        <property name="velocityEngine" ref="velocityEngine"/>
+        <property name="mailTemplate" value="templates/contact_us"/>
+    </bean>
+    <!-- Databases -->
+    <bean name="/databasesRead.json" class="com.seer.datacruncher.spring.DatabasesReadController"/>
+    <bean name="/databasesCreate.json" class="com.seer.datacruncher.spring.DatabasesCreateController"/>
+    <bean name="/databasesUpdate.json" class="com.seer.datacruncher.spring.DatabasesUpdateController"/>
+    <bean name="/databasesDestroy.json" class="com.seer.datacruncher.spring.DatabasesDestroyController"/>
+    <!-- Profiler -->   
+    <bean name="/profilerLoad.json" class="com.seer.datacruncher.profiler.spring.ProfilerLoadController">
+        <property name="methodNameResolver">
+            <ref bean="paramResolver"/>
+        </property>
+    </bean>
+    <bean name="/profilerHome.json" class="com.seer.datacruncher.profiler.spring.ProfilerHomeController"/>
+    <bean name="/profilerTree.json" class="com.seer.datacruncher.profiler.spring.ProfilerTreeController"/>
+    <bean name="/profilerInfo.json" class="com.seer.datacruncher.profiler.spring.ProfilerInfoController"/>
+    <bean name="/profilerInfoUpdate.json" class="com.seer.datacruncher.profiler.spring.ProfilerInfoUpdateController"/>
+    <bean name="/dbInfo.json" class="com.seer.datacruncher.profiler.spring.DbInfoController"/>
+    <bean name="/exporter.json" class="com.seer.datacruncher.profiler.spring.ExporterController"/>
+    <bean name="/numberAnalytics.json" class="com.seer.datacruncher.profiler.spring.NumberAnalyticsController"/>
+    <bean name="/dataQuality.json" class="com.seer.datacruncher.profiler.spring.DataQualityController"/>
+    <bean name="/stringAnalytics.json" class="com.seer.datacruncher.profiler.spring.StringAnalyticsController"/>
+    <bean name="/compareTable.json" class="com.seer.datacruncher.profiler.spring.CompareTableController"/>
+    <bean name="/profilerFileUpload.json" class="com.seer.datacruncher.profiler.spring.FileUploadController"/>
+    <bean name="/profilerMisc.json" class="com.seer.datacruncher.profiler.spring.MiscController"/>
+    <bean name="/testConnection.json" class="com.seer.datacruncher.profiler.spring.TestConnectionController"/>
+    <!-- Status -->
+    <bean name="/statusRead.json" class="com.seer.datacruncher.spring.StatusReadController"/>
+    <!-- Schemas -->
+    <bean name="/schemasRead.json" class="com.seer.datacruncher.spring.SchemasReadController"/>
+    <bean name="/schemasCreate.json" class="com.seer.datacruncher.spring.SchemasCreateController"/>
+    <bean name="/schemasUpdate.json" class="com.seer.datacruncher.spring.SchemasUpdateController"/>
+    <bean name="/schemasDestroy.json" class="com.seer.datacruncher.spring.SchemasDestroyController">
+        <property name="plannerJobMap">
+            <ref bean="plannerJobMapBean"/>
+        </property>
+    </bean>
+    <bean name="/schemaIsActive.json" class="com.seer.datacruncher.spring.SchemaIsActiveController"/>
+    <bean name="/schemaLinkedFields.json" class="com.seer.datacruncher.spring.SchemaLinkedFieldsController">
+        <property name="methodNameResolver">
+            <ref bean="paramResolver"/>
+        </property>
+    </bean>
+    <bean name="/schemaExtraCheckRead.json" class="com.seer.datacruncher.spring.SchemaExtraCheckReadController"/>
+    <bean name="/schemaExtraCheckCreate.json" class="com.seer.datacruncher.spring.SchemaExtraCheckCreateController"/>
+    <bean name="/schemaExtraCheckUpdate.json" class="com.seer.datacruncher.spring.SchemaExtraCheckUpdateController"/>
+    <bean name="/schemaExtraCheckDestroy.json" class="com.seer.datacruncher.spring.SchemaExtraCheckDestroyController"/>
+    <bean name="/schemasLibRead.json" class="com.seer.datacruncher.spring.SchemasLibReadController"/>
+    <bean name="/isExtraCheckCodeValid.json" class="com.seer.datacruncher.spring.ExtraCheckCustomCodeValidator"/>
+	<bean name="/downloadstream.json" class="com.seer.datacruncher.spring.DownloadStreamController" />
+	<bean name="/siteSchemaGenerateCreate.json" class="com.seer.datacruncher.spring.SiteSchemaGeneratorCreateController"/>
+
+    <!-- Triggers -->
+    <bean name="/eventTriggerRead.json" class="com.seer.datacruncher.spring.EventTriggerReadController"/>
+    <bean name="/eventTriggerUpdate.json" class="com.seer.datacruncher.spring.EventTriggerUpdateController"/>
+    <bean name="/eventTriggerDestroy.json" class="com.seer.datacruncher.spring.EventTriggerDestroyController"/>
+    <bean name="/isTriggerCodeValid.json" class="com.seer.datacruncher.spring.EventTriggerValidator"/>
+
+    <!-- Users -->
+    <bean name="/usersRead.json" class="com.seer.datacruncher.spring.UsersReadController"/>
+    <bean name="/usersCreate.json" class="com.seer.datacruncher.spring.UsersCreateController">
+        <property name="mailFrom" value="info@see-r.com"/>
+        <property name="mailSubject" value="SEE-R - User Registration"/>
+        <property name="velocityEngine" ref="velocityEngine"/>
+        <property name="mailTemplate" value="templates/userRegistration"/>
+    </bean>
+    <bean name="/usersUpdate.json" class="com.seer.datacruncher.spring.UsersUpdateController"/>
+    <bean name="/usersDestroy.json" class="com.seer.datacruncher.spring.UsersDestroyController"/>
+    <bean name="/activateDeactivateUser.json" class="com.seer.datacruncher.spring.UsersActivateController"/>
+    <!-- Connections -->
+    <bean name="/connectionsRead.json" class="com.seer.datacruncher.spring.ConnectionsReadController"/>
+    <bean name="/connectionsCreate.json" class="com.seer.datacruncher.spring.ConnectionsCreateController"/>
+    <bean name="/connectionsUpdate.json" class="com.seer.datacruncher.spring.ConnectionsUpdateController">
+        <property name="plannerJobMap">
+            <ref bean="plannerJobMapBean"/>
+        </property>
+    </bean>
+    <bean name="/connectionsDestroy.json" class="com.seer.datacruncher.spring.ConnectionsDestroyController">
+        <property name="plannerJobMap">
+            <ref bean="plannerJobMapBean"/>
+        </property>
+    </bean>
+    <bean name="/isSuccessfulConnection.json" class="com.seer.datacruncher.spring.IsSuccessfulConnectionController"/>
+    <bean name="/connectionsFileDownload.json" class="com.seer.datacruncher.spring.ConnectionsFileDownloadController">
+        <property name="methodNameResolver">
+            <ref bean="paramResolver"/>
+        </property>
+    </bean>
+    <!-- Servers -->
+    <bean name="/serversRead.json" class="com.seer.datacruncher.spring.ServersReadController"/>
+    <bean name="/adminInfoRead.json" class="com.seer.datacruncher.spring.AdminInfoReadController"/>
+    <bean name="/serverSetIsActive.json" class="com.seer.datacruncher.spring.ServerSetIsActiveController"/>
+    <bean name="/adminLogRead.json" class="com.seer.datacruncher.spring.AdminLogReadController"/>
+    <bean name="/adminLogDestroy.json" class="com.seer.datacruncher.spring.AdminLogDestroyController"/>
+    <!-- Tasks Scheduler -->
+    <bean name="/tasksRead.json" class="com.seer.datacruncher.spring.TasksReadController"/>
+    <bean name="/tasksCreate.json" class="com.seer.datacruncher.spring.TasksCreateController"/>
+    <bean name="/tasksUpdate.json" class="com.seer.datacruncher.spring.TasksUpdateController">
+        <property name="plannerJobMap">
+            <ref bean="plannerJobMapBean"/>
+        </property>
+    </bean>
+    <bean name="/tasksDestroy.json" class="com.seer.datacruncher.spring.TasksDestroyController">
+        <property name="plannerJobMap">
+            <ref bean="plannerJobMapBean"/>
+        </property>
+    </bean>
+    <bean name="/timeForTaskRead.json" class="com.seer.datacruncher.spring.TimeForTaskReadController"/>
+    <!-- Jobs -->
+    <bean name="/jobsRead.json" class="com.seer.datacruncher.spring.JobsReadController"/>
+    <bean name="/jobsCreate.json" class="com.seer.datacruncher.spring.JobsCreateController">
+        <property name="plannerJobMap">
+            <ref bean="plannerJobMapBean"/>
+        </property>
+    </bean>
+    <bean name="/jobsUpdate.json" class="com.seer.datacruncher.spring.JobsUpdateController">
+        <property name="plannerJobMap">
+            <ref bean="plannerJobMapBean"/>
+        </property>
+    </bean>
+    <bean name="/jobsDestroy.json" class="com.seer.datacruncher.spring.JobsDestroyController">
+        <property name="plannerJobMap">
+            <ref bean="plannerJobMapBean"/>
+        </property>
+    </bean>
+    <bean name="/jobsSetIsActive.json" class="com.seer.datacruncher.spring.JobsSetIsActiveController">
+        <property name="plannerJobMap">
+            <ref bean="plannerJobMapBean"/>
+        </property>
+    </bean>
+    <!-- Application Configuration -->
+    <bean name="/appConfigCreate.json" class="com.seer.datacruncher.spring.ApplicationConfigCreateController"/>
+    <bean name="/appConfigUpdate.json" class="com.seer.datacruncher.spring.ApplicationConfigUpdateController"/>
+    <bean name="/appConfigDestroy.json" class="com.seer.datacruncher.spring.ApplicationConfigDestroyController"/>
+    <bean name="/appConfigRead.json" class="com.seer.datacruncher.spring.ApplicationConfigReadController"/>
+    <bean name="/appConfigCheck.json" class="com.seer.datacruncher.spring.ApplicationConfigCheckController">
+        <property name="mailFrom" value="info@see-r.com"/>
+        <property name="mailTo" value="info@see-r.com"/>
+        <property name="mailSubject" value="DataCruncher - Email Configuration Check"/>
+        <property name="velocityEngine" ref="velocityEngine"/>
+        <property name="mailTemplate" value="templates/emailConfiguration_check"/>
+    </bean>
+    <bean name="/isApplicationConfigured.json" class="com.seer.datacruncher.spring.IsApplicationConfiguredController"/>
+    <!-- SchemaFields -->
+    <bean name="/schemaFieldsTreePopupRead.json"
+          class="com.seer.datacruncher.spring.SchemaFieldsTreePopupReadController"/>
+    <bean name="/schemaFieldsTreePopupCreate.json"
+          class="com.seer.datacruncher.spring.SchemaFieldsTreePopupCreateController"/>
+    <bean name="/schemaFieldsTreePopupDestroy.json"
+          class="com.seer.datacruncher.spring.SchemaFieldsTreePopupDestroyController"/>
+    <bean name="/schemaFieldsTreePopupMove.json"
+          class="com.seer.datacruncher.spring.SchemaFieldsTreePopupMoveController"/>
+    <bean name="/schemaDuplicate.json" class="com.seer.datacruncher.spring.SchemaDuplicateController"/>
+    <bean name="/schemaFieldsPopupRead.json" class="com.seer.datacruncher.spring.SchemaFieldsPopupReadController"/>
+    <bean name="/schemaFieldsPopupUpdate.json" class="com.seer.datacruncher.spring.SchemaFieldsPopupUpdateController"/>
+    <bean name="/schemaFieldIsForecasted.json" class="com.seer.datacruncher.spring.SchemaFieldIsForecastedController"/>
+    <bean name="/schemaValidate.json" class="com.seer.datacruncher.spring.SchemaValidateController"/>
+    <bean name="/schemaDbTreePopupRead.json" class="com.seer.datacruncher.spring.SchemaDbTreePopupReadController"/>
+
+    <bean name="/schemaImportFromJv.json" class="com.seer.datacruncher.spring.SchemaImportFromJvController"/>
+    <bean name="/checksTypeRead.json" class="com.seer.datacruncher.spring.ChecksTypeReadController"/>
+    <!-- Schema Attributes -->
+    <bean name="/schemaAttributesPopupRead.json"
+          class="com.seer.datacruncher.spring.SchemaAttributesPopupReadController"/>
+    <!-- Utils -->
+    <bean name="/getSchemaNameById.json" class="com.seer.datacruncher.spring.GetSchemaNameByIdController"/>
+    <!-- AlphanumricSchemaField -->
+    <bean name="/alphanumericFieldValuesRead.json"
+          class="com.seer.datacruncher.spring.AlphanumericFieldValuesReadController"/>
+    <bean name="/alphanumericFieldValuesCreate.json"
+          class="com.seer.datacruncher.spring.AlphanumericFieldValuesCreateController"/>
+    <bean name="/alphanumericFieldValuesUpdate.json"
+          class="com.seer.datacruncher.spring.AlphanumericFieldValuesUpdateController"/>
+    <bean name="/alphanumericFieldValuesDestroy.json"
+          class="com.seer.datacruncher.spring.AlphanumericFieldValuesDestroyController"/>
+    <bean name="/regularExpressionCheck.json" class="com.seer.datacruncher.spring.RegularExpressionCheckController"/>
+    <!-- NumericSchemaField -->
+    <bean name="/numericFieldValuesRead.json" class="com.seer.datacruncher.spring.NumericFieldValuesReadController"/>
+    <bean name="/numericFieldValuesCreate.json"
+          class="com.seer.datacruncher.spring.NumericFieldValuesCreateController"/>
+    <bean name="/numericFieldValuesUpdate.json"
+          class="com.seer.datacruncher.spring.NumericFieldValuesUpdateController"/>
+    <bean name="/numericFieldValuesDestroy.json"
+          class="com.seer.datacruncher.spring.NumericFieldValuesDestroyController"/>
+    <!-- ValidateDataStream -->
+    <bean name="/validateDatastreamPopup.json" class="com.seer.datacruncher.spring.ValidateDatastreamPopupController"/>
+    <bean name="/validateFilePopup.json" class="com.seer.datacruncher.spring.ValidateFilePopupController">
+
+    </bean>
+    <bean name="/generateDataStream.json" class="com.seer.datacruncher.spring.GenerateDatastreamController"/>
+    <bean name="/mashape/validateDataStream.json" class="com.seer.datacruncher.spring.ValidateDatastreamController"/>
+    <!-- DatastreamsReceived -->
+    <bean name="/datastreamsReceivedPopupRead.json"
+          class="com.seer.datacruncher.spring.DatastreamsReceivedPopupReadController"/>
+    <bean name="/datastreamsReceivedPopupDestroy.json"
+          class="com.seer.datacruncher.spring.DatastreamsReceivedPopupDestroyController"/>
+    <!-- DocumentsSchema -->
+    <bean name="/documentsPopupRead.json" class="com.seer.datacruncher.spring.DocumentsPopupReadController"/>
+    <bean name="/documentsPopupDestroy.json" class="com.seer.datacruncher.spring.DocumentsPopupDestroyController"/>
+    <bean name="/documentsPopupDownload.json" class="com.seer.datacruncher.spring.DocumentsPopupDownloadController"/>
+    <!-- Upload -->
+    <bean name="/upload.json" class="com.seer.datacruncher.spring.UploadController">
+        <property name="methodNameResolver">
+            <ref bean="paramResolver"/>
+        </property>
+    </bean>
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="5242880"/>
+    </bean>
+    <bean id="paramResolver" class="org.springframework.web.servlet.mvc.multiaction.ParameterMethodNameResolver">
+        <property name="paramName">
+            <value>action</value>
+        </property>
+    </bean>
+    <!-- Credits -->
+    <bean name="/creditsRead.json" class="com.seer.datacruncher.spring.CreditsReadController"/>
+    <!-- Forecasting -->
+    <bean name="/forecastContentPopup.json" class="com.seer.datacruncher.spring.ForecastReadController"/>
+    <!-- Alerts -->
+    <bean name="/alertsRead.json" class="com.seer.datacruncher.spring.AlertReadController"/>
+    <bean id="alertsByMail" class="com.seer.datacruncher.alerts.AlertsByMail">
+        <property name="mailFrom" value="info@see-r.com"/>
+        <property name="mailSubject" value="SEE-R - DataStreamAlert"/>
+        <property name="velocityEngine" ref="velocityEngine"/>
+        <property name="mailTemplate" value="templates/datastreamAlert"/>
+    </bean>
+
+    <bean id="alertsDialyJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="alertDialyJob"/>
+        <property name="cronExpression" value="0 0 * * * ?"/>
+    </bean>
+
+    <bean name="alertDialyJob" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass" value="com.seer.datacruncher.alerts.job.AlertsScheduledJob"/>
+    </bean>
+
+    <bean id="alertsSchedulerFactoryBean" class="com.seer.datacruncher.spring.DisposableSchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref bean="alertsDialyJobTrigger"/>
+            </list>
+        </property>
+        <property name="autoStartup">
+            <value>true</value>
+        </property>
+    </bean>
+
+    <bean id="alertDataHandler" class="com.seer.datacruncher.alerts.job.AlertsDataHandler" abstract="true">
+        <property name="alertsDispatchMethods">
+            <map>
+                <entry key="mail" value-ref="alertsByMail"/>
+                <!-- <entry key="sms" value-ref="alertsBySMS"/> -->
+            </map>
+        </property>
+    </bean>
+    <bean id="alertsJobDataProcessor" class="com.seer.datacruncher.alerts.job.AlertsJobDataProcessor">
+        <property name="alertsDataHandlers">
+            <map>
+                <entry key="All" value-ref="allStreamHandler"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="allStreamHandler" class="com.seer.datacruncher.alerts.job.AllFailureStreamsHandler"
+          parent="alertDataHandler"/>
+    <!-- exMyJobBean -->
+    <bean name="scheduleOnStartUp" init-method="executeInternal"
+          class="com.seer.datacruncher.utils.schema.ScheduleOnStartUp"/>
+    <bean id="serverJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="serverJobBean"/>
+        <property name="cronExpression" value="0/30 * * * * ?"/>
+    </bean>
+    <!-- planner's beans (scheduler's jobs) -->
+    <bean name="plannerStarterJob" init-method="executeInternal"
+          class="com.seer.datacruncher.services.scheduler.PlannerStarterJob">
+        <property name="plannerJobMap" ref="plannerJobMapBean"/>
+    </bean>
+
+    <bean id="plannerJobMapBean" class="com.seer.datacruncher.services.scheduler.PlannerJobMap"/>
+
+    <!-- License-->
+    <bean id="expiredLicenseEmails" class="com.seer.datacruncher.spring.ExpiredLicenseEmails">
+        <property name="mailFrom" value="info@see-r.com"/>
+        <property name="velocityEngine" ref="velocityEngine"/>
+        <property name="mailTemplate" value="templates/license_exp"/>
+    </bean>
+    <!-- planner's beans (scheduler's jobs) -->
+    <bean name="alertsStarterJob" init-method="executeInternal"
+          class="com.seer.datacruncher.services.scheduler.AlertsStarterJob">
+        <property name="scheduler" ref="alertsSchedulerFactoryBean"/>
+    </bean>
+
+    <!-- End of schedule bean configuration -->
+
+    <!-- Configure ActiveMQ embedded JMS broker -->
+    <!-- start -->
+    <amq:broker brokerName="DataCruncherJmsBroker" useJmx="false" persistent="false">
+        <amq:plugins>
+            <bean id="authPlugin" class="com.seer.datacruncher.services.jms.plugins.AuthenticationPlugin"/>
+        </amq:plugins>
+        <amq:transportConnectors>
+            <amq:transportConnector uri="tcp://127.0.0.1:61616"/>
+        </amq:transportConnectors>
+    </amq:broker>
+    <!-- Done ActiveMQ embedded server -->
+
+    <!-- Configure JMS queues and connectionFactory -->
+    <amq:connectionFactory id="amqConnectionFactory" brokerURL="vm://DataCruncherJmsBroker"/>
+
+    <bean class="org.springframework.jms.connection.CachingConnectionFactory" id="connectionFactory">
+        <constructor-arg ref="amqConnectionFactory"/>
+        <property name="sessionCacheSize" value="100"/>
+    </bean>
+
+    <amq:queue physicalName="DataCruncherInputQueue"/>
+    <amq:queue physicalName="DataCruncherOutputQueue"/>
+
+
+    <bean class="org.springframework.jms.core.JmsTemplate" id="jmsTemplate">
+        <constructor-arg ref="connectionFactory"/>
+    </bean>
+
+    <bean class="com.seer.datacruncher.services.jms.QueueSender" id="queueProducer">
+        <property name="jmsTemplate" ref="jmsTemplate"/>
+        <property name="queueName" value="DataCruncherOutputQueue"/>
+    </bean>
+
+    <bean class="com.seer.datacruncher.services.jms.QueueListener" id="queueListener"/>
+
+    <jms:listener-container concurrency="10" connection-factory="connectionFactory">
+        <jms:listener id="DataCruncherQueueListener" destination="DataCruncherInputQueue" ref="queueListener"/>
+    </jms:listener-container>
+    <!-- End of activeMQ JMS configuration  -->
+
+    <!-- Starts and stops the FTP server as the context is started and stopped -->
+    <bean name="userAuthManagerFactory" class="com.seer.datacruncher.services.ftp.UserAuthenticationManagerFactory"/>
+    <bean class="com.seer.datacruncher.services.ftp.FtpServerHandler"
+          init-method="init" destroy-method="destroy">
+    </bean>
+    <bean name="serverJobBean" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass" value="com.seer.datacruncher.services.ServiceScheduledJob"/>
+    </bean>
+    <!-- Close configuration for internal FTP server -->
+
+    <bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
+        <property name="velocityProperties">
+            <value>
+                resource.loader=class
+                class.resource.loader.class=org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+            </value>
+        </property>
+    </bean>
+
+    <!-- Define entityManagerFactory -->
+    <bean id="entityManagerFactory"
+          class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="persistenceUnitName" value="DataCruncher"/>
+        <property name="loadTimeWeaver">
+            <bean class="org.springframework.instrument.classloading.InstrumentationLoadTimeWeaver"/>
+        </property>
+        <property name="jpaVendorAdapter">
+            <!-- Mysql  -->
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"
+                  p:database="MYSQL"
+                  p:showSql="false"
+                  p:databasePlatform="org.hibernate.dialect.MySQLDialect"
+                  p:generateDdl="true"/>
+
+            <!-- SQL SERVER support (MSSQL) -->
+            <!--bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"
+                  p:database="SQL_SERVER"
+                  p:showSql="false"
+                  p:databasePlatform="org.hibernate.dialect.SQLServerDialect"
+                  p:generateDdl="true"/-->
+        </property>
+    </bean>
+
+    <!-- Add Transaction support -->
+    <bean id="myTxManager"
+          class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+
+    <!-- Use @Transaction annotations for managing transactions -->
+    <tx:annotation-driven transaction-manager="myTxManager"/>
+
+    <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/>
+
+    <!-- DAO Bean initialization Starts  -->
+    <bean id="ActivityDao" class="com.seer.datacruncher.jpa.dao.ActivityDao">
+    </bean>
+    <bean id="AlertsDao" class="com.seer.datacruncher.jpa.dao.AlertsDao">
+    </bean>
+    <bean id="AlertsAuditDao" class="com.seer.datacruncher.jpa.dao.AlertsAuditDao">
+    </bean>
+    <bean id="AlphanumericFieldValuesDao"
+          class="com.seer.datacruncher.jpa.dao.AlphanumericFieldValuesDao">
+    </bean>
+    <bean id="ApplicationsDao" class="com.seer.datacruncher.jpa.dao.ApplicationsDao">
+    </bean>
+    <bean id="ChecksTypeDao" class="com.seer.datacruncher.jpa.dao.ChecksTypeDao">
+    </bean>
+    <bean id="SchemaLibDao" class="com.seer.datacruncher.jpa.dao.SchemaLibDao">
+    </bean>
+    <bean id="ConnectionsDao" class="com.seer.datacruncher.jpa.dao.ConnectionsDao">
+    </bean>
+    <bean id="ContactsDao" class="com.seer.datacruncher.jpa.dao.ContactsDao">
+    </bean>
+    <bean id="DatabasesDao" class="com.seer.datacruncher.jpa.dao.DatabasesDao">
+    </bean>
+    <bean id="DatastreamsDao" class="com.seer.datacruncher.jpa.dao.DatastreamsDao">
+    </bean>
+    <bean id="FileDao" class="com.seer.datacruncher.jpa.dao.FileDao">
+    </bean>
+    <bean id="JobsDao" class="com.seer.datacruncher.jpa.dao.JobsDao">
+    </bean>
+    <bean id="NumericFieldValuesDao" class="com.seer.datacruncher.jpa.dao.NumericFieldValuesDao">
+    </bean>
+    <bean id="CreditsDao" class="com.seer.datacruncher.jpa.dao.CreditsDao">
+    </bean>
+    <bean id="RoleActivityDao" class="com.seer.datacruncher.jpa.dao.RoleActivityDao">
+    </bean>
+    <bean id="RoleDao" class="com.seer.datacruncher.jpa.dao.RoleDao">
+    </bean>
+    <bean id="SchemaFieldsDao" class="com.seer.datacruncher.jpa.dao.SchemaFieldsDao">
+    </bean>
+    <bean id="SchemasDao" class="com.seer.datacruncher.jpa.dao.SchemasDao">
+    </bean>
+    <bean id="SchemasXSDDao" class="com.seer.datacruncher.jpa.dao.SchemasXSDDao">
+    </bean>
+    <bean id="ServersDao" class="com.seer.datacruncher.jpa.dao.ServersDao">
+    </bean>
+    <bean id="TasksDao" class="com.seer.datacruncher.jpa.dao.TasksDao">
+    </bean>
+    <bean id="UserApplicationsDao" class="com.seer.datacruncher.jpa.dao.UserApplicationsDao">
+    </bean>
+    <bean id="UserSchemasDao" class="com.seer.datacruncher.jpa.dao.UserSchemasDao">
+    </bean>
+    <bean id="UsersDao" class="com.seer.datacruncher.jpa.dao.UsersDao">
+    </bean>
+    <bean id="EventTriggerDao" class="com.seer.datacruncher.jpa.dao.EventTriggerDao">
+    </bean>
+    <bean id="SchemaTriggerStatusDao" class="com.seer.datacruncher.jpa.dao.SchemaTriggerStatusDao">
+    </bean>
+    <bean id="ApplicationConfigDao" class="com.seer.datacruncher.jpa.dao.ApplicationConfigDao">
+    </bean>
+    <bean id="SchemaSQLDao" class="com.seer.datacruncher.jpa.dao.SchemaSQLDao"/>
+    <bean id="LogDao" class="com.seer.datacruncher.jpa.dao.LogDao"/>
+    <bean id="ForecastDao" class="com.seer.datacruncher.jpa.dao.ForecastDao"/>
+
+    <!--camel:camelContext id="camel2">
+        <camel:package>com.seer.datacruncher.services.ftp.camel</camel:package>
+        <camel:package>com.seer.datacruncher.services.jms.camel</camel:package>
+    </camel:camelContext-->
+
+    <!--bean id="ftpFileFilter" class="com.seer.datacruncher.services.ftp.camel.FTPFileFilter"/-->
+    <!--bean class="com.seer.datacruncher.services.jms.JMSQueueListenerProcessor" id="JMSQueueListenerProcessor"/-->
+
+    <context:component-scan base-package="com.seer.datacruncher.spring"/>
+    <context:component-scan base-package="com.seer.datacruncher.jpa.dao"/>
+    <context:annotation-config/>
+</beans>

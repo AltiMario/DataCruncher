@@ -1,0 +1,7 @@
+<div style="font-family:'Arial';font-size:16px;color:#333;margin-left:20px;">
+	<p>This is an automatically generated message to notify about soon license expiration: </p>
+	<p>Client: ${client}</p>
+	<p>Dealer: ${dealer}</p>	
+	<p>Module: ${module}</p>	
+	<p>Validity: ${validity}</p>		
+</div>

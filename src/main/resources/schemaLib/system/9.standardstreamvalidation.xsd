@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:annotation/>
+    <xs:element name="jvSchemaName" fixed="validationStandardStream"/>
+    <xs:element name="jvDataStreamType" fixed="5"/>
+    <xs:element name="jvValidityStartDate" fixed=""/>
+    <xs:element name="jvValidityEndDate" fixed=""/>
+    <xs:simpleType name="nameLength">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="|[a-zA-Z0-9\s.\-]+"/>
+            <xs:maxLength value="25"/>
+            <xs:minLength value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="safestext">
+        <xs:restriction xmlns="" base="xs:string">
+            <xs:pattern value="|[a-zA-Z0-9\s.\-]+"/>
+            <xs:maxLength value="200"/>
+            <xs:minLength value="0"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="dateFormat">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="|(((0[1-9]|[12]\d|3[01])[/](0[13578]|1[02])[/](\d{4}))|((0[1-9]|[12]\d|30)[/](0[13456789]|1[012])[/](\d{4}))|((0[1-9]|1\d|2[0-8])[/]02[/](\d{4}))|((29)[/](02)[/](((\d{2})00)|((\d{2})[0][48])|((\d{2})[2468][048])|((\d{2})[13579][26]))))"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="jvRoot">
+        <xs:complexType>
+            <xs:all>
+                <xs:element xmlns="" name="name" type="nameLength" minOccurs="1" maxOccurs="1"/>
+                <xs:element xmlns="" name="idApplication" type="xs:integer" maxOccurs="1"/>
+                <xs:element xmlns="" name="version" type="nameLength" minOccurs="0" maxOccurs="1"/>
+				<xs:element xmlns="" name="idStreamType" type="xs:integer" minOccurs="0" maxOccurs="1"/>
+				<xs:element xmlns="" name="idVersionLibrary" type="xs:string" minOccurs="0" maxOccurs="1"/>
+				<xs:element xmlns="" name="idSchema" type="xs:integer" minOccurs="0" maxOccurs="1"/>
+				<xs:element xmlns="" name="startDate" type="dateFormat" minOccurs="0" maxOccurs="1"/>
+				<xs:element xmlns="" name="endDate" type="dateFormat" minOccurs="0" maxOccurs="1"/>
+				<xs:element xmlns="" name="id" type="xs:integer" minOccurs="0" maxOccurs="1"/>
+				<xs:element xmlns="" name="description" type="safestext" minOccurs="0" maxOccurs="1"/>
+            </xs:all>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

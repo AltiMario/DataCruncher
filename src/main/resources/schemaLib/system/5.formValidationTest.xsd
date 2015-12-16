@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:annotation/>
+    <xs:element name="jvSchemaName" fixed="sampleFormTest"/>
+    <xs:element name="jvDataStreamType" fixed="5"/>
+    <xs:element name="jvValidityStartDate" fixed=""/>
+    <xs:element name="jvValidityEndDate" fixed=""/>
+    <xs:simpleType name="nameLength">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="25"/>
+            <xs:minLength value="1"/>
+            <xs:pattern value="[a-zA-Z0-9\s.\-]+"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="jvRoot">
+        <xs:complexType>
+            <xs:all>
+                <xs:element xmlns="" name="name" type="nameLength" minOccurs="0"/>
+                <xs:element xmlns="" name="ip" type="xs:string">
+                    <xs:annotation>
+                        <xs:appinfo>@inetaddress</xs:appinfo>
+                        <xs:appinfo>@domain</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element xmlns="" name="port" type="xs:string" minOccurs="1">
+                    <xs:annotation>
+                        <xs:appinfo>@serverport</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+            </xs:all>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

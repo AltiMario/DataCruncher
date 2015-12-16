@@ -1,0 +1,7 @@
+﻿<div style="font-family:'Arial';font-size:16px;color:#333;margin-left:20px;">
+	<p>Это автоматически сгенерированное сообщение о скором истечении лицензии: </p>
+	<p>Клиент: ${client}</p>
+	<p>Дилер: ${dealer}</p>	
+	<p>Модуль: ${module}</p>	
+	<p>Срок истечения: ${validity}</p>		
+</div>

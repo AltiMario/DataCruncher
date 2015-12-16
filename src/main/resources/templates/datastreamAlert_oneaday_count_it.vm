@@ -1,0 +1,28 @@
+<div style="font-family:'Arial';font-size:16px;color:#333;margin-left:20px;">
+    <p>Ciao,</p>
+
+    <p>${totStream} flussi dati ricevuti sono nello stato 'Non valido'/Warning, di seguito l'elenco dei primi ${maxStream}.</p>
+
+    <table border='1'>
+        <tr>
+            <td>Data di ricezione</td>
+            <td><b>Schema</b></td>
+            <td>Stato</td>
+            <td>Messaggio</td>
+        </tr>
+        #foreach( $dataStream in $dataStreams )
+            #set( $url = "$serverUrl$dataStream.idDatastream")
+            <tr>
+                <td>$dataStream.ReceivedDate $dataStream.ReceivedTime</td>
+                <td><a href=$url> $dataStream.schemaName</a></td>
+                <td>
+                    #if($dataStream.checked==0) Non valido #else Warning #end
+                </td>
+                <td>$dataStream.message</td>
+            </tr>
+        #end
+    </table>
+
+    <p>Grazie,</p>
+    <p>Supporto clienti</p>
+</div>

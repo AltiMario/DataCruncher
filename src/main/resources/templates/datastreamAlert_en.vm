@@ -1,0 +1,16 @@
+<div style="font-family:'Arial';font-size:16px;color:#333;margin-left:20px;">
+	<p>Hi,</p>
+
+	<p>Following are DataStream details received by you.</p>
+	
+	<p><b>Received Time:</b> ${receivedTime}</p>
+
+    <p><b>Schema:</b> <a href=${schema}> ${schemaName}</a></p>
+	
+	<p><b>Status:</b> ${streamStatus}</p>
+	
+	<p><b>Message:</b> ${message}</p>
+	
+	<p> Thanks,</p>
+	<p> Customer Support </p>	
+</div>

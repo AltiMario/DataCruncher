@@ -1,0 +1,28 @@
+<div style="font-family:'Arial';font-size:16px;color:#333;margin-left:20px;">
+    <p>Hallo,</p>
+
+    <p>${totStream} Einige der Datenstrom empfangen, indem Sie in ungültigen/warning Status. Folgende Liste stellt gleichzeitig ${maxStream}.</p>
+
+    <table border='1'>
+        <tr>
+            <td><b>Received Time</b></td>
+            <td><b>Schema</b></td>
+            <td><b>Status</b></td>
+            <td><b>Nachricht</b></td>
+        </tr>
+        #foreach( $dataStream in $dataStreams )
+            #set( $url = "$serverUrl$dataStream.idDatastream")
+            <tr>
+                <td>$dataStream.ReceivedDate $dataStream.ReceivedTime</td>
+                <td><a href=$url> $dataStream.schemaName</a></td>
+                <td>
+                    #if($dataStream.checked==0) ungültig #else warnen #end
+                </td>
+                <td>$dataStream.message</td>
+            </tr>
+        #end
+    </table>
+
+    <p> Dank,</p>
+    <p> Customer Support </p>
+</div>

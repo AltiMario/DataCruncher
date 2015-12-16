@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:annotation/>
+    <xs:element name="jvSchemaName" fixed="validationJobs"/>
+    <xs:element name="jvDataStreamType" fixed="5"/>
+    <xs:element name="jvValidityStartDate" fixed=""/>
+    <xs:element name="jvValidityEndDate" fixed=""/>
+    <xs:simpleType name="nameLength">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="25"/>
+            <xs:minLength value="1"/>
+            <xs:pattern value="[a-zA-Z0-9\s.\-]+"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="jvRoot">
+        <xs:complexType>
+            <xs:all>
+                <xs:element xmlns="" name="jobsNamePopupFieldId" type="nameLength" minOccurs="1" maxOccurs="1"/>
+                <xs:element xmlns="" name="jobsAppsPopupFieldId" type="xs:integer" minOccurs="0" maxOccurs="1"/>
+                <xs:element xmlns="" name="jobsSchemasPopupFieldId" type="xs:integer" minOccurs="0" maxOccurs="1"/>
+				<xs:element xmlns="" name="jobsSchedulerPopupFieldId" type="xs:string" minOccurs="0" maxOccurs="1"/>
+				<xs:element xmlns="" name="jobsGeneratedSchemasPopupFieldId" type="xs:integer" minOccurs="0" maxOccurs="1"/>
+				<xs:element xmlns="" name="jobsConnectionsPopupFieldId" type="xs:string" minOccurs="0" maxOccurs="1"/>
+				<xs:element xmlns="" name="jobsEventTrigger" type="xs:string" minOccurs="0" maxOccurs="1"/>
+				<xs:element xmlns="" name="jobsDescPopupFieldId" type="xs:string" minOccurs="0" maxOccurs="1"/>
+            </xs:all>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

@@ -1,0 +1,354 @@
+#loading_background {
+    background-color: white;
+	height: 100%;
+	left: 0;
+    position: absolute;
+    top: 0;
+	width: 100%;
+    z-index: 2;
+}
+
+#loading {
+    position:absolute;
+    background: #3892D3;
+    left: 31%;
+    padding: 5px 5px 5px 5px;
+    top: 31%;
+	z-index: 3;
+	border: 3px solid #157FCC;
+	width: 445px;
+    text-align: justify;
+}
+
+.copyright {
+    font-family: verdana, cursive;
+    font-size: 13px;
+	padding: 20px 0 0 0;
+}
+
+body {
+	/*background: url(../images/gradient.png) repeat-x;*/
+}
+
+.help{
+	background: url(../images/help.gif); 
+}
+
+.info{
+	background: url(../images/info.png); 
+}
+
+.application_add{
+	background: url(../images/application_add.png); 
+}
+.application_delete{
+	background: url(../images/application_delete.png); 
+}
+.application_edit{
+	background: url(../images/application_edit.png); 	
+}
+
+.database_add{
+	background: url(../images/database_add.png); 
+}
+.database_delete{
+	background: url(../images/database_delete.png); 
+}
+.database_edit{
+	background: url(../images/database_edit.png); 	
+}
+.database_refresh{
+	background: url(../images/refresh.png);
+}
+
+.root_add {
+	background: url(../images/schema_add_branch.png);
+}
+.schema_add {
+	background: url(../images/schema_add.png); 
+}
+.schema_add_branch {
+	background: url(../images/schema_add_branch.png);
+}
+.schema_delete {
+	background: url(../images/schema_delete.png); 
+}
+.schema_edit {
+	background: url(../images/schema_edit.png); 
+}
+.schema_edit_fields {
+	background: url(../images/schema_edit_fields.png); 
+}
+.schema_load_fields{
+	background: url(../images/load_XSD.png);
+}
+.schema_export_schema{
+    background: url(../images/schema_export.png);
+}
+.schema_import_schema{
+    background: url(../images/schema_import.png);
+}
+.schema_valid_trace{
+     background: url(../images/valid_trace.png);
+ }
+.schema_datastream_received{
+	background: url(../images/datastream_received.png); 
+}
+.schema_list{
+    background: url(../images/schema_list.png);
+}
+.schema_duplicate {
+	background: url(../images/schema_duplicate.png);
+}
+.schema_macro{
+	background: url(../images/macro.png);
+}
+.schema_macroAdd {
+	background: url(../images/schema_add_macro.png);
+}
+.schema_macroEdit {
+	background: url(../images/edit_macro.png);
+}
+.schema_macroDelete {
+	background: url(../images/delete_macro.png);
+}
+.schema_document{
+	background: url(../images/document.png);
+}
+.schema_document_delete{
+	background: url(../images/document_delete.png);
+}
+.schema_document_upload{
+	background: url(../images/document_upload.png);
+}
+.schema_document_download{
+	background: url(../images/document_download.png);
+}
+.schema_xsd_diagram{
+    background: url(../images/xsd_diagram.png);
+}
+.schema_extra_check{
+    background: url(../images/extra_check.png);
+}
+.schema_extra_check_add{
+    background: url(../images/extra_check_add.png);
+}
+.schema_extra_check_edit{
+    background: url(../images/extra_check_edit.png);
+}
+.schema_extra_check_delete{
+    background: url(../images/extra_check_delete.png);
+}
+
+.schema_trigger{
+    background: url(../images/trigger.png);
+}
+.schema_trigger_add{
+    background: url(../images/trigger_add.png);
+}
+.schema_trigger_edit{
+    background: url(../images/trigger_edit.png);
+}
+.schema_trigger_delete{
+    background: url(../images/trigger_delete.png);
+}
+.schema_trigger_clear_editor{
+    background: url(../images/clean.png);
+}
+.schema_trigger_validate{
+    background: url(../images/bug.png);
+}
+.forecasting{
+    background: url(../images/forecasting_ball.png);
+}
+.schema_share{
+    background: url(../images/share.png);
+}
+.schema_site_generation{
+    background: url(../images/web.png);
+}
+.supported_standard{
+    background: url(../images/supported_standard.png);
+}
+.trigger{
+    background: url(../images/trigger.png);
+}
+.trigger_add{
+    background: url(../images/trigger_add.png);
+}
+.trigger_edit{
+    background: url(../images/trigger_edit.png);
+}
+.trigger_delete{
+    background: url(../images/trigger_delete.png);
+}
+
+.user_application_add{
+	background: url(../images/user_add.png);
+}
+.user_application_delete{
+	background: url(../images/user_delete.png);
+}
+.user_application_edit{
+	background: url(../images/user_edit.png);
+}
+.user_logout{
+	background: url(../images/logout.gif); 	
+}
+
+.planner_add{
+    background: url(../images/planner_add.png);
+}
+.planner_delete{
+    background: url(../images/planner_delete.png);
+}
+.planner_edit{
+    background: url(../images/planner_edit.png);
+}
+
+.report_realTime{
+	background: url(../images/realtime.png);
+}
+.report_state_monthly{
+	background: url(../images/state_pie.png);
+}
+.report_state{
+    background: url(../images/state_detailed.gif);
+}
+.report_state_annual{
+    background: url(../images/state_annual.gif);
+}
+
+.clear {
+	background: url(../images/clean.png);
+}
+
+.server {
+	background: url(../images/inout.png);
+}
+
+.lock {
+	background: url(../images/lock.png) transparent no-repeat;
+	background-position: center;	
+}
+
+.unlock {
+	background: url(../images/unlock.png) transparent no-repeat;
+	background-position: center;	
+}
+
+.bug {
+	background: url(../images/bug.png); 
+}
+
+.checkIcon {
+	background: url(../images/check.png) transparent no-repeat;
+	background-position: center;	
+}
+
+.alertIcon {
+	background: url(../images/alert.png) transparent no-repeat;
+	background-position: center;
+}
+
+.ajax-loader {
+	background: url(../images/ajax-loader.gif) transparent no-repeat;
+	background-position: center;	
+}
+
+div#creditsGrid div.x-grid-view {
+	overflow-y: scroll !important;
+}
+
+.applications {
+	background: url(../images/application.png); 
+}
+
+.database {
+	background: url(../images/database.png); 
+}
+
+.standard_schema_validation {
+	background: url(../images/standard_schema_validation.png);
+}
+
+.custom_schema_validation {
+    background: url(../images/custom_schema_validation.png);
+}
+
+.stream_generation {
+    background: url(../images/stream_generation.png);
+}
+
+.stream_loading {
+    background: url(../images/stream_loading.png);
+}
+
+.stream_management {
+    background: url(../images/stream_management.png);
+}
+
+.schedulers {
+	background: url(../images/planner.png); 
+}
+
+.users {
+	background: url(../images/user.png); 
+}
+
+.profiler {
+    background: url(../images/profiler.png);
+}
+
+.admin {
+	background: url(../images/admin.png); 
+}
+
+.credits {
+	background: url(../images/copyright.png); 
+}
+
+.linkToDb {
+	background: url(../images/linked.png); 
+}
+
+.linked_node_to_db_green {
+	color: #4B8A08;
+}
+.field_attribute_branch {
+	background-image: url('../images/attribute_folder.gif') !important;
+    background-repeat: no-repeat;
+}
+.field_attribute_leaf {
+	background-image: url('../images/attribute.gif') !important;
+    background-repeat: no-repeat;
+}
+.field_attribute_add {
+	background: url(../images/attribute_add.gif);
+}
+.field_attribute_edit {
+	background: url(../images/attribute_edit.gif);
+}
+.field_attribute_delete {
+	background: url(../images/attribute_delete.gif);
+}
+.email{
+	background: url(../images/mail.png); 
+}
+.ftpConfig{
+	background: url(../images/ftp.png); 
+}
+.log{
+	background: url(../images/log.png);
+}
+.x-grid-row.red-background .x-grid-cell
+{
+    background-color: red;
+}
+.x-grid-row.yellow-background .x-grid-cell
+{
+    background-color: yellow;
+}
+.icon-magnifier {
+	background-image:url(../images/magnifier.png) ! important;
+}

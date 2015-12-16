@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:annotation/>
+    <xs:element name="jvSchemaName" fixed="validationPlanner"/>
+    <xs:element name="jvDataStreamType" fixed="5"/>
+    <xs:element name="jvValidityStartDate" fixed=""/>
+    <xs:element name="jvValidityEndDate" fixed=""/>
+    <xs:simpleType name="nameLength">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="25"/>
+            <xs:minLength value="1"/>
+            <xs:pattern value="[a-zA-Z0-9\s.\-]+"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="dateFormat">
+        <xs:restriction base="xs:string">
+            <xs:pattern
+                    value="(((0[1-9]|[12]\d|3[01])[/](0[13578]|1[02])[/](\d{4}))|((0[1-9]|[12]\d|30)[/](0[13456789]|1[012])[/](\d{4}))|((0[1-9]|1\d|2[0-8])[/]02[/](\d{4}))|((29)[/](02)[/](((\d{2})00)|((\d{2})[0][48])|((\d{2})[2468][048])|((\d{2})[13579][26]))))"/>
+            <xs:minLength value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="timeFormat">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="([01]?[0-9]|2[0-3]):[0-5][0-9]"/>
+            <xs:minLength value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="safestext">
+        <xs:restriction xmlns="" base="xs:string">
+            <xs:pattern value="|[a-zA-Z0-9\s.\-]+"/>
+            <xs:maxLength value="200"/>
+            <xs:minLength value="0"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="numMax">
+        <xs:restriction xmlns="" base="xs:integer">
+            <xs:minInclusive xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:numFacet" value="1"/>
+            <xs:maxInclusive xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:numFacet"
+                             value="86400"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="jvRoot">
+        <xs:complexType>
+            <xs:all>
+                <xs:element xmlns="" name="name" type="nameLength" minOccurs="1" maxOccurs="1"/>
+                <xs:element xmlns="" name="description" type="safestext" minOccurs="0" maxOccurs="1"/>
+                <xs:element xmlns="" name="minute" type="xs:integer" minOccurs="0" maxOccurs="1"/>
+                <xs:element xmlns="" name="hour" type="xs:integer" minOccurs="0" maxOccurs="1"/>
+                <xs:element xmlns="" name="day" type="xs:integer" minOccurs="0" maxOccurs="1"/>
+                <xs:element xmlns="" name="month" type="xs:integer" minOccurs="0" maxOccurs="1"/>
+                <xs:element xmlns="" name="everysecond" type="numMax" minOccurs="0" maxOccurs="1"/>
+                <xs:element xmlns="" name="week" type="xs:integer" minOccurs="0" maxOccurs="1"/>
+                <xs:element xmlns="" name="shootDate" type="dateFormat" minOccurs="0" maxOccurs="1"/>
+                <xs:element xmlns="" name="shootTime" type="timeFormat" minOccurs="0" maxOccurs="1"/>
+            </xs:all>
+
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

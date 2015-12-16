@@ -1,0 +1,9 @@
+<div style="font-family:'Arial';font-size:16px;color:#333;margin-left:20px;">
+	<p>Dear ${name} ${surname} ,</p>
+
+	<p>Welcome to DataCruncher</p>
+	<p>Your User name:${userName}</p>
+	
+	<p> Thanks,</p>
+	<p> Customer Support </p>	
+</div>

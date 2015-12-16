@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!--
+  ~ Copyright (c) 2015  www.see-r.com
+  ~ All rights reserved
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU Affero General Public License as
+  ~ published by the Free Software Foundation, either version 3 of the
+  ~ License, or (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU Affero General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU Affero General Public License
+  ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:p="http://www.springframework.org/schema/p"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:amq="http://activemq.apache.org/schema/core" 	   
+	   xmlns:jms="http://www.springframework.org/schema/jms"
+	   xmlns:ftp="http://mina.apache.org/ftpserver/spring/v1"
+	   xmlns:tx="http://www.springframework.org/schema/tx"
+	   xmlns:aop="http://www.springframework.org/schema/aop"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans         
+	   					   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd         
+	   					   http://www.springframework.org/schema/context         
+	   					   http://www.springframework.org/schema/context/spring-context-3.0.xsd
+	   					   http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core-5.2.0.xsd
+	   					   http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms-3.0.xsd
+	   					   http://mina.apache.org/ftpserver/spring/v1
+	   					   http://mina.apache.org/ftpserver/ftpserver-1.0.xsd
+	   					   http://www.springframework.org/schema/tx 
+	   					   http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+	   					   http://www.springframework.org/schema/aop 
+	   					   http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">       
+	<bean name="testDummyBean" class="java.lang.Object"/>
+	<bean name="/login.json" class="com.seer.datacruncher.spring.LoginController" />
+	
+	<!--  Reports -->
+ 	<bean name="/realTimeGraph.json" class="com.seer.datacruncher.spring.RealTimeGraphController" />
+	<!-- Applications -->
+	<bean name="/applicationsRead.json" class="com.seer.datacruncher.spring.ApplicationsReadController"/>
+	<bean name="/applicationsCreate.json" class="com.seer.datacruncher.spring.ApplicationsCreateController"/>
+	<bean name="/applicationsUpdate.json" class="com.seer.datacruncher.spring.ApplicationsUpdateController"/>
+	<bean name="/applicationsDestroy.json" class="com.seer.datacruncher.spring.ApplicationsDestroyController"/>
+	<bean name="/applicationIsActive.json" class="com.seer.datacruncher.spring.ApplicationIsActiveController"/>	
+	<!-- Databases -->
+	<bean name="/databasesRead.json" class="com.seer.datacruncher.spring.DatabasesReadController"/>
+	<bean name="/databasesCreate.json" class="com.seer.datacruncher.spring.DatabasesCreateController"/>
+	<bean name="/databasesUpdate.json" class="com.seer.datacruncher.spring.DatabasesUpdateController"/>
+	<bean name="/databasesDestroy.json" class="com.seer.datacruncher.spring.DatabasesDestroyController"/>
+	<!-- Schemas -->
+	<bean name="/schemasRead.json" class="com.seer.datacruncher.spring.SchemasReadController"/>
+	<bean name="/schemasCreate.json" class="com.seer.datacruncher.spring.SchemasCreateController"/>
+	<bean name="/schemasUpdate.json" class="com.seer.datacruncher.spring.SchemasUpdateController"/>
+	<bean name="/schemasDestroy.json" class="com.seer.datacruncher.spring.SchemasDestroyController"/>
+	<bean name="/schemaIsActive.json" class="com.seer.datacruncher.spring.SchemaIsActiveController"/>
+	<!-- Users -->
+	<bean name="/usersRead.json" class="com.seer.datacruncher.spring.UsersReadController"/>
+	<!-- Tasks Scheduler -->
+	<bean name="/tasksRead.json" class="com.seer.datacruncher.spring.TasksReadController"/>
+	<!-- SchemaFields -->
+	<bean name="/schemaFieldsTreePopupRead.json" class="com.seer.datacruncher.spring.SchemaFieldsTreePopupReadController"/>
+	<bean name="/schemaFieldsTreePopupCreate.json" class="com.seer.datacruncher.spring.SchemaFieldsTreePopupCreateController"/>
+	<bean name="/schemaFieldsTreePopupDestroy.json" class="com.seer.datacruncher.spring.SchemaFieldsTreePopupDestroyController"/>
+	<bean name="/schemaFieldsTreePopupMove.json" class="com.seer.datacruncher.spring.SchemaFieldsTreePopupMoveController"/>
+	<bean name="/schemaDuplicate.json" class="com.seer.datacruncher.spring.SchemaDuplicateController"/>	
+	<bean name="/schemaFieldsPopupRead.json" class="com.seer.datacruncher.spring.SchemaFieldsPopupReadController"/>
+	<bean name="/schemaFieldsPopupUpdate.json" class="com.seer.datacruncher.spring.SchemaFieldsPopupUpdateController"/>
+	<bean name="/schemaValidate.json" class="com.seer.datacruncher.spring.SchemaValidateController"/>		
+    <!-- Application Context -->
+    <bean id="contextApplicationContextProvider" class="com.seer.datacruncher.spring.AppContext" />
+	
+	<bean id="DaoServices" class="com.seer.datacruncher.jpa.dao.DaoServices">
+		<property name="activityDao" ref="ActivityDao" />
+		<property name="alertsDao" ref="AlertsDao" />
+		<property name="alphaFieldDao" ref="AlphanumericFieldValuesDao" />
+		<property name="applicationsDao" ref="ApplicationsDao" />
+		<property name="checksTypeDao" ref="ChecksTypeDao" />
+		<property name="connectionsDao" ref="ConnectionsDao" />
+		<property name="dbDao" ref="DatabasesDao" />
+		<property name="datastreamDao" ref="DatastreamsDao" />
+		<property name="fileDao" ref="FileDao" />
+		<property name="jobsDao" ref="JobsDao" />
+		<property name="numericFieldDao" ref="NumericFieldValuesDao" />
+		<property name="creditsDao" ref="CreditsDao" />
+		<property name="roleActivityDao" ref="RoleActivityDao" />
+		<property name="roleDao" ref="RoleDao" />
+		<property name="schemaFieldsDao" ref="SchemaFieldsDao" />
+		<property name="schemasDao" ref="SchemasDao" />
+		<property name="schemasXSDDao" ref="SchemasXSDDao" />
+		<property name="serversDao" ref="ServersDao" />
+		<property name="tasksDao" ref="TasksDao" />
+		<property name="userAppDao" ref="UserApplicationsDao" />
+		<property name="userSchemasDao" ref="UserSchemasDao" />
+		<property name="usersDao" ref="UsersDao" />
+        <property name="eventTriggerDao" ref="EventTriggerDao" />
+        <property name="schemaTriggerStatusDao" ref="SchemaTriggerStatusDao" />
+	</bean>	
+	
+	<bean id="messageSource"
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">	
+		<property name="defaultEncoding" value="UTF-8"/>
+		<property name="basename" value="locale/messages" />
+	</bean>		
+	
+    <!-- Define entityManagerFactory -->
+	<bean id="entityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="persistenceUnitName" value="DataCruncher" />
+        <property name="loadTimeWeaver">
+            <bean class="org.springframework.instrument.classloading.InstrumentationLoadTimeWeaver"/>
+        </property>
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"
+                  p:database="MYSQL"
+                  p:showSql="false"
+                  p:databasePlatform="org.hibernate.dialect.MySQLDialect"
+                  p:generateDdl="true"/>
+        </property>
+
+    </bean>
+	
+	<!-- JPA TX configuration using AOP -->
+	<bean id="txManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
+
+    <tx:annotation-driven transaction-manager="txManager" />
+
+    <!-- DAO Bean initialization Starts  -->
+	<bean id="ActivityDao" class="com.seer.datacruncher.jpa.dao.ActivityDao">
+	</bean>
+	<bean id="AlertsDao" class="com.seer.datacruncher.jpa.dao.AlertsDao">
+	</bean>
+	<bean id="AlphanumericFieldValuesDao"
+		class="com.seer.datacruncher.jpa.dao.AlphanumericFieldValuesDao">
+	</bean>
+	<bean id="ApplicationsDao" class="com.seer.datacruncher.jpa.dao.ApplicationsDao">
+	</bean>
+	<bean id="ChecksTypeDao" class="com.seer.datacruncher.jpa.dao.ChecksTypeDao">
+	</bean>
+	<bean id="ConnectionsDao" class="com.seer.datacruncher.jpa.dao.ConnectionsDao">
+	</bean>
+	<bean id="DatabasesDao" class="com.seer.datacruncher.jpa.dao.DatabasesDao">
+	</bean>
+	<bean id="DatastreamsDao" class="com.seer.datacruncher.jpa.dao.DatastreamsDao">
+	</bean>
+	<bean id="FileDao" class="com.seer.datacruncher.jpa.dao.FileDao">
+	</bean>
+	<bean id="JobsDao" class="com.seer.datacruncher.jpa.dao.JobsDao">
+	</bean>
+	<bean id="NumericFieldValuesDao" class="com.seer.datacruncher.jpa.dao.NumericFieldValuesDao">
+	</bean>
+	<bean id="CreditsDao" class="com.seer.datacruncher.jpa.dao.CreditsDao">
+	</bean>
+	<bean id="RoleActivityDao" class="com.seer.datacruncher.jpa.dao.RoleActivityDao">
+	</bean>
+	<bean id="RoleDao" class="com.seer.datacruncher.jpa.dao.RoleDao">
+	</bean>
+	<bean id="SchemaFieldsDao" class="com.seer.datacruncher.jpa.dao.SchemaFieldsDao">
+	</bean>
+	<bean id="SchemasDao" class="com.seer.datacruncher.jpa.dao.SchemasDao">
+	</bean>
+	<bean id="SchemasXSDDao" class="com.seer.datacruncher.jpa.dao.SchemasXSDDao">
+	</bean>
+	<bean id="ServersDao" class="com.seer.datacruncher.jpa.dao.ServersDao">
+	</bean>
+	<bean id="TasksDao" class="com.seer.datacruncher.jpa.dao.TasksDao">
+	</bean>
+	<bean id="UserApplicationsDao" class="com.seer.datacruncher.jpa.dao.UserApplicationsDao">
+	</bean>
+	<bean id="UserSchemasDao" class="com.seer.datacruncher.jpa.dao.UserSchemasDao">
+	</bean>
+	<bean id="UsersDao" class="com.seer.datacruncher.jpa.dao.UsersDao">
+	</bean>
+    <bean id="EventTriggerDao" class="com.seer.datacruncher.jpa.dao.EventTriggerDao">
+    </bean>
+    <bean id="SchemaTriggerStatusDao" class="com.seer.datacruncher.jpa.dao.SchemaTriggerStatusDao">
+    </bean>
+	<context:component-scan base-package="com.seer.datacruncher.spring" />
+	<context:component-scan base-package="com.seer.datacruncher.jpa.dao" />
+	<context:annotation-config/>
+	
+	<!-- Overridden in submodules beans -->
+	<bean name="FormalValidation" class="com.seer.datacruncher.validation.Formal" />
+	<bean id="CreateXSDJAXB" class="com.seer.datacruncher.datastreams.CreateXSDJAXB"/>		
+</beans>        

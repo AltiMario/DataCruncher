@@ -1,0 +1,3439 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+xmlns="urn:DataCruncher:swift:v1" 
+targetNamespace="urn:DataCruncher:swift:v1" 
+elementFormDefault="qualified" 
+attributeFormDefault="unqualified">
+<xs:complexType name="TAccount-25x-01">
+<xs:sequence>
+<xs:element name="Account" type="STx_1-35"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TAccount-25A-01">
+<xs:sequence>
+<xs:element name="Account" type="STx_1-34"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TAccount-97A-01">
+<xs:sequence>
+<xs:element name="AccountNumber" type="STx_1-35"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TAccount-97AB-01">
+<xs:sequence>
+<xs:sequence minOccurs="0">
+<xs:element name="DataSourceScheme" minOccurs="0" type="STc_1-8"/>
+<xs:element name="AccountTypeCode" type="STc_4-4"/>
+</xs:sequence>
+<xs:element name="AccountNumber" type="STx_1-35"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TAccount-97AB-02">
+<xs:sequence>
+<xs:sequence minOccurs="0">
+<xs:element name="DataSourceScheme" type="STc_1-8"/>
+<xs:element name="AccountTypeCode" type="STc_4-4"/>
+</xs:sequence>
+<xs:element name="AccountNumber" type="STx_1-35"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TAccount-97AC-01">
+<xs:choice>
+<xs:element name="AccountNumber" type="STx_1-35"/>
+<xs:element name="AccountCode" type="STc_4-4"/>
+</xs:choice>
+
+</xs:complexType>
+<xs:complexType name="TAccount-97AE-01">
+<xs:choice>
+<xs:element name="AccountNumber" type="STx_1-35"/>
+<xs:element name="InternationalBankAccountNumber" type="STx_1-34"/>
+</xs:choice>
+
+</xs:complexType>
+<xs:complexType name="TAmount-19x-01">
+<xs:sequence>
+<xs:element name="Amount" type="STd_1-17_NumberOrAmount"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TAmount-19A-01">
+<xs:sequence>
+<xs:element name="CurrencyCode" type="STa_3-3"/>
+<xs:element name="Amount" type="STd_1-15_NumberOrAmount"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TAmount-19B-01">
+<xs:sequence>
+<xs:element name="CurrencyCode" type="STa_3-3"/>
+<xs:element name="Amount" type="STd_1-15_NumberOrAmount_SignLess"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TAmount-32B-01">
+<xs:sequence>
+<xs:element name="Currency" type="STa_3-3"/>
+<xs:element name="Amount" type="STd_1-15_NumberOrAmount_SignLess"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TAmount-32H-01">
+<xs:sequence>
+<xs:element name="Currency" type="STa_3-3"/>
+<xs:element name="Amount" type="STd_1-15_NumberOrAmount"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TAmount-33B-01">
+<xs:sequence>
+<xs:element name="Currency" type="STa_3-3"/>
+<xs:element name="Amount" type="STd_1-15_NumberOrAmount_SignLess"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TAmount-33E-01">
+<xs:sequence>
+<xs:element name="Currency" type="STa_3-3"/>
+<xs:element name="Amount" type="STd_1-15_NumberOrAmount_SignLess"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TAmount-34E-01">
+<xs:sequence>
+<xs:element name="Currency" type="STa_3-3"/>
+<xs:element name="Amount" type="STd_1-15_NumberOrAmount"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TAmount-34P-01">
+<xs:sequence>
+<xs:element name="Date" type="STn_Date_YYMMDD"/>
+<xs:element name="Currency" type="STa_3-3"/>
+<xs:element name="Amount" type="STd_1-15_NumberOrAmount_SignLess"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TAmount-34R-01">
+<xs:sequence>
+<xs:element name="Date" type="STn_Date_YYMMDD"/>
+<xs:element name="Currency" type="STa_3-3"/>
+<xs:element name="Amount" type="STd_1-15_NumberOrAmount_SignLess"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TAmount-71F-01">
+<xs:sequence>
+<xs:element name="Currency" type="STa_3-3"/>
+<xs:element name="Amount" type="STd_1-15_NumberOrAmount_SignLess"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TAmount-71G-01">
+<xs:sequence>
+<xs:element name="Currency" type="STa_3-3"/>
+<xs:element name="Amount" type="STd_1-15_NumberOrAmount_SignLess"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TBalance-60F-01">
+<xs:sequence>
+<xs:element name="DebitCredit" type="STa_1-1_DebitCredit"/>
+<xs:element name="Date" type="STn_Date_YYMMDD"/>
+<xs:element name="Currency" type="STa_3-3"/>
+<xs:element name="Amount" type="STd_1-15_NumberOrAmount_SignLess"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TBalance-60M-01">
+<xs:sequence>
+<xs:element name="DebitCredit" type="STa_1-1_DebitCredit"/>
+<xs:element name="Date" type="STn_Date_YYMMDD"/>
+<xs:element name="Currency" type="STa_3-3"/>
+<xs:element name="Amount" type="STd_1-15_NumberOrAmount_SignLess"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TBalance-62F-01">
+<xs:sequence>
+<xs:element name="DebitCredit" type="STa_1-1_DebitCredit"/>
+<xs:element name="Date" type="STn_Date_YYMMDD"/>
+<xs:element name="Currency" type="STa_3-3"/>
+<xs:element name="Amount" type="STd_1-15_NumberOrAmount_SignLess"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TBalance-62M-01">
+<xs:sequence>
+<xs:element name="DebitCredit" type="STa_1-1_DebitCredit"/>
+<xs:element name="Date" type="STn_Date_YYMMDD"/>
+<xs:element name="Currency" type="STa_3-3"/>
+<xs:element name="Amount" type="STd_1-15_NumberOrAmount_SignLess"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TBalance-64x-01">
+<xs:sequence>
+<xs:element name="DebitCredit" type="STa_1-1_DebitCredit"/>
+<xs:element name="Date" type="STn_Date_YYMMDD"/>
+<xs:element name="Currency" type="STa_3-3"/>
+<xs:element name="Amount" type="STd_1-15_NumberOrAmount_SignLess"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TBalance-65x-01">
+<xs:sequence>
+<xs:element name="DebitCredit" type="STa_1-1_DebitCredit"/>
+<xs:element name="Date" type="STn_Date_YYMMDD"/>
+<xs:element name="Currency" type="STa_3-3"/>
+<xs:element name="Amount" type="STd_1-15_NumberOrAmount_SignLess"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TBalance-93B-01">
+<xs:sequence>
+<xs:element name="DataSourceScheme" minOccurs="0" type="STc_1-8"/>
+<xs:element name="QuantityTypeCode" type="STc_4-4"/>
+<xs:element name="Balance" type="STd_1-15_NumberOrAmount"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TBalance-93BC-01">
+<xs:sequence>
+<xs:choice>
+<xs:sequence>
+<xs:element name="DataSourceScheme" minOccurs="0" type="STc_1-8"/>
+<xs:element name="QuantityTypeCode" type="STc_4-4"/>
+</xs:sequence>
+<xs:sequence>
+<xs:element name="QtyTypeCode" type="STc_4-4"/>
+<xs:element name="BalanceTypeCode" type="STc_4-4"/>
+</xs:sequence>
+</xs:choice>
+<xs:element name="Balance" type="STd_1-15_NumberOrAmount"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TCode-14D-01">
+<xs:sequence>
+<xs:element name="Code" type="STx_1-7"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TCode-22A-01">
+<xs:sequence>
+<xs:element name="Type" type="STc_4-4"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TCode-22B-01">
+<xs:sequence>
+<xs:element name="Type" type="STc_4-4"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TCode-23x-MT102-01">
+<xs:sequence>
+<xs:element name="Code" type="STa_1-6"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TCode-23B-01">
+<xs:sequence>
+<xs:element name="Type" type="STc_4-4"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TCode-23E-01">
+<xs:sequence>
+<xs:element name="InstructionCode" type="STc_4-4"/>
+<xs:element name="AdditionalInformation" minOccurs="0" type="STx_1-35"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TCode-24B-01">
+<xs:sequence>
+<xs:element name="DataSourceScheme" minOccurs="0" type="STc_1-8"/>
+<xs:element name="ReasonCode" type="STc_4-4"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TCode-24D-01">
+<xs:sequence>
+<xs:element name="Methode" type="STc_4-4"/>
+<xs:element name="AdditionalInformation" minOccurs="0" type="STx_1-35"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TCode-25x-01">
+<xs:sequence>
+<xs:element name="Code" type="STx_1-35"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TCode-25D-01">
+<xs:sequence>
+<xs:element name="DataSourceScheme" minOccurs="0" type="STc_1-8"/>
+<xs:element name="StatusCode" type="STc_4-4"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TCode-26F-01">
+<xs:sequence>
+<xs:element name="Type" type="STa_1-9"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TCode-26T-01">
+<xs:sequence>
+<xs:element name="Type" type="STc_3-3"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TCode-71A-01">
+<xs:sequence>
+<xs:element name="Code" type="STa_3-3"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TCode-94A-01">
+<xs:sequence>
+<xs:element name="Scope" type="STc_4-4"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TCurrency-11A-01">
+<xs:sequence>
+<xs:element name="CurrencyCode" type="STa_3-3"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TDate-30x-01">
+<xs:sequence>
+<xs:element name="Date" type="STn_Date_YYMMDD"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TDate-30F-01">
+<xs:sequence>
+<xs:element name="Date" type="STn_Date_YYYYMMDD"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TDate-30P-01">
+<xs:sequence>
+<xs:element name="Date" type="STn_Date_YYYYMMDD"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TDate-30T-01">
+<xs:sequence>
+<xs:element name="Date" type="STn_Date_YYYYMMDD"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TDate-30V-01">
+<xs:sequence>
+<xs:element name="Date" type="STn_Date_YYYYMMDD"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TDate-30XA-01">
+<xs:sequence>
+<xs:element name="Date" type="STn_Date_YYYYMMDD"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TDate-31C-01">
+<xs:sequence>
+<xs:element name="Date" type="STn_Date_YYMMDD"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TDate-31E-01">
+<xs:sequence>
+<xs:element name="Date" type="STn_Date_YYMMDD"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TDate-31G-01">
+<xs:sequence>
+<xs:element name="Date" type="STn_Date_YYMMDD"/>
+<xs:element name="Time" type="STn_Time_HHMM"/>
+<xs:element name="Location" type="STa_1-12"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TDate-98A-01">
+<xs:sequence>
+<xs:element name="Date" type="STn_Date_YYYYMMDD"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TDate-98AB-01">
+<xs:choice>
+<xs:element name="Date" type="STn_Date_YYYYMMDD"/>
+<xs:sequence>
+<xs:element name="DataSourceScheme" minOccurs="0" type="STc_1-8"/>
+<xs:element name="DateCode" type="STc_4-4"/>
+</xs:sequence>
+</xs:choice>
+
+</xs:complexType>
+<xs:complexType name="TDate-98ABC-01">
+<xs:choice>
+<xs:sequence>
+<xs:element name="Date" type="STn_Date_YYYYMMDD"/>
+<xs:element name="Time" minOccurs="0" type="STn_Time_HHMMSS"/>
+</xs:sequence>
+<xs:sequence>
+<xs:element name="DataSourceScheme" minOccurs="0" type="STc_1-8"/>
+<xs:element name="DateCode" type="STc_4-4"/>
+</xs:sequence>
+</xs:choice>
+
+</xs:complexType>
+<xs:complexType name="TDate-98ABCD-01">
+<xs:choice>
+<xs:sequence>
+<xs:element name="Date" type="STn_Date_YYYYMMDD"/>
+<xs:element name="Time" minOccurs="0" type="STn_Time_HHMMSS"/>
+</xs:sequence>
+<xs:sequence>
+<xs:element name="DataSourceScheme" minOccurs="0" type="STc_1-8"/>
+<xs:element name="DateCode" type="STc_4-4"/>
+</xs:sequence>
+<xs:sequence>
+<xs:element name="ReferenceDate" type="STc_4-4"/>
+<xs:element name="NumberOfDays" type="STn_3-3_OptionalSign"/>
+<xs:element name="DayType" type="STc_4-4"/>
+</xs:sequence>
+</xs:choice>
+
+</xs:complexType>
+<xs:complexType name="TDate-98ABCE-01">
+<xs:choice>
+<xs:sequence>
+<xs:element name="Date" type="STn_Date_YYYYMMDD"/>
+<xs:element name="Time" minOccurs="0" type="STn_Time_HHMMSS"/>
+<xs:element name="Decimals" minOccurs="0" type="STn_1-3"/>
+<xs:sequence minOccurs="0">
+<xs:element name="UTCIndicatorHours" type="STn_Time_HH_OptionalSign"/>
+<xs:element name="UTCIndicatorMinutes" minOccurs="0" type="STn_Time_MM"/>
+</xs:sequence>
+</xs:sequence>
+<xs:sequence>
+<xs:element name="DataSourceScheme" minOccurs="0" type="STc_1-8"/>
+<xs:element name="DateCode" type="STc_4-4"/>
+</xs:sequence>
+</xs:choice>
+
+
+</xs:complexType>
+<xs:complexType name="TDate-98ABCEF-01">
+<xs:choice>
+<xs:sequence>
+<xs:element name="Date" type="STn_Date_YYYYMMDD"/>
+<xs:element name="Time" minOccurs="0" type="STn_Time_HHMMSS"/>
+<xs:element name="Decimals" minOccurs="0" type="STn_1-3"/>
+<xs:sequence minOccurs="0">
+<xs:element name="UTCIndicatorHours" type="STn_Time_HH_OptionalSign"/>
+<xs:element name="UTCIndicatorMinutes" minOccurs="0" type="STn_Time_MM"/>
+</xs:sequence>
+</xs:sequence>
+<xs:sequence>
+<xs:element name="DataSourceScheme" minOccurs="0" type="STc_1-8"/>
+<xs:element name="DateCode" type="STc_4-4"/>
+<xs:element name="DateCodeTime" minOccurs="0" type="STn_Time_HHMMSS"/>
+</xs:sequence>
+</xs:choice>
+
+
+</xs:complexType>
+<xs:complexType name="TDate-98ACE-01">
+<xs:sequence>
+<xs:element name="Date" type="STn_Date_YYYYMMDD"/>
+<xs:sequence minOccurs="0">
+<xs:element name="Time" type="STn_Time_HHMMSS"/>
+<xs:sequence minOccurs="0">
+<xs:element name="Decimals" minOccurs="0" type="STn_1-3"/>
+<xs:sequence minOccurs="0">
+<xs:element name="UTCIndicatorHours" type="STn_Time_HH_OptionalSign"/>
+<xs:element name="UTCIndicatorMinutes" minOccurs="0" type="STn_Time_MM"/>
+</xs:sequence>
+</xs:sequence>
+</xs:sequence>
+</xs:sequence>
+
+
+</xs:complexType>
+<xs:complexType name="TDate-98AC-01">
+<xs:sequence>
+<xs:element name="Date" type="STn_Date_YYYYMMDD"/>
+<xs:element name="Time" minOccurs="0" type="STn_Time_HHMMSS"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TDate-98C-01">
+<xs:sequence>
+<xs:element name="Date" type="STn_Date_YYYYMMDD"/>
+<xs:element name="Time" type="STn_Time_HHMMSS"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TDateAndAmount-32A-01">
+<xs:sequence>
+<xs:element name="Date" type="STn_Date_YYMMDD"/>
+<xs:element name="Currency" type="STa_3-3"/>
+<xs:element name="Amount" type="STd_1-15_NumberOrAmount_SignLess"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TFlag-17B-01">
+<xs:sequence>
+<xs:element name="Flag" type="STa_1-1"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TFreeText-77T-01">
+<xs:sequence>
+<xs:element name="Text" type="STz_1-9000"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TIdentificationOfTheFinancialInstrument-23x-01">
+<xs:sequence>
+<xs:element name="Code1" type="STa_1-4"/>
+<xs:element name="Code2" type="STa_1-4"/>
+<xs:element name="Code3" type="STa_1-1"/>
+<xs:element name="Currency" type="STa_3-3"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TIdentificationOfTheFinancialInstrument-35B-01">
+<xs:sequence>
+<xs:element name="IdentificationOfSecurity" minOccurs="0" type="STc_12-12"/>
+<xs:element name="DescriptionOfSecurity1" minOccurs="0" type="STx_1-35"/>
+<xs:element name="DescriptionOfSecurity2" minOccurs="0" type="STx_1-35"/>
+<xs:element name="DescriptionOfSecurity3" minOccurs="0" type="STx_1-35"/>
+<xs:element name="DescriptionOfSecurity4" minOccurs="0" type="STx_1-35"/>
+</xs:sequence>
+
+
+</xs:complexType>
+<xs:complexType name="TIndicator-17A-01">
+<xs:sequence>
+<xs:element name="Indicator" type="STa_1-1"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TIndicator-17R-01">
+<xs:sequence>
+<xs:element name="Indicator" type="STa_1-1"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TIndicator-17T-01">
+<xs:sequence>
+<xs:element name="Indicator" type="STa_1-1"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TIndicator-17U-01">
+<xs:sequence>
+<xs:element name="Indicator" type="STa_1-1"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TIndicator-22F-01">
+<xs:sequence>
+<xs:element name="DataSourceScheme" minOccurs="0" type="STc_1-8"/>
+<xs:element name="Indicator" type="STc_4-4"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TIndicator-22F-02">
+<xs:sequence>
+<xs:element name="DataSourceScheme" minOccurs="1" type="STc_1-8"/>
+<xs:element name="Indicator" type="STc_4-4"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TIndicator-22FH-01">
+<xs:choice>
+<xs:sequence>
+<xs:element name="DataSourceScheme" minOccurs="0" type="STc_1-8"/>
+<xs:element name="Indicator" type="STc_4-4"/>
+</xs:sequence>
+<xs:element name="IndicatorOnly" type="STc_4-4"/>
+</xs:choice>
+
+</xs:complexType>
+<xs:complexType name="TIndicator-22H-01">
+<xs:sequence>
+<xs:element name="Indicator" type="STc_4-4"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TFunctionOfTheMessage-23G-01">
+<xs:sequence>
+<xs:element name="Function" type="STc_4-4"/>
+<xs:element name="SubFunction" minOccurs="0" type="STc_4-4"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TMTAndDateOfTheOriginalMessage-11RS-01">
+<xs:sequence>
+<xs:choice>
+<xs:element name="MTNumberReceivedMsg" type="STn_3-3"/>
+<xs:element name="MTNumberSendMsg" type="STn_3-3"/>
+</xs:choice>
+<xs:element name="Date" type="STYearMonthDate"/>
+<xs:sequence minOccurs="0">
+<xs:element name="SessionNumber" type="STn_1-4"/>
+<xs:element name="ISN" type="STn_1-6"/>
+</xs:sequence>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TNarrative-29A-01">
+<xs:sequence>
+<xs:element name="Narrative1" type="STx_1-35"/>
+<xs:element name="Narrative2" minOccurs="0" type="STx_1-35"/>
+<xs:element name="Narrative3" minOccurs="0" type="STx_1-35"/>
+<xs:element name="Narrative4" minOccurs="0" type="STx_1-35"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TNarrative-70x-01">
+<xs:sequence>
+<xs:element name="Narrative1" type="STx_1-35"/>
+<xs:element name="Narrative2" minOccurs="0" type="STx_1-35"/>
+<xs:element name="Narrative3" minOccurs="0" type="STx_1-35"/>
+<xs:element name="Narrative4" minOccurs="0" type="STx_1-35"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TNarrative-70C-01">
+<xs:sequence>
+<xs:element name="Narrative1" type="STx_1-35"/>
+<xs:element name="Narrative2" minOccurs="0" type="STx_1-35"/>
+<xs:element name="Narrative3" minOccurs="0" type="STx_1-35"/>
+<xs:element name="Narrative4" minOccurs="0" type="STx_1-35"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TNarrative-70D-01">
+<xs:sequence>
+<xs:element name="Narrative1" type="STx_1-35"/>
+<xs:element name="Narrative2" minOccurs="0" type="STx_1-35"/>
+<xs:element name="Narrative3" minOccurs="0" type="STx_1-35"/>
+<xs:element name="Narrative4" minOccurs="0" type="STx_1-35"/>
+<xs:element name="Narrative5" minOccurs="0" type="STx_1-35"/>
+<xs:element name="Narrative6" minOccurs="0" type="STx_1-35"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TNarrative-70E-01">
+<xs:sequence>
+<xs:element name="Narrative1" type="STx_1-35"/>
+<xs:element name="Narrative2" minOccurs="0" type="STx_1-35"/>
+<xs:element name="Narrative3" minOccurs="0" type="STx_1-35"/>
+<xs:element name="Narrative4" minOccurs="0" type="STx_1-35"/>
+<xs:element name="Narrative5" minOccurs="0" type="STx_1-35"/>
+<xs:element name="Narrative6" minOccurs="0" type="STx_1-35"/>
+<xs:element name="Narrative7" minOccurs="0" type="STx_1-35"/>
+<xs:element name="Narrative8" minOccurs="0" type="STx_1-35"/>
+<xs:element name="Narrative9" minOccurs="0" type="STx_1-35"/>
+<xs:element name="Narrative10" minOccurs="0" type="STx_1-35"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TNarrative-70EF-01">
+<xs:choice>
+<xs:sequence>
+<xs:element name="Narrative1" type="STx_1-35"/>
+<xs:element name="Narrative2" minOccurs="0" type="STx_1-35"/>
+<xs:element name="Narrative3" minOccurs="0" type="STx_1-35"/>
+<xs:element name="Narrative4" minOccurs="0" type="STx_1-35"/>
+<xs:element name="Narrative5" minOccurs="0" type="STx_1-35"/>
+<xs:element name="Narrative6" minOccurs="0" type="STx_1-35"/>
+<xs:element name="Narrative7" minOccurs="0" type="STx_1-35"/>
+<xs:element name="Narrative8" minOccurs="0" type="STx_1-35"/>
+<xs:element name="Narrative9" minOccurs="0" type="STx_1-35"/>
+<xs:element name="Narrative10" minOccurs="0" type="STx_1-35"/>
+</xs:sequence>
+<xs:element name="Narrative" type="STz_1-8000"/>
+</xs:choice>
+
+</xs:complexType>
+<xs:complexType name="TNarrative-70EG-01">
+<xs:choice>
+<xs:sequence>
+<xs:element name="Narrative1" type="STx_1-35"/>
+<xs:element name="Narrative2" minOccurs="0" type="STx_1-35"/>
+<xs:element name="Narrative3" minOccurs="0" type="STx_1-35"/>
+<xs:element name="Narrative4" minOccurs="0" type="STx_1-35"/>
+<xs:element name="Narrative5" minOccurs="0" type="STx_1-35"/>
+<xs:element name="Narrative6" minOccurs="0" type="STx_1-35"/>
+<xs:element name="Narrative7" minOccurs="0" type="STx_1-35"/>
+<xs:element name="Narrative8" minOccurs="0" type="STx_1-35"/>
+<xs:element name="Narrative9" minOccurs="0" type="STx_1-35"/>
+<xs:element name="Narrative10" minOccurs="0" type="STx_1-35"/>
+</xs:sequence>
+<xs:sequence>
+<xs:element name="Narrative1z" type="STz_1-35"/>
+<xs:element name="Narrative2z" minOccurs="0" type="STz_1-35"/>
+<xs:element name="Narrative3z" minOccurs="0" type="STz_1-35"/>
+<xs:element name="Narrative4z" minOccurs="0" type="STz_1-35"/>
+<xs:element name="Narrative5z" minOccurs="0" type="STz_1-35"/>
+<xs:element name="Narrative6z" minOccurs="0" type="STz_1-35"/>
+<xs:element name="Narrative7z" minOccurs="0" type="STz_1-35"/>
+<xs:element name="Narrative8z" minOccurs="0" type="STz_1-35"/>
+<xs:element name="Narrative9z" minOccurs="0" type="STz_1-35"/>
+<xs:element name="Narrative10z" minOccurs="0" type="STz_1-35"/>
+</xs:sequence>
+</xs:choice>
+
+</xs:complexType>
+<xs:complexType name="TNarrative-72x-01">
+<xs:sequence>
+<xs:element name="Narrative1" type="STx_1-35_StructuredFormat_72-Line1"/>
+<xs:element name="Narrative2" minOccurs="0" type="STx_1-35_StructuredFormat_72-Lines2-6"/>
+<xs:element name="Narrative3" minOccurs="0" type="STx_1-35_StructuredFormat_72-Lines2-6"/>
+<xs:element name="Narrative4" minOccurs="0" type="STx_1-35_StructuredFormat_72-Lines2-6"/>
+<xs:element name="Narrative5" minOccurs="0" type="STx_1-35_StructuredFormat_72-Lines2-6"/>
+<xs:element name="Narrative6" minOccurs="0" type="STx_1-35_StructuredFormat_72-Lines2-6"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TNarrative-77A-01">
+<xs:sequence>
+<xs:element name="Narrative1" type="STx_1-35"/>
+<xs:element name="Narrative2" minOccurs="0" type="STx_1-35"/>
+<xs:element name="Narrative3" minOccurs="0" type="STx_1-35"/>
+<xs:element name="Narrative4" minOccurs="0" type="STx_1-35"/>
+<xs:element name="Narrative5" minOccurs="0" type="STx_1-35"/>
+<xs:element name="Narrative6" minOccurs="0" type="STx_1-35"/>
+<xs:element name="Narrative7" minOccurs="0" type="STx_1-35"/>
+<xs:element name="Narrative8" minOccurs="0" type="STx_1-35"/>
+<xs:element name="Narrative9" minOccurs="0" type="STx_1-35"/>
+<xs:element name="Narrative10" minOccurs="0" type="STx_1-35"/>
+<xs:element name="Narrative11" minOccurs="0" type="STx_1-35"/>
+<xs:element name="Narrative12" minOccurs="0" type="STx_1-35"/>
+<xs:element name="Narrative13" minOccurs="0" type="STx_1-35"/>
+<xs:element name="Narrative14" minOccurs="0" type="STx_1-35"/>
+<xs:element name="Narrative15" minOccurs="0" type="STx_1-35"/>
+<xs:element name="Narrative16" minOccurs="0" type="STx_1-35"/>
+<xs:element name="Narrative17" minOccurs="0" type="STx_1-35"/>
+<xs:element name="Narrative18" minOccurs="0" type="STx_1-35"/>
+<xs:element name="Narrative19" minOccurs="0" type="STx_1-35"/>
+<xs:element name="Narrative20" minOccurs="0" type="STx_1-35"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TNarrative-77B-01">
+<xs:sequence>
+<xs:element name="Narrative1" type="STx_1-35"/>
+<xs:element name="Narrative2" minOccurs="0" type="STx_1-35"/>
+<xs:element name="Narrative3" minOccurs="0" type="STx_1-35"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TNarrative-77D-01">
+<xs:sequence>
+<xs:element name="Narrative1" type="STx_1-35"/>
+<xs:element name="Narrative2" minOccurs="0" type="STx_1-35"/>
+<xs:element name="Narrative3" minOccurs="0" type="STx_1-35"/>
+<xs:element name="Narrative4" minOccurs="0" type="STx_1-35"/>
+<xs:element name="Narrative5" minOccurs="0" type="STx_1-35"/>
+<xs:element name="Narrative6" minOccurs="0" type="STx_1-35"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TNarrative-77D-02">
+<xs:sequence>
+<xs:element name="Narrative1" type="STx_1-35_CodeVALD"/>
+<xs:element name="Narrative2" minOccurs="0" type="STx_1-35"/>
+<xs:element name="Narrative3" minOccurs="0" type="STx_1-35"/>
+<xs:element name="Narrative4" minOccurs="0" type="STx_1-35"/>
+<xs:element name="Narrative5" minOccurs="0" type="STx_1-35"/>
+<xs:element name="Narrative6" minOccurs="0" type="STx_1-35"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TNarrative-86x-01">
+<xs:sequence>
+<xs:element name="Narrative1" type="STx_1-65"/>
+<xs:element name="Narrative2" minOccurs="0" type="STx_1-65"/>
+<xs:element name="Narrative3" minOccurs="0" type="STx_1-65"/>
+<xs:element name="Narrative4" minOccurs="0" type="STx_1-65"/>
+<xs:element name="Narrative5" minOccurs="0" type="STx_1-65"/>
+<xs:element name="Narrative6" minOccurs="0" type="STx_1-65"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TNumberCount-16A-01">
+<xs:sequence>
+<xs:element name="Number" type="STn_1-5"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TNumberCount-28C-01">
+<xs:sequence>
+<xs:element name="StatementNumber" type="STn_1-5"/>
+<xs:element name="SequenceNumber" minOccurs="0" type="STn_1-5"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TNumberCount-28D-01">
+<xs:sequence>
+<xs:element name="MessageIndex" type="STn_1-5"/>
+<xs:element name="Total" type="STn_1-5"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TNumberCount-28E-01">
+<xs:sequence>
+<xs:element name="PageNumber" type="STn_1-5"/>
+<xs:element name="Total" type="STc_4-4"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TNumberCount-38J-01">
+<xs:sequence>
+<xs:element name="Indicator" type="STa_1-1"/>
+<xs:element name="Number" type="STn_3-3"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TNumberCount-99A-01">
+<xs:sequence>
+<xs:element name="Number" type="STn_3-3_OptionalSign"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TNumberCount-99B-01">
+<xs:sequence>
+<xs:element name="Number" type="STn_3-3"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TNumberIdentification-13A-01">
+<xs:sequence>
+<xs:element name="NumberId" type="STc_3-3"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TNumberIdentification-13AB-01">
+<xs:choice>
+<xs:element name="NumberId" type="STc_3-3"/>
+<xs:sequence>
+<xs:element name="DataSourceScheme" minOccurs="0" type="STc_1-8"/>
+<xs:element name="Number" type="STx_1-30_NoBeginEndOrDoubleSlashesAllowed"/>
+</xs:sequence>
+</xs:choice>
+
+</xs:complexType>
+<xs:complexType name="TNumberIdentification-13ABK-01">
+<xs:choice>
+<xs:element name="NumberId" type="STn_3-3"/>
+<xs:sequence>
+<xs:element name="DataSourceScheme" minOccurs="0" type="STc_1-8"/>
+<xs:element name="Number" type="STx_1-30_NoBeginEndOrDoubleSlashesAllowed"/>
+</xs:sequence>
+<xs:sequence>
+<xs:element name="NumberIdentifier" type="STc_3-3"/>
+<xs:element name="Quantity" type="STd_1-15_NumberOrAmount"/>
+</xs:sequence>
+</xs:choice>
+
+</xs:complexType>
+<xs:complexType name="TNumberIdentification-13AJ-01">
+<xs:choice>
+<xs:element name="NumberId" type="STc_3-3"/>
+<xs:element name="ExtendedNumberId" type="STc_5-5"/>
+</xs:choice>
+
+</xs:complexType>
+<xs:complexType name="TNumberIdentification-13B-01">
+<xs:sequence>
+<xs:element name="DataSourceScheme" minOccurs="0" type="STc_1-8"/>
+<xs:element name="Number" type="STx_1-30_NoBeginEndOrDoubleSlashesAllowed"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TNumberOfRepetions-18A-01">
+<xs:sequence>
+<xs:element name="Number" type="STn_1-5"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TParty-50AKF-01">
+<xs:sequence>
+<xs:choice>
+<xs:element name="Account" minOccurs="0" type="STx_1-34"/>
+<xs:element name="PartyIdentifier" type="STx_1-35_StructuredFormat_50F-Line1"/>
+</xs:choice>
+<xs:choice>
+<xs:element name="BicBei" type="STBicBei"/>
+<xs:sequence>
+<xs:element name="NameAndAddress1" type="STx_1-35"/>
+<xs:element name="NameAndAddress2" minOccurs="0" type="STx_1-35"/>
+<xs:element name="NameAndAddress3" minOccurs="0" type="STx_1-35"/>
+<xs:element name="NameAndAddress4" minOccurs="0" type="STx_1-35"/>
+</xs:sequence>
+<xs:sequence>
+<xs:element name="CodeAndIdentifier1" type="STx_1-35_StructuredFormat_50F-Line2-5"/>
+<xs:element name="CodeAndIdentifier2" minOccurs="0" type="STx_1-35_StructuredFormat_50F-Line2-5"/>
+<xs:element name="CodeAndIdentifier3" minOccurs="0" type="STx_1-35_StructuredFormat_50F-Line2-5"/>
+<xs:element name="CodeAndIdentifier4" minOccurs="0" type="STx_1-35_StructuredFormat_50F-Line2-5"/>
+</xs:sequence>
+</xs:choice>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TParty-50CFx-01">
+<xs:choice>
+<xs:element name="BicBei" type="STBei"/>
+<xs:sequence>
+<xs:element name="NameAndAddress1" type="STx_1-35"/>
+<xs:element name="NameAndAddress2" minOccurs="0" type="STx_1-35"/>
+<xs:element name="NameAndAddress3" minOccurs="0" type="STx_1-35"/>
+<xs:element name="NameAndAddress4" minOccurs="0" type="STx_1-35"/>
+</xs:sequence>
+<xs:sequence>
+<xs:element name="PartyIdentifier" type="STx_1-35_StructuredFormat_50F-Line1"/>
+<xs:sequence>
+<xs:element name="CodeAndIdentifier1" type="STx_1-35_StructuredFormat_50F-Line2-5"/>
+<xs:element name="CodeAndIdentifier2" minOccurs="0" type="STx_1-35_StructuredFormat_50F-Line2-5"/>
+<xs:element name="CodeAndIdentifier3" minOccurs="0" type="STx_1-35_StructuredFormat_50F-Line2-5"/>
+<xs:element name="CodeAndIdentifier4" minOccurs="0" type="STx_1-35_StructuredFormat_50F-Line2-5"/>
+</xs:sequence>
+</xs:sequence>
+</xs:choice>
+
+</xs:complexType>
+<xs:complexType name="TParty-50CL-01">
+<xs:choice>
+<xs:element name="BicBei" type="STBei"/>
+<xs:element name="PartyIdentifier" type="STx_1-35"/>
+</xs:choice>
+
+</xs:complexType>
+<xs:complexType name="TParty-50GHF-01">
+<xs:sequence>
+<xs:choice>
+<xs:element name="Account" type="STx_1-34"/>
+<xs:element name="PartyIdentifier" type="STx_1-35_StructuredFormat_50F-Line1"/>
+</xs:choice>
+<xs:choice>
+<xs:element name="BicBei" type="STBei"/>
+<xs:sequence>
+<xs:element name="NameAndAddress1" type="STx_1-35"/>
+<xs:element name="NameAndAddress2" minOccurs="0" type="STx_1-35"/>
+<xs:element name="NameAndAddress3" minOccurs="0" type="STx_1-35"/>
+<xs:element name="NameAndAddress4" minOccurs="0" type="STx_1-35"/>
+</xs:sequence>
+<xs:sequence>
+<xs:element name="CodeAndIdentifier1" type="STx_1-35_StructuredFormat_50F-Line2-5"/>
+<xs:element name="CodeAndIdentifier2" minOccurs="0" type="STx_1-35_StructuredFormat_50F-Line2-5"/>
+<xs:element name="CodeAndIdentifier3" minOccurs="0" type="STx_1-35_StructuredFormat_50F-Line2-5"/>
+<xs:element name="CodeAndIdentifier4" minOccurs="0" type="STx_1-35_StructuredFormat_50F-Line2-5"/>
+</xs:sequence>
+</xs:choice>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TParty-51A-01">
+<xs:sequence>
+<xs:element name="DebitCreditCode" minOccurs="0" type="STa_1-1_DebitCredit"/>
+<xs:element name="PartyIdentifier" minOccurs="0" type="STx_1-34"/>
+<xs:element name="BicBei" type="STBic"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TParty-52AC-01">
+<xs:choice>
+<xs:sequence>
+<xs:element name="DebitCreditCode" minOccurs="0" type="STa_1-1_DebitCredit"/>
+<xs:element name="PartyIdentifier" minOccurs="0" type="STx_1-34"/>
+<xs:element name="BicBei" type="STBic"/>
+</xs:sequence>
+<xs:element name="PartyId" type="STx_1-34"/>
+</xs:choice>
+
+</xs:complexType>
+<xs:complexType name="TParty-52AD-01">
+<xs:sequence>
+<xs:element name="DebitCreditCode" minOccurs="0" type="STa_1-1_DebitCredit"/>
+<xs:element name="PartyIdentifier" minOccurs="0" type="STx_1-34"/>
+<xs:choice>
+<xs:element name="BicBei" type="STBic"/>
+<xs:sequence>
+<xs:element name="NameAndAddress1" type="STx_1-35"/>
+<xs:element name="NameAndAddress2" minOccurs="0" type="STx_1-35"/>
+<xs:element name="NameAndAddress3" minOccurs="0" type="STx_1-35"/>
+<xs:element name="NameAndAddress4" minOccurs="0" type="STx_1-35"/>
+</xs:sequence>
+</xs:choice>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TParty-52ABC-01">
+<xs:choice>
+<xs:sequence>
+<xs:element name="DebitCreditCode" minOccurs="0" type="STa_1-1_DebitCredit"/>
+<xs:element name="PartyIdentifier" minOccurs="0" type="STx_1-34"/>
+<xs:choice>
+<xs:element name="BicBei" type="STBic"/>
+<xs:element name="Location" minOccurs="0" type="STx_1-35"/>
+</xs:choice>
+</xs:sequence>
+<xs:element name="PartyId" type="STx_1-34"/>
+</xs:choice>
+
+</xs:complexType>
+<xs:complexType name="TParty-53ABD-01">
+<xs:sequence>
+<xs:element name="DebitCreditCode" minOccurs="0" type="STa_1-1_DebitCredit"/>
+<xs:element name="PartyIdentifier" minOccurs="0" type="STx_1-34"/>
+<xs:choice>
+<xs:element name="BicBei" type="STBic"/>
+<xs:element name="Location" type="STx_1-35"/>
+<xs:sequence>
+<xs:element name="NameAndAddress1" type="STx_1-35"/>
+<xs:element name="NameAndAddress2" minOccurs="0" type="STx_1-35"/>
+<xs:element name="NameAndAddress3" minOccurs="0" type="STx_1-35"/>
+<xs:element name="NameAndAddress4" minOccurs="0" type="STx_1-35"/>
+</xs:sequence>
+</xs:choice>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TParty-53AC-01">
+<xs:choice>
+<xs:sequence>
+<xs:element name="DebitCreditCode" minOccurs="0" type="STa_1-1_DebitCredit"/>
+<xs:element name="PartyIdentifier" minOccurs="0" type="STx_1-34"/>
+<xs:element name="BicBei" type="STBic"/>
+</xs:sequence>
+<xs:element name="Account" type="STx_1-34"/>
+</xs:choice>
+
+</xs:complexType>
+<xs:complexType name="TParty-53ADJ-01">
+<xs:choice>
+<xs:sequence>
+<xs:element name="DebitCreditCode" minOccurs="0" type="STa_1-1_DebitCredit"/>
+<xs:element name="PartyIdentifier" minOccurs="0" type="STx_1-34"/>
+<xs:choice>
+<xs:element name="BicBei" type="STBic"/>
+<xs:sequence>
+<xs:element name="NameAndAddress1" type="STx_1-35"/>
+<xs:element name="NameAndAddress2" minOccurs="0" type="STx_1-35"/>
+<xs:element name="NameAndAddress3" minOccurs="0" type="STx_1-35"/>
+<xs:element name="NameAndAddress4" minOccurs="0" type="STx_1-35"/>
+</xs:sequence>
+</xs:choice>
+</xs:sequence>
+<xs:sequence>
+<xs:element name="PartyIdentification1" type="STx_1-40"/>
+<xs:element name="PartyIdentification2" minOccurs="0" type="STx_1-40"/>
+<xs:element name="PartyIdentification3" minOccurs="0" type="STx_1-40"/>
+<xs:element name="PartyIdentification4" minOccurs="0" type="STx_1-40"/>
+<xs:element name="PartyIdentification5" minOccurs="0" type="STx_1-40"/>
+</xs:sequence>
+</xs:choice>
+
+</xs:complexType>
+<xs:complexType name="TParty-53B-01">
+<xs:sequence>
+<xs:element name="DebitCreditCode" minOccurs="0" type="STa_1-1_DebitCredit"/>
+<xs:element name="PartyIdentifier" minOccurs="0" type="STx_1-34"/>
+<xs:element name="Location" minOccurs="0" type="STx_1-35"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TParty-54A-01">
+<xs:sequence>
+<xs:element name="DebitCreditCode" minOccurs="0" type="STa_1-1_DebitCredit"/>
+<xs:element name="PartyIdentifier" minOccurs="0" type="STx_1-34"/>
+<xs:element name="BicBei" type="STBic"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TParty-54ABD-01">
+<xs:sequence>
+<xs:element name="DebitCreditCode" minOccurs="0" type="STa_1-1_DebitCredit"/>
+<xs:element name="PartyIdentifier" minOccurs="0" type="STx_1-34"/>
+<xs:choice>
+<xs:element name="BicBei" type="STBic"/>
+<xs:element name="Location" type="STx_1-35"/>
+<xs:sequence>
+<xs:element name="NameAndAddress1" type="STx_1-35"/>
+<xs:element name="NameAndAddress2" minOccurs="0" type="STx_1-35"/>
+<xs:element name="NameAndAddress3" minOccurs="0" type="STx_1-35"/>
+<xs:element name="NameAndAddress4" minOccurs="0" type="STx_1-35"/>
+</xs:sequence>
+</xs:choice>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TParty-55ABD-01">
+<xs:sequence>
+<xs:element name="DebitCreditCode" minOccurs="0" type="STa_1-1_DebitCredit"/>
+<xs:element name="PartyIdentifier" minOccurs="0" type="STx_1-34"/>
+<xs:choice>
+<xs:element name="BicBei" type="STBic"/>
+<xs:element name="Location" type="STx_1-35"/>
+<xs:sequence>
+<xs:element name="NameAndAddress1" type="STx_1-35"/>
+<xs:element name="NameAndAddress2" minOccurs="0" type="STx_1-35"/>
+<xs:element name="NameAndAddress3" minOccurs="0" type="STx_1-35"/>
+<xs:element name="NameAndAddress4" minOccurs="0" type="STx_1-35"/>
+</xs:sequence>
+</xs:choice>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TParty-56ACD-01">
+<xs:choice>
+<xs:sequence>
+<xs:element name="DebitCreditCode" minOccurs="0" type="STa_1-1_DebitCredit"/>
+<xs:element name="PartyIdentifier" minOccurs="0" type="STx_1-34"/>
+<xs:choice>
+<xs:element name="BicBei" type="STBic"/>
+<xs:sequence>
+<xs:element name="NameAndAddress1" type="STx_1-35"/>
+<xs:element name="NameAndAddress2" minOccurs="0" type="STx_1-35"/>
+<xs:element name="NameAndAddress3" minOccurs="0" type="STx_1-35"/>
+<xs:element name="NameAndAddress4" minOccurs="0" type="STx_1-35"/>
+</xs:sequence>
+</xs:choice>
+</xs:sequence>
+<xs:element name="PartyId" type="STx_1-34"/>
+</xs:choice>
+
+</xs:complexType>
+<xs:complexType name="TParty-56AD-01">
+<xs:sequence>
+<xs:element name="DebitCreditCode" minOccurs="0" type="STa_1-1_DebitCredit"/>
+<xs:element name="PartyIdentifier" minOccurs="0" type="STx_1-34"/>
+<xs:choice>
+<xs:element name="BicBei" type="STBic"/>
+<xs:sequence>
+<xs:element name="NameAndAddress1" type="STx_1-35"/>
+<xs:element name="NameAndAddress2" minOccurs="0" type="STx_1-35"/>
+<xs:element name="NameAndAddress3" minOccurs="0" type="STx_1-35"/>
+<xs:element name="NameAndAddress4" minOccurs="0" type="STx_1-35"/>
+</xs:sequence>
+</xs:choice>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TParty-56ADJ-01">
+<xs:choice>
+<xs:sequence>
+<xs:element name="DebitCreditCode" minOccurs="0" type="STa_1-1_DebitCredit"/>
+<xs:element name="PartyIdentifier" minOccurs="0" type="STx_1-34"/>
+<xs:choice>
+<xs:element name="BicBei" type="STBic"/>
+<xs:sequence>
+<xs:element name="NameAndAddress1" type="STx_1-35"/>
+<xs:element name="NameAndAddress2" minOccurs="0" type="STx_1-35"/>
+<xs:element name="NameAndAddress3" minOccurs="0" type="STx_1-35"/>
+<xs:element name="NameAndAddress4" minOccurs="0" type="STx_1-35"/>
+</xs:sequence>
+</xs:choice>
+</xs:sequence>
+<xs:sequence>
+<xs:element name="PartyIdentification1" type="STx_1-40"/>
+<xs:element name="PartyIdentification2" minOccurs="0" type="STx_1-40"/>
+<xs:element name="PartyIdentification3" minOccurs="0" type="STx_1-40"/>
+<xs:element name="PartyIdentification4" minOccurs="0" type="STx_1-40"/>
+<xs:element name="PartyIdentification5" minOccurs="0" type="STx_1-40"/>
+</xs:sequence>
+</xs:choice>
+
+</xs:complexType>
+<xs:complexType name="TParty-57ABCD-01">
+<xs:choice>
+<xs:sequence>
+<xs:element name="DebitCreditCode" minOccurs="0" type="STa_1-1_DebitCredit"/>
+<xs:element name="PartyIdentifier" minOccurs="0" type="STx_1-34"/>
+<xs:choice>
+<xs:element name="BicBei" type="STBic"/>
+<xs:element name="Location" type="STx_1-35"/>
+<xs:sequence>
+<xs:element name="NameAndAddress1" type="STx_1-35"/>
+<xs:element name="NameAndAddress2" minOccurs="0" type="STx_1-35"/>
+<xs:element name="NameAndAddress3" minOccurs="0" type="STx_1-35"/>
+<xs:element name="NameAndAddress4" minOccurs="0" type="STx_1-35"/>
+</xs:sequence>
+</xs:choice>
+</xs:sequence>
+<xs:element name="PartyId" type="STx_1-34"/>
+</xs:choice>
+
+</xs:complexType>
+<xs:complexType name="TParty-57ABD-01">
+<xs:sequence>
+<xs:element name="DebitCreditCode" minOccurs="0" type="STa_1-1_DebitCredit"/>
+<xs:element name="PartyIdentifier" minOccurs="0" type="STx_1-34"/>
+<xs:choice>
+<xs:element name="BicBei" type="STBic"/>
+<xs:element name="Location" type="STx_1-35"/>
+<xs:sequence>
+<xs:element name="NameAndAddress1" type="STx_1-35"/>
+<xs:element name="NameAndAddress2" minOccurs="0" type="STx_1-35"/>
+<xs:element name="NameAndAddress3" minOccurs="0" type="STx_1-35"/>
+<xs:element name="NameAndAddress4" minOccurs="0" type="STx_1-35"/>
+</xs:sequence>
+</xs:choice>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TParty-57AC-01">
+<xs:choice>
+<xs:sequence>
+<xs:element name="DebitCreditCode" minOccurs="0" type="STa_1-1_DebitCredit"/>
+<xs:element name="PartyIdentifier" minOccurs="0" type="STx_1-34"/>
+<xs:element name="BicBei" type="STBic"/>
+</xs:sequence>
+<xs:element name="PartyId" type="STx_1-34"/>
+</xs:choice>
+
+</xs:complexType>
+<xs:complexType name="TParty-57ACD-01">
+<xs:choice>
+<xs:sequence>
+<xs:element name="DebitCreditCode" minOccurs="0" type="STa_1-1_DebitCredit"/>
+<xs:element name="PartyIdentifier" minOccurs="0" type="STx_1-34"/>
+<xs:choice>
+<xs:element name="BicBei" type="STBic"/>
+<xs:sequence>
+<xs:element name="NameAndAddress1" type="STx_1-35"/>
+<xs:element name="NameAndAddress2" minOccurs="0" type="STx_1-35"/>
+<xs:element name="NameAndAddress3" minOccurs="0" type="STx_1-35"/>
+<xs:element name="NameAndAddress4" minOccurs="0" type="STx_1-35"/>
+</xs:sequence>
+</xs:choice>
+</xs:sequence>
+<xs:element name="PartyId" type="STx_1-34"/>
+</xs:choice>
+
+</xs:complexType>
+<xs:complexType name="TParty-57AD-01">
+<xs:sequence>
+<xs:element name="DebitCreditCode" minOccurs="0" type="STa_1-1_DebitCredit"/>
+<xs:element name="PartyIdentifier" minOccurs="0" type="STx_1-34"/>
+<xs:choice>
+<xs:element name="BicBei" type="STBic"/>
+<xs:sequence>
+<xs:element name="NameAndAddress1" type="STx_1-35"/>
+<xs:element name="NameAndAddress2" minOccurs="0" type="STx_1-35"/>
+<xs:element name="NameAndAddress3" minOccurs="0" type="STx_1-35"/>
+<xs:element name="NameAndAddress4" minOccurs="0" type="STx_1-35"/>
+</xs:sequence>
+</xs:choice>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TParty-57ADJ-01">
+<xs:choice>
+<xs:sequence>
+<xs:element name="DebitCreditCode" minOccurs="0" type="STa_1-1_DebitCredit"/>
+<xs:element name="PartyIdentifier" minOccurs="0" type="STx_1-34"/>
+<xs:choice>
+<xs:element name="BicBei" type="STBic"/>
+<xs:sequence>
+<xs:element name="NameAndAddress1" type="STx_1-35"/>
+<xs:element name="NameAndAddress2" minOccurs="0" type="STx_1-35"/>
+<xs:element name="NameAndAddress3" minOccurs="0" type="STx_1-35"/>
+<xs:element name="NameAndAddress4" minOccurs="0" type="STx_1-35"/>
+</xs:sequence>
+</xs:choice>
+</xs:sequence>
+<xs:sequence>
+<xs:element name="PartyIdentification1" type="STx_1-40"/>
+<xs:element name="PartyIdentification2" minOccurs="0" type="STx_1-40"/>
+<xs:element name="PartyIdentification3" minOccurs="0" type="STx_1-40"/>
+<xs:element name="PartyIdentification4" minOccurs="0" type="STx_1-40"/>
+<xs:element name="PartyIdentification5" minOccurs="0" type="STx_1-40"/>
+</xs:sequence>
+</xs:choice>
+
+</xs:complexType>
+<xs:complexType name="TParty-58AD-01">
+<xs:sequence>
+<xs:element name="DebitCreditCode" minOccurs="0" type="STa_1-1_DebitCredit"/>
+<xs:element name="PartyIdentifier" minOccurs="0" type="STx_1-34"/>
+<xs:choice>
+<xs:element name="BicBei" type="STBic"/>
+<xs:sequence>
+<xs:element name="NameAndAddress1" type="STx_1-35"/>
+<xs:element name="NameAndAddress2" minOccurs="0" type="STx_1-35"/>
+<xs:element name="NameAndAddress3" minOccurs="0" type="STx_1-35"/>
+<xs:element name="NameAndAddress4" minOccurs="0" type="STx_1-35"/>
+</xs:sequence>
+</xs:choice>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TParty-58ADJ-01">
+<xs:choice>
+<xs:sequence>
+<xs:element name="DebitCreditCode" minOccurs="0" type="STa_1-1_DebitCredit"/>
+<xs:element name="PartyIdentifier" minOccurs="0" type="STx_1-34"/>
+<xs:choice>
+<xs:element name="BicBei" type="STBicBei"/>
+<xs:sequence>
+<xs:element name="NameAndAddress1" type="STx_1-35"/>
+<xs:element name="NameAndAddress2" minOccurs="0" type="STx_1-35"/>
+<xs:element name="NameAndAddress3" minOccurs="0" type="STx_1-35"/>
+<xs:element name="NameAndAddress4" minOccurs="0" type="STx_1-35"/>
+</xs:sequence>
+</xs:choice>
+</xs:sequence>
+<xs:sequence>
+<xs:element name="PartyIdentification1" type="STx_1-40"/>
+<xs:element name="PartyIdentification2" minOccurs="0" type="STx_1-40"/>
+<xs:element name="PartyIdentification3" minOccurs="0" type="STx_1-40"/>
+<xs:element name="PartyIdentification4" minOccurs="0" type="STx_1-40"/>
+<xs:element name="PartyIdentification5" minOccurs="0" type="STx_1-40"/>
+</xs:sequence>
+</xs:choice>
+
+</xs:complexType>
+<xs:complexType name="TParty-59Ax-01">
+<xs:sequence>
+<xs:element name="Account" minOccurs="0" type="STx_1-34"/>
+<xs:choice>
+<xs:element name="BicBei" type="STBicBei"/>
+<xs:sequence>
+<xs:element name="NameAndAddress1" type="STx_1-35"/>
+<xs:element name="NameAndAddress2" minOccurs="0" type="STx_1-35"/>
+<xs:element name="NameAndAddress3" minOccurs="0" type="STx_1-35"/>
+<xs:element name="NameAndAddress4" minOccurs="0" type="STx_1-35"/>
+</xs:sequence>
+</xs:choice>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TParty-82ADJ-01">
+<xs:choice>
+<xs:sequence>
+<xs:element name="DebitCreditCode" minOccurs="0" type="STa_1-1_DebitCredit"/>
+<xs:element name="PartyIdentifier" minOccurs="0" type="STx_1-34"/>
+<xs:choice>
+<xs:element name="BicBei" type="STBicBei"/>
+<xs:sequence>
+<xs:element name="NameAndAddress1" type="STx_1-35"/>
+<xs:element name="NameAndAddress2" minOccurs="0" type="STx_1-35"/>
+<xs:element name="NameAndAddress3" minOccurs="0" type="STx_1-35"/>
+<xs:element name="NameAndAddress4" minOccurs="0" type="STx_1-35"/>
+</xs:sequence>
+</xs:choice>
+</xs:sequence>
+<xs:sequence>
+<xs:element name="PartyIdentification1" type="STx_1-40"/>
+<xs:element name="PartyIdentification2" minOccurs="0" type="STx_1-40"/>
+<xs:element name="PartyIdentification3" minOccurs="0" type="STx_1-40"/>
+<xs:element name="PartyIdentification4" minOccurs="0" type="STx_1-40"/>
+<xs:element name="PartyIdentification5" minOccurs="0" type="STx_1-40"/>
+</xs:sequence>
+</xs:choice>
+
+</xs:complexType>
+<xs:complexType name="TParty-83ADJ-01">
+<xs:choice>
+<xs:sequence>
+<xs:element name="DebitCreditCode" minOccurs="0" type="STa_1-1_DebitCredit"/>
+<xs:element name="PartyIdentifier" minOccurs="0" type="STx_1-34"/>
+<xs:choice>
+<xs:element name="BicBei" type="STBicBei"/>
+<xs:sequence>
+<xs:element name="NameAndAddress1" type="STx_1-35"/>
+<xs:element name="NameAndAddress2" minOccurs="0" type="STx_1-35"/>
+<xs:element name="NameAndAddress3" minOccurs="0" type="STx_1-35"/>
+<xs:element name="NameAndAddress4" minOccurs="0" type="STx_1-35"/>
+</xs:sequence>
+</xs:choice>
+</xs:sequence>
+<xs:sequence>
+<xs:element name="PartyIdentification1" type="STx_1-40"/>
+<xs:element name="PartyIdentification2" minOccurs="0" type="STx_1-40"/>
+<xs:element name="PartyIdentification3" minOccurs="0" type="STx_1-40"/>
+<xs:element name="PartyIdentification4" minOccurs="0" type="STx_1-40"/>
+<xs:element name="PartyIdentification5" minOccurs="0" type="STx_1-40"/>
+</xs:sequence>
+</xs:choice>
+
+</xs:complexType>
+<xs:complexType name="TParty-84ABDJ-01">
+<xs:choice>
+<xs:sequence>
+<xs:element name="DebitCreditCode" minOccurs="0" type="STa_1-1_DebitCredit"/>
+<xs:element name="PartyIdentifier" minOccurs="0" type="STx_1-34"/>
+<xs:choice>
+<xs:element name="BicBei" type="STBicBei"/>
+<xs:element name="Location" minOccurs="0" type="STx_1-35"/>
+<xs:sequence>
+<xs:element name="NameAndAddress1" type="STx_1-35"/>
+<xs:element name="NameAndAddress2" minOccurs="0" type="STx_1-35"/>
+<xs:element name="NameAndAddress3" minOccurs="0" type="STx_1-35"/>
+<xs:element name="NameAndAddress4" minOccurs="0" type="STx_1-35"/>
+</xs:sequence>
+</xs:choice>
+</xs:sequence>
+<xs:sequence>
+<xs:element name="PartyIdentification1" type="STx_1-40"/>
+<xs:element name="PartyIdentification2" minOccurs="0" type="STx_1-40"/>
+<xs:element name="PartyIdentification3" minOccurs="0" type="STx_1-40"/>
+<xs:element name="PartyIdentification4" minOccurs="0" type="STx_1-40"/>
+<xs:element name="PartyIdentification5" minOccurs="0" type="STx_1-40"/>
+</xs:sequence>
+</xs:choice>
+
+</xs:complexType>
+<xs:complexType name="TParty-85ABDJ-01">
+<xs:choice>
+<xs:sequence>
+<xs:element name="DebitCreditCode" minOccurs="0" type="STa_1-1_DebitCredit"/>
+<xs:element name="PartyIdentifier" minOccurs="0" type="STx_1-34"/>
+<xs:choice>
+<xs:element name="BicBei" type="STBicBei"/>
+<xs:element name="Location" minOccurs="0" type="STx_1-35"/>
+<xs:sequence>
+<xs:element name="NameAndAddress1" type="STx_1-35"/>
+<xs:element name="NameAndAddress2" minOccurs="0" type="STx_1-35"/>
+<xs:element name="NameAndAddress3" minOccurs="0" type="STx_1-35"/>
+<xs:element name="NameAndAddress4" minOccurs="0" type="STx_1-35"/>
+</xs:sequence>
+</xs:choice>
+</xs:sequence>
+<xs:sequence>
+<xs:element name="PartyIdentification1" type="STx_1-40"/>
+<xs:element name="PartyIdentification2" minOccurs="0" type="STx_1-40"/>
+<xs:element name="PartyIdentification3" minOccurs="0" type="STx_1-40"/>
+<xs:element name="PartyIdentification4" minOccurs="0" type="STx_1-40"/>
+<xs:element name="PartyIdentification5" minOccurs="0" type="STx_1-40"/>
+</xs:sequence>
+</xs:choice>
+
+</xs:complexType>
+<xs:complexType name="TParty-86ADJ-01">
+<xs:choice>
+<xs:sequence>
+<xs:element name="DebitCreditCode" minOccurs="0" type="STa_1-1_DebitCredit"/>
+<xs:element name="PartyIdentifier" minOccurs="0" type="STx_1-34"/>
+<xs:choice>
+<xs:element name="BicBei" type="STBic"/>
+<xs:sequence>
+<xs:element name="NameAndAddress1" type="STx_1-35"/>
+<xs:element name="NameAndAddress2" minOccurs="0" type="STx_1-35"/>
+<xs:element name="NameAndAddress3" minOccurs="0" type="STx_1-35"/>
+<xs:element name="NameAndAddress4" minOccurs="0" type="STx_1-35"/>
+</xs:sequence>
+</xs:choice>
+</xs:sequence>
+<xs:sequence>
+<xs:element name="PartyIdentification1" type="STx_1-40"/>
+<xs:element name="PartyIdentification2" minOccurs="0" type="STx_1-40"/>
+<xs:element name="PartyIdentification3" minOccurs="0" type="STx_1-40"/>
+<xs:element name="PartyIdentification4" minOccurs="0" type="STx_1-40"/>
+<xs:element name="PartyIdentification5" minOccurs="0" type="STx_1-40"/>
+</xs:sequence>
+</xs:choice>
+
+</xs:complexType>
+<xs:complexType name="TParty-87ADJ-01">
+<xs:choice>
+<xs:sequence>
+<xs:element name="DebitCreditCode" minOccurs="0" type="STa_1-1_DebitCredit"/>
+<xs:element name="PartyIdentifier" minOccurs="0" type="STx_1-34"/>
+<xs:choice>
+<xs:element name="BicBei" type="STBicBei"/>
+<xs:sequence>
+<xs:element name="NameAndAddress1" type="STx_1-35"/>
+<xs:element name="NameAndAddress2" minOccurs="0" type="STx_1-35"/>
+<xs:element name="NameAndAddress3" minOccurs="0" type="STx_1-35"/>
+<xs:element name="NameAndAddress4" minOccurs="0" type="STx_1-35"/>
+</xs:sequence>
+</xs:choice>
+</xs:sequence>
+<xs:sequence>
+<xs:element name="PartyIdentification1" type="STx_1-40"/>
+<xs:element name="PartyIdentification2" minOccurs="0" type="STx_1-40"/>
+<xs:element name="PartyIdentification3" minOccurs="0" type="STx_1-40"/>
+<xs:element name="PartyIdentification4" minOccurs="0" type="STx_1-40"/>
+<xs:element name="PartyIdentification5" minOccurs="0" type="STx_1-40"/>
+</xs:sequence>
+</xs:choice>
+
+</xs:complexType>
+<xs:complexType name="TParty-88ADJ-01">
+<xs:choice>
+<xs:sequence>
+<xs:element name="DebitCreditCode" minOccurs="0" type="STa_1-1_DebitCredit"/>
+<xs:element name="PartyIdentifier" minOccurs="0" type="STx_1-34"/>
+<xs:choice>
+<xs:element name="BicBei" type="STBicBei"/>
+<xs:sequence>
+<xs:element name="NameAndAddress1" type="STx_1-35"/>
+<xs:element name="NameAndAddress2" minOccurs="0" type="STx_1-35"/>
+<xs:element name="NameAndAddress3" minOccurs="0" type="STx_1-35"/>
+<xs:element name="NameAndAddress4" minOccurs="0" type="STx_1-35"/>
+</xs:sequence>
+</xs:choice>
+</xs:sequence>
+<xs:sequence>
+<xs:element name="PartyIdentification1" type="STx_1-40"/>
+<xs:element name="PartyIdentification2" minOccurs="0" type="STx_1-40"/>
+<xs:element name="PartyIdentification3" minOccurs="0" type="STx_1-40"/>
+<xs:element name="PartyIdentification4" minOccurs="0" type="STx_1-40"/>
+<xs:element name="PartyIdentification5" minOccurs="0" type="STx_1-40"/>
+</xs:sequence>
+</xs:choice>
+
+</xs:complexType>
+<xs:complexType name="TParty-95CPQ-01">
+<xs:choice>
+<xs:element name="CountryCode" type="STa_2-2"/>
+<xs:element name="BicBei" type="STBicBei"/>
+<xs:sequence>
+<xs:element name="NameAndAddress1" type="STx_1-35_NoBeginEndOrDoubleSlashesAllowed"/>
+<xs:element name="NameAndAddress2" minOccurs="0" type="STx_1-35_NoBeginEndOrDoubleSlashesAllowed"/>
+<xs:element name="NameAndAddress3" minOccurs="0" type="STx_1-35_NoBeginEndOrDoubleSlashesAllowed"/>
+<xs:element name="NameAndAddress4" minOccurs="0" type="STx_1-35_NoBeginEndOrDoubleSlashesAllowed"/>
+</xs:sequence>
+</xs:choice>
+
+</xs:complexType>
+<xs:complexType name="TParty-95CPQR-01">
+<xs:choice>
+<xs:element name="BicBei" type="STBicBei"/>
+<xs:sequence>
+<xs:element name="DataSourceScheme" type="STc_1-8"/>
+<xs:element name="ProprietaryCode" type="STx_1-34_NoBeginEndOrDoubleSlashesAllowed"/>
+</xs:sequence>
+<xs:sequence>
+<xs:element name="NameAndAddress1" type="STx_1-35_NoBeginEndOrDoubleSlashesAllowed"/>
+<xs:element name="NameAndAddress2" minOccurs="0" type="STx_1-35_NoBeginEndOrDoubleSlashesAllowed"/>
+<xs:element name="NameAndAddress3" minOccurs="0" type="STx_1-35_NoBeginEndOrDoubleSlashesAllowed"/>
+<xs:element name="NameAndAddress4" minOccurs="0" type="STx_1-35_NoBeginEndOrDoubleSlashesAllowed"/>
+</xs:sequence>
+<xs:element name="CountryCode" type="STa_2-2"/>
+</xs:choice>
+
+</xs:complexType>
+<xs:complexType name="TParty-95PQR-01">
+<xs:choice>
+<xs:element name="BicBei" type="STBicBei"/>
+<xs:sequence>
+<xs:element name="DataSourceScheme" type="STc_1-8"/>
+<xs:element name="ProprietaryCode" type="STx_1-34_NoBeginEndOrDoubleSlashesAllowed"/>
+</xs:sequence>
+<xs:sequence>
+<xs:element name="NameAndAddress1" type="STx_1-35_NoBeginEndOrDoubleSlashesAllowed"/>
+<xs:element name="NameAndAddress2" minOccurs="0" type="STx_1-35_NoBeginEndOrDoubleSlashesAllowed"/>
+<xs:element name="NameAndAddress3" minOccurs="0" type="STx_1-35_NoBeginEndOrDoubleSlashesAllowed"/>
+<xs:element name="NameAndAddress4" minOccurs="0" type="STx_1-35_NoBeginEndOrDoubleSlashesAllowed"/>
+</xs:sequence>
+</xs:choice>
+
+</xs:complexType>
+<xs:complexType name="TParty-95PQR-02">
+<xs:choice>
+<xs:element name="BicBei" type="STBic"/>
+<xs:sequence>
+<xs:element name="DataSourceScheme" type="STc_1-8"/>
+<xs:element name="ProprietaryCode" type="STx_1-34_NoBeginEndOrDoubleSlashesAllowed"/>
+</xs:sequence>
+<xs:sequence>
+<xs:element name="NameAndAddress1" type="STx_1-35_NoBeginEndOrDoubleSlashesAllowed"/>
+<xs:element name="NameAndAddress2" minOccurs="0" type="STx_1-35_NoBeginEndOrDoubleSlashesAllowed"/>
+<xs:element name="NameAndAddress3" minOccurs="0" type="STx_1-35_NoBeginEndOrDoubleSlashesAllowed"/>
+<xs:element name="NameAndAddress4" minOccurs="0" type="STx_1-35_NoBeginEndOrDoubleSlashesAllowed"/>
+</xs:sequence>
+</xs:choice>
+
+</xs:complexType>
+<xs:complexType name="TParty-95PR-01">
+<xs:choice>
+<xs:element name="BicBei" type="STBicBei"/>
+<xs:sequence>
+<xs:element name="DataSourceScheme" type="STc_1-8"/>
+<xs:element name="ProprietaryCode" type="STx_1-34_NoBeginEndOrDoubleSlashesAllowed"/>
+</xs:sequence>
+</xs:choice>
+
+</xs:complexType>
+<xs:complexType name="TParty-95PRV-01">
+<xs:choice>
+<xs:element name="BicBei" type="STBicBei"/>
+<xs:sequence>
+<xs:element name="DataSourceScheme" type="STc_1-8"/>
+<xs:element name="ProprietaryCode" type="STx_1-34"/>
+</xs:sequence>
+<xs:sequence>
+<xs:element name="NameAndAddress1" type="STx_1-35"/>
+<xs:element name="NameAndAddress2" minOccurs="0" type="STx_1-35"/>
+<xs:element name="NameAndAddress3" minOccurs="0" type="STx_1-35"/>
+<xs:element name="NameAndAddress4" minOccurs="0" type="STx_1-35"/>
+<xs:element name="NameAndAddress5" minOccurs="0" type="STx_1-35"/>
+<xs:element name="NameAndAddress6" minOccurs="0" type="STx_1-35"/>
+<xs:element name="NameAndAddress7" minOccurs="0" type="STx_1-35"/>
+<xs:element name="NameAndAddress8" minOccurs="0" type="STx_1-35"/>
+<xs:element name="NameAndAddress9" minOccurs="0" type="STx_1-35"/>
+<xs:element name="NameAndAddress10" minOccurs="0" type="STx_1-35"/>
+</xs:sequence>
+</xs:choice>
+
+</xs:complexType>
+<xs:complexType name="TParty-95R-01">
+<xs:sequence>
+<xs:element name="DataSourceScheme" type="STc_1-8"/>
+<xs:element name="ProprietaryCode" type="STx_1-34_NoBeginEndOrDoubleSlashesAllowed"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TParty-95S-01">
+<xs:sequence>
+<xs:element name="DataSourceScheme" minOccurs="0" type="STc_1-8"/>
+<xs:element name="TypeOfID" type="STc_4-4"/>
+<xs:element name="CountryCode" type="STa_2-2"/>
+<xs:element name="AlternateID" type="STx_1-30_NoBeginEndOrDoubleSlashesAllowed"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TPeriod-38A-01">
+<xs:sequence>
+<xs:element name="Period" type="STn_1-3"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TPeriod-69AB-01">
+<xs:choice>
+<xs:sequence>
+<xs:element name="DateOnlyFrom" type="STn_Date_YYYYMMDD"/>
+<xs:element name="DateOnlyTo" type="STn_Date_YYYYMMDD"/>
+</xs:sequence>
+<xs:sequence>
+<xs:element name="DateFrom" type="STn_Date_YYYYMMDD"/>
+<xs:element name="TimeFrom" type="STn_Time_HHMMSS"/>
+<xs:element name="DateTo" type="STn_Date_YYYYMMDD"/>
+<xs:element name="TimeTo" type="STn_Time_HHMMSS"/>
+</xs:sequence>
+</xs:choice>
+
+</xs:complexType>
+<xs:complexType name="TPeriod-69ABCDEF-01">
+<xs:choice>
+<xs:sequence>
+<xs:element name="DateOnlyFrom" type="STn_Date_YYYYMMDD"/>
+<xs:choice>
+<xs:element name="DateOnlyTo" type="STn_Date_YYYYMMDD"/>
+<xs:element name="DateOnlyDateCodeTo" type="STc_4-4"/>
+</xs:choice>
+</xs:sequence>
+<xs:sequence>
+<xs:element name="DateFrom" type="STn_Date_YYYYMMDD"/>
+<xs:element name="TimeFrom" type="STn_Time_HHMMSS"/>
+<xs:choice>
+<xs:sequence>
+<xs:element name="DateTo" type="STn_Date_YYYYMMDD"/>
+<xs:element name="TimeTo" type="STn_Time_HHMMSS"/>
+</xs:sequence>
+<xs:element name="DateCodeTo" type="STc_4-4"/>
+</xs:choice>
+</xs:sequence>
+<xs:sequence>
+<xs:element name="DateCode" type="STc_4-4"/>
+<xs:choice>
+<xs:element name="DateOnly" type="STn_Date_YYYYMMDD"/>
+<xs:sequence>
+<xs:element name="Date" type="STn_Date_YYYYMMDD"/>
+<xs:element name="Time" type="STn_Time_HHMMSS"/>
+</xs:sequence>
+</xs:choice>
+</xs:sequence>
+</xs:choice>
+
+</xs:complexType>
+<xs:complexType name="TPeriod-69ABCDEFJ-01">
+<xs:choice>
+<xs:sequence>
+<xs:element name="DateOnlyFrom" type="STn_Date_YYYYMMDD"/>
+<xs:choice>
+<xs:element name="DateOnlyTo" type="STn_Date_YYYYMMDD"/>
+<xs:element name="DateOnlyDateCodeTo" type="STc_4-4"/>
+</xs:choice>
+</xs:sequence>
+<xs:sequence>
+<xs:element name="DateFrom" type="STn_Date_YYYYMMDD"/>
+<xs:element name="TimeFrom" type="STn_Time_HHMMSS"/>
+<xs:choice>
+<xs:sequence>
+<xs:element name="DateTo" type="STn_Date_YYYYMMDD"/>
+<xs:element name="TimeTo" type="STn_Time_HHMMSS"/>
+</xs:sequence>
+<xs:element name="DateCodeTo" type="STc_4-4"/>
+</xs:choice>
+</xs:sequence>
+<xs:sequence>
+<xs:element name="DateCode" type="STc_4-4"/>
+<xs:choice minOccurs="0">
+<xs:element name="DateOnly" type="STn_Date_YYYYMMDD"/>
+<xs:sequence>
+<xs:element name="Date" type="STn_Date_YYYYMMDD"/>
+<xs:element name="Time" type="STn_Time_HHMMSS"/>
+</xs:sequence>
+</xs:choice>
+</xs:sequence>
+</xs:choice>
+
+</xs:complexType>
+<xs:complexType name="TPlace-94B-01">
+<xs:sequence>
+<xs:element name="DataSourceScheme" minOccurs="0" type="STc_1-8"/>
+<xs:element name="PlaceCode" type="STc_4-4"/>
+<xs:element name="Narrative" minOccurs="0" type="STx_1-30_NoBeginEndOrDoubleSlashesAllowed"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TPlace-94BCF-01">
+<xs:choice>
+<xs:sequence>
+<xs:element name="DataSourceScheme" minOccurs="0" type="STc_1-8"/>
+<xs:element name="PlaceCode" type="STc_4-4"/>
+<xs:element name="Narrative" minOccurs="0" type="STx_1-30_NoBeginEndOrDoubleSlashesAllowed"/>
+</xs:sequence>
+<xs:element name="Country" type="STa_2-2"/>
+<xs:sequence>
+<xs:element name="Place" type="STc_4-4"/>
+<xs:element name="BicBei" type="STBicBei"/>
+</xs:sequence>
+</xs:choice>
+
+</xs:complexType>
+<xs:complexType name="TPlace-94C-01">
+<xs:sequence>
+<xs:element name="Country" type="STa_2-2"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TPlace-94D-01">
+<xs:sequence>
+<xs:element name="CountryCode" minOccurs="0" type="STa_2-2"/>
+<xs:element name="Place" type="STx_1-35_NoBeginEndOrDoubleSlashesAllowed"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TPlace-94G-01">
+<xs:sequence>
+<xs:element name="Address1" type="STx_1-35"/>
+<xs:element name="Address2" minOccurs="0" type="STx_1-35"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TPlace-94H-01">
+<xs:sequence>
+<xs:element name="BicBei" type="STBicBei"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TPrice-90AB-01">
+<xs:sequence>
+<xs:choice>
+<xs:element name="PercentageTypeCode" type="STc_4-4"/>
+<xs:sequence>
+<xs:element name="AmountTypeCode" type="STc_4-4"/>
+<xs:element name="CurrencyCode" type="STa_3-3"/>
+</xs:sequence>
+</xs:choice>
+<xs:element name="Price" type="STd_1-15_NumberOrAmount_SignLess"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TPrice-90ABE-01">
+<xs:choice>
+<xs:sequence>
+<xs:choice>
+<xs:element name="PercentageTypeCode" type="STc_4-4"/>
+<xs:sequence>
+<xs:element name="AmountTypeCode" type="STc_4-4"/>
+<xs:element name="CurrencyCode" type="STa_3-3"/>
+</xs:sequence>
+</xs:choice>
+<xs:element name="Price" type="STd_1-15_NumberOrAmount_SignLess"/>
+</xs:sequence>
+<xs:element name="PriceCode" type="STc_4-4"/>
+</xs:choice>
+
+</xs:complexType>
+<xs:complexType name="TPrice-90ABEFJ-01">
+<xs:choice>
+<xs:sequence>
+<xs:element name="PercentageTypeCode" type="STc_4-4"/>
+<xs:element name="Percentage" type="STd_1-15_NumberOrAmount_SignLess"/>
+</xs:sequence>
+<xs:sequence>
+<xs:element name="AmountTypeCode" type="STc_4-4"/>
+<xs:element name="CurrencyCode" type="STa_3-3"/>
+<xs:choice>
+<xs:element name="Price" type="STd_1-15_NumberOrAmount_SignLess"/>
+<xs:sequence>
+<xs:element name="Amount" type="STd_1-15_NumberOrAmount_SignLess"/>
+<xs:choice>
+<xs:sequence>
+<xs:element name="QuantityTypeCode" type="STc_4-4"/>
+<xs:element name="Quantity" type="STd_1-15_NumberOrAmount_SignLess"/>
+</xs:sequence>
+<xs:sequence>
+<xs:element name="SecondCurrencyCode" type="STa_3-3"/>
+<xs:element name="SecondAmount" type="STd_1-15_NumberOrAmount_SignLess"/>
+</xs:sequence>
+</xs:choice>
+</xs:sequence>
+</xs:choice>
+</xs:sequence>
+<xs:element name="PriceCode" type="STc_4-4"/>
+</xs:choice>
+
+</xs:complexType>
+<xs:complexType name="TPrice-90ABEK-01">
+<xs:choice>
+<xs:sequence>
+<xs:choice>
+<xs:element name="PercentageTypeCode" type="STc_4-4"/>
+<xs:sequence>
+<xs:element name="AmountTypeCode" type="STc_4-4"/>
+<xs:element name="CurrencyCode" type="STa_3-3"/>
+</xs:sequence>
+</xs:choice>
+<xs:element name="Price" type="STd_1-15_NumberOrAmount_SignLess"/>
+</xs:sequence>
+<xs:element name="PriceCode" type="STc_4-4"/>
+<xs:element name="IndexPoints" type="STd_1-15_NumberOrAmount_SignLess"/>
+</xs:choice>
+
+</xs:complexType>
+<xs:complexType name="TPrice-90ABFJ-01">
+<xs:choice>
+<xs:sequence>
+<xs:element name="PercentageTypeCode" type="STc_4-4"/>
+<xs:element name="Percentage" type="STd_1-15_NumberOrAmount_SignLess"/>
+</xs:sequence>
+<xs:sequence>
+<xs:element name="AmountTypeCode" type="STc_4-4"/>
+<xs:element name="CurrencyCode" type="STa_3-3"/>
+<xs:choice>
+<xs:element name="Price" type="STd_1-15_NumberOrAmount_SignLess"/>
+<xs:sequence>
+<xs:element name="Amount" type="STd_1-15_NumberOrAmount_SignLess"/>
+<xs:choice>
+<xs:sequence>
+<xs:element name="QuantityTypeCode" type="STc_4-4"/>
+<xs:element name="Quantity" type="STd_1-15_NumberOrAmount_SignLess"/>
+</xs:sequence>
+<xs:sequence>
+<xs:element name="SecondCurrencyCode" type="STa_3-3"/>
+<xs:element name="SecondAmount" type="STd_1-15_NumberOrAmount_SignLess"/>
+</xs:sequence>
+</xs:choice>
+</xs:sequence>
+</xs:choice>
+</xs:sequence>
+</xs:choice>
+
+</xs:complexType>
+<xs:complexType name="TPrice-90ABK-01">
+<xs:choice>
+<xs:sequence>
+<xs:choice>
+<xs:element name="PercentageTypeCode" type="STc_4-4"/>
+<xs:sequence>
+<xs:element name="AmountTypeCode" type="STc_4-4"/>
+<xs:element name="CurrencyCode" type="STa_3-3"/>
+</xs:sequence>
+</xs:choice>
+<xs:element name="Price" type="STd_1-15_NumberOrAmount_SignLess"/>
+</xs:sequence>
+<xs:element name="IndexPoints" type="STd_1-15_NumberOrAmount_SignLess"/>
+</xs:choice>
+
+</xs:complexType>
+<xs:complexType name="TPrice-90B-01">
+<xs:sequence>
+<xs:element name="AmountTypeCode" type="STc_4-4"/>
+<xs:element name="CurrencyCode" type="STa_3-3"/>
+<xs:element name="Price" type="STd_1-15_NumberOrAmount_SignLess"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TQuantityOfFinancialInstrument-36B-01">
+<xs:sequence>
+<xs:element name="QuantityTypeCode" type="STc_4-4"/>
+<xs:element name="Quantity" type="STd_1-15_NumberOrAmount_SignLess"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TQuantityOfFinancialInstrument-36BC-01">
+<xs:choice>
+<xs:sequence>
+<xs:element name="QuantityTypeCode" type="STc_4-4"/>
+<xs:element name="Quantity" type="STd_1-15_NumberOrAmount_SignLess"/>
+</xs:sequence>
+<xs:element name="QuantityCode" type="STc_4-4"/>
+</xs:choice>
+
+</xs:complexType>
+<xs:complexType name="TQuantityOfFinancialInstrument-36BE-01">
+<xs:sequence>
+<xs:element name="QuantityTypeCode" type="STc_4-4"/>
+<xs:choice>
+<xs:element name="SignedQuantity" type="STd_1-15_NumberOrAmount"/>
+<xs:element name="Quantity" type="STd_1-15_NumberOrAmount_SignLess"/>
+</xs:choice>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TQueries-75x-01">
+<xs:sequence>
+<xs:element name="Narrative1" type="STx_1-35"/>
+<xs:element name="Narrative2" minOccurs="0" type="STx_1-35"/>
+<xs:element name="Narrative3" minOccurs="0" type="STx_1-35"/>
+<xs:element name="Narrative4" minOccurs="0" type="STx_1-35"/>
+<xs:element name="Narrative5" minOccurs="0" type="STx_1-35"/>
+<xs:element name="Narrative6" minOccurs="0" type="STx_1-35"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TRate-36x-01">
+<xs:sequence>
+<xs:element name="Rate" type="STd_1-12_NumberOrAmount_SignLess"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TRate-37G-01">
+<xs:sequence>
+<xs:element name="Rate" type="STd_1-12_NumberOrAmount"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TRate-37K-01">
+<xs:sequence>
+<xs:element name="CurrencyCode" type="STa_3-3"/>
+<xs:element name="Rate" type="STd_1-12_NumberOrAmount_SignLess"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TRate-37L-01">
+<xs:sequence>
+<xs:element name="Rate" type="STd_1-12_NumberOrAmount_SignLess"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TRate-92A-01">
+<xs:sequence>
+<xs:element name="Rate" type="STd_1-15_NumberOrAmount"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TRate-92AB-01">
+<xs:choice>
+<xs:sequence>
+<xs:element name="FirstCurrencyCode" type="STa_3-3"/>
+<xs:element name="SecondCurrencyCode" type="STa_3-3"/>
+<xs:element name="SignlessRate" type="STd_1-15_NumberOrAmount_SignLess"/>
+</xs:sequence>
+<xs:element name="Rate" type="STd_1-15_NumberOrAmount"/>
+</xs:choice>
+
+</xs:complexType>
+<xs:complexType name="TRate-92ABK-01">
+<xs:choice>
+<xs:sequence>
+<xs:element name="FirstCurrencyCode" type="STa_3-3"/>
+<xs:element name="SecondCurrencyCode" type="STa_3-3"/>
+<xs:element name="SignlessRate" type="STd_1-15_NumberOrAmount_SignLess"/>
+</xs:sequence>
+<xs:element name="Rate" type="STd_1-15_NumberOrAmount"/>
+<xs:element name="RateTypeCode" type="STc_4-4"/>
+</xs:choice>
+
+</xs:complexType>
+<xs:complexType name="TRate-92AC-01">
+<xs:choice>
+<xs:element name="Rate" type="STd_1-15_NumberOrAmount"/>
+<xs:sequence>
+<xs:element name="DataSourceScheme" minOccurs="0" type="STc_1-8"/>
+<xs:element name="RateName" type="STx_1-24"/>
+</xs:sequence>
+</xs:choice>
+
+</xs:complexType>
+<xs:complexType name="TRate-92AEFJ-01">
+<xs:sequence>
+<xs:element name="DataSourceScheme" minOccurs="0" type="STc_1-8"/>
+<xs:element name="RateTypeCode" minOccurs="0" type="STc_4-4"/>
+<xs:choice minOccurs="0">
+<xs:sequence>
+<xs:element name="Rate" type="STd_1-15_NumberOrAmount"/>
+</xs:sequence>
+<xs:sequence>
+<xs:element name="CurrencyCode" type="STa_3-3"/>
+<xs:element name="Amount" type="STd_1-15_NumberOrAmount_SignLess"/>
+</xs:sequence>
+</xs:choice>
+<xs:element name="RateStatus" minOccurs="0" type="STc_4-4"/>
+</xs:sequence>
+
+
+</xs:complexType>
+<xs:complexType name="TRate-92AEFJK-01">
+<xs:sequence>
+<xs:element name="DataSourceScheme" minOccurs="0" type="STc_1-8"/>
+<xs:element name="RateTypeCode" minOccurs="0" type="STc_4-4"/>
+<xs:choice minOccurs="0">
+<xs:sequence>
+<xs:element name="Rate" type="STd_1-15_NumberOrAmount"/>
+</xs:sequence>
+<xs:sequence>
+<xs:element name="CurrencyCode" type="STa_3-3"/>
+<xs:element name="Amount" type="STd_1-15_NumberOrAmount_SignLess"/>
+</xs:sequence>
+</xs:choice>
+<xs:element name="RateStatus" minOccurs="0" type="STc_4-4"/>
+</xs:sequence>
+
+
+</xs:complexType>
+<xs:complexType name="TRate-92AF-01">
+<xs:choice>
+<xs:element name="Rate" type="STd_1-15_NumberOrAmount"/>
+<xs:sequence>
+<xs:element name="CurrencyCode" type="STa_3-3"/>
+<xs:element name="Amount" type="STd_1-15_NumberOrAmount_SignLess"/>
+</xs:sequence>
+</xs:choice>
+
+</xs:complexType>
+<xs:complexType name="TRate-92AFJ-01">
+<xs:choice>
+<xs:element name="Rate" type="STd_1-15_NumberOrAmount"/>
+<xs:sequence>
+<xs:element name="DataSourceScheme" minOccurs="0" type="STc_1-8"/>
+<xs:element name="RateTypeCode" minOccurs="0" type="STc_4-4"/>
+<xs:sequence minOccurs="0">
+<xs:element name="CurrencyCode" type="STa_3-3"/>
+<xs:element name="Amount" type="STd_1-15_NumberOrAmount_SignLess"/>
+</xs:sequence>
+</xs:sequence>
+</xs:choice>
+
+
+</xs:complexType>
+<xs:complexType name="TRate-92AFJK-01">
+<xs:choice>
+<xs:element name="Rate" type="STd_1-15_NumberOrAmount"/>
+<xs:sequence>
+<xs:element name="DataSourceScheme" minOccurs="0" type="STc_1-8"/>
+<xs:element name="RateTypeCode" minOccurs="0" type="STc_4-4"/>
+<xs:sequence minOccurs="0">
+<xs:element name="CurrencyCode" type="STa_3-3"/>
+<xs:element name="Amount" type="STd_1-15_NumberOrAmount_SignLess"/>
+</xs:sequence>
+</xs:sequence>
+</xs:choice>
+
+
+</xs:complexType>
+<xs:complexType name="TRate-92AFK-01">
+<xs:choice>
+<xs:element name="Rate" type="STd_1-15_NumberOrAmount"/>
+<xs:sequence>
+<xs:element name="CurrencyCode" type="STa_3-3"/>
+<xs:element name="Amount" type="STd_1-15_NumberOrAmount_SignLess"/>
+</xs:sequence>
+<xs:element name="RateTypeCode" type="STc_4-4"/>
+</xs:choice>
+
+</xs:complexType>
+<xs:complexType name="TRate-92AK-01">
+<xs:choice>
+<xs:element name="Rate" type="STd_1-15_NumberOrAmount"/>
+<xs:element name="RateTypeCode" type="STc_4-4"/>
+</xs:choice>
+
+</xs:complexType>
+<xs:complexType name="TRate-92AKM-01">
+<xs:choice>
+<xs:element name="Rate" type="STd_1-15_NumberOrAmount"/>
+<xs:element name="RateTypeCode" type="STc_4-4"/>
+<xs:sequence>
+<xs:element name="CurrencyCode" type="STa_3-3"/>
+<xs:element name="Amount" type="STd_1-15_NumberOrAmount_SignLess"/>
+<xs:element name="Quantity" type="STd_1-15_NumberOrAmount_SignLess"/>
+</xs:sequence>
+</xs:choice>
+
+</xs:complexType>
+<xs:complexType name="TRate-92B-01">
+<xs:sequence>
+<xs:element name="FirstCurrencyCode" type="STa_3-3"/>
+<xs:element name="SecondCurrencyCode" type="STa_3-3"/>
+<xs:element name="SignlessRate" type="STd_1-15_NumberOrAmount_SignLess"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TRate-92C-01">
+<xs:sequence>
+<xs:element name="DataSourceScheme" minOccurs="0" type="STc_1-8"/>
+<xs:element name="RateName" type="STx_1-24"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TRate-92D-01">
+<xs:sequence>
+<xs:element name="Quantity1" type="STd_1-15_NumberOrAmount_SignLess"/>
+<xs:element name="Quantity2" type="STd_1-15_NumberOrAmount_SignLess"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TRate-92DK-01">
+<xs:choice>
+<xs:sequence>
+<xs:element name="Quantity1" type="STd_1-15_NumberOrAmount_SignLess"/>
+<xs:element name="Quantity2" type="STd_1-15_NumberOrAmount_SignLess"/>
+</xs:sequence>
+<xs:element name="RateTypeCode" type="STc_4-4"/>
+</xs:choice>
+
+</xs:complexType>
+<xs:complexType name="TRate-92DKL-01">
+<xs:choice>
+<xs:sequence>
+<xs:element name="Quantity1" type="STd_1-15_NumberOrAmount_SignLess"/>
+<xs:element name="Quantity2" type="STd_1-15_NumberOrAmount_SignLess"/>
+</xs:sequence>
+<xs:element name="RateTypeCode" type="STc_4-4"/>
+<xs:sequence>
+<xs:element name="FirstCurrencyCode" type="STa_3-3"/>
+<xs:element name="FirstAmount" type="STd_1-15_NumberOrAmount_SignLess"/>
+<xs:element name="SecondCurrencyCode" type="STa_3-3"/>
+<xs:element name="SecondAmount" type="STd_1-15_NumberOrAmount_SignLess"/>
+</xs:sequence>
+</xs:choice>
+
+</xs:complexType>
+<xs:complexType name="TRate-92DKLMN-01">
+<xs:choice>
+<xs:sequence>
+<xs:choice>
+<xs:element name="Quantity1" type="STd_1-15_NumberOrAmount_SignLess"/>
+<xs:sequence>
+<xs:element name="FirstCurrencyCode" type="STa_3-3"/>
+<xs:element name="FirstAmount" type="STd_1-15_NumberOrAmount_SignLess"/>
+</xs:sequence>
+</xs:choice>
+<xs:choice>
+<xs:element name="Quantity2" type="STd_1-15_NumberOrAmount_SignLess"/>
+<xs:sequence>
+<xs:element name="SecondCurrencyCode" type="STa_3-3"/>
+<xs:element name="SecondAmount" type="STd_1-15_NumberOrAmount_SignLess"/>
+</xs:sequence>
+</xs:choice>
+</xs:sequence>
+<xs:element name="RateTypeCode" type="STc_4-4"/>
+</xs:choice>
+
+</xs:complexType>
+<xs:complexType name="TRate-92DL-01">
+<xs:choice>
+<xs:sequence>
+<xs:element name="Quantity1" type="STd_1-15_NumberOrAmount_SignLess"/>
+<xs:element name="Quantity2" type="STd_1-15_NumberOrAmount_SignLess"/>
+</xs:sequence>
+<xs:sequence>
+<xs:element name="FirstCurrencyCode" type="STa_3-3"/>
+<xs:element name="FirstAmount" type="STd_1-15_NumberOrAmount_SignLess"/>
+<xs:element name="SecondCurrencyCode" type="STa_3-3"/>
+<xs:element name="SecondAmount" type="STd_1-15_NumberOrAmount_SignLess"/>
+</xs:sequence>
+</xs:choice>
+
+</xs:complexType>
+<xs:complexType name="TRate-92DLMN-01">
+<xs:sequence>
+<xs:choice>
+<xs:element name="Quantity1" type="STd_1-15_NumberOrAmount_SignLess"/>
+<xs:sequence>
+<xs:element name="FirstCurrencyCode" type="STa_3-3"/>
+<xs:element name="FirstAmount" type="STd_1-15_NumberOrAmount_SignLess"/>
+</xs:sequence>
+</xs:choice>
+<xs:choice>
+<xs:element name="Quantity2" type="STd_1-15_NumberOrAmount_SignLess"/>
+<xs:sequence>
+<xs:element name="SecondCurrencyCode" type="STa_3-3"/>
+<xs:element name="SecondAmount" type="STd_1-15_NumberOrAmount_SignLess"/>
+</xs:sequence>
+</xs:choice>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TRate-92EJ-01">
+<xs:sequence>
+<xs:element name="DataSourceScheme" minOccurs="0" type="STc_1-8"/>
+<xs:element name="RateTypeCode" type="STc_4-4"/>
+<xs:choice>
+<xs:sequence>
+<xs:element name="Rate" type="STd_1-15_NumberOrAmount"/>
+</xs:sequence>
+<xs:sequence>
+<xs:element name="CurrencyCode" type="STa_3-3"/>
+<xs:element name="Amount" type="STd_1-15_NumberOrAmount_SignLess"/>
+</xs:sequence>
+</xs:choice>
+<xs:element name="RateStatus" minOccurs="0" type="STc_4-4"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TRate-92F-01">
+<xs:sequence>
+<xs:element name="CurrencyCode" type="STa_3-3"/>
+<xs:element name="Amount" type="STd_1-15_NumberOrAmount_SignLess"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TRate-92FJ-01">
+<xs:sequence>
+<xs:element name="DataSourceScheme" minOccurs="0" type="STc_1-8"/>
+<xs:element name="RateTypeCode" minOccurs="0" type="STc_4-4"/>
+<xs:sequence minOccurs="0">
+<xs:element name="CurrencyCode" type="STa_3-3"/>
+<xs:element name="Amount" type="STd_1-15_NumberOrAmount_SignLess"/>
+</xs:sequence>
+<xs:element name="RateStatus" minOccurs="0" type="STc_4-4"/>
+</xs:sequence>
+
+
+</xs:complexType>
+<xs:complexType name="TRate-92FJK-01">
+<xs:sequence>
+<xs:element name="DataSourceScheme" minOccurs="0" type="STc_1-8"/>
+<xs:element name="RateTypeCode" minOccurs="0" type="STc_4-4"/>
+<xs:sequence minOccurs="0">
+<xs:element name="CurrencyCode" type="STa_3-3"/>
+<xs:element name="Amount" type="STd_1-15_NumberOrAmount_SignLess"/>
+</xs:sequence>
+<xs:element name="RateStatus" minOccurs="0" type="STc_4-4"/>
+</xs:sequence>
+
+
+</xs:complexType>
+<xs:complexType name="TRate-92FK-01">
+<xs:choice>
+<xs:sequence>
+<xs:element name="CurrencyCode" type="STa_3-3"/>
+<xs:element name="Amount" type="STd_1-15_NumberOrAmount_SignLess"/>
+</xs:sequence>
+<xs:element name="RateTypeCode" type="STc_4-4"/>
+</xs:choice>
+
+</xs:complexType>
+<xs:complexType name="TRate-92J-01">
+<xs:sequence>
+<xs:element name="DataSourceScheme" minOccurs="0" type="STc_1-8"/>
+<xs:element name="RateTypeCode" type="STc_4-4"/>
+<xs:element name="CurrencyCode" type="STa_3-3"/>
+<xs:element name="Amount" type="STd_1-15_NumberOrAmount_SignLess"/>
+<xs:element name="RateStatus" minOccurs="0" type="STc_4-4"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TReference-20x-01">
+<xs:sequence>
+<xs:element name="Reference" type="STx_1-16_NoBeginEndOrDoubleSlashesAllowed"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TReference-20C-01">
+<xs:sequence>
+<xs:element name="Reference" type="STx_1-16_NoBeginEndOrDoubleSlashesAllowed"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TReference-21x-01">
+<xs:sequence>
+<xs:element name="Reference" type="STx_1-16_NoBeginEndOrDoubleSlashesAllowed"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TReference-21F-01">
+<xs:sequence>
+<xs:element name="Reference" type="STx_1-16_NoBeginEndOrDoubleSlashesAllowed"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TReference-21G-01">
+<xs:sequence>
+<xs:element name="Reference" type="STx_1-16_NoBeginEndOrDoubleSlashesAllowed"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TReference-21N-01">
+<xs:sequence>
+<xs:element name="ContractNumber" type="STx_1-16"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TReference-21R-01">
+<xs:sequence>
+<xs:element name="Reference" type="STx_1-16_NoBeginEndOrDoubleSlashesAllowed"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TReference-22x-01">
+<xs:sequence>
+<xs:element name="Function" type="STa_1-8"/>
+<xs:element name="BankCode1" type="STa_4-4"/>
+<xs:element name="LocationCode1" type="STc_2-2"/>
+<xs:element name="ReferenceCode" type="STn_4-4"/>
+<xs:element name="BankCode2" type="STa_4-4"/>
+<xs:element name="LocationCode2" type="STc_2-2"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TReference-22C-01">
+<xs:sequence>
+<xs:element name="BankCode1" type="STa_4-4"/>
+<xs:element name="LocationCode1" type="STc_2-2"/>
+<xs:element name="ReferenceCode" type="STn_4-4"/>
+<xs:element name="BankCode2" type="STa_4-4"/>
+<xs:element name="LocationCode2" type="STc_2-2"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TReference-26H-01">
+<xs:sequence>
+<xs:element name="Reference" type="STx_1-16"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TRejectReturnOrInstruction-72x-01">
+<xs:choice>
+<xs:sequence>
+<xs:element name="RejectReturn1" type="ST_REJT-RETN-72_Line1"/>
+<xs:element name="RejectReturn2" type="ST_REJT-RETN-72_Line2"/>
+<xs:element name="RejectReturn3" type="ST_REJT-RETN-72_Line3"/>
+<xs:element name="RejectReturn4" minOccurs="0" type="ST_REJT-RETN-72_Line4"/>
+<xs:element name="RejectReturn5" minOccurs="0" type="ST_REJT-RETN-72_Line5"/>
+<xs:element name="RejectReturn6" minOccurs="0" type="ST_REJT-RETN-72_Line6"/>
+</xs:sequence>
+<xs:sequence>
+<xs:element name="Instruction1" type="STx_1-35_StructuredFormat_72-Line1"/>
+<xs:element name="Instruction2" minOccurs="0" type="STx_1-35_StructuredFormat_72-Lines2-6"/>
+<xs:element name="Instruction3" minOccurs="0" type="STx_1-35_StructuredFormat_72-Lines2-6"/>
+<xs:element name="Instruction4" minOccurs="0" type="STx_1-35_StructuredFormat_72-Lines2-6"/>
+<xs:element name="Instruction5" minOccurs="0" type="STx_1-35_StructuredFormat_72-Lines2-6"/>
+<xs:element name="Instruction6" minOccurs="0" type="STx_1-35_StructuredFormat_72-Lines2-6"/>
+</xs:sequence>
+</xs:choice>
+
+
+</xs:complexType>
+<xs:complexType name="TRejectReturnOrInstruction-79x-01">
+<xs:choice>
+<xs:sequence>
+<xs:element name="RejectReturn1" type="ST_REJT-RETN-79_Line1"/>
+<xs:element name="RejectReturn2" type="ST_REJT-RETN-79_Line2"/>
+<xs:element name="RejectReturn3" type="ST_REJT-RETN-79_Line3"/>
+<xs:element name="RejectReturn4" minOccurs="0" type="ST_REJT-RETN-79_Line4"/>
+<xs:element name="RejectReturn5" minOccurs="0" type="ST_REJT-RETN-79_Line5"/>
+<xs:element name="RejectReturn6" minOccurs="0" type="ST_REJT-RETN-79_Line6"/>
+<xs:element name="RejectReturn7" minOccurs="0" type="STx_1-50_StructuredFormat_79-Lines2-35"/>
+<xs:element name="RejectReturn8" minOccurs="0" type="STx_1-50_StructuredFormat_79-Lines2-35"/>
+<xs:element name="RejectReturn9" minOccurs="0" type="STx_1-50_StructuredFormat_79-Lines2-35"/>
+<xs:element name="RejectReturn10" minOccurs="0" type="STx_1-50_StructuredFormat_79-Lines2-35"/>
+<xs:element name="RejectReturn11" minOccurs="0" type="STx_1-50_StructuredFormat_79-Lines2-35"/>
+<xs:element name="RejectReturn12" minOccurs="0" type="STx_1-50_StructuredFormat_79-Lines2-35"/>
+<xs:element name="RejectReturn13" minOccurs="0" type="STx_1-50_StructuredFormat_79-Lines2-35"/>
+<xs:element name="RejectReturn14" minOccurs="0" type="STx_1-50_StructuredFormat_79-Lines2-35"/>
+<xs:element name="RejectReturn15" minOccurs="0" type="STx_1-50_StructuredFormat_79-Lines2-35"/>
+<xs:element name="RejectReturn16" minOccurs="0" type="STx_1-50_StructuredFormat_79-Lines2-35"/>
+<xs:element name="RejectReturn17" minOccurs="0" type="STx_1-50_StructuredFormat_79-Lines2-35"/>
+<xs:element name="RejectReturn18" minOccurs="0" type="STx_1-50_StructuredFormat_79-Lines2-35"/>
+<xs:element name="RejectReturn19" minOccurs="0" type="STx_1-50_StructuredFormat_79-Lines2-35"/>
+<xs:element name="RejectReturn20" minOccurs="0" type="STx_1-50_StructuredFormat_79-Lines2-35"/>
+<xs:element name="RejectReturn21" minOccurs="0" type="STx_1-50_StructuredFormat_79-Lines2-35"/>
+<xs:element name="RejectReturn22" minOccurs="0" type="STx_1-50_StructuredFormat_79-Lines2-35"/>
+<xs:element name="RejectReturn23" minOccurs="0" type="STx_1-50_StructuredFormat_79-Lines2-35"/>
+<xs:element name="RejectReturn24" minOccurs="0" type="STx_1-50_StructuredFormat_79-Lines2-35"/>
+<xs:element name="RejectReturn25" minOccurs="0" type="STx_1-50_StructuredFormat_79-Lines2-35"/>
+<xs:element name="RejectReturn26" minOccurs="0" type="STx_1-50_StructuredFormat_79-Lines2-35"/>
+<xs:element name="RejectReturn27" minOccurs="0" type="STx_1-50_StructuredFormat_79-Lines2-35"/>
+<xs:element name="RejectReturn28" minOccurs="0" type="STx_1-50_StructuredFormat_79-Lines2-35"/>
+<xs:element name="RejectReturn29" minOccurs="0" type="STx_1-50_StructuredFormat_79-Lines2-35"/>
+<xs:element name="RejectReturn30" minOccurs="0" type="STx_1-50_StructuredFormat_79-Lines2-35"/>
+<xs:element name="RejectReturn31" minOccurs="0" type="STx_1-50_StructuredFormat_79-Lines2-35"/>
+<xs:element name="RejectReturn32" minOccurs="0" type="STx_1-50_StructuredFormat_79-Lines2-35"/>
+<xs:element name="RejectReturn33" minOccurs="0" type="STx_1-50_StructuredFormat_79-Lines2-35"/>
+<xs:element name="RejectReturn34" minOccurs="0" type="STx_1-50_StructuredFormat_79-Lines2-35"/>
+<xs:element name="RejectReturn35" minOccurs="0" type="STx_1-50_StructuredFormat_79-Lines2-35"/>
+</xs:sequence>
+<xs:sequence>
+<xs:element name="Instruction1" type="STx_1-50_StructuredFormat_79-Line1"/>
+<xs:element name="Instruction2" minOccurs="0" type="STx_1-50_StructuredFormat_79-Lines2-35"/>
+<xs:element name="Instruction3" minOccurs="0" type="STx_1-50_StructuredFormat_79-Lines2-35"/>
+<xs:element name="Instruction4" minOccurs="0" type="STx_1-50_StructuredFormat_79-Lines2-35"/>
+<xs:element name="Instruction5" minOccurs="0" type="STx_1-50_StructuredFormat_79-Lines2-35"/>
+<xs:element name="Instruction6" minOccurs="0" type="STx_1-50_StructuredFormat_79-Lines2-35"/>
+<xs:element name="Instruction7" minOccurs="0" type="STx_1-50_StructuredFormat_79-Lines2-35"/>
+<xs:element name="Instruction8" minOccurs="0" type="STx_1-50_StructuredFormat_79-Lines2-35"/>
+<xs:element name="Instruction9" minOccurs="0" type="STx_1-50_StructuredFormat_79-Lines2-35"/>
+<xs:element name="Instruction10" minOccurs="0" type="STx_1-50_StructuredFormat_79-Lines2-35"/>
+<xs:element name="Instruction11" minOccurs="0" type="STx_1-50_StructuredFormat_79-Lines2-35"/>
+<xs:element name="Instruction12" minOccurs="0" type="STx_1-50_StructuredFormat_79-Lines2-35"/>
+<xs:element name="Instruction13" minOccurs="0" type="STx_1-50_StructuredFormat_79-Lines2-35"/>
+<xs:element name="Instruction14" minOccurs="0" type="STx_1-50_StructuredFormat_79-Lines2-35"/>
+<xs:element name="Instruction15" minOccurs="0" type="STx_1-50_StructuredFormat_79-Lines2-35"/>
+<xs:element name="Instruction16" minOccurs="0" type="STx_1-50_StructuredFormat_79-Lines2-35"/>
+<xs:element name="Instruction17" minOccurs="0" type="STx_1-50_StructuredFormat_79-Lines2-35"/>
+<xs:element name="Instruction18" minOccurs="0" type="STx_1-50_StructuredFormat_79-Lines2-35"/>
+<xs:element name="Instruction19" minOccurs="0" type="STx_1-50_StructuredFormat_79-Lines2-35"/>
+<xs:element name="Instruction20" minOccurs="0" type="STx_1-50_StructuredFormat_79-Lines2-35"/>
+<xs:element name="Instruction21" minOccurs="0" type="STx_1-50_StructuredFormat_79-Lines2-35"/>
+<xs:element name="Instruction22" minOccurs="0" type="STx_1-50_StructuredFormat_79-Lines2-35"/>
+<xs:element name="Instruction23" minOccurs="0" type="STx_1-50_StructuredFormat_79-Lines2-35"/>
+<xs:element name="Instruction24" minOccurs="0" type="STx_1-50_StructuredFormat_79-Lines2-35"/>
+<xs:element name="Instruction25" minOccurs="0" type="STx_1-50_StructuredFormat_79-Lines2-35"/>
+<xs:element name="Instruction26" minOccurs="0" type="STx_1-50_StructuredFormat_79-Lines2-35"/>
+<xs:element name="Instruction27" minOccurs="0" type="STx_1-50_StructuredFormat_79-Lines2-35"/>
+<xs:element name="Instruction28" minOccurs="0" type="STx_1-50_StructuredFormat_79-Lines2-35"/>
+<xs:element name="Instruction29" minOccurs="0" type="STx_1-50_StructuredFormat_79-Lines2-35"/>
+<xs:element name="Instruction30" minOccurs="0" type="STx_1-50_StructuredFormat_79-Lines2-35"/>
+<xs:element name="Instruction31" minOccurs="0" type="STx_1-50_StructuredFormat_79-Lines2-35"/>
+<xs:element name="Instruction32" minOccurs="0" type="STx_1-50_StructuredFormat_79-Lines2-35"/>
+<xs:element name="Instruction33" minOccurs="0" type="STx_1-50_StructuredFormat_79-Lines2-35"/>
+<xs:element name="Instruction34" minOccurs="0" type="STx_1-50_StructuredFormat_79-Lines2-35"/>
+<xs:element name="Instruction35" minOccurs="0" type="STx_1-50_StructuredFormat_79-Lines2-35"/>
+</xs:sequence>
+</xs:choice>
+
+
+</xs:complexType>
+<xs:complexType name="TStatementLine-61x-01">
+<xs:sequence>
+<xs:element name="ValueDate" type="STn_Date_YYMMDD"/>
+<xs:element name="EntryDate" minOccurs="0" type="STn_Date_MMDD"/>
+<xs:element name="DebitCredit" type="STa_1-2"/>
+<xs:element name="FundsCode" minOccurs="0" type="STa_1-1"/>
+<xs:element name="Amount" type="STd_1-15_NumberOrAmount_SignLess"/>
+<xs:element name="TransactionType" type="STa_1-1"/>
+<xs:element name="TransactionTypeIdentificationCode" type="STc_3-3"/>
+<xs:element name="ReferenceForTheAccountOwner" type="STx_1-16"/>
+<xs:element name="AccountServicingInstitutionsReference" minOccurs="0" type="STx_1-16"/>
+<xs:element name="SupplementaryDetails" minOccurs="0" type="STx_1-34"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TTime-13C-01">
+<xs:sequence>
+<xs:element name="Code" type="STc_1-8"/>
+<xs:element name="TimeIndication" type="STn_Time_HHMM"/>
+<xs:element name="Sign" type="STx_1-1_Sign"/>
+<xs:element name="TimeOffset" type="STn_TimeOffset_HHMM_0000-1359"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TTypeOfFinancialInstrument-12AC-01">
+<xs:choice>
+<xs:sequence>
+<xs:element name="DataSourceScheme" minOccurs="0" type="STc_1-8"/>
+<xs:element name="InstrumentCodeOrDescription" type="STx_1-30"/>
+</xs:sequence>
+<xs:element name="CFICode" type="STc_6-6"/>
+</xs:choice>
+
+</xs:complexType>
+<xs:complexType name="TTypeOfFinancialInstrument-12B-01">
+<xs:sequence>
+<xs:element name="DataSourceScheme" minOccurs="0" type="STc_1-8"/>
+<xs:element name="InstrumentTypeCode" type="STc_4-4"/>
+</xs:sequence>
+
+</xs:complexType>
+<xs:complexType name="TBasicHeader">
+<xs:sequence>
+<xs:element name="ApplicationIdentifier" type="STHeaderApplicationIdentifier"/>
+<xs:element name="ServiceIdentifier" type="STHeaderServiceIdentifier"/>
+<xs:element name="LogicalTerminalIdentifier" type="STHeaderLTIdentifier"/>
+<xs:element name="SessionNumber" type="STHeaderSessionNumber"/>
+<xs:element name="SequenceNumber" type="STHeaderSequenceNumber"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="TApplicationHeader">
+<xs:choice>
+<xs:element name="InputMessage">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="MessageType" type="STHeaderMessageType"/>
+<xs:element name="ReceiversAddress" type="STHeaderReceiversAddress"/>
+<xs:element name="MessagePriority" type="STHeaderMessagePriority"/>
+<xs:element name="DeliveryMonitoring" minOccurs="0" type="STHeaderDeliveryMonitoring"/>
+<xs:element name="ObsolescencePeriod" minOccurs="0" type="STHeaderObsolescencePeriod"/>
+</xs:sequence>
+
+</xs:complexType>
+</xs:element>
+<xs:element name="OutputMessage">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="MessageType" type="STHeaderMessageType"/>
+<xs:element name="InputTime" type="STHeaderInputTime"/>
+<xs:element name="MessageInputReference" type="STHeaderMessageInputReference"/>
+<xs:element name="OutputDate" type="STHeaderOutputDate"/>
+<xs:element name="OutputTime" type="STHeaderOutputTime"/>
+<xs:element name="MessagePriority" type="STHeaderMessagePriority"/>
+</xs:sequence>
+
+</xs:complexType>
+</xs:element>
+</xs:choice>
+
+</xs:complexType>
+<xs:complexType name="TUserHeader">
+<xs:sequence>
+<xs:element name="ServiceIdentifier" minOccurs="0" type="STHeaderServiceIdentifier"/>
+<xs:element name="BankingPriority" minOccurs="0" type="STHeaderBankingPriority"/>
+<xs:element name="MessageUserReference" minOccurs="0" type="STHeaderMessageUserReference"/>
+<xs:element name="ValidationFlag" minOccurs="0" type="xs:string"/>
+<xs:element name="AddresseeInformation" minOccurs="0" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="THeader">
+<xs:sequence>
+<xs:element name="BasicHeader" type="TBasicHeader"/>
+<xs:element name="ApplicationHeader" type="TApplicationHeader"/>
+<xs:element name="UserHeader" type="TUserHeader" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="TTrailer">
+<xs:sequence>
+<xs:element name="Checksum" type="STHeaderChecksum"/>
+<xs:element name="System" minOccurs="0" type="xs:string"/>
+<xs:element name="Training" minOccurs="0" type="xs:string"/>
+<xs:element name="PossibleDuplicateEmission" minOccurs="0" type="xs:string"/>
+<xs:element name="PossibleDuplicateMessage" minOccurs="0" type="xs:string"/>
+<xs:element name="DelayedMessage" minOccurs="0" type="xs:string"/>
+<xs:element name="MessageReference" minOccurs="0" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:annotation>
+<xs:documentation>Specific Format</xs:documentation>
+</xs:annotation>
+<xs:simpleType name="ST_REJT-RETN-72_Line1">
+<xs:restriction base="STx_1-35_StructuredFormat_72-Line1">
+<xs:pattern value="(/REJT/|/RETN/)[0-9]{2}[A-Z]?(/[A-Z0-9]{1,2})?"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="ST_REJT-RETN-72_Line2">
+<xs:restriction base="STx_1-35_StructuredFormat_72-Lines2-6">
+<xs:pattern value="/AC0[1-6]/.*"/>
+<xs:pattern value="/AM0[1-8]/.*"/>
+<xs:pattern value="/AG0[1-2]/.*"/>
+<xs:pattern value="/BE0[1-5]/.*"/>
+<xs:pattern value="/DT01/.*"/>
+<xs:pattern value="/MS01/.*"/>
+<xs:pattern value="/PY01/.*"/>
+<xs:pattern value="/RC0[1-4]/.*"/>
+<xs:pattern value="/RF01/.*"/>
+<xs:pattern value="/TM01/.*"/>
+<xs:pattern value="/X[A-Z0-9][0-9]{2}/.*"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="ST_REJT-RETN-72_Line3">
+<xs:restriction base="STx_1-35_StructuredFormat_72-Lines2-6">
+<xs:pattern value="/MREF/.{1,16}"/>
+<xs:pattern value="(_#ErrorCode:T80)"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="ST_REJT-RETN-72_Line4">
+<xs:restriction base="STx_1-35_StructuredFormat_72-Lines2-6">
+<xs:pattern value="/TREF/.{1,16}"/>
+<xs:pattern value="/CHGS/[A-Z]{3}[0-9]{1,14}"/>
+<xs:pattern value="/CHGS/[A-Z]{3}[0-9]\.[0-9]{1,13}"/>
+<xs:pattern value="/CHGS/[A-Z]{3}[0-9]{2}\.[0-9]{1,12}"/>
+<xs:pattern value="/CHGS/[A-Z]{3}[0-9]{3}\.[0-9]{1,11}"/>
+<xs:pattern value="/CHGS/[A-Z]{3}[0-9]{4}\.[0-9]{1,10}"/>
+<xs:pattern value="/CHGS/[A-Z]{3}[0-9]{5}\.[0-9]{1,9}"/>
+<xs:pattern value="/CHGS/[A-Z]{3}[0-9]{6}\.[0-9]{1,8}"/>
+<xs:pattern value="/CHGS/[A-Z]{3}[0-9]{7}\.[0-9]{1,7}"/>
+<xs:pattern value="/CHGS/[A-Z]{3}[0-9]{8}\.[0-9]{1,6}"/>
+<xs:pattern value="/CHGS/[A-Z]{3}[0-9]{9}\.[0-9]{1,5}"/>
+<xs:pattern value="/CHGS/[A-Z]{3}[0-9]{10}\.[0-9]{1,4}"/>
+<xs:pattern value="/CHGS/[A-Z]{3}[0-9]{11}\.[0-9]{1,3}"/>
+<xs:pattern value="/CHGS/[A-Z]{3}[0-9]{12}\.[0-9]{1,2}"/>
+<xs:pattern value="/CHGS/[A-Z]{3}[0-9]{13}\.[0-9]"/>
+<xs:pattern value="/TEXT/.+"/>
+<xs:pattern value="(_#ErrorCode:T80)"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="ST_REJT-RETN-72_Line5">
+<xs:restriction base="STx_1-35_StructuredFormat_72-Lines2-6">
+<xs:pattern value="/CHGS/[A-Z]{3}[0-9]{1,14}"/>
+<xs:pattern value="/CHGS/[A-Z]{3}[0-9]\.[0-9]{1,13}"/>
+<xs:pattern value="/CHGS/[A-Z]{3}[0-9]{2}\.[0-9]{1,12}"/>
+<xs:pattern value="/CHGS/[A-Z]{3}[0-9]{3}\.[0-9]{1,11}"/>
+<xs:pattern value="/CHGS/[A-Z]{3}[0-9]{4}\.[0-9]{1,10}"/>
+<xs:pattern value="/CHGS/[A-Z]{3}[0-9]{5}\.[0-9]{1,9}"/>
+<xs:pattern value="/CHGS/[A-Z]{3}[0-9]{6}\.[0-9]{1,8}"/>
+<xs:pattern value="/CHGS/[A-Z]{3}[0-9]{7}\.[0-9]{1,7}"/>
+<xs:pattern value="/CHGS/[A-Z]{3}[0-9]{8}\.[0-9]{1,6}"/>
+<xs:pattern value="/CHGS/[A-Z]{3}[0-9]{9}\.[0-9]{1,5}"/>
+<xs:pattern value="/CHGS/[A-Z]{3}[0-9]{10}\.[0-9]{1,4}"/>
+<xs:pattern value="/CHGS/[A-Z]{3}[0-9]{11}\.[0-9]{1,3}"/>
+<xs:pattern value="/CHGS/[A-Z]{3}[0-9]{12}\.[0-9]{1,2}"/>
+<xs:pattern value="/CHGS/[A-Z]{3}[0-9]{13}\.[0-9]"/>
+<xs:pattern value="/(TEXT)?/.+"/>
+<xs:pattern value="(_#ErrorCode:T80)"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="ST_REJT-RETN-72_Line6">
+<xs:restriction base="STx_1-35_StructuredFormat_72-Lines2-6">
+<xs:pattern value="/(TEXT)?/.+"/>
+<xs:pattern value="(_#ErrorCode:T80)"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="ST_REJT-RETN-79_Line1">
+<xs:restriction base="STx_1-50_StructuredFormat_79-Line1">
+<xs:pattern value="(/REJT/|/RETN/)[0-9]{2}[A-Z]?(/[A-Z0-9]{1,2})?"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="ST_REJT-RETN-79_Line2">
+<xs:restriction base="STx_1-50_StructuredFormat_79-Lines2-35">
+<xs:pattern value="/AC0[1-6]/.*"/>
+<xs:pattern value="/AM0[1-8]/.*"/>
+<xs:pattern value="/AG0[1-2]/.*"/>
+<xs:pattern value="/BE0[1-5]/.*"/>
+<xs:pattern value="/DT01/.*"/>
+<xs:pattern value="/MS01/.*"/>
+<xs:pattern value="/PY01/.*"/>
+<xs:pattern value="/RC0[1-4]/.*"/>
+<xs:pattern value="/RF01/.*"/>
+<xs:pattern value="/TM01/.*"/>
+<xs:pattern value="/X[A-Z0-9][0-9]{2}/.*"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="ST_REJT-RETN-79_Line3">
+<xs:restriction base="STx_1-50_StructuredFormat_79-Lines2-35">
+<xs:pattern value="/MREF/.{1,16}"/>
+<xs:pattern value="(_#ErrorCode:T80)"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="ST_REJT-RETN-79_Line4">
+<xs:restriction base="STx_1-50_StructuredFormat_79-Lines2-35">
+<xs:pattern value="/TREF/.{1,16}"/>
+<xs:pattern value="/CHGS/[A-Z]{3}[0-9]{1,14}"/>
+<xs:pattern value="/CHGS/[A-Z]{3}[0-9]\.[0-9]{1,13}"/>
+<xs:pattern value="/CHGS/[A-Z]{3}[0-9]{2}\.[0-9]{1,12}"/>
+<xs:pattern value="/CHGS/[A-Z]{3}[0-9]{3}\.[0-9]{1,11}"/>
+<xs:pattern value="/CHGS/[A-Z]{3}[0-9]{4}\.[0-9]{1,10}"/>
+<xs:pattern value="/CHGS/[A-Z]{3}[0-9]{5}\.[0-9]{1,9}"/>
+<xs:pattern value="/CHGS/[A-Z]{3}[0-9]{6}\.[0-9]{1,8}"/>
+<xs:pattern value="/CHGS/[A-Z]{3}[0-9]{7}\.[0-9]{1,7}"/>
+<xs:pattern value="/CHGS/[A-Z]{3}[0-9]{8}\.[0-9]{1,6}"/>
+<xs:pattern value="/CHGS/[A-Z]{3}[0-9]{9}\.[0-9]{1,5}"/>
+<xs:pattern value="/CHGS/[A-Z]{3}[0-9]{10}\.[0-9]{1,4}"/>
+<xs:pattern value="/CHGS/[A-Z]{3}[0-9]{11}\.[0-9]{1,3}"/>
+<xs:pattern value="/CHGS/[A-Z]{3}[0-9]{12}\.[0-9]{1,2}"/>
+<xs:pattern value="/CHGS/[A-Z]{3}[0-9]{13}\.[0-9]"/>
+<xs:pattern value="/TEXT/.+"/>
+<xs:pattern value="(_#ErrorCode:T80)"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="ST_REJT-RETN-79_Line5">
+<xs:restriction base="STx_1-50_StructuredFormat_79-Lines2-35">
+<xs:pattern value="/CHGS/[A-Z]{3}[0-9]{1,14}"/>
+<xs:pattern value="/CHGS/[A-Z]{3}[0-9]\.[0-9]{1,13}"/>
+<xs:pattern value="/CHGS/[A-Z]{3}[0-9]{2}\.[0-9]{1,12}"/>
+<xs:pattern value="/CHGS/[A-Z]{3}[0-9]{3}\.[0-9]{1,11}"/>
+<xs:pattern value="/CHGS/[A-Z]{3}[0-9]{4}\.[0-9]{1,10}"/>
+<xs:pattern value="/CHGS/[A-Z]{3}[0-9]{5}\.[0-9]{1,9}"/>
+<xs:pattern value="/CHGS/[A-Z]{3}[0-9]{6}\.[0-9]{1,8}"/>
+<xs:pattern value="/CHGS/[A-Z]{3}[0-9]{7}\.[0-9]{1,7}"/>
+<xs:pattern value="/CHGS/[A-Z]{3}[0-9]{8}\.[0-9]{1,6}"/>
+<xs:pattern value="/CHGS/[A-Z]{3}[0-9]{9}\.[0-9]{1,5}"/>
+<xs:pattern value="/CHGS/[A-Z]{3}[0-9]{10}\.[0-9]{1,4}"/>
+<xs:pattern value="/CHGS/[A-Z]{3}[0-9]{11}\.[0-9]{1,3}"/>
+<xs:pattern value="/CHGS/[A-Z]{3}[0-9]{12}\.[0-9]{1,2}"/>
+<xs:pattern value="/CHGS/[A-Z]{3}[0-9]{13}\.[0-9]"/>
+<xs:pattern value="/(TEXT)?/.+"/>
+<xs:pattern value="(_#ErrorCode:T80)"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="ST_REJT-RETN-79_Line6">
+<xs:restriction base="STx_1-50_StructuredFormat_79-Lines2-35">
+<xs:pattern value="/(TEXT)?/.+"/>
+<xs:pattern value="(_#ErrorCode:T80)"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:annotation>
+<xs:documentation>Specific Types used in Header en Footer blocks</xs:documentation>
+</xs:annotation>
+<xs:simpleType name="STHeaderApplicationIdentifier">
+<xs:restriction base="xs:string">
+<xs:length value="1"/>
+<xs:enumeration value="A"/>
+<xs:enumeration value="F"/>
+<xs:enumeration value="L"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STHeaderBankingPriority">
+<xs:restriction base="xs:string">
+<xs:length value="4"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STHeaderChecksum">
+<xs:restriction base="xs:string">
+<xs:length value="12"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STHeaderDeliveryMonitoring">
+<xs:restriction base="xs:string">
+<xs:length value="1"/>
+<xs:enumeration value="1"/>
+<xs:enumeration value="2"/>
+<xs:enumeration value="3"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STHeaderInputTime">
+<xs:restriction base="xs:string">
+<xs:length value="4"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STHeaderLTIdentifier">
+<xs:restriction base="xs:string">
+<xs:length value="12"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STHeaderMessageInputReference">
+<xs:restriction base="xs:string">
+<xs:length value="28"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STHeaderMessagePriority">
+<xs:restriction base="xs:string">
+<xs:length value="1"/>
+<xs:enumeration value="U"/>
+<xs:enumeration value="N"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STHeaderMessageType">
+<xs:restriction base="xs:string">
+<xs:length value="3"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STHeaderMessageUserReference">
+<xs:restriction base="xs:string">
+<xs:minLength value="1"/>
+<xs:maxLength value="16"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STHeaderObsolescencePeriod">
+<xs:restriction base="xs:string">
+<xs:length value="3"/>
+<xs:enumeration value="003"/>
+<xs:enumeration value="020"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STHeaderOutputDate">
+<xs:restriction base="xs:string">
+<xs:length value="6"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STHeaderOutputTime">
+<xs:restriction base="xs:string">
+<xs:length value="4"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STHeaderReceiversAddress">
+<xs:restriction base="xs:string">
+<xs:length value="12"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STHeaderServiceIdentifier">
+<xs:restriction base="xs:string">
+<xs:length value="2"/>
+<xs:enumeration value="01"/>
+<xs:enumeration value="05"/>
+<xs:enumeration value="21"/>
+<xs:enumeration value="25"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STHeaderSequenceNumber">
+<xs:restriction base="xs:string">
+<xs:length value="6"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STHeaderSessionNumber">
+<xs:restriction base="xs:string">
+<xs:length value="4"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:annotation>
+<xs:documentation>Restrictions on Basic Field Types</xs:documentation>
+</xs:annotation>
+<xs:simpleType name="STBei">
+<xs:restriction base="STBicBei">
+<xs:pattern value="(BEID|MCCO|TESP|TRCO).*"/>
+<xs:pattern value="(_#ErrorCode:E57)"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STBic">
+<xs:restriction base="STBic_NotOfSubtypesBEID-MCCO-TESP-TRCO"/>
+</xs:simpleType>
+<xs:simpleType name="STBic_NotOfSubtypeBEID">
+<xs:restriction base="STBicBei">
+<xs:pattern value="(B[^E]|[^B]E|[^B][^E]|BE[^I]D|BEI[^D]|BE[^I][^D]).*"/>
+<xs:pattern value="(_#ErrorCode:C05)"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STBic_NotOfDubtypesBEID-MCCO">
+<xs:restriction base="STBic_NotOfSubtypeBEID">
+<xs:pattern value="(M[^C]|[^M]C|[^M][^C]|MC[^C]O|MCC[^O]|MC[^C][^O]).*"/>
+<xs:pattern value="(_#ErrorCode:C05)"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STBic_NotOfSubtypesBEID-MCCO-TESP">
+<xs:restriction base="STBic_NotOfDubtypesBEID-MCCO">
+<xs:pattern value="(T[^E]|[^T]E|[^T][^E]|TE[^S]P|TES[^P]|TE[^S][^P]).*"/>
+<xs:pattern value="(_#ErrorCode:C05)"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STBic_NotOfSubtypesBEID-MCCO-TESP-TRCO">
+<xs:restriction base="STBic_NotOfSubtypesBEID-MCCO-TESP">
+<xs:pattern value="(T[^R]|[^T]R|[^T][^R]|TR[^C]O|TRC[^O]|TR[^C][^O]).*"/>
+<xs:pattern value="(_#ErrorCode:C05)"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STa_1-1">
+<xs:restriction base="STa">
+<xs:length value="1"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STa_1-1_DebitCredit">
+<xs:restriction base="STa">
+<xs:length value="1"/>
+<xs:pattern value="[DC]"/>
+<xs:pattern value="(_#ErrorCode:T51)"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STa_1-2">
+<xs:restriction base="STa">
+<xs:minLength value="1"/>
+<xs:maxLength value="2"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STa_1-4">
+<xs:restriction base="STa">
+<xs:minLength value="1"/>
+<xs:maxLength value="4"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STa_1-6">
+<xs:restriction base="STa">
+<xs:minLength value="1"/>
+<xs:maxLength value="6"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STa_1-8">
+<xs:restriction base="STa">
+<xs:minLength value="1"/>
+<xs:maxLength value="8"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STa_1-9">
+<xs:restriction base="STa">
+<xs:minLength value="1"/>
+<xs:maxLength value="9"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STa_1-12">
+<xs:restriction base="STa">
+<xs:minLength value="1"/>
+<xs:maxLength value="12"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STa_2-2">
+<xs:restriction base="STa">
+<xs:length value="2"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STa_3-3">
+<xs:restriction base="STa">
+<xs:length value="3"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STa_4-4">
+<xs:restriction base="STa">
+<xs:length value="4"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STc_1-8">
+<xs:restriction base="STc">
+<xs:minLength value="1"/>
+<xs:maxLength value="8"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STc_12-12">
+<xs:restriction base="STc">
+<xs:length value="12"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STc_2-2">
+<xs:restriction base="STc">
+<xs:length value="2"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STc_3-3">
+<xs:restriction base="STc">
+<xs:length value="3"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STc_4-4">
+<xs:restriction base="STc">
+<xs:length value="4"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STc_5-5">
+<xs:restriction base="STc">
+<xs:length value="4"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STc_6-6">
+<xs:restriction base="STc">
+<xs:length value="6"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STd_1-12_NumberOrAmount">
+<xs:restriction base="STd">
+<xs:pattern value="[+\-]?[0-9]{1,11}"/>
+<xs:pattern value="[+\-]?[0-9]\.[0-9]{1,10}"/>
+<xs:pattern value="[+\-]?[0-9]{2}\.[0-9]{1,9}"/>
+<xs:pattern value="[+\-]?[0-9]{3}\.[0-9]{1,8}"/>
+<xs:pattern value="[+\-]?[0-9]{4}\.[0-9]{1,7}"/>
+<xs:pattern value="[+\-]?[0-9]{5}\.[0-9]{1,6}"/>
+<xs:pattern value="[+\-]?[0-9]{6}\.[0-9]{1,5}"/>
+<xs:pattern value="[+\-]?[0-9]{7}\.[0-9]{1,4}"/>
+<xs:pattern value="[+\-]?[0-9]{8}\.[0-9]{1,3}"/>
+<xs:pattern value="[+\-]?[0-9]{9}\.[0-9]{1,2}"/>
+<xs:pattern value="[+\-]?[0-9]{10}\.[0-9]"/>
+<xs:pattern value="(_#ErrorCode:T40/T43)"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STd_1-12_NumberOrAmount_SignLess">
+<xs:restriction base="STd_SignLess">
+<xs:pattern value="[0-9]{1,11}"/>
+<xs:pattern value="[0-9]\.[0-9]{1,10}"/>
+<xs:pattern value="[0-9]{2}\.[0-9]{1,9}"/>
+<xs:pattern value="[0-9]{3}\.[0-9]{1,8}"/>
+<xs:pattern value="[0-9]{4}\.[0-9]{1,7}"/>
+<xs:pattern value="[0-9]{5}\.[0-9]{1,6}"/>
+<xs:pattern value="[0-9]{6}\.[0-9]{1,5}"/>
+<xs:pattern value="[0-9]{7}\.[0-9]{1,4}"/>
+<xs:pattern value="[0-9]{8}\.[0-9]{1,3}"/>
+<xs:pattern value="[0-9]{9}\.[0-9]{1,2}"/>
+<xs:pattern value="[0-9]{10}\.[0-9]"/>
+<xs:pattern value="(_#ErrorCode:T40/T43)"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STd_1-15_NumberOrAmount">
+<xs:restriction base="STd">
+<xs:pattern value="[+\-]?[0-9]{1,14}"/>
+<xs:pattern value="[+\-]?[0-9]\.[0-9]{1,13}"/>
+<xs:pattern value="[+\-]?[0-9]{2}\.[0-9]{1,12}"/>
+<xs:pattern value="[+\-]?[0-9]{3}\.[0-9]{1,11}"/>
+<xs:pattern value="[+\-]?[0-9]{4}\.[0-9]{1,10}"/>
+<xs:pattern value="[+\-]?[0-9]{5}\.[0-9]{1,9}"/>
+<xs:pattern value="[+\-]?[0-9]{6}\.[0-9]{1,8}"/>
+<xs:pattern value="[+\-]?[0-9]{7}\.[0-9]{1,7}"/>
+<xs:pattern value="[+\-]?[0-9]{8}\.[0-9]{1,6}"/>
+<xs:pattern value="[+\-]?[0-9]{9}\.[0-9]{1,5}"/>
+<xs:pattern value="[+\-]?[0-9]{10}\.[0-9]{1,4}"/>
+<xs:pattern value="[+\-]?[0-9]{11}\.[0-9]{1,3}"/>
+<xs:pattern value="[+\-]?[0-9]{12}\.[0-9]{1,2}"/>
+<xs:pattern value="[+\-]?[0-9]{13}\.[0-9]"/>
+<xs:pattern value="(_#ErrorCode:T40/T43)"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STd_1-15_NumberOrAmount_SignLess">
+<xs:restriction base="STd_SignLess">
+<xs:pattern value="[0-9]{1,14}"/>
+<xs:pattern value="[0-9]\.[0-9]{1,13}"/>
+<xs:pattern value="[0-9]{2}\.[0-9]{1,12}"/>
+<xs:pattern value="[0-9]{3}\.[0-9]{1,11}"/>
+<xs:pattern value="[0-9]{4}\.[0-9]{1,10}"/>
+<xs:pattern value="[0-9]{5}\.[0-9]{1,9}"/>
+<xs:pattern value="[0-9]{6}\.[0-9]{1,8}"/>
+<xs:pattern value="[0-9]{7}\.[0-9]{1,7}"/>
+<xs:pattern value="[0-9]{8}\.[0-9]{1,6}"/>
+<xs:pattern value="[0-9]{9}\.[0-9]{1,5}"/>
+<xs:pattern value="[0-9]{10}\.[0-9]{1,4}"/>
+<xs:pattern value="[0-9]{11}\.[0-9]{1,3}"/>
+<xs:pattern value="[0-9]{12}\.[0-9]{1,2}"/>
+<xs:pattern value="[0-9]{13}\.[0-9]"/>
+<xs:pattern value="(_#ErrorCode:T40/T43)"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STd_1-17_NumberOrAmount">
+<xs:restriction base="STd">
+<xs:pattern value="[+\-]?[0-9]{1,16}"/>
+<xs:pattern value="[+\-]?[0-9]\.[0-9]{1,15}"/>
+<xs:pattern value="[+\-]?[0-9]{2}\.[0-9]{1,14}"/>
+<xs:pattern value="[+\-]?[0-9]{3}\.[0-9]{1,13}"/>
+<xs:pattern value="[+\-]?[0-9]{4}\.[0-9]{1,12}"/>
+<xs:pattern value="[+\-]?[0-9]{5}\.[0-9]{1,11}"/>
+<xs:pattern value="[+\-]?[0-9]{6}\.[0-9]{1,10}"/>
+<xs:pattern value="[+\-]?[0-9]{7}\.[0-9]{1,9}"/>
+<xs:pattern value="[+\-]?[0-9]{8}\.[0-9]{1,8}"/>
+<xs:pattern value="[+\-]?[0-9]{9}\.[0-9]{1,7}"/>
+<xs:pattern value="[+\-]?[0-9]{10}\.[0-9]{1,6}"/>
+<xs:pattern value="[+\-]?[0-9]{11}\.[0-9]{1,5}"/>
+<xs:pattern value="[+\-]?[0-9]{12}\.[0-9]{1,4}"/>
+<xs:pattern value="[+\-]?[0-9]{13}\.[0-9]{1,3}"/>
+<xs:pattern value="[+\-]?[0-9]{14}\.[0-9]{1,2}"/>
+<xs:pattern value="[+\-]?[0-9]{15}\.[0-9]"/>
+<xs:pattern value="(_#ErrorCode:T40/T43)"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STd_1-17_NumberOrAmount_SignLess">
+<xs:restriction base="STd_SignLess">
+<xs:pattern value="[0-9]{1,16}"/>
+<xs:pattern value="[0-9]\.[0-9]{1,15}"/>
+<xs:pattern value="[0-9]{2}\.[0-9]{1,14}"/>
+<xs:pattern value="[0-9]{3}\.[0-9]{1,13}"/>
+<xs:pattern value="[0-9]{4}\.[0-9]{1,12}"/>
+<xs:pattern value="[0-9]{5}\.[0-9]{1,11}"/>
+<xs:pattern value="[0-9]{6}\.[0-9]{1,10}"/>
+<xs:pattern value="[0-9]{7}\.[0-9]{1,9}"/>
+<xs:pattern value="[0-9]{8}\.[0-9]{1,8}"/>
+<xs:pattern value="[0-9]{9}\.[0-9]{1,7}"/>
+<xs:pattern value="[0-9]{10}\.[0-9]{1,6}"/>
+<xs:pattern value="[0-9]{11}\.[0-9]{1,5}"/>
+<xs:pattern value="[0-9]{12}\.[0-9]{1,4}"/>
+<xs:pattern value="[0-9]{13}\.[0-9]{1,3}"/>
+<xs:pattern value="[0-9]{14}\.[0-9]{1,2}"/>
+<xs:pattern value="[0-9]{15}\.[0-9]"/>
+<xs:pattern value="(_#ErrorCode:T40/T43)"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STn_1-3">
+<xs:restriction base="STn">
+<xs:minLength value="1"/>
+<xs:maxLength value="3"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STn_1-4">
+<xs:restriction base="STn">
+<xs:minLength value="1"/>
+<xs:maxLength value="4"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STn_1-5">
+<xs:restriction base="STn">
+<xs:minLength value="1"/>
+<xs:maxLength value="5"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STn_1-6">
+<xs:restriction base="STn">
+<xs:minLength value="1"/>
+<xs:maxLength value="6"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STn_2-2">
+<xs:restriction base="STn">
+<xs:length value="2"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STn_2-2_OptionalSign">
+<xs:restriction base="STn_OptionalSign">
+<xs:minLength value="2"/>
+<xs:maxLength value="3"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STn_3-3">
+<xs:restriction base="STn">
+<xs:length value="3"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STn_3-3_OptionalSign">
+<xs:restriction base="STn_OptionalSign">
+<xs:minLength value="3"/>
+<xs:maxLength value="4"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STn_4-4">
+<xs:restriction base="STn">
+<xs:length value="4"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STn_Date_MMDD">
+<xs:restriction base="STMonthDate">
+<xs:pattern value="(((0[1-9]|1[012])(0[1-9]|1\d|2[0-8])|(0[13456789]|1[012])(29|30)|(0[13578]|1[02])31)|0229)"/>
+<xs:pattern value="(_#ErrorCode:T50)"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STn_Date_YYMMDD">
+<xs:restriction base="STYearMonthDate">
+<xs:pattern value="(\d{2}((0[1-9]|1[012])(0[1-9]|1\d|2[0-8])|(0[13456789]|1[012])(29|30)|(0[13578]|1[02])31)|([02468][048]|[13579][26])0229)"/>
+<xs:pattern value="(_#ErrorCode:T50)"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STn_Date_YYYYMMDD">
+<xs:restriction base="STCenturyYearMonthDate">
+<xs:pattern value="(\d{4}(((0[1-9]|1[012])(0[1-9]|1\d|2[0-8]))|((0[13456789]|1[012])(29|30))|((0[13578]|1[02])31)))|((\d{2}([2468][48]|[0][48]|[2468][0]|[13579][26])0229)|(([02468][048]|[13579][26])000229))"/>
+<xs:pattern value="(_#ErrorCode:T50)"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STn_Time_HHMM">
+<xs:restriction base="STn">
+<xs:pattern value="(([01][0-9])|2[0-3])[0-5][0-9]"/>
+<xs:pattern value="(_#ErrorCode:T38)"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STn_Time_HHMMSS">
+<xs:restriction base="STn">
+<xs:pattern value="(([01][0-9])|2[0-3])([0-5][0-9]){2}"/>
+<xs:pattern value="(_#ErrorCode:T38)"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STn_Time_HH_OptionalSign">
+<xs:restriction base="STn_2-2_OptionalSign">
+<xs:pattern value="([+\-]?(([01][0-9])|2[0-3]))"/>
+<xs:pattern value="(_#ErrorCode:T39)"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STn_Time_MM">
+<xs:restriction base="STn_2-2">
+<xs:pattern value="([0-5][0-9])"/>
+<xs:pattern value="(_#ErrorCode:T39)"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STn_TimeOffset_HHMM_0000-1359">
+<xs:restriction base="STn">
+<xs:pattern value="((0[0-9])|1[0-3])[0-5][0-9]"/>
+<xs:pattern value="(_#ErrorCode:T16)"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STx_1-1_Sign">
+<xs:restriction base="STx">
+<xs:length value="1"/>
+<xs:pattern value="[+\-]"/>
+<xs:pattern value="(_#ErrorCode:T15)"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STx_1-7">
+<xs:restriction base="STx">
+<xs:minLength value="1"/>
+<xs:maxLength value="7"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STx_1-16">
+<xs:restriction base="STx">
+<xs:minLength value="1"/>
+<xs:maxLength value="16"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STx_1-16_NoBeginEndOrDoubleSlashesAllowed">
+<xs:restriction base="STx">
+<xs:minLength value="1"/>
+<xs:maxLength value="16"/>
+<xs:pattern value="[^/]([^/]|/[^/])*[^/]?"/>
+<xs:pattern value="(_#ErrorCode:T26)"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STx_1-24">
+<xs:restriction base="STx">
+<xs:minLength value="1"/>
+<xs:maxLength value="24"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STx_1-30">
+<xs:restriction base="STx">
+<xs:minLength value="1"/>
+<xs:maxLength value="30"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STx_1-30_NoBeginEndOrDoubleSlashesAllowed">
+<xs:restriction base="STx">
+<xs:minLength value="1"/>
+<xs:maxLength value="30"/>
+<xs:pattern value="[^/]([^/]|/[^/])*[^/]?"/>
+<xs:pattern value="(_#ErrorCode:T26)"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STx_1-34">
+<xs:restriction base="STx">
+<xs:minLength value="1"/>
+<xs:maxLength value="34"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STx_1-34_NoBeginEndOrDoubleSlashesAllowed">
+<xs:restriction base="STx">
+<xs:minLength value="1"/>
+<xs:maxLength value="34"/>
+<xs:pattern value="[^/]([^/]|/[^/])*[^/]?"/>
+<xs:pattern value="(_#ErrorCode:T26)"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STx_1-35">
+<xs:restriction base="STx">
+<xs:minLength value="1"/>
+<xs:maxLength value="35"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STx_1-35_NoBeginEndOrDoubleSlashesAllowed">
+<xs:restriction base="STx">
+<xs:minLength value="1"/>
+<xs:maxLength value="35"/>
+<xs:pattern value="[^/]([^/]|/[^/])*[^/]?"/>
+<xs:pattern value="(_#ErrorCode:T26)"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STx_1-35_CodeVALD">
+<xs:restriction base="STx">
+<xs:minLength value="1"/>
+<xs:maxLength value="35"/>
+<xs:pattern value="[^/].{4}[^/].*"/>
+<xs:pattern value="/.{4}[^/].*"/>
+<xs:pattern value="[^/].{4}/.*"/>
+<xs:pattern value="/V[^A].{2}/.*"/>
+<xs:pattern value="/[^V]A.{2}/.*"/>
+<xs:pattern value="/[^V][^A].{2}/.*"/>
+<xs:pattern value="/VAL[^D]/.*"/>
+<xs:pattern value="/VA[^L]D/.*"/>
+<xs:pattern value="/VA[^L][^D]/.*"/>
+<xs:pattern value="/VALD/((\d{4}(((0[1-9]|1[012])(0[1-9]|1\d|2[0-8]))|((0[13456789]|1[012])(29|30))|((0[13578]|1[02])31)))|((\d{2}([2468][48]|[0][48]|[2468][0]|[13579][26])0229)|(([02468][048]|[13579][26])000229)))"/>
+<xs:pattern value="(_#ErrorCode:C58)"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STx_1-35_StructuredFormat_50F-Line1">
+<xs:restriction base="STx">
+<xs:minLength value="1"/>
+<xs:maxLength value="35"/>
+<xs:pattern value="[/].*"/>
+<xs:pattern value="[A-Z]{4}[/][A-Z]{2}[/].*"/>
+<xs:pattern value="(_#ErrorCode:T54)"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STx_1-35_StructuredFormat_50F-Line2-5">
+<xs:restriction base="STx">
+<xs:minLength value="1"/>
+<xs:maxLength value="35"/>
+<xs:pattern value="[1-3,5-8][/].*"/>
+<xs:pattern value="4/(\d{4}(((0[1-9]|1[012])(0[1-9]|1\d|2[0-8]))|((0[13456789]|1[012])(29|30))|((0[13578]|1[02])31)))|((\d{2}([2468][48]|[0][48]|[2468][0]|[13579][26])0229)|(([02468][048]|[13579][26])000229))"/>
+<xs:pattern value="(_#ErrorCode:T54)"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STx_1-35_StructuredFormat_72-Line1">
+<xs:restriction base="STx">
+<xs:minLength value="1"/>
+<xs:maxLength value="35"/>
+<xs:pattern value="/[A-Z0-9]{1,8}/.*"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STx_1-35_StructuredFormat_72-Lines2-6">
+<xs:restriction base="STx">
+<xs:minLength value="1"/>
+<xs:maxLength value="35"/>
+<xs:pattern value="//.+"/>
+<xs:pattern value="/[A-Z0-9]{1,8}/.*"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STx_1-50_StructuredFormat_79-Line1">
+<xs:restriction base="STx">
+<xs:minLength value="1"/>
+<xs:maxLength value="50"/>
+<xs:pattern value="/[A-Z0-9]{1,8}/.*"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STx_1-50_StructuredFormat_79-Lines2-35">
+<xs:restriction base="STx">
+<xs:minLength value="1"/>
+<xs:maxLength value="50"/>
+<xs:pattern value="//.+"/>
+<xs:pattern value="/[A-Z0-9]{1,8}/.*"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STx_1-40">
+<xs:restriction base="STx">
+<xs:minLength value="1"/>
+<xs:maxLength value="40"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STx_1-50">
+<xs:restriction base="STx">
+<xs:minLength value="1"/>
+<xs:maxLength value="50"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STx_1-65">
+<xs:restriction base="STx">
+<xs:minLength value="1"/>
+<xs:maxLength value="65"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STz_1-35">
+<xs:restriction base="STz">
+<xs:minLength value="1"/>
+<xs:maxLength value="35"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STz_1-8000">
+<xs:restriction base="STz">
+<xs:minLength value="1"/>
+<xs:maxLength value="8000"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STz_1-9000">
+<xs:restriction base="STz">
+<xs:minLength value="1"/>
+<xs:maxLength value="9000"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:annotation>
+<xs:documentation>Basic Field Types</xs:documentation>
+</xs:annotation>
+<xs:annotation>
+<xs:documentation>// The characteristics of the basic field types are specified in the</xs:documentation>
+</xs:annotation>
+<xs:annotation>
+<xs:documentation>// SWIFTStandards Final release guide; Part II - Components</xs:documentation>
+</xs:annotation>
+<xs:simpleType name="STA">
+<xs:restriction base="xs:string">
+<xs:pattern value="[A-Za-z]*"/>
+<xs:pattern value="(_#ErrorCode:M60)"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STB">
+<xs:restriction base="xs:string">
+<xs:pattern value="[A-Za-z0-9]*"/>
+<xs:pattern value="(_#ErrorCode:M60)"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STBicBei">
+<xs:restriction base="xs:string">
+<xs:pattern value="[A-Z]{4}[A-Z]{2}[A-Z0-9]{2}"/>
+<xs:pattern value="[A-Z]{4}[A-Z]{2}[A-Z0-9]{2}[A-Z0-9]{3}"/>
+<xs:pattern value="(_#ErrorCode:T27)"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STCenturyYearMonthDate">
+<xs:restriction base="STn">
+<xs:pattern value="[0-9]{4}(([0][1-9])|([1][012]))(([012][0-9])|([3][01]))"/>
+<xs:pattern value="(_#ErrorCode:T50)"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STMonthDate">
+<xs:restriction base="STn">
+<xs:pattern value="(([0][1-9])|([1][012]))(([012][0-9])|([3][01]))"/>
+<xs:pattern value="(_#ErrorCode:T50)"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STYearMonthDate">
+<xs:restriction base="STn">
+<xs:pattern value="[0-9]{2}(([0][1-9])|([1][012]))(([012][0-9])|([3][01]))"/>
+<xs:pattern value="(_#ErrorCode:T50)"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STa">
+<xs:restriction base="xs:string">
+<xs:pattern value="[A-Z]*"/>
+<xs:pattern value="(_#ErrorCode:M60)"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STc">
+<xs:restriction base="xs:string">
+<xs:pattern value="[A-Z0-9]*"/>
+<xs:pattern value="(_#ErrorCode:M60)"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STd">
+<xs:restriction base="xs:float">
+<xs:pattern value="[+\-]?[0-9]+(\.[0-9]+)?"/>
+<xs:pattern value="(_#ErrorCode:T40/T43)"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STd_SignLess">
+<xs:restriction base="xs:float">
+<xs:pattern value="[0-9]+(\.[0-9]+)?"/>
+<xs:pattern value="(_#ErrorCode:T40/T43)"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STe">
+<xs:restriction base="xs:string">
+<xs:pattern value="[ ]"/>
+<xs:pattern value="(_#ErrorCode:M60)"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STh">
+<xs:restriction base="xs:string">
+<xs:pattern value="[0-9A-F]*"/>
+<xs:pattern value="(_#ErrorCode:M60)"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STn">
+<xs:restriction base="xs:string">
+<xs:pattern value="[0-9]*"/>
+<xs:pattern value="(_#ErrorCode:M60)"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STn_OptionalSign">
+<xs:restriction base="xs:string">
+<xs:pattern value="[+\-]?[0-9]*"/>
+<xs:pattern value="(_#ErrorCode:M60)"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STs">
+<xs:restriction base="xs:string">
+<xs:pattern value="[+\-]"/>
+<xs:pattern value="(_#ErrorCode:M60)"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STx">
+<xs:restriction base="ST_string_OnlySpaceOrSpacesNotAllowed">
+<xs:pattern value="[A-Za-z0-9/\-?:().,'+ ]*"/>
+<xs:pattern value="(_#ErrorCode:M60)"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STy">
+<xs:restriction base="xs:string">
+<xs:pattern value="([A-Z0-9 .,\-()/='+:?!%*;]|&quot;|&amp;|&lt;|&gt;)*"/>
+<xs:pattern value="(_#ErrorCode:M60)"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="STz">
+<xs:restriction base="xs:string">
+<xs:pattern value="([A-Za-z0-9.,\-()/='+:?@#\r\n {!%*;]|&quot;|&amp;|&lt;|&gt;)*"/>
+<xs:pattern value="(_#ErrorCode:M60)"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="ST_string_OnlySpaceOrSpacesNotAllowed">
+<xs:restriction base="xs:string">
+<xs:pattern value="[ ]*[^ ](.|[\r\n])*"/>
+<xs:pattern value="(_#ErrorCode:M60)"/>
+</xs:restriction>
+</xs:simpleType>
+</xs:schema>

@@ -1,0 +1,28 @@
+<div style="font-family:'Arial';font-size:16px;color:#333;margin-left:20px;">
+	<p>Привет,</p>
+
+	<p>Некоторые из потока данные, полученные вами в недействительный/предупреждение статус. Следующий список представляет одинаково.</p>
+	
+	<table border='1'>
+	  	<tr>
+	    	<td><b>Поступила время</b></td>
+              <td><b>Schema</b></td>
+	    	<td><b>Статус</b></td>
+	    	<td><b>Сообщение</b></td>
+	  	</tr>
+	  	#foreach( $dataStream in $dataStreams )
+              #set( $url = "$serverUrl$dataStream.idDatastream")
+		    <tr>
+		      <td>$dataStream.ReceivedDate $dataStream.ReceivedTime</td>
+              <td><a href=$url> $dataStream.schemaName</a></td>
+		      <td>
+		      	#if($dataStream.checked==0) Invalid #else Warn	#end
+		      </td>
+		      <td>$dataStream.message</td>      
+		    </tr>
+	  	#end
+	</table>
+	
+	<p>спасибо,</p>
+	<p>Поддержка </p>
+</div>
