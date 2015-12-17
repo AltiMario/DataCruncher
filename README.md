@@ -1,22 +1,21 @@
 # SeerDataCruncher
 SEE-R Data Cruncher is a cutting edge technology Data Quality Firewall, Data Quality Monitor and ETL middleware to manage data streams on the fly.
 
+
+
 **SeerDataCruncher modules**
 
 There's one parent-module (seerdatacruncher-parent) which has only one pom and no other files. This pom is parent for all child modules, and has dependencies which are common for all child modules. This means that all new common dependencies must be introduced in this pom. 
 
 There's also child-module with basic functionality which takes dependencies from parent-module.
+
 1. To build project first of all you should checkout parent-module and then seerdatacruncher from git into local workspace.
 
-2. Then using win-cmd, build projects in this order: seerdatacruncher-parent, seerdatacruncher. The maven command can be like this: 'mvn clean install -U'
+2. Build projects in this order: seerdatacruncher-parent, seerdatacruncher. The maven command can be like this: 'mvn clean install -U'
 
 3. Modify the persistence.xml and create an empty db (MySQL by default) called datacruncher
 
-4. If 2 builds are successfully completed, you'll find war in seerdatacruncher/target. It can be deployed on  tomcat (version > 7.0).
-
-5. To build the Enterprise Edition (SeerDataCruncher-ee) you have to build before the project SeerDataCruncher-license
-
-
+4. If 2 builds are successfully completed, you'll find war in seerdatacruncher/target. It can be deployed on tomcat (version > 7.0).
 
 
 ----------------------------- 
