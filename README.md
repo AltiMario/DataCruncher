@@ -2,7 +2,7 @@
 SeerDataCruncher is a Data Quality Firewall, Data Quality Monitor and ETL middleware to manage data streams on the fly.
 
 
-
+----------------------------- 
 **SeerDataCruncher modules**
 
 There's one parent-module (seerdatacruncher-parent) which has only one pom and no other files. This pom is parent for all child modules, and has dependencies which are common for all child modules. This means that all new common dependencies must be introduced in this pom.
