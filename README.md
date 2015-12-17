@@ -1,5 +1,5 @@
 # SeerDataCruncher
-SEE-R Data Cruncher is a Data Quality Firewall, Data Quality Monitor and ETL middleware to manage data streams on the fly.
+SeerDataCruncher is a Data Quality Firewall, Data Quality Monitor and ETL middleware to manage data streams on the fly.
 
 
 
