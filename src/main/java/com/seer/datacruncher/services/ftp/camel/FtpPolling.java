@@ -56,7 +56,7 @@ public class FtpPolling extends RouteBuilder implements DaoSet {
 		
         FtpServerHandler ftpServerHandler = new FtpServerHandler();
         ftpServerHandler.init();
-        
+
 		// If input directory is not set, set inputDirectory as rootDirectory
 		if(StringUtils.isBlank(inputDir)){
 			inputDir = "/";

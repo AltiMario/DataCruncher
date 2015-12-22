@@ -18,15 +18,16 @@
 
 package com.seer.datacruncher.services.ftp;
 
+import org.apache.ftpserver.FtpServer;
+import org.apache.ftpserver.FtpServerFactory;
+import org.apache.ftpserver.filesystem.nativefs.NativeFileSystemFactory;
+import org.apache.ftpserver.listener.ListenerFactory;
+import org.apache.log4j.Logger;
+
 import com.seer.datacruncher.constants.Servers;
 import com.seer.datacruncher.jpa.dao.DaoSet;
 import com.seer.datacruncher.jpa.entity.ServersEntity;
 import com.seer.datacruncher.spring.AppContext;
-
-import org.apache.ftpserver.FtpServer;
-import org.apache.ftpserver.FtpServerFactory;
-import org.apache.ftpserver.filesystem.nativefs.NativeFileSystemFactory;
-import org.apache.log4j.Logger;
 
 /**
  * This is a spring bean class. and used to start and stop embedded FTP server. 
@@ -50,9 +51,15 @@ public class FtpServerHandler implements DaoSet {
 			*/
 			//System.out.println("HOME DIRECTORY:"+homedirectory);
 			//System.out.println("maxIdleTimeInSec:"+maxIdleTimeInSec);
+			
+			ListenerFactory factory = new ListenerFactory();
+			factory.setPort(2221);
+			
 			FtpServerFactory serverFactory = new FtpServerFactory();
-			UserAuthenticationManagerFactory userAuthManagerFactory =  AppContext.getApplicationContext()
-			.getBean(UserAuthenticationManagerFactory.class);
+			serverFactory.addListener("default", factory.createListener());
+			
+			UserAuthenticationManagerFactory userAuthManagerFactory =  AppContext.getApplicationContext().getBean(UserAuthenticationManagerFactory.class);
+			
 			serverFactory.setUserManager(userAuthManagerFactory.createUserManager());
 			NativeFileSystemFactory f = new NativeFileSystemFactory();
 			f.setCreateHome(true);

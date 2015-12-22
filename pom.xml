@@ -3,7 +3,6 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>SeerDataCruncher</artifactId>
-    <version>1.0</version>
     <packaging>war</packaging>
     <name>SEE-R Data Cruncher</name>
 
@@ -33,6 +32,8 @@
 					</execution>
 				</executions>
 			</plugin>
+			
+			<!--
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-install-plugin</artifactId>
@@ -56,6 +57,8 @@
 					</execution>
 				</executions>
 			</plugin>
+			-->
+			
 		</plugins>
 	</build>
 </project>
