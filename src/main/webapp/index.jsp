@@ -22,7 +22,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html">
-	<title>DataCruncher</title>
+	<title>SeerDataCruncher</title>
 	<link rel="stylesheet" type="text/css" href="./extjs/css/ext-all-neptune.css"/>
 	<link href="./images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <script type="text/javascript" src="./extjs/ext-all.js"></script>
