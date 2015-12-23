@@ -23,33 +23,39 @@ import java.util.Map;
 
 import org.json.JSONObject;
 
-import com.mashape.client.exceptions.MashapeClientException;
-import com.mashape.client.http.HttpClient;
-import com.mashape.client.http.HttpMethod;
-import com.mashape.client.http.callback.MashapeCallback;
+//import com.mashape.unirest.exceptions.MashapeClientException;
+//import com.mashape.unirest.http.client.HttpClient;
+//import com.mashape.unirest.http.HttpClientHelper;
+//import com.mashape.unirest.http.HttpMethod;
+//import com.mashape.unirest.http.Unirest;
+//import com.mashape.unirest.http.callback.MashapeCallback;
 
 public class TokenMashape {
 
-	private String publicKey;
-	private String privateKey;
-
-	public TokenMashape(String publicKey, String privateKey) {
-		this.publicKey = publicKey;
-		this.privateKey = privateKey;
-	}
-
-	public JSONObject validateDataStream(String idSchema, String dataStream) throws MashapeClientException {
-		Map<String, String> parameters = new HashMap<String, String>();
-		parameters.put("idSchema", idSchema);
-		parameters.put("dataStream", dataStream);
-		return (JSONObject) HttpClient.doRequest(HttpMethod.POST, "http://hH15CWJDPI7PQyJ9gbVmlkEbP.proxy.mashape.com/mashape/validateDataStream.json", parameters, true, publicKey, privateKey, true);
-	}
-
-	public Thread validateDataStream(String idSchema, String dataStream, MashapeCallback mashapeCallback) {
-		Map<String, String> parameters = new HashMap<String, String>();
-		parameters.put("idSchema", idSchema);
-		parameters.put("dataStream", dataStream);
-		return HttpClient.doRequest(HttpMethod.POST, "http://hH15CWJDPI7PQyJ9gbVmlkEbP.proxy.mashape.com/mashape/validateDataStream.json", parameters, true, publicKey, privateKey, true, mashapeCallback);
-	}
+//	private String publicKey;
+//	private String privateKey;
+//
+//	public TokenMashape(String publicKey, String privateKey) {
+//		this.publicKey = publicKey;
+//		this.privateKey = privateKey;
+//	}
+//
+//	public JSONObject validateDataStream(String idSchema, String dataStream) throws MashapeClientException {
+//		Map<String, String> parameters = new HashMap<String, String>();
+//		parameters.put("idSchema", idSchema);
+//		parameters.put("dataStream", dataStream);
+//		Unirest.post("http://hH15CWJDPI7PQyJ9gbVmlkEbP.proxy.mashape.com/mashape/validateDataStream.json").asJson().getBody()
+//		return (JSONObject) HttpClientHelper.doRequest(HttpMethod.POST, , parameters, true, publicKey, privateKey, true);
+//		return null;
+//	}
+//
+//	public Thread validateDataStream(String idSchema, String dataStream, MashapeCallback mashapeCallback) {
+//		Map<String, String> parameters = new HashMap<String, String>();
+//		parameters.put("idSchema", idSchema);
+//		parameters.put("dataStream", dataStream);
+//		Unirest.post("http://hH15CWJDPI7PQyJ9gbVmlkEbP.proxy.mashape.com/mashape/validateDataStream.json").fields(parameters)
+//		return HttpClient.doRequest(HttpMethod.POST, , parameters, true, publicKey, privateKey, true, mashapeCallback);
+//		return null;
+//	}
 
 }

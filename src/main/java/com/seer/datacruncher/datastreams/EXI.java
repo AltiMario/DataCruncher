@@ -18,29 +18,36 @@
 
 package com.seer.datacruncher.datastreams;
 
-import com.siemens.ct.exi.api.sax.EXIResult;
-import com.siemens.ct.exi.api.sax.EXISource;
-import com.siemens.ct.exi.exceptions.EXIException;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.sax.SAXSource;
+import javax.xml.transform.stream.StreamResult;
+
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
 
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.sax.SAXResult;
-import javax.xml.transform.sax.SAXSource;
-import javax.xml.transform.stream.StreamResult;
-import java.io.*;
+import com.siemens.ct.exi.api.sax.EXIResult;
+import com.siemens.ct.exi.api.sax.EXISource;
+import com.siemens.ct.exi.exceptions.EXIException;
 
 public final class EXI {
 
-	protected void encodeFile(String xmlInput, String exiOutput)
-			throws SAXException, IOException, EXIException {
+	protected void encodeFile(String xmlInput, String exiOutput) throws SAXException, IOException, EXIException {
 
 		OutputStream exiOS = new FileOutputStream(exiOutput);
-		SAXResult exiResult = new EXIResult(exiOS);
+		EXIResult exiResult = new EXIResult();
+		exiResult.setOutputStream(exiOS);
 		XMLReader xmlReader = XMLReaderFactory.createXMLReader();
 		xmlReader.setContentHandler(exiResult.getHandler());
 		xmlReader.parse(new InputSource(xmlInput));
@@ -49,7 +56,7 @@ public final class EXI {
 
 	protected void decodeFile(String exiInput, String xmlOutput)
 			throws SAXException, IOException, TransformerException, EXIException {
-		
+
 		SAXSource exiSource = new EXISource();
 		XMLReader exiReader = exiSource.getXMLReader();
 		TransformerFactory tf = TransformerFactory.newInstance();
@@ -61,19 +68,19 @@ public final class EXI {
 		transformer.transform(exiSource, new StreamResult(os));
 		os.close();
 	}
-	protected void encode(String xmlInput, String exiOutput)
-			throws SAXException, IOException, EXIException {
-		
+
+	protected void encode(String xmlInput, String exiOutput) throws SAXException, IOException, EXIException {
+
 		OutputStream exiOS = new FileOutputStream(exiOutput);
-		SAXResult exiResult = new EXIResult(exiOS);
+		EXIResult exiResult = new EXIResult();
+		exiResult.setOutputStream(exiOS);
 		XMLReader xmlReader = XMLReaderFactory.createXMLReader();
 		xmlReader.setContentHandler(exiResult.getHandler());
 		xmlReader.parse(new InputSource(xmlInput));
 		exiOS.close();
 	}
 
-	protected String decode(String exiInput)
-			throws SAXException, IOException, TransformerException, EXIException {
+	protected String decode(String exiInput) throws SAXException, IOException, TransformerException, EXIException {
 		SAXSource exiSource = new EXISource();
 		XMLReader exiReader = exiSource.getXMLReader();
 		TransformerFactory tf = TransformerFactory.newInstance();
@@ -86,8 +93,10 @@ public final class EXI {
 		os.close();
 		return os.toString();
 	}
+
 	/**
 	 * This method will use to convert EXI byte array into String
+	 * 
 	 * @param exiInput
 	 * @return
 	 * @throws SAXException
@@ -95,8 +104,7 @@ public final class EXI {
 	 * @throws TransformerException
 	 * @throws EXIException
 	 */
-	public static String decode(byte[] exiInput)
-				throws SAXException, IOException, TransformerException, EXIException {
+	public static String decode(byte[] exiInput) throws SAXException, IOException, TransformerException, EXIException {
 		SAXSource exiSource = new EXISource();
 		XMLReader exiReader = exiSource.getXMLReader();
 		TransformerFactory tf = TransformerFactory.newInstance();
@@ -108,15 +116,16 @@ public final class EXI {
 		transformer.transform(exiSource, new StreamResult(os));
 		os.close();
 		return os.toString();
-	}	
-	
+	}
+
 	public static void encodeXmlToEXI(InputStream is, OutputStream os) throws SAXException, EXIException, IOException {
-		//OutputStream exiOS = new FileOutputStream(exiOutput);
-		SAXResult exiResult = new EXIResult(os);
+		// OutputStream exiOS = new FileOutputStream(exiOutput);
+		EXIResult exiResult = new EXIResult();
+		exiResult.setOutputStream(os);
 		XMLReader xmlReader = XMLReaderFactory.createXMLReader();
 		xmlReader.setContentHandler(exiResult.getHandler());
 		xmlReader.parse(new InputSource(is));
-		//exiOS.close();		
+		// exiOS.close();
 	}
 
 }
