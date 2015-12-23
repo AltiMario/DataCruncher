@@ -415,7 +415,7 @@ _label = {
     "attributeDetail": "Attribute detail",
     "companyName": "Company name",
     "companyWebsite": "Company website",
-    "position": "Position",
+    "position": "Role",
     "authorize": "I authorize the use of my personal data.",
     "trimChar" : "Trim char:",
     "linkToDb" : "DB field",
