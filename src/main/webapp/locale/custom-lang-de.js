@@ -215,7 +215,7 @@ _message = {
     "macro": "Makro",
     "exportPng": "Bild exportiert Diagram",
     "optionInEE" : "Function available in<br/><br/><b>Enterprise Edition version</b>",
-    "moduleName" : "Basic Edition",
+    "moduleName" : "Open Edition",
     "shareSchema": "Share with the world",
     "sendStream" : "Send stream",
     "noValuesForDisplay" : "No values to display",

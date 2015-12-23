@@ -214,7 +214,7 @@ _message = {
     "macro": "Macro",
     "exportPng": "Esportazione Immagine XSD",
 	"optionInEE" : "Funzione disponibile nella versione<br/><br/><b>Enterprise Edition</b>",
-	"moduleName" : "Basic Edition",
+	"moduleName" : "Open Edition",
 	"shareSchema": "Condividi con il mondo",
 	"sendStream" : "Invia flusso",
 	"noValuesForDisplay" : "Nessun dato da visualizzare",

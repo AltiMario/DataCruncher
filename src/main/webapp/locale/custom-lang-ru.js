@@ -214,7 +214,7 @@ _message = {
     "macro": "Макро",
     "exportPng": "Диаграмма Экспорт изображения",
     "optionInEE" : "Функционал доступен в версии<br/><br/><b>Enterprise Edition</b>",
-    "moduleName" : "Basic Edition",
+    "moduleName" : "Open Edition",
     "shareSchema": "Share with the world",
     "sendStream" : "Отправить поток",
     "noValuesForDisplay" : "Нет значений для отображения",
