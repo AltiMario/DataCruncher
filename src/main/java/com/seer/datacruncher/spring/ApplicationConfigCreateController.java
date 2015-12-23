@@ -100,7 +100,7 @@ public class ApplicationConfigCreateController implements Controller, DaoSet {
 					ex.printStackTrace();
 				}
 			}
-			UserEntity userEntity = new UserEntity(userName, password, name, surname, email, 1, 1, language, idAlert, -1, date, "neptune");
+			UserEntity userEntity = new UserEntity(userName, password, name, surname, email, 1, 1, language, idAlert, -1, date, "classic");
 			create = usersDao.create(userEntity);
 			create.setMessage(I18n.getMessage("success.userProfileSaved"));
 			

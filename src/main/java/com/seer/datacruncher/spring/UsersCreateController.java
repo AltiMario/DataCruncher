@@ -67,7 +67,7 @@ public class UsersCreateController implements Controller, DaoSet {
 			HttpSession session = request.getSession();
 			UserEntity loggedUser = (UserEntity)session.getAttribute("user");
 			userEntity = mapper.readValue(json , UserEntity.class);
-			userEntity.setTheme("neptune");
+			userEntity.setTheme("classic");
 			userEntity.setCreatedBy(loggedUser.getIdUser());
 		}else{
 			try {

@@ -183,7 +183,7 @@ public class UsersDao {
 				
 				String encPassword = new CryptoUtil().encrypt("admin");
 				userEntry = new UserEntity("admin", encPassword, "Administrator", "", "info@see-r.com", 1, 1, "en",
-						Alerts.NEVER.getDbCode(), -1, null, "neptune");
+						Alerts.NEVER.getDbCode(), -1, null, "classic");
 				commonDao.persist(userEntry);
 			}
 		} catch (Exception exception) {
