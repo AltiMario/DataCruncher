@@ -601,7 +601,7 @@ function popupSchemas(record, add) {
 					        	 width : 95,
 					        	 height : 83,
 					        	 layout : 'absolute',
-					        	 title : 'Global', //_label['global'],
+					        	 title : _label['global'],
 					        	 items : [
 					        	          {
 					        	        	  xtype : 'checkboxfield',
@@ -611,7 +611,7 @@ function popupSchemas(record, add) {
 					        	        	  inputValue : true,
 					        	        	  submitValue: false,
 					        	        	  disabled : !record.get('publishToDb'),
-					        	        	  boxLabel : 'Forecast', //_label['forecasting'],
+					        	        	  boxLabel : _label['forecasting'],
 					        	        	  checked : record.get('isForecasted')
 					        	          },
 					        	          {
@@ -622,7 +622,7 @@ function popupSchemas(record, add) {
 					        	        	  inputValue : true,
 					        	        	  submitValue: false,
 					        	        	  disabled : !record.get('publishToDb'),
-					        	        	  boxLabel : 'Index', //_label['indexing'],
+					        	        	  boxLabel : _label['indexing'],
 					        	        	  checked : record.get('isIndexedIncrement')
 					        	          }				        	          
 					        	          ]
