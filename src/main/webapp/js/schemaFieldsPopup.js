@@ -660,6 +660,10 @@ function popupSchemaField(record, action, fieldType, isGenerationStream) {
 					}
 	        	}
 	        },
+
+            {id: 'indexIncremental', value: "Index incremental", x: 300, xtype: 'displayfield' , y: 95},
+            {id: 'chkBoxIndexIncremental', xtype: 'checkboxfield', x: 300, y: 115 },	                     
+
 	        {id: 'idSliderField', xtype: 'sliderfield', x: 190, y: 115, width: 90, value: 0, minValue: 0, maxValue: 60, disabled: true},
 	        {value: _message['type'] , x: 5 , xtype: 'displayfield' , y: 50},
 	        {displayField: 'name' , id: 'numericType' , queryMode: 'local' , store : storeNumericType , triggerAction : 'all', valueField : 'idNumericType' , x : 5 , xtype : 'combo' , width : 150 , y : 70 ,
@@ -690,7 +694,9 @@ function popupSchemaField(record, action, fieldType, isGenerationStream) {
 	                }
 	            }
 	        },
+	        	        
 	        {id: 'fractionDigitsLabel' , value: _message['decimalPlaces'] , x: 165 , xtype: 'displayfield' , y: 50},
+
 	        {
 	            xtype : 'fieldset',
 	            height : 78,
@@ -738,6 +744,7 @@ function popupSchemaField(record, action, fieldType, isGenerationStream) {
 	                })
 	            ]
 	        },
+	        	        
 	        {id: 'numericSizeLabel' , value:_message['sizeField'] , x: 5 , xtype: 'displayfield' , y: 95},
 	        {id: 'numericSize' , x: 5 , xtype: 'numberfield', hideTrigger: true, minValue: 1,allowBlank: false, width: 120 , y: 115, allowDecimals : false},	        
 	        {id: 'fractionDigits' , x: 165 , xtype: 'textfield' , width: 150 , y: 70, disabled: true},
@@ -1128,6 +1135,10 @@ function popupSchemaField(record, action, fieldType, isGenerationStream) {
 							idAlignDateTime: Ext.getCmp('idAlignDateTime').getValue(),
 		                    fillCharDateTime: fillChar,
 		                    errorToleranceValue: Ext.getCmp('chkBoxError').getValue() == true ? Ext.getCmp('idSliderField').getValue() : -1,
+		                    
+		                    // Index incremental
+		                    indexIncrementalValue: Ext.getCmp('chkBoxIndexIncremental').getValue() == true ? "true" : "false",
+
 		                    errorType: Ext.getCmp('errorTypeRadioId').getChecked()[0].getSubmitValue(),
                             selectedExtraCheck:selectedExtraCheck
                         },
@@ -1339,7 +1350,7 @@ function popupSchemaField(record, action, fieldType, isGenerationStream) {
 
                 Ext.getCmp('numericType').setValue(record.idNumericType);
                 Ext.getCmp("fractionDigits").setValue(record.fractionDigits);
-                
+
                 if(record.errorToleranceValue == -1) {
                 	Ext.getCmp("idSliderField").setValue(0);                	
                 	Ext.getCmp('idSliderField').setDisabled(true);
@@ -1350,6 +1361,8 @@ function popupSchemaField(record, action, fieldType, isGenerationStream) {
                 	Ext.getCmp("chkBoxError").setValue(true);
                 }
                 
+            	Ext.getCmp("chkBoxIndexIncremental").setValue(record.indexIncremental);
+
                 if(Ext.getCmp("numericType").getValue() == 1) {
                     Ext.getCmp("fractionDigitsLabel").setDisabled(true);
                     Ext.getCmp("fractionDigits").setDisabled(true);

@@ -158,7 +158,6 @@ public class SchemaFieldEntity implements Serializable {
     @Column(name = "forecast_accuracy", nullable = false)
     private Integer forecastAccuracy = 50;
 
-
     @Column(name = "is_attribute" , nullable = false)
     private boolean is_Attribute = false;
 
@@ -174,6 +173,9 @@ public class SchemaFieldEntity implements Serializable {
 
     @Column(name = "error_tolerance_value")
     private int errorToleranceValue;
+
+    @Column(name = "index_incremental")    
+    private boolean indexIncremental;
     
 	@Column(name = "error_type", nullable = false)
 	private int errorType;	    
@@ -457,6 +459,14 @@ public class SchemaFieldEntity implements Serializable {
 
 	public void setErrorType(int errorType) {
 		this.errorType = errorType;
+	}
+
+	public boolean isIndexIncremental() {
+		return indexIncremental;
+	}
+
+	public void setIndexIncremental(boolean indexIncremental) {
+		this.indexIncremental = indexIncremental;
 	}
 
 	/**

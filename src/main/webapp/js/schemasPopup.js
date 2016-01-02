@@ -18,7 +18,6 @@
 
 var idSchemaType = 1;
 function popupSchemas(record, add) {
-	
 	if (add) {
 		idSchemaType = 1;
 		scheduleDataSource.schedulerStore.load();
@@ -275,18 +274,22 @@ function popupSchemas(record, add) {
  										/*if (newValue == false && Ext.getCmp('idForecastingCheckBox').checked == true) 
  											Ext.getCmp('idForecastingCheckBox').setValue(false);*/
 					        	        					  var forecastChkbx = Ext.getCmp('idForecastingCheckBox'); 
+					        	        					  var indexChkbx = Ext.getCmp('idIndexIncrementCheckBox'); 
 					        	        					  var wtChkbx = Ext.getCmp('idWarnToleranceCheckBox');
 					        	        					  //if publishToDb select event
 					        	        					  if (newValue && record.get('idDatabase') != 0) {
 					        	        						  forecastChkbx.enable();
+					        	        						  indexChkbx.enable();
 					        	        						  wtChkbx.enable();
 					        	        					  } else {
 					        	        						  forecastChkbx.disable();
+					        	        						  indexChkbx.disable();
 					        	        						  wtChkbx.disable();
 					        	        					  }
 					        	        					  //if publishToDb deselect event
 					        	        					  if (newValue == false) {
 					        	        						  if (forecastChkbx.checked == true) forecastChkbx.setValue(false);
+					        	        						  if (indexChkbx.checked == true) indexChkbx.setValue(false);
 					        	        						  if (wtChkbx.checked == true) wtChkbx.setValue(false);
 					        	        					  }
 					        	        				  },
@@ -314,6 +317,7 @@ function popupSchemas(record, add) {
 					        	        				  change : function(field, newValue, oldValue) {
 					        	        					  if (newValue != 0) {
 					        	        						  Ext.getCmp('idForecastingCheckBox').enable();
+					        	        						  Ext.getCmp('idIndexIncrementCheckBox').enable();
 					        	        						  Ext.getCmp('idWarnToleranceCheckBox').enable();
 					        	        					  }
 					        	        				  }
@@ -597,7 +601,7 @@ function popupSchemas(record, add) {
 					        	 width : 95,
 					        	 height : 83,
 					        	 layout : 'absolute',
-					        	 title : _label['forecasting'],
+					        	 title : 'Global', //_label['global'],
 					        	 items : [
 					        	          {
 					        	        	  xtype : 'checkboxfield',
@@ -607,9 +611,20 @@ function popupSchemas(record, add) {
 					        	        	  inputValue : true,
 					        	        	  submitValue: false,
 					        	        	  disabled : !record.get('publishToDb'),
-					        	        	  boxLabel : _label['available'],
+					        	        	  boxLabel : 'Forecast', //_label['forecasting'],
 					        	        	  checked : record.get('isForecasted')
-					        	          }
+					        	          },
+					        	          {
+					        	        	  xtype : 'checkboxfield',
+					        	        	  id : 'idIndexIncrementCheckBox',
+					        	        	  y: 30,
+					        	        	  name : 'idIndexIncrementCheckBox',
+					        	        	  inputValue : true,
+					        	        	  submitValue: false,
+					        	        	  disabled : !record.get('publishToDb'),
+					        	        	  boxLabel : 'Index', //_label['indexing'],
+					        	        	  checked : record.get('isIndexedIncrement')
+					        	          }				        	          
 					        	          ]
 					         },
 
@@ -819,11 +834,15 @@ function popupSchemas(record, add) {
                                                 } else {
                                                     record.set('isMongoDB', false);
                                                 }
+                                                
 			                    				record.set('isForecasted', Ext.getCmp('idForecastingCheckBox').getValue());
+			                    				record.set('isIndexedIncrement', Ext.getCmp('idIndexIncrementCheckBox').getValue());
+			                    				
 			                    				record.set('isWarnTolerance', Ext.getCmp('idWarnToleranceCheckBox').getValue());
 			                    				record.set('chrDelimiter', Ext.getCmp('trimchar').getValue());
 			                    				record.set("idSchemaType", idSchemaType);
 			                    				record.set("idValidationDatabase", Ext.getCmp('idValidationDatabase').getValue());
+			                    				
 			                    				if (add) {
 			                    					schemasGrid.store.insert(0, record);
 			                    				} 

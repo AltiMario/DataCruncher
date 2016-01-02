@@ -114,6 +114,7 @@ public class SchemaFieldsPopupUpdateController implements Controller, DaoSet {
         String errorType= request.getParameter("errorType");
 		String selectedExtraCheckVals = request.getParameter("selectedExtraCheck");
         int errorToleranceValue = Integer.parseInt(request.getParameter("errorToleranceValue") == null ? "-1" : request.getParameter("errorToleranceValue"));
+        boolean indexIncremental = Boolean.parseBoolean(request.getParameter("indexIncrementalValue"));
         SchemaEntity schemaEntity = schemasDao.find(Long.parseLong(idSchema));
         SchemaFieldEntity schemaFieldEntity = schemaFieldsDao.find(Long.parseLong(idSchemaField));
         schemasXSDDao.destroy(schemaFieldEntity.getIdSchema());
@@ -122,6 +123,7 @@ public class SchemaFieldsPopupUpdateController implements Controller, DaoSet {
         schemaFieldEntity.setName(name);
         schemaFieldEntity.setDescription(description.replace('\u200b',' '));
         schemaFieldEntity.setErrorToleranceValue(errorToleranceValue);
+        schemaFieldEntity.setIndexIncremental(indexIncremental);
         if (errorType != null)
             schemaFieldEntity.setErrorType(Integer.parseInt(request.getParameter("errorType")));
         
@@ -416,6 +418,7 @@ public class SchemaFieldsPopupUpdateController implements Controller, DaoSet {
 			schemaFieldEntity.setIdCustomError(rootEntity.getIdCustomError());
 			schemaFieldEntity.setIdFieldType(FieldType.alphanumeric);
 			schemaFieldEntity.setErrorToleranceValue(rootEntity.getErrorToleranceValue());
+			schemaFieldEntity.setIndexIncremental(rootEntity.isIndexIncremental());
 			schemaFieldEntity.setIdNumericType(rootEntity.getIdNumericType());
 			schemaFieldEntity.setMaxOccurs(rootEntity.getMaxOccurs());
 			schemaFieldEntity.setErrorType(rootEntity.getErrorType());

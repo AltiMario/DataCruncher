@@ -158,9 +158,15 @@ public class DatastreamsInput implements DaoSet {
                     checkEventTrigger(idSchema);
                 }
                 ExecutorService executor = Executors.newFixedThreadPool(poolSize);
+                if ( schemaEntity.getIsIndexedIncrement() ) {
+                	executor = Executors.newSingleThreadExecutor();
+                }
                 long numElemChecked = schemaFieldsDao.findNumExtraCheck(idSchema);
                 String defaultNsLib = schemaEntity.getIdSchemaLib() == 0 ? null : schemaLibDao.find(schemaEntity.getIdSchemaLib()).getDefaultNsLib();
                 List<Future<Map<String, Object>>> list = new ArrayList<Future<Map<String, Object>>>();
+                
+            	// TODO qui potrei prendere insieme tutti gli stream (ognuno poi va analizzato solo per i field che sono "globali")
+
                 for (String stream : streamsList) {
                     Callable<Map<String, Object>> callee = new ValidationCallable(idSchema, schemaEntity, stream, bytes, isUnitTest,
                             okEvent, koEvent, warnEvent, okEventList, koEventList, warnEventList, object, numElemChecked, appEntity,

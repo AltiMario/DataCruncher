@@ -32,6 +32,7 @@ import com.seer.datacruncher.utils.generic.I18n;
 import com.seer.datacruncher.utils.generic.StreamsUtils;
 import com.seer.datacruncher.validation.DatastreamsValidator;
 import com.seer.datacruncher.validation.ForcastedFieldsValidation;
+import com.seer.datacruncher.validation.IndexIncrementalValidation;
 
 import java.util.HashMap;
 import java.util.List;
@@ -152,7 +153,10 @@ public class ValidationCallable implements Callable<Map<String, Object>>, DaoSet
 		if (schemaEntity.getIdSchemaType() == SchemaType.STANDARD) { // Standard schema
 			if (datastreamDTO.getSuccess()) {
 				DatastreamsValidator dsValidator = new DatastreamsValidator();
+				
+				// TODO validazione standard di un datastreamDTO versa una singola entity (XML contro il suo XSD)
 				dsValidator.standardValidation(datastreamDTO, schemaEntity);
+				
 				if (datastreamDTO.getSuccess()) {
 					datastreamEntity.setChecked(1);
 				} else if (!datastreamDTO.getSuccess() && !datastreamDTO.isWarning()) {
@@ -204,6 +208,17 @@ public class ValidationCallable implements Callable<Map<String, Object>>, DaoSet
                                 datastreamDTO.setMessage(res);
                                 datastreamEntity.setChecked(2);
                             }
+                            else {
+                                res = IndexIncrementalValidation.validate(schemaEntity.getIdSchema());
+                                if (res != null) {
+                                    isWarning = true;
+                                    datastreamDTO.setWarning(true);
+                                    datastreamDTO.setSuccess(false);
+                                    datastreamDTO.setMessage(res);
+                                    datastreamEntity.setChecked(2);
+                                }
+                            }
+                            
                         }
 					}
 					if(isNotAvailable){

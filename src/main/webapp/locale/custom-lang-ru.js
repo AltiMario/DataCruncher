@@ -400,6 +400,8 @@ _label = {
     "streamLogging" : "Логгирование потока",
     "timeWindow" : "Окно планировщика",
     "forecasting" : "Прогнозирование",
+    "indexing" : "Indexing",
+    "global" : "Global",
     "delimiter" : "Разделитель",
     "available" : "Доступно",
     "speed" : "Скорость",

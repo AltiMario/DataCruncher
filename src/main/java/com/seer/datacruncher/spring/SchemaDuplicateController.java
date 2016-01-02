@@ -145,6 +145,7 @@ public class SchemaDuplicateController implements Controller, DaoSet {
         target.setIdValidationDatabase(source.getIdValidationDatabase());
         target.setSchemaEvents(source.getSchemaEvents());
         target.setIsForecasted(source.getIsForecasted());
+        target.setIsIndexedIncrement(source.getIsIndexedIncrement());
         target.setIsEventTrigger(source.getIsEventTrigger());
         target.setIdTriggerStatus(source.getIdTriggerStatus());
         target.setIsMongoDB(source.getIsMongoDB());
@@ -200,7 +201,7 @@ public class SchemaDuplicateController implements Controller, DaoSet {
         schemaFieldEntity.setIs_Attribute(ent.getIs_Attribute());
         schemaFieldEntity.setMaxOccurs(ent.getMaxOccurs());
         schemaFieldEntity.setErrorToleranceValue(ent.getErrorToleranceValue());
-        
+        schemaFieldEntity.setIndexIncremental(ent.isIndexIncremental());
         return schemaFieldsDao.create(schemaFieldEntity);
     }
 }

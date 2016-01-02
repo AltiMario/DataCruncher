@@ -399,6 +399,8 @@ _label = {
     "streamLogging" : "Stream logging",
     "timeWindow" : "Finestra Temporale",
     "forecasting" : "Previsione",
+    "indexing" : "Indexing",
+    "global" : "Global",
     "delimiter" : "Delimitatore",
     "available" : "Disponibile",
     "speed" : "Velocit&agrave;",

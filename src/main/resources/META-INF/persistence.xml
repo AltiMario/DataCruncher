@@ -8,15 +8,14 @@
             <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/datacruncher"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
 
-            <!--  SQL SERVER  properties
-            <property name="hibernate.connection.driver_class" value="net.sourceforge.jtds.jdbc.Driver"/>
-            <property name="hibernate.connection.url" value="jdbc:jtds:sqlserver://localhost:1433/datacruncher"/>
-            <property name="hibernate.dialect" value="org.hibernate.dialect.SQLServerDialect"/>
-            -->
+            <!--  SQL SERVER  properties -->
+            <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
+            <property name="hibernate.connection.url" value="jdbc:mysql://localhost/datacruncher"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
 
             <property name="hibernate.connection.autocommit" value="true"/>
             <property name="hibernate.connection.username" value="root"/>
-            <property name="hibernate.connection.password" value="r00m1n7h3m00n"/>
+            <property name="hibernate.connection.password" value="pippo80"/>
             <property name="hibernate.show_sql" value="false"/>
             <property name="hibernate.hbm2ddl.auto" value="update"/>
 

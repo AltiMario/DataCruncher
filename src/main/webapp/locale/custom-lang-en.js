@@ -401,6 +401,8 @@ _label = {
     "streamLogging" : "Stream logging",
     "timeWindow" : "Time window",
     "forecasting" : "Forecasting",
+    "indexing" : "Indexing",
+    "global" : "Global",
     "delimiter" : "Delimiter",
     "available" : "Available",
     "speed" : "Speed",

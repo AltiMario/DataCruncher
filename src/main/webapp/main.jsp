@@ -102,11 +102,11 @@
     <script type="text/javascript" src="./js/databasesContent.js"></script>
     <script type="text/javascript" src="./js/databasesPopup.js"></script>
     <script type="text/javascript" src="./js/loadingStreamPopup.js"></script>
-    <script type="text/javascript" src="./js/schemasContent.js"></script>
+    <script type="text/javascript" src="./js/schemasContent.js?pippo=<%=java.util.UUID.randomUUID().toString()%>"></script>
     <script type="text/javascript" src="./js/generationStreamContent.js"></script>
     <script type="text/javascript" src="./js/loadingStreamContent.js"></script>
     <script type="text/javascript" src="./js/standardContent.js"></script>
-    <script type="text/javascript" src="./js/schemasPopup.js"></script>
+    <script type="text/javascript" src="./js/schemasPopup.js?pippo=<%=java.util.UUID.randomUUID().toString()%>"></script>
     <script type="text/javascript" src="./js/generationStreamPopup.js"></script>
     <script type="text/javascript" src="./js/schemaFieldsTreePopup.js"></script>
     <script type="text/javascript" src="./js/generationStreamFieldsTreePopup.js"></script>
