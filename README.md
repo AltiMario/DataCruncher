@@ -56,4 +56,4 @@ For adding new menu item we need to do following:
 -----------------------------------------------
 **Architecture**
 
-![datacruncher_architecture.png](http://see-r.com/wp-content/uploads/2015/12/architecture.png)
+![datacruncher_architecture.png](http://see-r.com/wp-content/uploads/2016/01/architecture.png)
