@@ -42,13 +42,7 @@ public class IndexIncrementalValidation implements DaoSet {
 	private static Logger log = Logger.getLogger(IndexIncrementalValidation.class);
 
 	private IndexIncrementalValidation() {}
-	
-	/**
-	 * Validates whether stream value within forecasted range.
-	 * 
-	 * @param schemaId 
-	 * @return String with success/error message
-	 */
+
 	public static String validate(long schemaId) {
 		
 		class Pair {
