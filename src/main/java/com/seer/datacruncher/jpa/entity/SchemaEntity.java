@@ -40,6 +40,7 @@ import org.hibernate.annotations.Cascade;
 		@NamedQuery(name = "SchemaEntity.findByUserId", query = "SELECT a FROM SchemaEntity a, UserSchemasEntity us where us.idSchema=a.idSchema and us.idUser= :idUser ORDER BY a.idSchema DESC"),
 		@NamedQuery(name = "SchemaEntity.findByApplicationIds", query = "SELECT s FROM SchemaEntity s WHERE s.idApplication in ( :appIds ) ORDER BY s.idSchema DESC"),
 		@NamedQuery(name = "SchemaEntity.findByApplicationId", query = "SELECT s FROM SchemaEntity s WHERE s.idApplication = :appId ORDER BY s.idSchema DESC"),
+	    @NamedQuery(name = "SchemaEntity.findAllReferencing", query = "SELECT s FROM SchemaEntity s WHERE s.idDatabase = :idDatabase"),
 		@NamedQuery(name = "SchemaEntity.count", query = "SELECT COUNT (j) FROM SchemaEntity j WHERE j.idApplication <> 1"),
 		@NamedQuery(name = "SchemaEntity.find", query = "SELECT e FROM SchemaEntity e WHERE e.idApplication <> 1"),
 		@NamedQuery(name = "SchemaEntity.findAllByAppIdAndSchemaType", query = "SELECT e from SchemaEntity e Where e.idSchemaType in(:idSchemaType) and e.idApplication in (:appIds) ORDER BY e.idSchema DESC"),

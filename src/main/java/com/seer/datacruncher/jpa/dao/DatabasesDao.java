@@ -124,7 +124,15 @@ public class DatabasesDao {
 	public Destroy destroy(long idDatabase) {
 		Destroy destroy = new Destroy();
 		try {
-            commonDao.remove(DatabaseEntity.class, idDatabase);
+			if ( em.createNamedQuery("SchemaEntity.findAllReferencing").setParameter("idDatabase", idDatabase).getResultList().size() > 0 ) {
+	            destroy.setSuccess(false);
+	            destroy.setMessage(I18n.getMessage("error.schemaInDB"));
+	            destroy.setResults(null);
+	            return destroy;
+			}
+			else {
+	            commonDao.remove(DatabaseEntity.class, idDatabase);
+			}
         } catch (EntityNotFoundException ex) {
             destroy.setSuccess(false);
             destroy.setMessage(I18n.getMessage("error.schemaInDB"));

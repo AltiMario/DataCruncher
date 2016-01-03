@@ -115,7 +115,7 @@ storeDatabases.proxy.addListener('exception', function (proxy, response, operati
 				Ext.Msg.alert("" , _error['connectionError']);
 			} else{
 				App.setAlert(false , responseObj.message);
-				if (operation.action == 'create') {
+				if (operation.action == 'create' || operation.action == 'destroy') {
 	    			storeDatabases.load();
 	        	}else{
 	    			storeDatabases.remove();
