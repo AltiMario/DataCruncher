@@ -402,6 +402,7 @@ _label = {
     "forecasting" : "Прогнозирование",
     "indexing" : "Index",
     "global" : "Global",
+    "noHeader" : "No Header",
     "delimiter" : "Разделитель",
     "available" : "Доступно",
     "speed" : "Скорость",

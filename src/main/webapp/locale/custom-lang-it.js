@@ -401,6 +401,7 @@ _label = {
     "forecasting" : "Previsione",
     "indexing" : "Indice",
     "global" : "Globale",
+    "noHeader" : "No Header",
     "delimiter" : "Delimitatore",
     "available" : "Disponibile",
     "speed" : "Velocit&agrave;",

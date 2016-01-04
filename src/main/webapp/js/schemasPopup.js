@@ -439,7 +439,7 @@ function popupSchemas(record, add) {
 					        	        			  enforceMaxLength: true,
 					        	        			  disabled: true
 					        	          },
-					        	          {value: 'No Header' /*_label['noHeader']*/ , x : 480,  y : 0, xtype: 'displayfield'},
+					        	          {value: _label['noHeader'] , x : 480,  y : 0, xtype: 'displayfield'},
 					        	          {								
 					        	        	  xtype : 'checkboxfield',
 					        	        	  id : 'idNoHeaderCheckBox',
@@ -448,7 +448,7 @@ function popupSchemas(record, add) {
 			        	        			  y: 20,
 			        	        			  inputValue : true,
 			        	        			  submitValue: false,
-			        	        			  disabled : false, // Ext.getCmp("idStreamType").getValue() != 4,
+			        	        			  disabled : false,
 			        	        			  checked : record.get('noHeader')
 						        	      }
 					        	    ]

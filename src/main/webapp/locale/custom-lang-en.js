@@ -403,6 +403,7 @@ _label = {
     "forecasting" : "Forecast",
     "indexing" : "Index",
     "global" : "Global",
+    "noHeader" : "No Header",
     "delimiter" : "Delimiter",
     "available" : "Available",
     "speed" : "Speed",
