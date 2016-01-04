@@ -229,6 +229,7 @@ Ext.define('schemas', {
 		{name: 'publishToDb', type: 'boolean'},
 		{name: 'isForecasted', type: 'boolean'},
 		{name: 'isIndexedIncrement', type: 'boolean'},
+		{name: 'noHeader', type: 'boolean'},
 		{name: 'isWarnTolerance', type: 'boolean'},
 		{name: 'inputToDb', type: 'boolean'},
         {name: 'loadedXSD', type: 'boolean', defaultValue: false},

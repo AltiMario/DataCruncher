@@ -328,8 +328,8 @@ function popupSchemas(record, add) {
 
 					         //second row - 1st column
 					         { 	xtype : 'fieldset',
-					        	 width: 502,
-					        	 height : 83,
+					        	 width: 582,
+					        	 height : 113,
 					        	 y : 100,
 					        	 title : _label['dataStream'],
 					        	 layout : 'absolute',
@@ -350,22 +350,17 @@ function popupSchemas(record, add) {
 					        	        	  width : 150,
 					        	        	  listeners : {
 					        	        		  collapse : function() {
-					        	        			  Ext.getCmp('textFieldDelimiter').setValue(
-					        	        			  "");
+					        	        			  Ext.getCmp('textFieldDelimiter').setValue("");
 					        	        			  if (Ext.getCmp("idStreamType").getValue() == 4) {
-					        	        				  Ext.getCmp("delimiter").setDisabled(
-					        	        						  false);
-					        	        				  Ext.getCmp("trimchar").setDisabled(
-					        	        						  false);
+					        	        				  Ext.getCmp("delimiter").setDisabled(false);
+					        	        				  Ext.getCmp("trimchar").setDisabled(false);
+					        	        				  Ext.getCmp("idNoHeaderCheckBox").setDisabled(false);
 					        	        			  } else {
-					        	        				  Ext.getCmp("trimchar").setDisabled(
-					        	        						  true);
-					        	        				  Ext.getCmp("delimiter").setDisabled(
-					        	        						  true);
-					        	        				  Ext.getCmp("delimiterLabel")
-					        	        				  .setDisabled(true);
-					        	        				  Ext.getCmp('textFieldDelimiter')
-					        	        				  .setDisabled(true);											
+					        	        				  Ext.getCmp("trimchar").setDisabled(true);
+					        	        				  Ext.getCmp("idNoHeaderCheckBox").setDisabled(true);
+					        	        				  Ext.getCmp("delimiter").setDisabled(true);
+					        	        				  Ext.getCmp("delimiterLabel").setDisabled(true);
+					        	        				  Ext.getCmp('textFieldDelimiter').setDisabled(true);											
 					        	        			  }
 					        	        		  },
 					        	        		  afterrender : function() {
@@ -443,15 +438,27 @@ function popupSchemas(record, add) {
 					        	        			  maxLength: 1,
 					        	        			  enforceMaxLength: true,
 					        	        			  disabled: true
-					        	          }
-					        	          ]
+					        	          },
+					        	          {value: 'No Header' /*_label['noHeader']*/ , x : 480,  y : 0, xtype: 'displayfield'},
+					        	          {								
+					        	        	  xtype : 'checkboxfield',
+					        	        	  id : 'idNoHeaderCheckBox',
+					        	        	  name : 'idNoHeaderCheckBox',					        	        	  
+			        	        			  x : 480,
+			        	        			  y: 20,
+			        	        			  inputValue : true,
+			        	        			  submitValue: false,
+			        	        			  disabled : false, // Ext.getCmp("idStreamType").getValue() != 4,
+			        	        			  checked : record.get('noHeader')
+						        	      }
+					        	    ]
 					         },
 
 					         //second row - 2nd column
 					         {	xtype: 'fieldset',
-					        	 height : 83,
-					        	 width : 385,
-					        	 x: 520,
+					        	 height : 113,
+					        	 width : 305,
+					        	 x: 600,
 					        	 y : 100,						
 					        	 layout : 'absolute',
 					        	 title : _label['timeWindow'],
@@ -473,7 +480,8 @@ function popupSchemas(record, add) {
 					        	        	  value : record.get('endDate'),
 					        	        	  labelAlign : 'top',
 					        	        	  fieldLabel : _label['endDate'],
-					        	        	  x : 110,
+					        	        	  x : 0,
+					        	        	  y : 40,
 					        	        	  xtype : 'datefield',
 					        	        	  width : 100
 					        	          },
@@ -484,7 +492,7 @@ function popupSchemas(record, add) {
 					        	        	  uncheckedValue : false,
 					        	        	  labelAlign : 'top',
 					        	        	  fieldLabel : _label['planned'],
-					        	        	  x : 220,
+					        	        	  x : 120,
 					        	        	  checked : record.get('isPlanned'),
 					        	        	  disabled: scheduleDataSource.schedulerStore.getCount() > 0 ? false : true,
 					        	        			  listeners : {
@@ -519,13 +527,13 @@ function popupSchemas(record, add) {
 					        	        	  name : 'id',					        	        	  
 					        	        	  queryMode : 'local',
 					        	        	  value : record.get('plannedName') <= 0 ? '' : record.get('plannedName'),
-					        	        			  store : scheduleDataSource.schedulerStore,
-					        	        			  triggerAction : 'all',
-					        	        			  valueField : 'id',
-					        	        			  x : 240,
-					        	        			  xtype : 'combo',
-					        	        			  width : 118,
-					        	        			  y : 18
+			        	        			  store : scheduleDataSource.schedulerStore,
+			        	        			  triggerAction : 'all',
+			        	        			  valueField : 'id',
+			        	        			  x : 140,
+			        	        			  xtype : 'combo',
+			        	        			  width : 118,
+			        	        			  y : 18
 					        	          }
 					        	          ]
 					         },
@@ -534,7 +542,7 @@ function popupSchemas(record, add) {
 					         { 	xtype : 'fieldset',
 					        	 height : 83,
 					        	 width : 370,
-					        	 y : 190,
+					        	 y : 210,
 					        	 title : 'Event Trigger',
 					        	 layout : 'absolute',
 					        	 items : [							
@@ -596,7 +604,7 @@ function popupSchemas(record, add) {
 					         //third row - 2nd column
 					         {	xtype: 'fieldset',
 					        	 x : 375, 
-					        	 y : 190,
+					        	 y : 220,
 					        	 layout : 'absolute',
 					        	 width : 95,
 					        	 height : 83,
@@ -631,7 +639,7 @@ function popupSchemas(record, add) {
 					         //third row - 3rd column
 					         {	xtype: 'fieldset',
 					        	 x : 475, 
-					        	 y : 190,
+					        	 y : 220,
 					        	 layout : 'absolute',
 					        	 width : 190,
 					        	 height : 83,
@@ -669,7 +677,7 @@ function popupSchemas(record, add) {
 					        //third row - 4th column
 					         {	xtype: 'fieldset',
 					        	 x : 670, 
-					        	 y : 190,
+					        	 y : 220,
 					        	 layout : 'absolute',
 					        	 width : 100,
 					        	 height : 83,
@@ -693,7 +701,7 @@ function popupSchemas(record, add) {
 					         //third row - 5th column
 					         {	xtype: 'fieldset',
 					        	 x : 775, 
-					        	 y : 190,
+					        	 y : 220,
 					        	 layout : 'absolute',
 					        	 width : 130,
 					        	 height : 83,
@@ -837,6 +845,7 @@ function popupSchemas(record, add) {
                                                 
 			                    				record.set('isForecasted', Ext.getCmp('idForecastingCheckBox').getValue());
 			                    				record.set('isIndexedIncrement', Ext.getCmp('idIndexIncrementCheckBox').getValue());
+			                    				record.set('noHeader', Ext.getCmp('idNoHeaderCheckBox').getValue());
 			                    				
 			                    				record.set('isWarnTolerance', Ext.getCmp('idWarnToleranceCheckBox').getValue());
 			                    				record.set('chrDelimiter', Ext.getCmp('trimchar').getValue());
@@ -871,6 +880,7 @@ function popupSchemas(record, add) {
 
 	if (Ext.getCmp("idStreamType").getValue() == 4) {
 		Ext.getCmp('trimchar').setDisabled(false);
+		Ext.getCmp('idNoHeaderCheckBox').setDisabled(false);
 		if (record.get('delimiter') == ';') {
 			Ext.getCmp('delimiter').items.items[0].setValue(true);
 			Ext.getCmp('textFieldDelimiter').setDisabled(true);
@@ -890,6 +900,7 @@ function popupSchemas(record, add) {
 		}
 	} else {
 		Ext.getCmp('delimiter').setDisabled(true);
+		Ext.getCmp('idNoHeaderCheckBox').setDisabled(true);
 		Ext.getCmp('trimchar').setDisabled(true);
 		Ext.getCmp('textFieldDelimiter').setDisabled(true);
 		Ext.getCmp('textFieldDelimiter').setValue("");

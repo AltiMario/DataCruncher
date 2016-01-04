@@ -81,6 +81,9 @@ public class SchemaEntity {
 
 	@Column(name = "delimiter")
 	private String delimiter;
+	
+	@Column(name = "no_header")
+	private boolean noHeader;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name = "start_date")
@@ -292,6 +295,14 @@ public class SchemaEntity {
 
 	public String getDelimiter() {
 		return delimiter;
+	}
+
+	public boolean isNoHeader() {
+		return noHeader;
+	}
+
+	public void setNoHeader(boolean noHeader) {
+		this.noHeader = noHeader;
 	}
 
 	public Date getStartDate() {
