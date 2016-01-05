@@ -54,7 +54,7 @@ public class FtpPolling extends RouteBuilder implements DaoSet {
         //String homedirectory = configEntity.getOutputDir();
         //String maxIdleTimeInSec = propertyConfigurer.getProps().getProperty("ftp.maxIdleTimeInSec");
 		
-        FtpServerHandler ftpServerHandler = new FtpServerHandler();
+        FtpServerHandler ftpServerHandler = new FtpServerHandler(configEntity.getServerPort());
         ftpServerHandler.init();
 
 		// If input directory is not set, set inputDirectory as rootDirectory

@@ -431,6 +431,7 @@ _label = {
     "annualState" : "Annual State",
     "defaultDatabase" : "Default Database",
     "inputDir" : "Input directory",
+    "serverPort" : "Server port",
     "outputDir" : "Output directory",
     "ftpConfig" : "FTP Config",
 	"linked" : "Linked",

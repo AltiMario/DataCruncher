@@ -24,8 +24,10 @@ import org.apache.ftpserver.filesystem.nativefs.NativeFileSystemFactory;
 import org.apache.ftpserver.listener.ListenerFactory;
 import org.apache.log4j.Logger;
 
+import com.seer.datacruncher.constants.ApplicationConfigType;
 import com.seer.datacruncher.constants.Servers;
 import com.seer.datacruncher.jpa.dao.DaoSet;
+import com.seer.datacruncher.jpa.entity.ApplicationConfigEntity;
 import com.seer.datacruncher.jpa.entity.ServersEntity;
 import com.seer.datacruncher.spring.AppContext;
 
@@ -39,10 +41,14 @@ public class FtpServerHandler implements DaoSet {
 	private static Logger log = Logger.getLogger(FtpServerHandler.class);	
 	public static FtpServer server;
 		
+	public FtpServerHandler() {
+		this(null);
+	}
+
 	/**
 	 * Constructor to initialize the embedded FTP server with default credentials.
 	 */
-	public FtpServerHandler() {
+	public FtpServerHandler(Integer port) {
 		
 		if(server == null || server.isStopped()) {
 			/*JVPropertyPlaceholderConfigurer propertyConfigurer = AppContext.getApplicationContext().getBean(JVPropertyPlaceholderConfigurer.class);
@@ -51,9 +57,18 @@ public class FtpServerHandler implements DaoSet {
 			*/
 			//System.out.println("HOME DIRECTORY:"+homedirectory);
 			//System.out.println("maxIdleTimeInSec:"+maxIdleTimeInSec);
-			
+
 			ListenerFactory factory = new ListenerFactory();
-			factory.setPort(2221);
+			if ( port == null ) {
+	        	port = ApplicationConfigEntity.FTP_DEFAULT_SAFE_PORT;
+	        	if ( applicationConfigDao != null ) {
+			        ApplicationConfigEntity appConfigEntity = applicationConfigDao.findByConfigType(ApplicationConfigType.FTP);
+			        if ( appConfigEntity != null ) {
+			        	port = appConfigEntity.getServerPort();
+			        }
+	        	}
+			}
+			factory.setPort(port);
 			
 			FtpServerFactory serverFactory = new FtpServerFactory();
 			serverFactory.addListener("default", factory.createListener());

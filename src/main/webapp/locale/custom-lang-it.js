@@ -429,6 +429,7 @@ _label = {
     "annualState" : "Stato annuale",
     "defaultDatabase" : "Default Database",
     "inputDir" : "Input directory",
+    "serverPort" : "Server port",
     "outputDir" : "Output directory",
     "ftpConfig" : "FTP Config",
 	"linked" : "Agganciato",
