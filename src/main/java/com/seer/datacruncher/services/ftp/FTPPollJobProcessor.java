@@ -142,7 +142,7 @@ public class FTPPollJobProcessor  implements Processor, DaoSet {
 		String userName = configEntity.getUserName();
 		String password = new CryptoUtil().decrypt(configEntity.getPassword());
 		String outputDir = configEntity.getOutputDir();
-		String endPoint = "ftp://" + ftpServer + "/" + outputDir + "?username="
+		String endPoint = "ftp://" + ftpServer + ":" + configEntity.getServerPort() + "/" + outputDir + "?username="
 				+ userName + "&password=" + password + "&binary=true";
 		// if output Directory is not set store the file in root directory.
 		if(StringUtils.isBlank(outputDir)){

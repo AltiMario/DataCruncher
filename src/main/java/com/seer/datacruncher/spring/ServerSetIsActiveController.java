@@ -18,8 +18,11 @@
 
 package com.seer.datacruncher.spring;
 
+import com.seer.datacruncher.constants.ApplicationConfigType;
 import com.seer.datacruncher.constants.Servers;
 import com.seer.datacruncher.jpa.dao.DaoSet;
+import com.seer.datacruncher.jpa.entity.ApplicationConfigEntity;
+import com.seer.datacruncher.jpa.entity.ServersEntity;
 import com.seer.datacruncher.services.ftp.FtpServerHandler;
 
 import java.io.IOException;
@@ -38,14 +41,16 @@ public class ServerSetIsActiveController implements Controller, DaoSet {
 		long serverId = Long.parseLong(request.getParameter("serverId"));
 		int isActive = Integer.parseInt(request.getParameter("isActive"));
 
+		ApplicationConfigEntity configEntity = applicationConfigDao.findByConfigType(ApplicationConfigType.FTP);
+
 		serversDao.setActive(serverId, isActive);
 
 		try {
 			if (serverId == Servers.FTP.getDbCode() && isActive == 1) {
-				FtpServerHandler ftpServerHandler = new FtpServerHandler();
+				FtpServerHandler ftpServerHandler = new FtpServerHandler(configEntity.getServerPort());
 				ftpServerHandler.init();
 			} else if (serverId == Servers.FTP.getDbCode() && isActive == 0) {
-				FtpServerHandler ftpServerHandler = new FtpServerHandler();
+				FtpServerHandler ftpServerHandler = new FtpServerHandler(configEntity.getServerPort());
 				ftpServerHandler.destroy();
 			}
 		} catch (Exception ex) {

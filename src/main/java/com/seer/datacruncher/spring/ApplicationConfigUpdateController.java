@@ -71,9 +71,16 @@ public class ApplicationConfigUpdateController implements Controller, DaoSet {
 			appConfigEntity.setPassword(request.getParameter("password"));			
 			appConfigEntity.setInputDir(request.getParameter("inputDirectory"));
 			appConfigEntity.setOutputDir(request.getParameter("outputDirectory"));
-			
-			update = applicationConfigDao.update(appConfigEntity);		
-			update.setMessage(I18n.getMessage("success.ftpConfigSaved"));
+			try {
+				appConfigEntity.setServerPort(Integer.parseInt(request.getParameter("serverPort")));
+				update = applicationConfigDao.update(appConfigEntity);		
+				update.setMessage(I18n.getMessage("success.ftpConfigSaved"));
+			}
+			catch (Throwable t) {
+				update = new Update();
+				update.setSuccess(false);
+				update.setMessage(I18n.getMessage("error.ftpConfigPortInNotANumber"));
+			}
 		}
 		
 		ObjectMapper mapper = new ObjectMapper();				

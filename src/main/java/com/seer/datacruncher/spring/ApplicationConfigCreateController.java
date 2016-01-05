@@ -111,9 +111,16 @@ public class ApplicationConfigCreateController implements Controller, DaoSet {
 			appConfigEntity.setPassword(request.getParameter("password"));			
 			appConfigEntity.setInputDir(request.getParameter("inputDirectory"));
 			appConfigEntity.setOutputDir(request.getParameter("outputDirectory"));
-
-			create = applicationConfigDao.create(appConfigEntity);		
-			create.setMessage(I18n.getMessage("success.ftpConfigSaved"));
+			try {
+				appConfigEntity.setServerPort(Integer.parseInt(request.getParameter("serverPort")));
+				create = applicationConfigDao.create(appConfigEntity);		
+				create.setMessage(I18n.getMessage("success.ftpConfigSaved"));
+			}
+			catch (Throwable t) {
+				create = new Create();
+				create.setSuccess(false);
+				create.setMessage(I18n.getMessage("error.ftpConfigPortInNotANumber"));
+			}
 		} else if(configType.equals("email")) {
             ApplicationConfigEntity appConfigEntity = new ApplicationConfigEntity();
             String serverUrl= getServerURL(request.getRequestURL().toString());

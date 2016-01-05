@@ -29,6 +29,9 @@ import javax.persistence.Table;
 @Table(name = "jv_application_config")
 
 public class ApplicationConfigEntity {
+	
+	public static final int FTP_DEFAULT_SAFE_PORT = 10021;
+	
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_application_config")
@@ -61,6 +64,9 @@ public class ApplicationConfigEntity {
 	@Column(name = "output_dir")
 	private String outputDir;
 	
+	@Column(name = "server_port")
+	private int serverPort;
+	
 	@Column(name = "protocol")
 	private String protocol;
 	
@@ -75,7 +81,7 @@ public class ApplicationConfigEntity {
 	
 	@Column(name = "smtps_authenticate")
 	private Integer isSmtpsAuthenticate = 0;
-	
+		
 	public long getIdApplicationConfig() {
 		return idApplicationConfig;
 	}
@@ -194,5 +200,14 @@ public class ApplicationConfigEntity {
 
 	public void setIsSmtpsAuthenticate(Integer isSmtpsAuthenticate) {
 		this.isSmtpsAuthenticate = isSmtpsAuthenticate;
+	}
+
+	public int getServerPort() {
+		return serverPort;
+	}
+
+	public void setServerPort(int serverPort) {
+		this.serverPort = serverPort;
 	}	    
+	
 }
