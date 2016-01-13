@@ -1489,6 +1489,25 @@ function popupSchemaField(record, action, fieldType, isGenerationStream) {
                         !eval(recordResult.isForecasted));
                 }
             });
+
+            Ext.Ajax.request( {
+                params : {
+                    schemaId : schemId
+                },
+                url : './schemaFieldIsIndexIncremental.json',
+                success : function(result) {
+                    recordResult = Ext.JSON.decode(result.responseText);
+                    if ( !eval(recordResult.isIndexIncremental)) {
+                    	Ext.getCmp("chkBoxIndexIncremental").setDisabled(true);
+                    	Ext.getCmp("chkBoxIndexIncremental").setValue(false);
+                    }
+                    else {
+                    	Ext.getCmp("chkBoxIndexIncremental").setDisabled(false);
+                    }
+                    Ext.getCmp("indexIncremental").setDisabled(!eval(recordResult.isIndexIncremental));
+                }
+            });
+
             if (isGenerationStream) {
 				gsfDataStores.dbTree.proxy.extraParams.idSchema = schemId;
 				gsfDataStores.dbTree.proxy.extraParams.fieldId = recordId;
