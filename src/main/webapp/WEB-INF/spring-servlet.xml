@@ -294,6 +294,7 @@
     <bean name="/schemaFieldsPopupRead.json" class="com.seer.datacruncher.spring.SchemaFieldsPopupReadController"/>
     <bean name="/schemaFieldsPopupUpdate.json" class="com.seer.datacruncher.spring.SchemaFieldsPopupUpdateController"/>
     <bean name="/schemaFieldIsForecasted.json" class="com.seer.datacruncher.spring.SchemaFieldIsForecastedController"/>
+    <bean name="/schemaFieldIsIndexIncremental.json" class="com.seer.datacruncher.spring.SchemaFieldIsIndexIncrementalController"/>
     <bean name="/schemaValidate.json" class="com.seer.datacruncher.spring.SchemaValidateController"/>
     <bean name="/schemaDbTreePopupRead.json" class="com.seer.datacruncher.spring.SchemaDbTreePopupReadController"/>
 
