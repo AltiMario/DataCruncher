@@ -158,6 +158,9 @@ public class DatastreamsInput implements DaoSet {
                     checkEventTrigger(idSchema);
                 }
                 ExecutorService executor = Executors.newFixedThreadPool(poolSize);
+                
+                // On case of IndexInrement thread executor is forced to be 
+                // single thred to guarantee order of task executions
                 if ( schemaEntity.getIsIndexedIncrement() ) {
                 	executor = Executors.newSingleThreadExecutor();
                 }
@@ -165,13 +168,15 @@ public class DatastreamsInput implements DaoSet {
                 String defaultNsLib = schemaEntity.getIdSchemaLib() == 0 ? null : schemaLibDao.find(schemaEntity.getIdSchemaLib()).getDefaultNsLib();
                 List<Future<Map<String, Object>>> list = new ArrayList<Future<Map<String, Object>>>();
 
+                boolean skipHeader = 
+                		schemaEntity.getIdStreamType() == StreamType.flatFileDelimited && 
+            			schemaEntity.getIdSchemaType() == SchemaType.VALIDATION && 
+            			schemaEntity.isNoHeader();
+                
                 int index = -1;
                 for (String stream : streamsList) {
                 	index ++;
-                	if ( index == 0 && 
-                			schemaEntity.getIdStreamType() == StreamType.flatFileDelimited && 
-                			schemaEntity.getIdSchemaType() == SchemaType.VALIDATION && 
-                			schemaEntity.isNoHeader()) {
+                	if ( index == 0 && skipHeader ) {
                 		continue;
                 	}
                 		
@@ -190,7 +195,9 @@ public class DatastreamsInput implements DaoSet {
                             object, 
                             numElemChecked, 
                             appEntity,
-                            defaultNsLib);
+                            defaultNsLib,
+                            skipHeader ? index == 1 : index == 0,
+                            index == streamsList.size());
                     Future<Map<String, Object>> submit = executor.submit(callee);
                     list.add(submit);
                 }

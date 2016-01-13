@@ -18,6 +18,16 @@
 
 package com.seer.datacruncher.datastreams;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.MessageFormat;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.Callable;
+
+import com.seer.datacruncher.connection.ConnectionPoolsSet;
 import com.seer.datacruncher.constants.SchemaType;
 import com.seer.datacruncher.constants.StreamType;
 import com.seer.datacruncher.constants.Tag;
@@ -28,16 +38,12 @@ import com.seer.datacruncher.jpa.entity.ApplicationEntity;
 import com.seer.datacruncher.jpa.entity.DatastreamEntity;
 import com.seer.datacruncher.jpa.entity.EventTriggerEntity;
 import com.seer.datacruncher.jpa.entity.SchemaEntity;
+import com.seer.datacruncher.persistence.manager.QuickDBRecognizer;
 import com.seer.datacruncher.utils.generic.I18n;
 import com.seer.datacruncher.utils.generic.StreamsUtils;
 import com.seer.datacruncher.validation.DatastreamsValidator;
 import com.seer.datacruncher.validation.ForcastedFieldsValidation;
 import com.seer.datacruncher.validation.IndexIncrementalValidation;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.Callable;
 
 public class ValidationCallable implements Callable<Map<String, Object>>, DaoSet {
 
@@ -57,11 +63,13 @@ public class ValidationCallable implements Callable<Map<String, Object>>, DaoSet
     private long numElemChecked;
     private ApplicationEntity appEntity;
     private String defaultNsLib;
+    private boolean isLast;
+    private boolean isFirst;
 
 	ValidationCallable(Long idSchema, SchemaEntity schemaEntity, String stream, byte[] bytes, boolean isUnitTest,
 			boolean okEvent, boolean koEvent, boolean warnEvent, List<EventTriggerEntity> okEventList,
 			List<EventTriggerEntity> koEventList, List<EventTriggerEntity> warnEventList, Object object, long numElemChecked,
-			ApplicationEntity appEntity, String defaultNsLib) {
+			ApplicationEntity appEntity, String defaultNsLib, boolean isFirst, boolean isLast) {
 		this.idSchema = idSchema;
 		this.schemaEntity = schemaEntity;
 		this.stream = stream;
@@ -77,6 +85,8 @@ public class ValidationCallable implements Callable<Map<String, Object>>, DaoSet
         this.numElemChecked = numElemChecked;
         this.appEntity = appEntity;
         this.defaultNsLib = defaultNsLib;
+        this.isFirst = isFirst;
+        this.isLast = isLast;
 	}
 
 	@Override
@@ -192,8 +202,9 @@ public class ValidationCallable implements Callable<Map<String, Object>>, DaoSet
 					
 					synchronized("mutex") {
 						if (!isUnitTest && schemaEntity.getPublishToDb() && datastreamDTO.getErrorLevel() != ValidationStep.FORMAL) {
-							if (!isWarning/*success*/ || (isWarning && schemaEntity.getIsWarnTolerance()))
+							if (!isWarning/*success*/ || (isWarning && schemaEntity.getIsWarnTolerance())) {
 								StreamsUtils.publishStreamToDB(datastreamDTO);
+							}
 						}
 						SchemaEntity loadingStream = schemasDao.hasLoadingStream(schemaEntity);
 						if (loadingStream != null) {
@@ -209,14 +220,30 @@ public class ValidationCallable implements Callable<Map<String, Object>>, DaoSet
                                 datastreamEntity.setChecked(2);
                             }
                             else {
-                                res = IndexIncrementalValidation.validate(schemaEntity.getIdSchema());
-                                if (res != null) {
-                                    isWarning = true;
-                                    datastreamDTO.setWarning(true);
-                                    datastreamDTO.setSuccess(false);
-                                    datastreamDTO.setMessage(res);
-                                    datastreamEntity.setChecked(2);
-                                }
+                            	if ( isLast ) {
+                            		
+	                                res = IndexIncrementalValidation.validate(schemaEntity.getIdSchema());
+	                                if (res != null) {
+	                                    isWarning = true;
+	                                    datastreamDTO.setWarning(true);
+	                                    datastreamDTO.setSuccess(false);
+	                                    datastreamDTO.setMessage(res);
+	                                    datastreamEntity.setChecked(2);
+	                                }
+
+	                        		// After that last datastream was save (in case a user submits a CSV file)
+	                        		// all informations saved on DB are cleaned
+	                        		try {
+	                        			deleteData();
+	                        		} catch (SQLException e) {
+	                                    isWarning = true;
+	                                    datastreamDTO.setWarning(true);
+	                                    datastreamDTO.setSuccess(false);
+	                                    datastreamDTO.setMessage(I18n.getMessage("error.impossibleToEmptySavedData"));
+	                                    datastreamEntity.setChecked(2);
+	                        		}
+
+                            	}
                             }
                             
                         }
@@ -257,6 +284,16 @@ public class ValidationCallable implements Callable<Map<String, Object>>, DaoSet
 		resMap.put(DatastreamsInput._SINGLE_SUCC_RESP, bSuccess);
 		return resMap;
 
+	}
+
+	private void deleteData() throws SQLException {
+		String schemaName = QuickDBRecognizer.getSchemaNamePlusVersion(schemaEntity);
+		Connection connection = ConnectionPoolsSet.getConnection(schemaEntity.getIdDatabase());
+		String deletesql = MessageFormat.format("DELETE FROM {0}", schemaName);
+		Statement statement = connection.createStatement();
+        statement.executeUpdate(deletesql);
+        statement.close();
+		
 	}
 
 	private void startEvent(List<EventTriggerEntity> eventList, DatastreamDTO datastreamDTO) {
