@@ -1,0 +1,741 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="urn:x12:schemas:V00201202:StpPaymentWithRemittanceDocument" xmlns:X12.7="urn:x12:schemas:V00201002:X12.7" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:x12:schemas:V00201202:StpPaymentWithRemittanceDocument" elementFormDefault="qualified" attributeFormDefault="unqualified" version="00201202" X12.7:PublicationDate="2012-02-12">
+	<!-- ==========  Document ========== -->
+	<xs:element name="StpPaymentWithRemittanceDocument">
+		<xs:annotation>
+			<xs:documentation>Allows an interested party to request and receive information from another party. | This document instructs an originating depository financial institution to initiate a single credit payment through the domestic Automated Clearing House (ACH) network, in a Corporate Trade Exchange (CTX) standard entry class format.   Accurate remittance information (invoice, purchase order, accounts receivable open item) is necessary to facilitate seamless or straight-through processing.    (Note that a maximum of 9,999 addenda records may be generated for any one ACH CTX message, allowing a maximum document size totaling 799,920 bytes. This limit must be considered.) </xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="PaymentInformation" type="PaymentInformationModule" minOccurs="1" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>Payment that must include remittance information.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Originator" type="OriginatorModule" minOccurs="1" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>Payment entry creator.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Receiver" type="ReceiverModule" minOccurs="1" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>Payment entry receiver.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Detail" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="RemittanceInformation" type="RemittanceInformationModule" minOccurs="1" maxOccurs="1">
+								<xs:annotation>
+									<xs:documentation>Detailed remittance information.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="AdditionalReferenceInformation" type="AdditionalReferenceInformationModule" minOccurs="1" maxOccurs="1">
+								<xs:annotation>
+									<xs:documentation>Supporting remittance information. </xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="PublicationVersion" type="PublicationVersionType" use="required"/>
+			<xs:attribute name="PublicationDate" type="xs:date" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<!-- ==========  Modules ========== -->
+	<xs:complexType name="PaymentInformationModule">
+		<xs:annotation>
+			<xs:documentation>Payment that must include remittance information.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="PaymentFlowInformation" type="DocumentDetailBlock_15" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Information on how and when the payment is to be routed.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MonetaryAmount" type="AmountBlock_6" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Sum of all the net payment amounts from the remittance detail.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OriginatorModule">
+		<xs:annotation>
+			<xs:documentation>Payment entry creator.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="OriginatingFinancialInstitutionInformation" type="AccountInformationBlock_1" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Identifies the financial institution information about the originator of the entry.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OriginatingTradingPartner" type="OrganizationBlock_6" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Identifies the trading partner originating  the entry.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ReceiverModule">
+		<xs:annotation>
+			<xs:documentation>Payment entry receiver.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ReceivingFinancialInstitutionInformation" type="AccountInformationBlock_1" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Identifies the financial institution information about the reciever of the entry.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ReceivingTradingPartner" type="OrganizationBlock_5" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Identifies the trading partner recieving the entry.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RemittanceInformationModule">
+		<xs:annotation>
+			<xs:documentation>Detailed remittance information.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="RemittanceDetails" type="DocumentDetailBlock_9" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Supporting remittance information.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="NetAmountPaid" type="AmountBlock_3" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Amount paid for an accounts receivable open item less discounts and adjustments.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OriginalDocumentAmount" type="AmountBlock_4" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Gross amount of accounts receivable open item.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TermsDiscountAmount" type="AmountBlock_5" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Amount deducted from the gross amount of the accounts receivable open item for payment made within terms of the sale.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AdditionalReferenceInformationModule">
+		<xs:annotation>
+			<xs:documentation>Supporting remittance information.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="AdditionalReferenceInformation" type="DocumentDetailBlock_10" minOccurs="1" maxOccurs="3">
+				<xs:annotation>
+					<xs:documentation>Description not provided</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- ==========  Assemblies ========== -->
+	<!-- ==========  Blocks ========== -->
+	<xs:complexType name="AmountBlock_3">
+		<xs:annotation>
+			<xs:documentation>Describes the value and purpose of a monetary amount. Can also optionally include the value and reason for adjustments to an amount.  All concrete amount blocks must clearly state the purpose and effect of adjustments (indicate if an amount includes an ad | Amount paid for an accounts receivable open item less discounts and adjustments.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="NetPaymentAmount" type="Amount_2" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Amount paid for an accounts receivable open item less discounts and adjustments.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AdjustmentAmount" type="AdjustmentAmountComponent_1" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Adjustment items that are netted to the Accounts Receivable open item.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AmountBlock_4">
+		<xs:annotation>
+			<xs:documentation>Describes the value and purpose of a monetary amount. Can also optionally include the value and reason for adjustments to an amount.  All concrete amount blocks must clearly state the purpose and effect of adjustments (indicate if an amount includes an ad | Gross amount of accounts receivable open item.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="OriginalDocumentAmount" type="Amount_2" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Amount including charges, before terms discounts or deductions for adjustment items.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AmountBlock_5">
+		<xs:annotation>
+			<xs:documentation>Describes the value and purpose of a monetary amount. Can also optionally include the value and reason for adjustments to an amount.  All concrete amount blocks must clearly state the purpose and effect of adjustments (indicate if an amount includes an ad | Amount deducted from the gross amount of the accounts receivable open item for payment made within terms of the sale.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="TermsDiscountAmount" type="Amount_2" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Amount including charges, before terms discounts or deductions for adjustment items.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AmountBlock_6">
+		<xs:annotation>
+			<xs:documentation>Describes the value and purpose of a monetary amount. Can also optionally include the value and reason for adjustments to an amount.  All concrete amount blocks must clearly state the purpose and effect of adjustments (indicate if an amount includes an ad | The sum of all the net payment amounts from the remittance detail.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="MonetaryAmount" type="Amount_2" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Actual amount of the funds being transferred.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DocumentDetailBlock_10">
+		<xs:annotation>
+			<xs:documentation>Specifies a logical or physical document level of contextual information, unique identification number, creation date, etc. | Supporting remittance information.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ReferenceCode" type="PurposeCode_2" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Additional reference information for the accounts receivable open item.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DocumentIdentifier" type="ResourceIdentifier_16" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Identifies the referenced document.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Description" type="DescriptionText_1" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Supporting description of a document.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DocumentDetailBlock_15">
+		<xs:annotation>
+			<xs:documentation>Specifies a logical or physical document level of contextual information, unique identification number, creation date, etc. | Information on how and when the payment is to be routed.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="OriginatorTraceReferenceNumber" type="ResourceIdentifier_23" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Originator Trace Reference Number</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="IntendedPaymentDate" type="DateTimeText_3" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Intended transfer date of funds between the payer and receiver of the payment (expressed as CCYYMMDD).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DocumentDetailBlock_9">
+		<xs:annotation>
+			<xs:documentation>Specifies a logical or physical document level of contextual information, unique identification number, creation date, etc. | Supporting remittance information.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="RemittanceCode" type="PurposeCode_1" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Type of document referenced for the accounts receivable open item.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DocumentIdentifier" type="ResourceIdentifier_16" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Identifies the referenced document.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OriginalDocumentDate" type="DateTimeText_3" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Original date the document was created (expressed as CCYYMMDD).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OrganizationBlock_5">
+		<xs:annotation>
+			<xs:documentation>Specifies the role and identity of an organization. | Identifies the trading partner recieving the entry.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="PartnerName" type="NameText_6" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Name of a trading partner.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OrganizationBlock_6">
+		<xs:annotation>
+			<xs:documentation>Specifies the role and identity of an organization. | Identifies the trading partner originating  the entry.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="PartnerName" type="NameText_6" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Name of a trading partner.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OriginatingCompanyID" type="PartyIdentifier_3" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Identification of the party originating the entry.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CustomerID" type="PartyIdentifier_5" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Assigned by Receiver (vendor) to identify the originator (buyer).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AccountInformationBlock_1">
+		<xs:annotation>
+			<xs:documentation>Identification of an organization and an account number at that organization. | Identifies financial institution  information.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ABATransitRoutingNumber" type="ResourceIdentifier_31" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Financial Institution Identifier.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DemandDepositAccountNumber" type="ResourceIdentifier_32" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Identifies the customer of a financial institution.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- ==========  Components ========== -->
+	<xs:complexType name="AdjustmentAmountComponent_1">
+		<xs:annotation>
+			<xs:documentation>An adjustment amount that alters another amount with the reason for the change. | Adjustment items that are netted to the Accounts Receivable open item.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="AdjustmentAmount" type="Amount_3" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>A deduction from the accounts receivable open item resulting in a decrease in the payment amount.  Must have a negative amount.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AdjustmentReasonCode" type="ReasonCode_3" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Reason for the adjusted net amount.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ReasonForChange" type="DescriptionText_2" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Used to provide additional descriptive information regarding adjustments taken.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- ==========  Primitives ========== -->
+	<xs:complexType name="Amount_2">
+		<xs:annotation>
+			<xs:documentation>A monetary amount. | A positive amount. (Note - this has been sized to be able to move through the financial ACH network.)</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="Amount_2_Content">
+				<xs:attribute name="CurrencyIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="CurrencyCodeListVersionIdentifier" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="Amount_2_Content">
+		<xs:restriction base="xs:decimal">
+			<xs:minExclusive value="0"/>
+			<xs:maxExclusive value="100000000"/>
+			<xs:totalDigits value="10"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="Amount_3">
+		<xs:annotation>
+			<xs:documentation>A monetary amount. | A negative amount sized to be able to move through the financial ACH network.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="Amount_3_Content">
+				<xs:attribute name="CurrencyIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="CurrencyCodeListVersionIdentifier" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="Amount_3_Content">
+		<xs:restriction base="xs:decimal">
+			<xs:minExclusive value="-100000000"/>
+			<xs:maxExclusive value="0"/>
+			<xs:totalDigits value="10"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="NameText_6">
+		<xs:annotation>
+			<xs:documentation>A word or phrase that constitutes the distinctive designation of a person or thing. | A word or phrase that designates a person or thing.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="NameText_6_Content">
+				<xs:attribute name="LanguageIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="LanguageLocaleIdentifier" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="NameText_6_Content">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="60"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="PartyIdentifier_3">
+		<xs:annotation>
+			<xs:documentation>Identifier which uniquely specifies a party, either an Individual or an Organization. | A proprietary number assigned by a financial institution to identify a customer.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="PartyIdentifier_3_Content">
+				<xs:attribute name="IDSchemeIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeAgencyIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeAgencyNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeVersionIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeDataURI" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeURI" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="PartyIdentifier_3_Content">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="10"/>
+			<xs:maxLength value="10"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="PartyIdentifier_5">
+		<xs:annotation>
+			<xs:documentation>Identifier which uniquely specifies a party, either an Individual or an Organization. | Assigned by a Receiver (vendor) to identify an Originator (Buyer).</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="PartyIdentifier_5_Content">
+				<xs:attribute name="IDSchemeIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeAgencyIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeAgencyNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeVersionIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeDataURI" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeURI" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="PartyIdentifier_5_Content">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="2"/>
+			<xs:maxLength value="80"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="ResourceIdentifier_16">
+		<xs:annotation>
+			<xs:documentation>Specified a supply or support, i.e. material or service. | Identifies the referenced document.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="ResourceIdentifier_16_Content">
+				<xs:attribute name="IDSchemeIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeAgencyIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeAgencyNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeVersionIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeDataURI" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeURI" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="ResourceIdentifier_16_Content">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="30"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="ResourceIdentifier_23">
+		<xs:annotation>
+			<xs:documentation>Specified a supply or support, i.e. material or service. | Identifies cross reference information to excess plant property</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="ResourceIdentifier_23_Content">
+				<xs:attribute name="IDSchemeIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeAgencyIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeAgencyNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeVersionIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeDataURI" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeURI" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="ResourceIdentifier_23_Content">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="30"/>
+			<xs:pattern value="[0-9a-zA-Z]*"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="ResourceIdentifier_31">
+		<xs:annotation>
+			<xs:documentation>Specified a supply or support, i.e. material or service. | American Banking Association Bank Routing Identifier</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="ResourceIdentifier_31_Content">
+				<xs:attribute name="IDSchemeIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeAgencyIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeAgencyNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeVersionIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeDataURI" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeURI" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="ResourceIdentifier_31_Content">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="9"/>
+			<xs:maxLength value="9"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="ResourceIdentifier_32">
+		<xs:annotation>
+			<xs:documentation>Specified a supply or support, i.e. material or service. | Financial Institution  Account Identifier</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="ResourceIdentifier_32_Content">
+				<xs:attribute name="IDSchemeIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeAgencyIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeAgencyNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeVersionIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeDataURI" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeURI" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="ResourceIdentifier_32_Content">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="17"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="ReasonCode_3">
+		<xs:annotation>
+			<xs:documentation>Something that supports a conclusion or explains a fact.  Describes or specifies the statement offered in explanation or justification or motivation.  May answer the question why. | Reason for the adjusted net amount.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="ReasonCode_3_Content">
+				<xs:attribute name="ListIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="ListAgencyIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="ListAgencyNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="ListNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="ListVersionIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="LanguageIdentifier" type="xs:token" use="optional"/>
+				<xs:attribute name="ListURI" type="xs:string" use="optional"/>
+				<xs:attribute name="ListSchemeURI" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="ReasonCode_3_Content">
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="CoveredByCreditMemo">
+				<xs:annotation>
+					<xs:documentation>Covered By Credit Memo</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CreditAsAgreed">
+				<xs:annotation>
+					<xs:documentation>Credit As Agreed</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ExtensionError">
+				<xs:annotation>
+					<xs:documentation>Extension Error</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="IncorrectProduct">
+				<xs:annotation>
+					<xs:documentation>Incorrect Product</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Item Not Accepted-Quality">
+				<xs:annotation>
+					<xs:documentation>Item Not Accepted - Quality</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ItemNotAccepted-Damaged">
+				<xs:annotation>
+					<xs:documentation>Item Not Accepted - Damaged</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ItemNotReceived">
+				<xs:annotation>
+					<xs:documentation>Item Not Received</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PricingError">
+				<xs:annotation>
+					<xs:documentation>Pricing Error</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="QuantityContested">
+				<xs:annotation>
+					<xs:documentation>Quantity Contested</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Returns-Damage">
+				<xs:annotation>
+					<xs:documentation>Returns - Damage</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Returns-Quality">
+				<xs:annotation>
+					<xs:documentation>Returns - Quality</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="TotalOrderNotReceived">
+				<xs:annotation>
+					<xs:documentation>Total Order Not Received</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="PurposeCode_1">
+		<xs:annotation>
+			<xs:documentation>Describes or specifies the intended outcome. May answer the question what. | Type of document referenced for the accounts receivable open item.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="PurposeCode_1_Content">
+				<xs:attribute name="ListIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="ListAgencyIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="ListAgencyNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="ListNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="ListVersionIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="LanguageIdentifier" type="xs:token" use="optional"/>
+				<xs:attribute name="ListURI" type="xs:string" use="optional"/>
+				<xs:attribute name="ListSchemeURI" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="PurposeCode_1_Content">
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="AcctRecvOpenItemNumber">
+				<xs:annotation>
+					<xs:documentation>Acct Recv Open Item Number</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PONumber">
+				<xs:annotation>
+					<xs:documentation>PO Number</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SellersInvoiceNumber">
+				<xs:annotation>
+					<xs:documentation>Sellers Invoice Number</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="PurposeCode_2">
+		<xs:annotation>
+			<xs:documentation>Describes or specifies the intended outcome. May answer the question what. | Additional reference information for the accounts receivable open item.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="PurposeCode_2_Content">
+				<xs:attribute name="ListIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="ListAgencyIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="ListAgencyNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="ListNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="ListVersionIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="LanguageIdentifier" type="xs:token" use="optional"/>
+				<xs:attribute name="ListURI" type="xs:string" use="optional"/>
+				<xs:attribute name="ListSchemeURI" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="PurposeCode_2_Content">
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="AcctRecvOpenItemNumber">
+				<xs:annotation>
+					<xs:documentation>Acct Recv Open Item Number</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BillOfLadingNumber">
+				<xs:annotation>
+					<xs:documentation>Bill of Lading Number</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PONumber">
+				<xs:annotation>
+					<xs:documentation>PO Number</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="VoucherNumber">
+				<xs:annotation>
+					<xs:documentation>Voucher Number</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="DescriptionText_1">
+		<xs:annotation>
+			<xs:documentation>Discourse intended to give a mental image of something. | Discourse intended to give a mental image of something.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="DescriptionText_1_Content">
+				<xs:attribute name="LanguageIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="LanguageLocaleIdentifier" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="DescriptionText_1_Content">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="80"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="DescriptionText_2">
+		<xs:annotation>
+			<xs:documentation>Discourse intended to give a mental image of something. | A short textual description not to exceed 30 characters.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="DescriptionText_2_Content">
+				<xs:attribute name="LanguageIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="LanguageLocaleIdentifier" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="DescriptionText_2_Content">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="30"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="DateTimeText_3">
+		<xs:annotation>
+			<xs:documentation>Part of a complete date time combination. (i.e. Year as CCYY or Time as HHMM) | Date (century, year, month, day) expressed as CCYYMMDD.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="DateTimeText_3_Content">
+				<xs:attribute name="LanguageIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="LanguageLocaleIdentifier" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="DateTimeText_3_Content">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="8"/>
+			<xs:maxLength value="8"/>
+			<xs:pattern value="\d\d\d\d\d\d\d\d"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ==========  Common Derived Datatypes ========== -->
+	<xs:simpleType name="JulianDate">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="\d\d\d\d\d\d\d"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="JulianDayOfYear">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="\d\d\d"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ==========  Publication Version Type ========== -->
+	<xs:simpleType name="PublicationVersionType">
+		<xs:restriction base="xs:token">
+			<xs:pattern value="\d\d\d\d\d\d\d\d"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

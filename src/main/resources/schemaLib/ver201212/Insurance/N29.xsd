@@ -1,0 +1,1276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns="urn:x12:schemas:V00201202:FinancialResponsibilityFilingNotificationDocument" xmlns:X12.7="urn:x12:schemas:V00201002:X12.7" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:x12:schemas:V00201202:FinancialResponsibilityFilingNotificationDocument" elementFormDefault="qualified" attributeFormDefault="unqualified" version="00201202" X12.7:PublicationDate="2012-02-12">
+	<!-- ==========  Document ========== -->
+	<xs:element name="FinancialResponsibilityFilingNotificationDocument">
+		<xs:annotation>
+			<xs:documentation>Allows an interested party to request and receive insurance information from another party. | This document is used to submit certificates of financial responsibility between insurance companies and interested parties such as state supported motor vehicle departments and their agencies.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="DocumentHeader" type="StandardDocumentHeaderModule" minOccurs="1" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>Provides control information for this document</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="TransactionIdentification" type="Insurance.FinancialResponsibilityFiling.Module" minOccurs="1" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>Transaction detail for financial responsibility filing</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Detail" maxOccurs="1">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="PolicyDetail" type="InsurancePolicy.Module" minOccurs="1" maxOccurs="1">
+								<xs:annotation>
+									<xs:documentation>Defines the information needed to identify the insurance policy</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="InsuredParty" type="InsuredDetail.Module" minOccurs="0" maxOccurs="1">
+								<xs:annotation>
+									<xs:documentation>Describes the insured party or parties</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="RiskInformation" type="RiskInformation.Module" minOccurs="0" maxOccurs="1">
+								<xs:annotation>
+									<xs:documentation>Defines the information used to identify a risk</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="PublicationVersion" type="PublicationVersionType" use="required"/>
+			<xs:attribute name="PublicationDate" type="xs:date" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<!-- ==========  Modules ========== -->
+	<xs:complexType name="InsuredDetail.Module">
+		<xs:annotation>
+			<xs:documentation>Describes party for which information is being requested.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="PrimaryName" type="Individual.Block" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The name of the party that insurance information is being requested on.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AdditionalNames" type="Individual.Block" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>The name of additional individuals listed as members of the household.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Address" type="AddressBlock_1" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Describes what is commonly known as the mailing address on the policy.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="InsurancePolicy.Module">
+		<xs:annotation>
+			<xs:documentation>Specific items that describe an insurance policy.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="PolicyIdentification" type="PolicyDetail.Block" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Defines the information needed to identify the message and the insurance policy for which information is being sent</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PolicyDates" type="EffectivePeriod.Block" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Policy effective dates</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Insurance.FinancialResponsibilityFiling.Module">
+		<xs:annotation>
+			<xs:documentation>Transaction detail for certificates of financial responsibility filing</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="TransactionDetail" type="Insurance.FinancialResponsibilityFiling.Block" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Transaction detail for certificates of financial responsibility filing</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RiskInformation.Module">
+		<xs:annotation>
+			<xs:documentation>Defines the information used to identify a risk</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="VehicleDetails" type="ResourceIdentificationBlock_1" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Defines the information used to identify a specific vehicle</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="StandardDocumentHeaderModule">
+		<xs:annotation>
+			<xs:documentation>Standard document header module</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Sender" type="OrganizationAndIndividualInformationAssembly_1" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Identifies the party who sends the document</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Receiver" type="OrganizationAndIndividualInformationAssembly_1" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Identifies the party who receives the document</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DocumentDetail" type="DocumentDetailBlock_31" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Identification of document</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- ==========  Assemblies ========== -->
+	<xs:complexType name="OrganizationContactAssembly_12">
+		<xs:annotation>
+			<xs:documentation>Information that identifies a specific name and electronic or physical location of an organization. | Information used to contact the organization.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="OrganizationIdentification" type="OrganizationBlock_15" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Organization involved in the document exchange.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Address" type="AddressBlock_1" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Describes what is commonly known as the mailing address.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="IndividualContactAssembly_2">
+		<xs:annotation>
+			<xs:documentation>Information that identifies a specific name and electronic or physical location of an individual. | Information used to contact the individual.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="ContactIdentification" type="IndividualBlock_4" minOccurs="1" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>Individual involved in the document exchange.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="IndividualLocation" type="EntityLocationAssembly_4" minOccurs="1" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>Location of Individual involved in the document exchange.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OrganizationAndIndividualInformationAssembly_1">
+		<xs:annotation>
+			<xs:documentation>Organization and Individual Information Assembly | Identifies the organization and provides an individual contact.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="OrganizationContact" type="OrganizationContactAssembly_12" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Organization involved in the document exchange.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="IndividualContact" type="IndividualContactAssembly_2" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Individual involved in the document exchange.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EntityLocationAssembly_4">
+		<xs:annotation>
+			<xs:documentation>Combination of information that defines a specified individual's or organization's electronic and physical location. | Combination of information that defines a specified individual's or organization's electronic and physical location.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="ElectronicLocation" type="ElectronicLocationBlock_1" minOccurs="1" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>Combination of information that defines a specified individual's or organization's electronic location.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Telephone" type="TelephoneBlock_1" minOccurs="1" maxOccurs="5">
+					<xs:annotation>
+						<xs:documentation>Comprehensive telephone block, designed to provide definition for the telephone number, and also a variety of characteristics covering use and features.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- ==========  Blocks ========== -->
+	<xs:complexType name="ResourceIdentificationBlock_1">
+		<xs:annotation>
+			<xs:documentation>Combination of constructs that together identify a specific resource. | The terms used to specifically describe a vehicle.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="VIN" type="ResourceIdentifier_11" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The Vehicle Identification Number is a  unique number the vehicle manufacturer assigns to a specific vehicle to provide identification for that specific vehicle.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Make" type="ResourceIdentifier_12" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Describes the manufacturer of the vehicle.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Model" type="ResourceIdentifier_12" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Describes the "kind " of vehicle a manufacturer makes.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Year" type="DateTimeText_2" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Four position designation of the year expressed as CCYY.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PolicyDetail.Block">
+		<xs:annotation>
+			<xs:documentation>Combination of constructs that together identify a specific resource. | Describes an insurance policy's identification.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="PolicyNumber" type="ResourceIdentifier_12" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Identifying number of the policy.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DocumentDetailBlock_31">
+		<xs:annotation>
+			<xs:documentation>Specifies a logical or physical document level of contextual information, unique identification number, creation date, etc. | Identification of document.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CreateDateAndTime" type="DateTime_1" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The date and time that this instance of the document is generated.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="InstanceIdentifier" type="ResourceIdentifier_85" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>An instance identifier is a business document or an arbitrary control number.  The combination of the instance identifier and the creation date and time must be unique in the eyes of the receiver.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Insurance.FinancialResponsibilityFiling.Block">
+		<xs:annotation>
+			<xs:documentation>Specifies a logical or physical document level of contextual information, unique identification number, creation date, etc. | Financial responsibility filing information for reporting.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Purpose" type="Insurance.FinancialResponsibilityFilingPurpose.Code" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Defines the reason the sender is providing insurance information</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Type" type="Insurance.FinancialResponsibilityFilingType.Code" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Defines details about the transaction purpose</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="EffectiveDate" type="DateTime_1" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Effective date</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TrackingNumber" type="ResourceIdentifier_12" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Tracking number assigned to the financial responsibility filing</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AddressBlock_1">
+		<xs:annotation>
+			<xs:documentation>Grouping of information used to specify the location address. | Describes what is commonly known as the mailing address.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="StreetAddress" type="LocationText_9" minOccurs="1" maxOccurs="2">
+					<xs:annotation>
+						<xs:documentation>Specifies the set of details required to fully delineate a street number, as used in postal addressing schemes.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="SubsiteAddress" type="SubsiteAddressComponent_1" minOccurs="1" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>Detailed breakout of the information that is often found on the address lines of a mailing address such as apartment, building, department, floor, mail stop, room, and suite.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="City" type="LocationText_1" minOccurs="1" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>Text identifying a city.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="CountrySubdivision" type="LocationCode_2" minOccurs="1" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>Largest subdivision of a country.  Examples include US states and Canadian provcinces.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="PostalCode" type="LocationIdentifier_1" minOccurs="1" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>Defines international postal code.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Country" type="LocationCode_3" minOccurs="1" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>Code identifying a country.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Individual.Block">
+		<xs:annotation>
+			<xs:documentation>Identifies the role and identity of an individual. | Defines the party for whom  information is being requested.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="ParsedName" type="IndividualNameComponent_2" minOccurs="1" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>The name of the party that information is being requested on.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Name" type="NameText_1" minOccurs="1" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>The full name of the party.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+			<xs:element name="SocialSecurityNumber" type="PartyIdentifier_9" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The unique number assigned to an individual by the U.S Social Security Administration federal agency.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FEIN" type="PartyIdentifier_8" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The unique number assigned to a company by the U.S. Federal Government.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DriversLicense" type="DriversLicense.Component" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Describes unique identifier assigned to an individual and the licensing agency.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DateOfBirth" type="DateTime_1" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Date on which an individual was born.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="IndividualBlock_4">
+		<xs:annotation>
+			<xs:documentation>Identifies the role and identity of an individual. | Identifies an individual by name only.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="IndividualName" type="NameText_6" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Name of the individual involved in the document exchange.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OrganizationBlock_15">
+		<xs:annotation>
+			<xs:documentation>Specifies the role and identity of an organization. | Organization involved in the document exchange</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="OrganizationName" type="NameText_1" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Name of the organization involved in the document exchange</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OrganizationIdentifier" type="PartyIdentifier_29" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Identifies an organization involved in the document exchange</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TelephoneBlock_1">
+		<xs:annotation>
+			<xs:documentation>Comprehensive telephone block, designed to provide definition for the telephone number, and also a variety of characteristics covering use and features. | Comprehensive telephone block, designed to provide definition for the telephone number, and also a variety of characteristics covering use and features.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="TelephoneNumber" type="LocationText_4" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>A word or phrase that constitutes the designation of place.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TelephoneTimeRole" type="DateTimeCode_1" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Description not provided</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TelephoneLocationRole" type="LocationCode_4" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Description not provided</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TelephoneDevice" type="ResourceCode_1" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Description not provided</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TelephoneService" type="ResourceCode_2" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Description not provided</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ElectronicLocationBlock_1">
+		<xs:annotation>
+			<xs:documentation>Combination of information that defines a specified individual's or organization's electronic location. | Combination of information that defines a specified individual's or organization's electronic location.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="EmailAddress" type="LocationText_10" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>A word or phrase that constitutes the designation of place.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EffectivePeriod.Block">
+		<xs:annotation>
+			<xs:documentation>Dates relating to an event or period. | Describes the start and end dates of a document.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="EffectiveDate" type="DateTime_1" minOccurs="1" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>Effective date of the policy.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="ExpirationDate" type="DateTime_1" minOccurs="1" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>Expiration date of the policy.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- ==========  Components ========== -->
+	<xs:complexType name="SubsiteAddressComponent_1">
+		<xs:annotation>
+			<xs:documentation>Detailed breakout of the information that is often found on the Address Lines of a mailing address such as apartment, building, department, floor, mail stop, room, and suite. | Detailed breakout of the information that is often found on the address lines of a mailing address such as apartment, building, department, floor, mail stop, room, or suite.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="Apartment" type="LocationText_2" minOccurs="1" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>A single residence in a multi unit dwelling.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Building" type="LocationText_7" minOccurs="1" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>A single structure.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Department" type="LocationText_7" minOccurs="1" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>A distinct usually specified division of a large organization.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Floor" type="LocationText_2" minOccurs="1" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>A story or level of a building.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Room" type="LocationText_2" minOccurs="1" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>An area seperated by walls or partitions from other similar parts of the building in which it is located.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Suite" type="LocationText_2" minOccurs="1" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>A series of connected rooms used as a living unit.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DriversLicense.Component">
+		<xs:annotation>
+			<xs:documentation>Describes a party's identification | Describes unique identifier assigned to an individual and the licensing agency.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="LicenseNumber" type="PartyIdentifier_8" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>A unique identifier assigned to an individual driver's license</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="LicensingState" type="LocationCode_2" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>State issuing a driver's license</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="IndividualNameComponent_2">
+		<xs:annotation>
+			<xs:documentation>Grouping of information that is used to specify an individual's name. | Name of the individual.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Prefix" type="NameText_2" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>A word or phrase that constitutes the distinctive designation of a person, place, thing, or concept.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GivenName" type="NameText_4" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>A word or phrase that constitutes the distinctive designation of a person, place, thing, or concept.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MiddleName" type="NameText_5" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>A word or phrase that constitutes the distinctive designation of a person, place, thing, or concept.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Surname" type="NameText_6" minOccurs="1" maxOccurs="2">
+				<xs:annotation>
+					<xs:documentation>A word or phrase that constitutes the distinctive designation of a person, place, thing, or concept.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Suffix" type="NameText_2" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>A word or phrase that constitutes the distinctive designation of a person, place, thing, or concept.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- ==========  Primitives ========== -->
+	<xs:complexType name="LocationIdentifier_1">
+		<xs:annotation>
+			<xs:documentation>An identifier that designates a place. | Defines international postal code.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="LocationIdentifier_1_Content">
+				<xs:attribute name="IDSchemeIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeAgencyIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeAgencyNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeVersionIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeDataURI" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeURI" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="LocationIdentifier_1_Content">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="3"/>
+			<xs:maxLength value="15"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="LocationText_1">
+		<xs:annotation>
+			<xs:documentation>A word or phrase that describes a position or site. | A word or phrase that describes a position or site.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="LocationText_1_Content">
+				<xs:attribute name="LanguageIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="LanguageLocaleIdentifier" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="LocationText_1_Content">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="2"/>
+			<xs:maxLength value="30"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="LocationText_10">
+		<xs:annotation>
+			<xs:documentation>A word or phrase that describes a position or site. | Email Address</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="LocationText_10_Content">
+				<xs:attribute name="LanguageIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="LanguageLocaleIdentifier" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="LocationText_10_Content">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="256"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="LocationText_2">
+		<xs:annotation>
+			<xs:documentation>A word or phrase that describes a position or site. | A specific identifier on a public way or thoroughfare.  i.e. Street Number.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="LocationText_2_Content">
+				<xs:attribute name="LanguageIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="LanguageLocaleIdentifier" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="LocationText_2_Content">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="20"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="LocationText_4">
+		<xs:annotation>
+			<xs:documentation>A word or phrase that describes a position or site. | Telephone Number</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="LocationText_4_Content">
+				<xs:attribute name="LanguageIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="LanguageLocaleIdentifier" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="LocationText_4_Content">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="20"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="LocationText_7">
+		<xs:annotation>
+			<xs:documentation>A word or phrase that describes a position or site. | A word or phrase that describes a position or site.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="LocationText_7_Content">
+				<xs:attribute name="LanguageIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="LanguageLocaleIdentifier" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="LocationText_7_Content">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="55"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="LocationText_9">
+		<xs:annotation>
+			<xs:documentation>A word or phrase that describes a position or site. | A word or phrase that describes a position or site.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="LocationText_9_Content">
+				<xs:attribute name="LanguageIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="LanguageLocaleIdentifier" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="LocationText_9_Content">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="80"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="LocationCode_2">
+		<xs:annotation>
+			<xs:documentation>A list of codes that designates a place. | The highest level of subdivision within a country.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="LocationCode_2_Content">
+				<xs:attribute name="ListIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="ListAgencyIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="ListAgencyNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="ListNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="ListVersionIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="LanguageIdentifier" type="xs:token" use="optional"/>
+				<xs:attribute name="ListURI" type="xs:string" use="optional"/>
+				<xs:attribute name="ListSchemeURI" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="LocationCode_2_Content">
+		<xs:restriction base="xs:token">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="3"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="LocationCode_3">
+		<xs:annotation>
+			<xs:documentation>A list of codes that designates a place. | Code identifying a country.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="LocationCode_3_Content">
+				<xs:attribute name="ListIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="ListAgencyIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="ListAgencyNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="ListNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="ListVersionIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="LanguageIdentifier" type="xs:token" use="optional"/>
+				<xs:attribute name="ListURI" type="xs:string" use="optional"/>
+				<xs:attribute name="ListSchemeURI" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="LocationCode_3_Content">
+		<xs:restriction base="xs:token">
+			<xs:minLength value="2"/>
+			<xs:maxLength value="3"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="LocationCode_4">
+		<xs:annotation>
+			<xs:documentation>A list of codes that designates a place. | Used to describe where a specific item is located.  Commonly used to differentiate between home and business."  Subelement Information:  (Put in description if don't have another location for now).  Subset of DE365,  Enum 'HP', 'WP'</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="LocationCode_4_Content">
+				<xs:attribute name="ListIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="ListAgencyIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="ListAgencyNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="ListNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="ListVersionIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="LanguageIdentifier" type="xs:token" use="optional"/>
+				<xs:attribute name="ListURI" type="xs:string" use="optional"/>
+				<xs:attribute name="ListSchemeURI" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="LocationCode_4_Content">
+		<xs:restriction base="xs:token">
+			<xs:minLength value="2"/>
+			<xs:maxLength value="2"/>
+			<xs:enumeration value="HP">
+				<xs:annotation>
+					<xs:documentation>Home Phone</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="WP">
+				<xs:annotation>
+					<xs:documentation>Work Phone</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="NameText_1">
+		<xs:annotation>
+			<xs:documentation>A word or phrase that constitutes the distinctive designation of a person or thing. | A word or phrase that designates a person or thing.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="NameText_1_Content">
+				<xs:attribute name="LanguageIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="LanguageLocaleIdentifier" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="NameText_1_Content">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="80"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="NameText_2">
+		<xs:annotation>
+			<xs:documentation>A word or phrase that constitutes the distinctive designation of a person or thing. | The title before an individual's name.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="NameText_2_Content">
+				<xs:attribute name="LanguageIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="LanguageLocaleIdentifier" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="NameText_2_Content">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="10"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="NameText_4">
+		<xs:annotation>
+			<xs:documentation>A word or phrase that constitutes the distinctive designation of a person or thing. | A word or phrase that designates a person or thing.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="NameText_4_Content">
+				<xs:attribute name="LanguageIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="LanguageLocaleIdentifier" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="NameText_4_Content">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="35"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="NameText_5">
+		<xs:annotation>
+			<xs:documentation>A word or phrase that constitutes the distinctive designation of a person or thing. | A word or phrase that designates a person or thing.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="NameText_5_Content">
+				<xs:attribute name="LanguageIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="LanguageLocaleIdentifier" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="NameText_5_Content">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="25"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="NameText_6">
+		<xs:annotation>
+			<xs:documentation>A word or phrase that constitutes the distinctive designation of a person or thing. | A word or phrase that designates a person or thing.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="NameText_6_Content">
+				<xs:attribute name="LanguageIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="LanguageLocaleIdentifier" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="NameText_6_Content">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="60"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="PartyIdentifier_29">
+		<xs:annotation>
+			<xs:documentation>Identifier which uniquely specifies a party, either an Individual or an Organization. | Identifies an organization involved in the message exchange.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="PartyIdentifier_29_Content">
+				<xs:attribute name="IDSchemeIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeAgencyIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeAgencyNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeVersionIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeDataURI" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeURI" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="PartyIdentifier_29_Content">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="128"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="PartyIdentifier_8">
+		<xs:annotation>
+			<xs:documentation>Identifier which uniquely specifies a party, either an Individual or an Organization. | A unique number assigned to identify a party</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="PartyIdentifier_8_Content">
+				<xs:attribute name="IDSchemeIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeAgencyIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeAgencyNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeVersionIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeDataURI" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeURI" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="PartyIdentifier_8_Content">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="50"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="PartyIdentifier_9">
+		<xs:annotation>
+			<xs:documentation>Identifier which uniquely specifies a party, either an Individual or an Organization. | A unique number assigned to identify a party.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="PartyIdentifier_9_Content">
+				<xs:attribute name="IDSchemeIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeAgencyIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeAgencyNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeVersionIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeDataURI" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeURI" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="PartyIdentifier_9_Content">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="9"/>
+			<xs:maxLength value="9"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="DateTime_1">
+		<xs:annotation>
+			<xs:documentation>Specifies a date and/or time | Date and/or Time.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="xs:dateTime"/>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="ResourceCode_1">
+		<xs:annotation>
+			<xs:documentation>Specifies a supply or support. i.e. material or service. | Type of telephone. i.e. Facsimile, Landline, Mobile.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="ResourceCode_1_Content">
+				<xs:attribute name="ListIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="ListAgencyIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="ListAgencyNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="ListNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="ListVersionIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="LanguageIdentifier" type="xs:token" use="optional"/>
+				<xs:attribute name="ListURI" type="xs:string" use="optional"/>
+				<xs:attribute name="ListSchemeURI" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="ResourceCode_1_Content">
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="Fax">
+				<xs:annotation>
+					<xs:documentation>Facsimile</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Landline">
+				<xs:annotation>
+					<xs:documentation>Landline</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Mobile">
+				<xs:annotation>
+					<xs:documentation>Mobile</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Pager">
+				<xs:annotation>
+					<xs:documentation>Pager</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PDA">
+				<xs:annotation>
+					<xs:documentation>Personal Data Assistant</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="ResourceCode_2">
+		<xs:annotation>
+			<xs:documentation>Specifies a supply or support. i.e. material or service. | Type of service expected for the telephone.  i.e. Answering service.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="ResourceCode_2_Content">
+				<xs:attribute name="ListIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="ListAgencyIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="ListAgencyNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="ListNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="ListVersionIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="LanguageIdentifier" type="xs:token" use="optional"/>
+				<xs:attribute name="ListURI" type="xs:string" use="optional"/>
+				<xs:attribute name="ListSchemeURI" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="ResourceCode_2_Content">
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="AS">
+				<xs:annotation>
+					<xs:documentation>Answering Service</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="OSB">
+				<xs:annotation>
+					<xs:documentation>Operator Standing By</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="VM">
+				<xs:annotation>
+					<xs:documentation>Voice Mail</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="ResourceIdentifier_11">
+		<xs:annotation>
+			<xs:documentation>Specified a supply or support, i.e. material or service. | A unique number assigned to identify a vehicle.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="ResourceIdentifier_11_Content">
+				<xs:attribute name="IDSchemeIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeAgencyIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeAgencyNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeVersionIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeDataURI" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeURI" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="ResourceIdentifier_11_Content">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="30"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="ResourceIdentifier_12">
+		<xs:annotation>
+			<xs:documentation>Specified a supply or support, i.e. material or service. | Identifies information about the risk.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="ResourceIdentifier_12_Content">
+				<xs:attribute name="IDSchemeIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeAgencyIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeAgencyNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeVersionIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeDataURI" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeURI" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="ResourceIdentifier_12_Content">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="50"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="ResourceIdentifier_85">
+		<xs:annotation>
+			<xs:documentation>Specified a supply or support, i.e. material or service. | Name of the organization involved in the message exchange.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="ResourceIdentifier_85_Content">
+				<xs:attribute name="IDSchemeIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeAgencyIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeAgencyNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeVersionIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeDataURI" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeURI" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="ResourceIdentifier_85_Content">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="128"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="Insurance.FinancialResponsibilityFilingPurpose.Code">
+		<xs:annotation>
+			<xs:documentation>Describes or specifies the intended outcome. May answer the question what. | Code identifying the purpose of the financial responsibility filing document.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="Insurance.FinancialResponsibilityFilingPurpose.Code_Content">
+				<xs:attribute name="ListIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="ListAgencyIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="ListAgencyNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="ListNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="ListVersionIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="NameText" type="xs:string" use="optional"/>
+				<xs:attribute name="LanguageIdentifier" type="xs:token" use="optional"/>
+				<xs:attribute name="ListURI" type="xs:string" use="optional"/>
+				<xs:attribute name="ListSchemeURI" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="Insurance.FinancialResponsibilityFilingPurpose.Code_Content">
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="FR2">
+				<xs:annotation>
+					<xs:documentation>FL only – SR22 for PIP and PDL coverages only</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="FR44">
+				<xs:annotation>
+					<xs:documentation>Financial Responsibilty filing indicating increased coverage is in force</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="FR46">
+				<xs:annotation>
+					<xs:documentation>Financial Responsibilty filing indicating increased coverage is no longer in force</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="S22A">
+				<xs:annotation>
+					<xs:documentation>SC only – Non-restrictive SR22</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="S22B">
+				<xs:annotation>
+					<xs:documentation>SC only – Non-owner SR22</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="S22C">
+				<xs:annotation>
+					<xs:documentation>SC only – Restricted SR22</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="S22D">
+				<xs:annotation>
+					<xs:documentation>SC only – Motorcycle  SR22</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="S26">
+				<xs:annotation>
+					<xs:documentation>SC only – Cancels S22A, S22B, S22C, or S22D</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SR1A">
+				<xs:annotation>
+					<xs:documentation>Verification of coverage for an accident where damage total is &gt; $750</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SR1P">
+				<xs:annotation>
+					<xs:documentation>Verification of coverage for an accident</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SR22">
+				<xs:annotation>
+					<xs:documentation>Financial Responsibilty filing indicating coverage is in force</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SR22A">
+				<xs:annotation>
+					<xs:documentation>IL Only - Financial Responsibilty filing indicating coverage is in force</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SR23">
+				<xs:annotation>
+					<xs:documentation>Financial Responsibilty filing indicating coverage is in force for fleets</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SR24">
+				<xs:annotation>
+					<xs:documentation>Notice of change of vehicle to update a previously filed SR22</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SR26">
+				<xs:annotation>
+					<xs:documentation>Financial Responsibilty filing indicating coverage is no longer in force</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="Insurance.FinancialResponsibilityFilingType.Code">
+		<xs:annotation>
+			<xs:documentation>Describes or specifies the intended outcome. May answer the question what. | Transaction type code for certificates of financial responsibility filing.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="Insurance.FinancialResponsibilityFilingType.Code_Content">
+				<xs:attribute name="ListIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="ListAgencyIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="ListAgencyNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="ListNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="ListVersionIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="NameText" type="xs:string" use="optional"/>
+				<xs:attribute name="LanguageIdentifier" type="xs:token" use="optional"/>
+				<xs:attribute name="ListURI" type="xs:string" use="optional"/>
+				<xs:attribute name="ListSchemeURI" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="Insurance.FinancialResponsibilityFilingType.Code_Content">
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="B">
+				<xs:annotation>
+					<xs:documentation>Broad</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="NSC">
+				<xs:annotation>
+					<xs:documentation>Non vehicle specific commercial</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="NSP">
+				<xs:annotation>
+					<xs:documentation>Non vehicle specific personal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="O">
+				<xs:annotation>
+					<xs:documentation>Owner</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="OP">
+				<xs:annotation>
+					<xs:documentation>Owner and operator</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="P">
+				<xs:annotation>
+					<xs:documentation>Operator</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="VSC">
+				<xs:annotation>
+					<xs:documentation>Vehicle specific commercial</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="VSP">
+				<xs:annotation>
+					<xs:documentation>Vehicle specific personal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Z">
+				<xs:annotation>
+					<xs:documentation>Low cost</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="DateTimeCode_1">
+		<xs:annotation>
+			<xs:documentation>Used for textual date time representations.  i.e.  When describing Day, Night, Morning, Afternoon, Evening, etc. | Represents a portion of the day that is commonly associated with the sun coming up and going down.  Subelement Information:  (Put in description if don't have another location for now)  Subset of DE365,  Enum  'NP',  Note:  Will have to add 'DP - Daytime</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="xs:token">
+				<xs:attribute name="ListIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="ListAgencyIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="ListAgencyNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="ListNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="ListVersionIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="LanguageIdentifier" type="xs:token" use="optional"/>
+				<xs:attribute name="ListURI" type="xs:string" use="optional"/>
+				<xs:attribute name="ListSchemeURI" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="DateTimeText_2">
+		<xs:annotation>
+			<xs:documentation>Part of a complete date time combination. (i.e. Year as CCYY or Time as HHMM) | Specifies a year.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="DateTimeText_2_Content">
+				<xs:attribute name="LanguageIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="LanguageLocaleIdentifier" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="DateTimeText_2_Content">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="4"/>
+			<xs:maxLength value="4"/>
+			<xs:pattern value="\d\d\d\d"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ==========  Common Derived Datatypes ========== -->
+	<xs:simpleType name="JulianDate">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="\d\d\d\d\d\d\d"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="JulianDayOfYear">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="\d\d\d"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ==========  Publication Version Type ========== -->
+	<xs:simpleType name="PublicationVersionType">
+		<xs:restriction base="xs:token">
+			<xs:pattern value="\d\d\d\d\d\d\d\d"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

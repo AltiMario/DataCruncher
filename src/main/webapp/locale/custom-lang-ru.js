@@ -213,8 +213,8 @@ _message = {
     "customErrors": "Custom message errors",
     "macro": "Макро",
     "exportPng": "Диаграмма Экспорт изображения",
-    "optionInEE" : "Функционал доступен в версии<br/><br/><b>Enterprise Edition</b>",
-    "moduleName" : "Open Edition",
+    "optionNotReady" : "Function not yet available",
+    "moduleName" : "Full Edition",
     "shareSchema": "Share with the world",
     "sendStream" : "Отправить поток",
     "noValuesForDisplay" : "Нет значений для отображения",
@@ -588,4 +588,23 @@ _language = {
     "german" : "Немецкий",
     "russian": "Русский"
 };
+
+_alert_ee = {
+
+},
+
+    _error_ee = {
+        "schemaLoadFieldsError": "Эта схема не может иметь макрос"
+    },
+
+    _message_ee = {
+        "addMacro": "Добавить  макрос",
+        "macroCorrectly":"Макрос завершен корректно",
+        "macroIncorrectly":"Макрос Ошибка проверки",
+        "macroEditing":"Макрос редактирования"
+    },
+
+    _label_ee = {
+        "macroCompilation": "Макро сборник"
+    };
 

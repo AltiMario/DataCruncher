@@ -146,7 +146,7 @@ function popupTrigger() {
 			popupAddCodeEE(record);
 			schemaTriggerGrid.store.sync();
 		} catch (e) {
-			callAlert((e instanceof ReferenceError) ? _message['optionInEE']
+			callAlert((e instanceof ReferenceError) ? _message['optionNotReady']
 					: 'loadTriggerPopup.js :: unknown error');
 		}
 	}

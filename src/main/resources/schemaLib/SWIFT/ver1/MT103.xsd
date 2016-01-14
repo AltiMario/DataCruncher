@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+xmlns="urn:DataCruncher:swift:v1" targetNamespace="urn:DataCruncher:swift:v1"
+elementFormDefault="qualified" attributeFormDefault="unqualified">
+<xs:include schemaLocation="TypeDictionary.xsd"/>
+	<xs:element name="CMFXML">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ApplicationMessage">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Header" type="THeader" minOccurs="0"/>
+							<xs:element name="SingleCustomerCreditTransfer" type="TSingleCustomerCreditTransfer"/>
+							<xs:element name="Trailer" type="TTrailer" minOccurs="0"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="TSingleCustomerCreditTransfer">
+		<xs:sequence>
+			<xs:element name="SendersReference" type="TReference-20x-01"/>
+			<xs:element name="TimeIndication" type="TTime-13C-01" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="BankOperationCode" type="TCode-23B-01"/>
+			<xs:element name="InstructionCode" type="TCode-23E-01" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="TransactionTypeCode" type="TCode-26T-01" minOccurs="0"/>
+			<xs:element name="ValueDateAndInterbankSettledAmount" type="TDateAndAmount-32A-01"/>
+			<xs:element name="InstructedAmount" type="TAmount-33B-01" minOccurs="0"/>
+			<xs:element name="ExchangeRate" type="TRate-36x-01" minOccurs="0"/>
+			<xs:element name="OrderingCustomer" type="TParty-50AKF-01"/>
+			<xs:element name="SendingInstitution" type="TParty-51A-01" minOccurs="0"/>
+			<xs:element name="OrderingInstitution" type="TParty-52AD-01" minOccurs="0"/>
+			<xs:element name="SendersCorrespondent" type="TParty-53ABD-01" minOccurs="0"/>
+			<xs:element name="ReceiversCorrespondent" type="TParty-54ABD-01" minOccurs="0"/>
+			<xs:element name="ThirdReimbursementInstitution" type="TParty-55ABD-01" minOccurs="0"/>
+			<xs:element name="IntermediaryInstitution" type="TParty-56ACD-01" minOccurs="0"/>
+			<xs:element name="AccountWithInstitution" type="TParty-57ABCD-01" minOccurs="0"/>
+			<xs:element name="BeneficiaryCustomer" type="TParty-59Ax-01"/>
+			<xs:element name="RemittanceInformation" type="TNarrative-70x-01" minOccurs="0"/>
+			<xs:element name="DetailsOfCharges" type="TCode-71A-01"/>
+			<xs:element name="SendersCharges" type="TAmount-71F-01" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="ReceiversCharges" type="TAmount-71G-01" minOccurs="0"/>
+			<xs:element name="SenderToReceiverInformation" type="TRejectReturnOrInstruction-72x-01" minOccurs="0"/>
+			<xs:element name="RegulatoryReporting" type="TNarrative-77B-01" minOccurs="0"/>
+			<xs:element name="EnvelopeContents" type="TFreeText-77T-01" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

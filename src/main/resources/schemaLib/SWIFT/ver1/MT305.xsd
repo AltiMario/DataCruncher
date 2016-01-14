@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+xmlns="urn:DataCruncher:swift:v1" targetNamespace="urn:DataCruncher:swift:v1"
+elementFormDefault="qualified" attributeFormDefault="unqualified">
+<xs:include schemaLocation="TypeDictionary.xsd"/>
+<xs:element name="CMFXML">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="ApplicationMessage">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="Header" type="THeader" minOccurs="0"/>
+<xs:element name="ForeignCurrencyOptionConfirmation" type="TForeignCurrencyOptionConfirmation"/>
+<xs:element name="Trailer" type="TTrailer" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:complexType name="TForeignCurrencyOptionConfirmation">
+<xs:sequence>
+<xs:element name="TransactionReferenceNumber" type="TReference-20x-01"/>
+<xs:element name="RelatedReference" type="TReference-21x-01"/>
+<xs:element name="CommonReference" type="TReference-22x-01"/>
+<xs:element name="FurtherIdentification" type="TIdentificationOfTheFinancialInstrument-23x-01"/>
+<xs:element name="ScopeOfOperation" type="TCode-94A-01" minOccurs="0"/>
+<xs:element name="PartyA" type="TParty-82ADJ-01"/>
+<xs:element name="PartyB" type="TParty-87ADJ-01"/>
+<xs:element name="FundOrBeneficiaryCustomer" type="TParty-83ADJ-01" minOccurs="0"/>
+<xs:element name="DateContractAgreedOrAmended" type="TDate-30x-01"/>
+<xs:element name="EarliestExerciseDate" type="TDate-31C-01" minOccurs="0"/>
+<xs:element name="ExpiryDetails" type="TDate-31G-01"/>
+<xs:element name="FinalSettlementDate" type="TDate-31E-01" minOccurs="0"/>
+<xs:element name="SettlementType" type="TCode-26F-01"/>
+<xs:element name="UnderlyingAmount" type="TAmount-32B-01"/>
+<xs:element name="StrikePrice" type="TRate-36x-01"/>
+<xs:element name="CounterAmount" type="TAmount-33B-01"/>
+<xs:element name="PremiumPrice" type="TRate-37K-01"/>
+<xs:choice>
+<xs:element name="PremiumPaymentPaid" type="TAmount-34P-01"/>
+<xs:element name="PremiumPaymentReceived" type="TAmount-34R-01"/>
+</xs:choice>
+<xs:element name="SendersCorrespondent" type="TParty-53ABD-01" minOccurs="0"/>
+<xs:element name="Intermediary" type="TParty-56AD-01" minOccurs="0"/>
+<xs:element name="AccountWithInstitution" type="TParty-57AD-01"/>
+<xs:element name="TermsAndConditions" type="TNarrative-77D-01" minOccurs="0"/>
+<xs:element name="SenderToReceiverInformation" type="TNarrative-72x-01" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>

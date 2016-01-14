@@ -1,0 +1,423 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+xmlns="urn:DataCruncher:swift:v1" targetNamespace="urn:DataCruncher:swift:v1"
+elementFormDefault="qualified" attributeFormDefault="unqualified">
+<xs:include schemaLocation="TypeDictionary.xsd"/>
+<xs:element name="CMFXML">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="ApplicationMessage">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="Header" type="THeader" minOccurs="0"/>
+<xs:element name="CorporateActionConfirmation">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="GeneralInformation" type="TGeneralInformation"/>
+<xs:element name="UnderlyingSecurities" type="TUnderlyingSecurities"/>
+<xs:element name="CorporateActionDetails" type="TCorporateActionDetails" minOccurs="0"/>
+<xs:element name="CorporateActionConfirmation" type="TCorporateActionConfirmation"/>
+<xs:element name="AdditionalInformation" type="TAdditionalInformation" minOccurs="0"/>
+</xs:sequence>
+
+</xs:complexType>
+</xs:element>
+<xs:element name="Trailer" type="TTrailer" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:complexType name="TAdditionalInformation">
+<xs:sequence>
+<xs:element name="DeclarationDetails" minOccurs="0" maxOccurs="unbounded" type="TNarrative-70E-01"/>
+<xs:element name="AdditionalText" minOccurs="0" maxOccurs="unbounded" type="TNarrative-70E-01"/>
+<xs:element name="NarrativeVersion" minOccurs="0" maxOccurs="unbounded" type="TNarrative-70E-01"/>
+<xs:element name="RegistrationDetails" minOccurs="0" maxOccurs="unbounded" type="TNarrative-70E-01"/>
+<xs:element name="InformationConditions" minOccurs="0" maxOccurs="unbounded" type="TNarrative-70E-01"/>
+<xs:element name="InformationToBeCompliedWith" minOccurs="0" maxOccurs="unbounded" type="TNarrative-70E-01"/>
+<xs:element name="PartyContactNarrative" minOccurs="0" maxOccurs="unbounded" type="TNarrative-70E-01"/>
+<xs:element name="TaxationConditions" minOccurs="0" maxOccurs="unbounded" type="TNarrative-70E-01"/>
+<xs:element name="BasketOrIndexInformation" minOccurs="0" maxOccurs="unbounded" type="TNarrative-70E-01"/>
+<xs:element name="OriginatorOfMessage" minOccurs="0" type="TParty-95PQR-01"/>
+<xs:element name="RecipientOfMessage" minOccurs="0" type="TParty-95PQR-01"/>
+<xs:element name="IssuerAgent" minOccurs="0" maxOccurs="unbounded" type="TParty-95PQR-01"/>
+<xs:element name="PayingAgent" minOccurs="0" maxOccurs="unbounded" type="TParty-95PQR-01"/>
+<xs:element name="SubPayingAgent" minOccurs="0" maxOccurs="unbounded" type="TParty-95PQR-01"/>
+</xs:sequence>
+
+
+</xs:complexType>
+<xs:complexType name="TCashMovement">
+<xs:sequence>
+<xs:element name="CreditDebitIndicator" type="TIndicator-22H-01"/>
+<xs:element name="ContractualPayment" minOccurs="0" type="TIndicator-22H-01"/>
+<xs:element name="TypeOfIncome" minOccurs="0" type="TIndicator-22F-02"/>
+<xs:choice minOccurs="0">
+<xs:element name="CashAccount" type="TAccount-97AE-01"/>
+<xs:element name="ChargesAccount" type="TAccount-97AE-01"/>
+<xs:element name="TaxAccount" type="TAccount-97AE-01"/>
+</xs:choice>
+<xs:element name="CashParty" type="TCashParty" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="PostingAmount" type="TAmount-19B-01"/>
+<xs:element name="ResultingAmount" minOccurs="0" type="TAmount-19B-01"/>
+<xs:element name="OriginalCurrencyAndOrderedAmount" minOccurs="0" type="TAmount-19B-01"/>
+<xs:element name="CapitalGainsAmount" minOccurs="0" type="TAmount-19B-01"/>
+<xs:element name="IndemnityAmount" minOccurs="0" type="TAmount-19B-01"/>
+<xs:element name="CashInLieuOfSecurities" minOccurs="0" type="TAmount-19B-01"/>
+<xs:element name="ChargesFees" minOccurs="0" type="TAmount-19B-01"/>
+<xs:element name="FullyFrankedAmount" minOccurs="0" type="TAmount-19B-01"/>
+<xs:element name="UnfrankedAmount" minOccurs="0" type="TAmount-19B-01"/>
+<xs:element name="TaxFreeAmount" minOccurs="0" type="TAmount-19B-01"/>
+<xs:element name="TaxDeferred" minOccurs="0" type="TAmount-19B-01"/>
+<xs:element name="SundryOtherIncome" minOccurs="0" type="TAmount-19B-01"/>
+<xs:element name="GrossAmount" minOccurs="0" type="TAmount-19B-01"/>
+<xs:element name="InterestAmount" minOccurs="0" type="TAmount-19B-01"/>
+<xs:element name="MarketClaim" minOccurs="0" type="TAmount-19B-01"/>
+<xs:element name="NetCashAmount" minOccurs="0" type="TAmount-19B-01"/>
+<xs:element name="PrincipalOfCorpus" minOccurs="0" type="TAmount-19B-01"/>
+<xs:element name="ReinvestmentAmount" minOccurs="0" type="TAmount-19B-01"/>
+<xs:element name="AmountOfTaxCredit" minOccurs="0" type="TAmount-19B-01"/>
+<xs:element name="WithholdingTaxAmount" minOccurs="0" type="TAmount-19B-01"/>
+<xs:element name="WithholdingOfForeignTax" minOccurs="0" type="TAmount-19B-01"/>
+<xs:element name="WithholdingOfLocalTax" minOccurs="0" type="TAmount-19B-01"/>
+<xs:element name="RedemptionPremiumAmount" minOccurs="0" type="TAmount-19B-01"/>
+<xs:element name="AdditionalTax" minOccurs="0" type="TAmount-19B-01"/>
+<xs:element name="CashIncentive" minOccurs="0" type="TAmount-19B-01"/>
+<xs:element name="IncomePortion" minOccurs="0" type="TAmount-19B-01"/>
+<xs:element name="ExecutionBrokersCommission" minOccurs="0" type="TAmount-19B-01"/>
+<xs:element name="LocalBrokersCommission" minOccurs="0" type="TAmount-19B-01"/>
+<xs:element name="ManufacturedDividend" minOccurs="0" type="TAmount-19B-01"/>
+<xs:element name="PayingSubPayingAgentCommission" minOccurs="0" type="TAmount-19B-01"/>
+<xs:element name="PostageAmount" minOccurs="0" type="TAmount-19B-01"/>
+<xs:element name="RegulatoryFees" minOccurs="0" type="TAmount-19B-01"/>
+<xs:element name="Shipping" minOccurs="0" type="TAmount-19B-01"/>
+<xs:element name="SolicitationFee" minOccurs="0" type="TAmount-19B-01"/>
+<xs:element name="StampDuty" minOccurs="0" type="TAmount-19B-01"/>
+<xs:element name="StockExchangeTax" minOccurs="0" type="TAmount-19B-01"/>
+<xs:element name="ValueAddedTax" minOccurs="0" type="TAmount-19B-01"/>
+<xs:element name="FiscalStamp" minOccurs="0" type="TAmount-19B-01"/>
+<xs:element name="ReclaimOfTaxes" minOccurs="0" type="TAmount-19B-01"/>
+<xs:element name="EUTaxRetentionAmount" minOccurs="0" type="TAmount-19B-01"/>
+<xs:element name="CashAmountBroughtForward" minOccurs="0" type="TAmount-19B-01"/>
+<xs:element name="CashAmountCarriedForward" minOccurs="0" type="TAmount-19B-01"/>
+<xs:element name="NotionalDividendPayable" minOccurs="0" type="TAmount-19B-01"/>
+<xs:element name="NotionalTax" minOccurs="0" type="TAmount-19B-01"/>
+<xs:element name="TaxArrearAmount" minOccurs="0" type="TAmount-19B-01"/>
+<xs:element name="AccruedInterestAmount" minOccurs="0" type="TAmount-19B-01"/>
+<xs:element name="PostingDate" type="TDate-98AC-01"/>
+<xs:element name="ValueDate" minOccurs="0" type="TDate-98AC-01"/>
+<xs:element name="EarliestPaymentDate" minOccurs="0" type="TDate-98ABCE-01"/>
+<xs:element name="FXRateFixingDate" minOccurs="0" type="TDate-98AC-01"/>
+<xs:element name="PaymentDate" minOccurs="0" type="TDate-98AC-01"/>
+<xs:element name="ExchangeRate" minOccurs="0" type="TRate-92B-01"/>
+<xs:element name="GenericCashPriceReceivedPerProduct" minOccurs="0" type="TPrice-90ABFJ-01"/>
+<xs:element name="TaxVoucherDetails" type="TTaxVoucherDetails" minOccurs="0"/>
+</xs:sequence>
+
+
+</xs:complexType>
+<xs:complexType name="TCashParty">
+<xs:sequence>
+<xs:choice>
+<xs:element name="AccountWithInstitution" type="TParty-95PQR-01"/>
+<xs:element name="BeneficiaryOfMoney" type="TParty-95PQR-01"/>
+<xs:element name="MarketClaimCounterpart" type="TParty-95PQR-01"/>
+</xs:choice>
+<xs:element name="AlternateIdentification" minOccurs="0" type="TParty-95S-01"/>
+<xs:element name="CashAccount" minOccurs="0" type="TAccount-97AE-01"/>
+<xs:element name="ProcessingReference" minOccurs="0" type="TReference-20C-01"/>
+<xs:element name="PartyContactNarrative" minOccurs="0" type="TNarrative-70E-01"/>
+</xs:sequence>
+
+
+</xs:complexType>
+<xs:complexType name="TCorporateActionConfirmation">
+<xs:sequence>
+<xs:element name="CAOptionNumber" type="TNumberIdentification-13A-01"/>
+<xs:element name="CorporateActionOptionCode" type="TIndicator-22FH-01"/>
+<xs:element name="OptionFeaturesIndicator" minOccurs="0" maxOccurs="unbounded" type="TIndicator-22F-01"/>
+<xs:element name="DispositionOfFractionsIndicator" minOccurs="0" type="TIndicator-22F-01"/>
+<xs:element name="CurrencyOption" minOccurs="0" type="TCurrency-11A-01"/>
+<xs:element name="ExpiryDate" minOccurs="0" type="TDate-98ABC-01"/>
+<xs:element name="MarketDeadlineDate" minOccurs="0" type="TDate-98ABCE-01"/>
+<xs:element name="ProtectDate" minOccurs="0" type="TDate-98ABCE-01"/>
+<xs:element name="SubscriptionCostDebitDate" minOccurs="0" type="TDate-98ABC-01"/>
+<xs:element name="ResponseDeadlineDate" minOccurs="0" type="TDate-98ABCE-01"/>
+<xs:element name="CoverProtectExpirationDate" minOccurs="0" type="TDate-98ABCE-01"/>
+<xs:element name="TradeDate" minOccurs="0" type="TDate-98ABCE-01"/>
+<xs:element name="PriceCalculationPeriod" minOccurs="0" type="TPeriod-69ABCDEF-01"/>
+<xs:element name="PeriodOfAction" minOccurs="0" type="TPeriod-69ABCDEF-01"/>
+<xs:element name="ParallelTradingPeriod" minOccurs="0" type="TPeriod-69ABCDEF-01"/>
+<xs:element name="NetDividendRate" minOccurs="0" maxOccurs="unbounded" type="TRate-92FJ-01"/>
+<xs:element name="GrossDividendRate" minOccurs="0" maxOccurs="unbounded" type="TRate-92FJ-01"/>
+<xs:element name="TaxCreditRate" minOccurs="0" maxOccurs="unbounded" type="TRate-92AFJ-01"/>
+<xs:element name="TaxRelatedRate" minOccurs="0" maxOccurs="unbounded" type="TRate-92J-01"/>
+<xs:element name="NonResidentRate" minOccurs="0" type="TRate-92AF-01"/>
+<xs:element name="WithholdingTaxRate" minOccurs="0" type="TRate-92A-01"/>
+<xs:element name="WithholdingOfForeignTax" minOccurs="0" type="TRate-92AF-01"/>
+<xs:element name="WithholdingOfLocalTax" minOccurs="0" type="TRate-92AF-01"/>
+<xs:element name="ChargesFees" minOccurs="0" type="TRate-92AF-01"/>
+<xs:element name="FullyFrankedRate" minOccurs="0" type="TRate-92AF-01"/>
+<xs:element name="IndexFactor" minOccurs="0" type="TRate-92AF-01"/>
+<xs:element name="AdditionalTax" minOccurs="0" type="TRate-92AF-01"/>
+<xs:element name="ApplicableRate" minOccurs="0" type="TRate-92A-01"/>
+<xs:element name="FinalDividendRate" minOccurs="0" type="TRate-92F-01"/>
+<xs:element name="CashIncentiveRate" minOccurs="0" type="TRate-92A-01"/>
+<xs:element name="MaximumAllowedOversubscriptionRate" minOccurs="0" type="TRate-92A-01"/>
+<xs:element name="ProvisionalDividendRate" minOccurs="0" type="TRate-92F-01"/>
+<xs:element name="SolicitationFeeRate" minOccurs="0" type="TRate-92A-01"/>
+<xs:element name="TaxOnIncome" minOccurs="0" type="TRate-92A-01"/>
+<xs:element name="TaxOnProfits" minOccurs="0" type="TRate-92A-01"/>
+<xs:element name="ReclaimOfTaxesRate" minOccurs="0" type="TRate-92A-01"/>
+<xs:element name="ProRationRate" minOccurs="0" type="TRate-92A-01"/>
+<xs:element name="FiscalStamp" minOccurs="0" type="TRate-92A-01"/>
+<xs:element name="InterestRateUsedForPayments" minOccurs="0" type="TRate-92AFJ-01"/>
+<xs:element name="ExercisePrice" minOccurs="0" type="TPrice-90ABK-01"/>
+<xs:element name="GenericCashPriceReceivedPerProduct" minOccurs="0" maxOccurs="unbounded" type="TPrice-90ABFJ-01"/>
+<xs:element name="GenericCashPricePaidPerProduct" minOccurs="0" type="TPrice-90AB-01"/>
+<xs:element name="TaxableIncomePerDividendShare" minOccurs="0" type="TPrice-90B-01"/>
+<xs:element name="CashInLieuOfSecuritiesPrice" minOccurs="0" type="TPrice-90AB-01"/>
+<xs:element name="OverSubscriptionDepositPrice" minOccurs="0" type="TPrice-90AB-01"/>
+<xs:element name="PlaceOfTrade" minOccurs="0" type="TPlace-94B-01"/>
+<xs:element name="SecurityMovement" type="TSecurityMovement" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="CashMovement" type="TCashMovement" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+
+
+</xs:complexType>
+<xs:complexType name="TCorporateActionDetails">
+<xs:sequence>
+<xs:element name="AnnouncementDate" minOccurs="0" type="TDate-98ABC-01"/>
+<xs:element name="CertificationDeadlineDate" minOccurs="0" type="TDate-98ABC-01"/>
+<xs:element name="ExDividendOrDistributionDate" minOccurs="0" type="TDate-98ABC-01"/>
+<xs:element name="EffectiveDate" minOccurs="0" type="TDate-98ABC-01"/>
+<xs:element name="ProrationDate" minOccurs="0" type="TDate-98ABC-01"/>
+<xs:element name="DeadlineToRegister" minOccurs="0" type="TDate-98ABC-01"/>
+<xs:element name="ResultPublicationDate" minOccurs="0" type="TDate-98ABC-01"/>
+<xs:element name="DeadlineToSplit" minOccurs="0" type="TDate-98ABC-01"/>
+<xs:element name="MeetingDate" minOccurs="0" type="TDate-98ABCE-01"/>
+<xs:element name="RecordDate" minOccurs="0" type="TDate-98ABC-01"/>
+<xs:element name="DeadlineForTaxBreakdownInstructions" minOccurs="0" type="TDate-98ABC-01"/>
+<xs:element name="LotteryDate" minOccurs="0" type="TDate-98ABC-01"/>
+<xs:element name="UnconditionalDate" minOccurs="0" type="TDate-98ABC-01"/>
+<xs:element name="WhollyUnconditionalDate" minOccurs="0" type="TDate-98ABC-01"/>
+<xs:element name="EqualizationDate" minOccurs="0" type="TDate-98ABC-01"/>
+<xs:element name="MaturityDate" minOccurs="0" type="TDate-98ABC-01"/>
+<xs:element name="BlockingPeriod" minOccurs="0" type="TPeriod-69ABCDEF-01"/>
+<xs:element name="PriceCalculationPeriod" minOccurs="0" type="TPeriod-69ABCDEF-01"/>
+<xs:element name="InterestPeriod" minOccurs="0" type="TPeriod-69ABCDEF-01"/>
+<xs:element name="CompulsoryPurchasePeriod" minOccurs="0" type="TPeriod-69ABCDEF-01"/>
+<xs:element name="ClaimPeriod" minOccurs="0" type="TPeriod-69ABCDEF-01"/>
+<xs:element name="NumberOfDaysAccured" minOccurs="0" type="TNumberCount-99A-01"/>
+<xs:element name="ReinvestmentDiscountRateToMarket" minOccurs="0" type="TRate-92A-01"/>
+<xs:element name="InterestRate" minOccurs="0" type="TRate-92AF-01"/>
+<xs:element name="BidIntervalRate" minOccurs="0" type="TRate-92F-01"/>
+<xs:element name="NextFactor" minOccurs="0" type="TRate-92AK-01"/>
+<xs:element name="PreviousFactor" minOccurs="0" type="TRate-92AK-01"/>
+<xs:element name="PercentageSought" minOccurs="0" type="TRate-92AK-01"/>
+<xs:element name="MarketPrice" minOccurs="0" type="TPrice-90AB-01"/>
+<xs:element name="MaximumPrice" minOccurs="0" type="TPrice-90AB-01"/>
+<xs:element name="MinimumPrice" minOccurs="0" type="TPrice-90AB-01"/>
+<xs:element name="BackAndOddLotQuantity" minOccurs="0" type="TQuantityOfFinancialInstrument-36BC-01"/>
+<xs:element name="QuantitySought" minOccurs="0" type="TQuantityOfFinancialInstrument-36BC-01"/>
+<xs:element name="FrontEndOddLotQuantity" minOccurs="0" type="TQuantityOfFinancialInstrument-36BC-01"/>
+<xs:element name="NewBoardLotQuantity" minOccurs="0" type="TQuantityOfFinancialInstrument-36B-01"/>
+<xs:element name="NewDenominationQuantity" minOccurs="0" type="TQuantityOfFinancialInstrument-36B-01"/>
+<xs:element name="CouponNumber" minOccurs="0" maxOccurs="unbounded" type="TNumberIdentification-13AB-01"/>
+<xs:element name="CertificationFlag" minOccurs="0" type="TFlag-17B-01"/>
+<xs:element name="ChargesFlag" minOccurs="0" type="TFlag-17B-01"/>
+<xs:element name="InformationToBeCompliedWithFlag" minOccurs="0" type="TFlag-17B-01"/>
+<xs:element name="DividendType" minOccurs="0" type="TIndicator-22F-01"/>
+<xs:element name="ConversionType" minOccurs="0" type="TIndicator-22F-01"/>
+<xs:element name="DistributionType" minOccurs="0" type="TIndicator-22F-01"/>
+<xs:element name="OfferType" minOccurs="0" maxOccurs="unbounded" type="TIndicator-22F-01"/>
+<xs:element name="AdditionalBusinessProcess" minOccurs="0" maxOccurs="unbounded" type="TIndicator-22F-01"/>
+<xs:element name="ChangeType" minOccurs="0" maxOccurs="unbounded" type="TIndicator-22F-01"/>
+<xs:element name="IntermediateSecuritiesDistributionType" minOccurs="0" type="TIndicator-22F-01"/>
+<xs:element name="CapitalGainInOutIndicator" minOccurs="0" type="TIndicator-22F-01"/>
+<xs:element name="TIDTISCalculatedIndicator" minOccurs="0" type="TIndicator-22F-01"/>
+<xs:element name="TypeOfExemption" minOccurs="0" type="TIndicator-22F-02"/>
+<xs:element name="AdditionalText" minOccurs="0" type="TNarrative-70E-01"/>
+<xs:element name="NarrativeVersion" minOccurs="0" type="TNarrative-70E-01"/>
+<xs:element name="InformationConditions" minOccurs="0" maxOccurs="unbounded" type="TNarrative-70E-01"/>
+<xs:element name="InformationToBeCompliedWith" minOccurs="0" maxOccurs="unbounded" type="TNarrative-70E-01"/>
+<xs:element name="Offeror" minOccurs="0" type="TNarrative-70E-01"/>
+<xs:element name="Name" minOccurs="0" type="TNarrative-70E-01"/>
+<xs:element name="TaxationConditions" minOccurs="0" type="TNarrative-70E-01"/>
+</xs:sequence>
+
+
+</xs:complexType>
+<xs:complexType name="TFIASecurityMovement">
+<xs:sequence>
+<xs:element name="PlaceOfListing" minOccurs="0" type="TPlace-94B-01"/>
+<xs:element name="MethodOfInterestComputation" minOccurs="0" type="TIndicator-22F-01"/>
+<xs:element name="ClassificationType" minOccurs="0" type="TTypeOfFinancialInstrument-12AC-01"/>
+<xs:element name="CurrencyOfDenomination" minOccurs="0" type="TCurrency-11A-01"/>
+<xs:element name="CouponDate" minOccurs="0" type="TDate-98A-01"/>
+<xs:element name="ExpiryDate" minOccurs="0" type="TDate-98A-01"/>
+<xs:element name="FloatingRateFixingDate" minOccurs="0" type="TDate-98A-01"/>
+<xs:element name="MaturityDate" minOccurs="0" type="TDate-98A-01"/>
+<xs:element name="IssueDate" minOccurs="0" type="TDate-98A-01"/>
+<xs:element name="CallDate" minOccurs="0" type="TDate-98A-01"/>
+<xs:element name="PutDate" minOccurs="0" type="TDate-98A-01"/>
+<xs:element name="DatedDate" minOccurs="0" type="TDate-98A-01"/>
+<xs:element name="ConversionDate" minOccurs="0" type="TDate-98A-01"/>
+<xs:element name="IssuePrice" minOccurs="0" type="TPrice-90AB-01"/>
+<xs:element name="PreviousFactor" minOccurs="0" type="TRate-92A-01"/>
+<xs:element name="NextFactor" minOccurs="0" type="TRate-92A-01"/>
+<xs:element name="InterestRate" minOccurs="0" type="TRate-92A-01"/>
+<xs:element name="NextInterestRate" minOccurs="0" type="TRate-92A-01"/>
+<xs:element name="MinimumNominalQuantity" minOccurs="0" type="TQuantityOfFinancialInstrument-36B-01"/>
+<xs:element name="MinimumExercisableQuantity" minOccurs="0" type="TQuantityOfFinancialInstrument-36B-01"/>
+<xs:element name="MinimumExercisableMultipleQuantity" minOccurs="0" type="TQuantityOfFinancialInstrument-36B-01"/>
+<xs:element name="ContractSize" minOccurs="0" type="TQuantityOfFinancialInstrument-36B-01"/>
+</xs:sequence>
+
+
+</xs:complexType>
+<xs:complexType name="TFIAUnderlyingSecurities">
+<xs:sequence>
+<xs:element name="PlaceOfListing" minOccurs="0" type="TPlace-94B-01"/>
+<xs:element name="MethodOfInterestComputation" minOccurs="0" type="TIndicator-22F-01"/>
+<xs:element name="ClassificationType" minOccurs="0" type="TTypeOfFinancialInstrument-12AC-01"/>
+<xs:element name="CurrencyOfDenomination" minOccurs="0" type="TCurrency-11A-01"/>
+<xs:element name="CouponDate" minOccurs="0" type="TDate-98A-01"/>
+<xs:element name="ExpiryDate" minOccurs="0" type="TDate-98A-01"/>
+<xs:element name="FloatingRateFixingDate" minOccurs="0" type="TDate-98A-01"/>
+<xs:element name="MaturityDate" minOccurs="0" type="TDate-98A-01"/>
+<xs:element name="IssueDate" minOccurs="0" type="TDate-98A-01"/>
+<xs:element name="CallDate" minOccurs="0" type="TDate-98A-01"/>
+<xs:element name="PutDate" minOccurs="0" type="TDate-98A-01"/>
+<xs:element name="DatedDate" minOccurs="0" type="TDate-98A-01"/>
+<xs:element name="ConversionDate" minOccurs="0" type="TDate-98A-01"/>
+<xs:element name="PreviousFactor" minOccurs="0" type="TRate-92A-01"/>
+<xs:element name="NextFactor" minOccurs="0" type="TRate-92A-01"/>
+<xs:element name="InterestRate" minOccurs="0" type="TRate-92A-01"/>
+<xs:element name="NextInterestRate" minOccurs="0" type="TRate-92A-01"/>
+<xs:element name="PercentageOfDebtClaims" minOccurs="0" type="TRate-92A-01"/>
+<xs:element name="MinimumNominalQuantity" minOccurs="0" type="TQuantityOfFinancialInstrument-36B-01"/>
+<xs:element name="MinimumExercisableQuantity" minOccurs="0" type="TQuantityOfFinancialInstrument-36B-01"/>
+<xs:element name="MinimumExercisableMultipleQuantity" minOccurs="0" type="TQuantityOfFinancialInstrument-36B-01"/>
+<xs:element name="ContractSize" minOccurs="0" type="TQuantityOfFinancialInstrument-36B-01"/>
+</xs:sequence>
+
+
+</xs:complexType>
+<xs:complexType name="TGeneralInformation">
+<xs:sequence>
+<xs:element name="CorporateActionReference" type="TReference-20C-01"/>
+<xs:element name="SendersReference" type="TReference-20C-01"/>
+<xs:element name="OfficialCorporateActionEventReference" minOccurs="0" type="TReference-20C-01"/>
+<xs:element name="FunctionOfTheMessage" type="TFunctionOfTheMessage-23G-01"/>
+<xs:element name="CorporateActionEventIndicator" type="TIndicator-22F-01"/>
+<xs:element name="PreparationDate" minOccurs="0" type="TDate-98AC-01"/>
+<xs:element name="Linkage" type="TLinkage" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+
+
+</xs:complexType>
+<xs:complexType name="TLinkage">
+<xs:sequence>
+<xs:element name="LinkageTypeIndicator" minOccurs="0" type="TIndicator-22F-01"/>
+<xs:element name="LinkedMessage" minOccurs="0" type="TNumberIdentification-13AB-01"/>
+<xs:choice>
+<xs:element name="CorporateActionReference" type="TReference-20C-01"/>
+<xs:element name="PreviousMessageReference" type="TReference-20C-01"/>
+<xs:element name="RelatedReference" type="TReference-20C-01"/>
+<xs:element name="CaseNumber" type="TReference-20C-01"/>
+<xs:element name="OfficialCorporateActionEventReference" type="TReference-20C-01"/>
+</xs:choice>
+</xs:sequence>
+
+
+</xs:complexType>
+<xs:complexType name="TReceiveDeliver">
+<xs:sequence>
+<xs:choice>
+<xs:element name="Buyer" type="TParty-95PQR-01"/>
+<xs:element name="DeliveringAgent" type="TParty-95PQR-01"/>
+<xs:element name="DeliverersCustodian" type="TParty-95PQR-01"/>
+<xs:element name="ReceivingAgent" type="TParty-95PQR-01"/>
+<xs:element name="ReceiversCustodian" type="TParty-95PQR-01"/>
+<xs:element name="PlaceOfSettlement" type="TParty-95CPQ-01"/>
+<xs:element name="Seller" type="TParty-95PQR-01"/>
+</xs:choice>
+<xs:element name="AlternateIdentification" minOccurs="0" maxOccurs="unbounded" type="TParty-95S-01"/>
+<xs:element name="SafekeepingAccount" minOccurs="0" type="TAccount-97A-01"/>
+<xs:element name="ProcessingReference" minOccurs="0" type="TReference-20C-01"/>
+<xs:element name="PartyContactNarrative" minOccurs="0" type="TNarrative-70E-01"/>
+</xs:sequence>
+
+
+</xs:complexType>
+<xs:complexType name="TSecurityMovement">
+<xs:sequence>
+<xs:element name="CreditDebitIndicator" type="TIndicator-22H-01"/>
+<xs:element name="TemporaryIndicator" minOccurs="0" type="TIndicator-22F-01"/>
+<xs:element name="IdentificationOfTheFinancialInstrument" type="TIdentificationOfTheFinancialInstrument-35B-01"/>
+<xs:element name="FinancialInstrumentAttributes" type="TFIASecurityMovement" minOccurs="0"/>
+<xs:element name="PostingQuantity" maxOccurs="unbounded" type="TQuantityOfFinancialInstrument-36B-01"/>
+<xs:element name="PlaceOfSafekeeping" minOccurs="0" type="TPlace-94BCF-01"/>
+<xs:element name="DispositionOfFraction" minOccurs="0" type="TIndicator-22F-01"/>
+<xs:element name="CurrencyOption" minOccurs="0" type="TCurrency-11A-01"/>
+<xs:choice minOccurs="0">
+<xs:element name="IndicativePrice" type="TPrice-90AB-01"/>
+<xs:element name="MarketPrice" type="TPrice-90AB-01"/>
+</xs:choice>
+<xs:element name="CashInLieuOfSecurities" minOccurs="0" type="TPrice-90AB-01"/>
+<xs:element name="AdditionalForExistingSecurities" minOccurs="0" type="TRate-92DL-01"/>
+<xs:element name="NewToOld" minOccurs="0" type="TRate-92DLMN-01"/>
+<xs:element name="AdditionalForSubscribedResultantSecurities" minOccurs="0" type="TRate-92DL-01"/>
+<xs:element name="NewSecuritiesToUnderlying" minOccurs="0" type="TRate-92DLMN-01"/>
+<xs:element name="PostingDate" type="TDate-98AC-01"/>
+<xs:element name="AvailableDateForTrading" minOccurs="0" type="TDate-98ABC-01"/>
+<xs:element name="DividendRankingDate" minOccurs="0" type="TDate-98ABC-01"/>
+<xs:element name="EarliestPaymentDate" minOccurs="0" type="TDate-98ABCE-01"/>
+<xs:element name="PaymentDate" minOccurs="0" type="TDate-98ABC-01"/>
+<xs:element name="PariPassuDate" minOccurs="0" type="TDate-98ABC-01"/>
+<xs:element name="ReceiveDeliver" type="TReceiveDeliver" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+
+
+</xs:complexType>
+<xs:complexType name="TTaxVoucherDetails">
+<xs:sequence>
+<xs:element name="TaxVoucherReference" type="TReference-20C-01"/>
+<xs:element name="BargainDate" minOccurs="0" type="TDate-98AC-01"/>
+<xs:element name="BargainSettlementDate" minOccurs="0" type="TDate-98AC-01"/>
+</xs:sequence>
+
+
+</xs:complexType>
+<xs:complexType name="TUnderlyingSecurities">
+<xs:sequence>
+<xs:element name="AccountOwner" minOccurs="0" type="TParty-95PR-01"/>
+<xs:element name="SafekeepingAccount" type="TAccount-97A-01"/>
+<xs:element name="PlaceOfSafekeeping" minOccurs="0" type="TPlace-94BCF-01"/>
+<xs:element name="IdentificationOfTheFinancialInstrument" type="TIdentificationOfTheFinancialInstrument-35B-01"/>
+<xs:element name="FinancialInstrumentAttributes" type="TFIAUnderlyingSecurities" minOccurs="0"/>
+<xs:element name="TotalEligibleForCA" minOccurs="0" maxOccurs="unbounded" type="TBalance-93B-01"/>
+<xs:element name="Blocked" minOccurs="0" type="TBalance-93BC-01"/>
+<xs:element name="Borrowed" minOccurs="0" type="TBalance-93BC-01"/>
+<xs:element name="CollateralIn" minOccurs="0" type="TBalance-93BC-01"/>
+<xs:element name="CollateralOut" minOccurs="0" type="TBalance-93BC-01"/>
+<xs:element name="OnLoan" minOccurs="0" type="TBalance-93BC-01"/>
+<xs:element name="PendingDelivery" minOccurs="0" maxOccurs="unbounded" type="TBalance-93BC-01"/>
+<xs:element name="PendingReceipt" minOccurs="0" maxOccurs="unbounded" type="TBalance-93BC-01"/>
+<xs:element name="OutForRegistration" minOccurs="0" type="TBalance-93BC-01"/>
+<xs:element name="SettlementPosition" minOccurs="0" type="TBalance-93BC-01"/>
+<xs:element name="StreetPosition" minOccurs="0" type="TBalance-93BC-01"/>
+<xs:element name="TradeDatePosition" minOccurs="0" type="TBalance-93BC-01"/>
+<xs:element name="InTransshipment" minOccurs="0" type="TBalance-93BC-01"/>
+<xs:element name="Registered" minOccurs="0" type="TBalance-93BC-01"/>
+<xs:element name="ConfirmedBalance" type="TBalance-93BC-01"/>
+<xs:element name="AffectedBalance" minOccurs="0" type="TBalance-93BC-01"/>
+<xs:element name="UnaffectedBalance" minOccurs="0" type="TBalance-93BC-01"/>
+</xs:sequence>
+
+
+</xs:complexType>
+</xs:schema>

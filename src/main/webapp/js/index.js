@@ -1121,7 +1121,7 @@ var schemas = ({
                         schemaExportToXSD();
                     }
 				} catch (e) {
-					callAlert((e instanceof ReferenceError) ? _message['optionInEE'] 
+					callAlert((e instanceof ReferenceError) ? _message['optionNotReady']
 						: 'index.js :: unknown error');	
 				}
 			}		

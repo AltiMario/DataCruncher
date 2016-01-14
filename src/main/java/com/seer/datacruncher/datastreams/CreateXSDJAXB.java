@@ -39,6 +39,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import com.seer.datacruncher.datastreams.XSDentities.Annotation;
+import com.seer.datacruncher.datastreams.XSDentities.Appinfo;
+import com.seer.datacruncher.jpa.entity.MacroEntity;
+
 
 public class CreateXSDJAXB implements DaoSet {
 
@@ -537,7 +541,18 @@ public class CreateXSDJAXB implements DaoSet {
 
     }
     protected void addMacroToDocument(Annotation annotation, long idSchema) {
-        //don't delete this empty method, it's overridden in other modules
+        @SuppressWarnings("rawtypes")
+        List macros = macrosDao.read(idSchema).getResults();
+        if (macros.size() > 0) {
+            Appinfo appInfo = objectFactory.createAppinfo();
+            for (Object o : macros) {
+                MacroEntity ent = (MacroEntity) o;
+                if (ent.getIsActive() == 1) {
+                    appInfo.getContent().add("@RuleCheck:" + ent.getName() + ";\n");
+                }
+            }
+            annotation.getAppinfoOrDocumentation().add(appInfo);
+        }
     }
 
     private void createChild (long idSchema , long idParent, List<Object> particle) {

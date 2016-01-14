@@ -89,9 +89,7 @@
     <script type="text/javascript" src="./js/loginPopup.js"></script>
     <script type="text/javascript" src="./js/forgetPasswordPopup.js"></script>
 	<script type="text/javascript" src="./js/userRegistrationPopup.js"></script>
-    <script type="text/javascript" src="./js/utils.js"></script>   
-    <script type="text/javascript" src="./js/indexEE.js"></script>     
-    <!--  <script type="text/javascript" src="./js/index.js"></script> -->
+    <script type="text/javascript" src="./js/utils.js"></script>
 </head>
 <body>
 	<div id="loading_background"></div>

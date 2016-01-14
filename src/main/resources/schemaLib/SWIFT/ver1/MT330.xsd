@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+xmlns="urn:DataCruncher:swift:v1" targetNamespace="urn:DataCruncher:swift:v1"
+elementFormDefault="qualified" attributeFormDefault="unqualified">
+<xs:include schemaLocation="TypeDictionary.xsd"/>
+	<xs:element name="CMFXML">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ApplicationMessage">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Header" type="THeader" minOccurs="0"/>
+							<xs:element name="CallNoticeDepositConfirmation">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="GeneralInformation" type="TGeneralInformation"/>
+										<xs:element name="TransactionDetails" type="TTransactionDetails"/>
+										<xs:element name="SIForAmountsPayableByPartyA" type="TSIForAmountsPayableByPartyA"/>
+										<xs:element name="SIForAmountsPayableByPartyB" type="TSIForAmountsPayableByPartyB"/>
+										<xs:element name="SIForInterestPayableByPartyA" type="TSIForInterestsPayableByPartyA" minOccurs="0"/>
+										<xs:element name="SIForInterestPayableByPartyB" type="TSIForInterestsPayableByPartyB" minOccurs="0"/>
+										<xs:element name="TaxInformation" type="TTaxInformation" minOccurs="0"/>
+										<xs:element name="AdditionalInformation" type="TAdditionalInformation" minOccurs="0"/>
+									</xs:sequence>
+									
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="Trailer" type="TTrailer" minOccurs="0"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="TAdditionalInformation">
+		<xs:sequence>
+			<xs:element name="ContactInformation" type="TNarrative-29A-01" minOccurs="0"/>
+			<xs:element name="DealingMethod" type="TCode-24D-01" minOccurs="0"/>
+			<xs:element name="DealingBranchPartyA" type="TParty-84ABDJ-01" minOccurs="0"/>
+			<xs:element name="DealingBranchPartyB" type="TParty-85ABDJ-01" minOccurs="0"/>
+			<xs:element name="CounterpartysReference" type="TReference-26H-01" minOccurs="0"/>
+			<xs:element name="SenderToReceiverInformation" type="TNarrative-72x-01" minOccurs="0"/>
+		</xs:sequence>
+		
+		
+	</xs:complexType>
+	<xs:complexType name="TGeneralInformation">
+		<xs:sequence>
+			<xs:element name="SendersReference" type="TReference-20x-01"/>
+			<xs:element name="RelatedReference" type="TReference-21x-01" minOccurs="0"/>
+			<xs:element name="TypeOfOperation" type="TCode-22A-01"/>
+			<xs:element name="ScopeOfOperation" type="TCode-94A-01" minOccurs="0"/>
+			<xs:element name="TypeOfEvent" type="TCode-22B-01"/>
+			<xs:element name="CommonReference" type="TReference-22C-01"/>
+			<xs:element name="ContractNumberPartyA" type="TReference-21N-01" minOccurs="0"/>
+			<xs:element name="PartyA" type="TParty-82ADJ-01"/>
+			<xs:element name="PartyB" type="TParty-87ADJ-01"/>
+			<xs:element name="FundOrInstructingParty" type="TParty-83ADJ-01" minOccurs="0"/>
+			<xs:element name="TermsAndConditions" type="TNarrative-77D-01" minOccurs="0"/>
+		</xs:sequence>
+		
+		
+	</xs:complexType>
+	<xs:complexType name="TTransactionDetails">
+		<xs:sequence>
+			<xs:element name="PartyAsRole" type="TIndicator-17R-01"/>
+			<xs:element name="TradeDate" type="TDate-30T-01"/>
+			<xs:element name="ValueDate" type="TDate-30V-01"/>
+			<xs:element name="PeriodOfNotice" type="TPeriod-38A-01"/>
+			<xs:element name="Balance" type="TAmount-32B-01" minOccurs="0"/>
+			<xs:element name="PrincipalAmountToBeSettled" type="TAmount-32H-01" minOccurs="0"/>
+			<xs:element name="InterestDueDate" type="TDate-30XA-01" minOccurs="0"/>
+			<xs:element name="InterestAmount" type="TAmount-34E-01" minOccurs="0"/>
+			<xs:element name="InterestRate" type="TRate-37G-01"/>
+			<xs:element name="DayCountFraction" type="TCode-14D-01"/>
+			<xs:element name="LastDayOfTheFirstInterestPeriod" type="TDate-30F-01" minOccurs="0"/>
+			<xs:element name="NumberOfDays" type="TNumberCount-38J-01" minOccurs="0"/>
+		</xs:sequence>
+		
+		
+	</xs:complexType>
+	<xs:complexType name="TSettlementInstructions">
+		<xs:sequence>
+			<xs:element name="DeliveryAgent" type="TParty-53ADJ-01" minOccurs="0"/>
+			<xs:element name="Intermediary2" type="TParty-86ADJ-01" minOccurs="0"/>
+			<xs:element name="Intermediary" type="TParty-56ADJ-01" minOccurs="0"/>
+			<xs:element name="ReceivingAgent" type="TParty-57ADJ-01"/>
+			<xs:element name="BeneficiaryInstitution" type="TParty-58ADJ-01" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TSIForAmountsPayableByPartyA">
+		<xs:complexContent>
+			<xs:extension base="TSettlementInstructions">
+				
+				
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TSIForAmountsPayableByPartyB">
+		<xs:complexContent>
+			<xs:extension base="TSettlementInstructions">
+				
+				
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TSIForInterestsPayableByPartyA">
+		<xs:complexContent>
+			<xs:extension base="TSettlementInstructions">
+				
+				
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TSIForInterestsPayableByPartyB">
+		<xs:complexContent>
+			<xs:extension base="TSettlementInstructions">
+				
+				
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TTaxInformation">
+		<xs:sequence>
+			<xs:element name="TaxRate" type="TRate-37L-01"/>
+			<xs:element name="NetInterestAmount" type="TAmount-33B-01"/>
+			<xs:element name="ExchangeRate" type="TRate-36x-01" minOccurs="0"/>
+			<xs:element name="TaxAmount" type="TAmount-33E-01" minOccurs="0"/>
+		</xs:sequence>
+		
+		
+	</xs:complexType>
+</xs:schema>

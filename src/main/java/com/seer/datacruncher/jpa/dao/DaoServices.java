@@ -58,8 +58,25 @@ public class DaoServices {
     private static SchemaSQLDao schemaSQLDao;
     private static LogDao logDao;
     private static ForecastDao forecastDao;
+	private static CustomErrorsDao customErrorsDao;
+	private static MacrosDao macrosDao;
 
-    public static ActivityDao getActivityDao() {
+	public static CustomErrorsDao getCustomErrorsDao() {
+		return customErrorsDao;
+	}
+
+	public void setCustomErrorsDao(CustomErrorsDao customErrorsDao) {
+		DaoServices.customErrorsDao = customErrorsDao;
+	}
+
+	public static MacrosDao getMacrosDao() {
+		return macrosDao;
+	}
+
+	public void setMacrosDao(MacrosDao macrosDao) {
+		DaoServices.macrosDao = macrosDao;
+	}
+	public static ActivityDao getActivityDao() {
         return activityDao;
     }
 

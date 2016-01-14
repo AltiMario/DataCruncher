@@ -392,14 +392,16 @@ function popupStandardSupported() {
 		}	
 	});
 	storeSupportedStandard.load({params:{start:0 , limit:19}});
-		
+
 	function getAvailabilityName(value){
-		if(value == 1) {
-			value = 'Open version';
+		var str = '';
+		/*if(value == 1) {
+			value = 'Open Edition';
 		} else if(value == 2) {
-			value = 'Enterprise version';
+			value = 'Enterprise Edition';
 		}
-	    var str = '<div style="white-space:pre-wrap !important;display:inline-block;">' + value + '</div>';
+	    str = '<div style="white-space:pre-wrap !important;display:inline-block;">' + value + '</div>';*/
+		str = '<div style="white-space:pre-wrap !important;display:inline-block;">Full Edition</div>';
 	    return str;
 	}
 	

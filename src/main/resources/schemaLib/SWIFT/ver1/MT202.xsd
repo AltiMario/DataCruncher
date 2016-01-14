@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+xmlns="urn:DataCruncher:swift:v1" targetNamespace="urn:DataCruncher:swift:v1"
+elementFormDefault="qualified" attributeFormDefault="unqualified">
+<xs:include schemaLocation="TypeDictionary.xsd"/>
+	<xs:element name="CMFXML">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ApplicationMessage">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Header" type="THeader" minOccurs="0"/>
+							<xs:element name="GeneralFinancialInstitutionTransfer" type="TGeneralFinancialInstitutionTransfer"/>
+							<xs:element name="Trailer" type="TTrailer" minOccurs="0"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="TGeneralFinancialInstitutionTransfer">
+		<xs:sequence>
+			<xs:element name="TransactionReferenceNumber" type="TReference-20x-01"/>
+			<xs:element name="RelatedReference" type="TReference-21x-01"/>
+			<xs:element name="TimeIndication" type="TTime-13C-01" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="ValueDateAndAmount" type="TDateAndAmount-32A-01"/>
+			<xs:element name="OrderingInstitution" type="TParty-52AD-01" minOccurs="0"/>
+			<xs:element name="SendersCorrespondent" type="TParty-53ABD-01" minOccurs="0"/>
+			<xs:element name="ReceiversCorrespondent" type="TParty-54ABD-01" minOccurs="0"/>
+			<xs:element name="Intermediary" type="TParty-56AD-01" minOccurs="0"/>
+			<xs:element name="AccountWithInstitution" type="TParty-57ABD-01" minOccurs="0"/>
+			<xs:element name="BeneficiaryCustomer" type="TParty-58AD-01"/>
+			<xs:element name="SenderToReceiverInformation" type="TRejectReturnOrInstruction-72x-01" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

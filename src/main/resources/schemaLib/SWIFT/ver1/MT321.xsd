@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+xmlns="urn:DataCruncher:swift:v1" targetNamespace="urn:DataCruncher:swift:v1"
+elementFormDefault="qualified" attributeFormDefault="unqualified">
+<xs:include schemaLocation="TypeDictionary.xsd"/>
+<xs:element name="CMFXML">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="ApplicationMessage">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="Header" type="THeader" minOccurs="0"/>
+<xs:element name="InstructionToSettleAThirdPartyLoanDeposit">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="GeneralInformation" type="TGeneralInformation"/>
+<xs:element name="DepositDetails" type="TDepositDetails"/>
+<xs:element name="SettlementDetails" type="TSettlementDetails" maxOccurs="unbounded"/>
+</xs:sequence>
+
+</xs:complexType>
+</xs:element>
+<xs:element name="Trailer" type="TTrailer" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:complexType name="TDepositDetails">
+<xs:sequence>
+<xs:element name="ContractNumberReference" type="TReference-20C-01"/>
+<xs:element name="LenderBorrowerIndicator" type="TIndicator-22H-01"/>
+<xs:element name="MethodOfInterestComputationIndicator" minOccurs="0" type="TIndicator-22H-01"/>
+<xs:element name="TradeDate" type="TDate-98A-01"/>
+<xs:element name="ValueDate" type="TDate-98A-01"/>
+<xs:element name="MaturityDate" type="TDate-98A-01"/>
+<xs:element name="NextInterestDueDate" minOccurs="0" type="TDate-98A-01"/>
+<xs:element name="LastDayOfFirstInterestPeriod" minOccurs="0" type="TDate-98A-01"/>
+<xs:element name="PrincipalCurrencyAndAmount" type="TAmount-19A-01"/>
+<xs:element name="CurrencyAndAmountToBeSettled" minOccurs="0" type="TAmount-19A-01"/>
+<xs:element name="CurrencyAndNextInterestAmount" minOccurs="0" type="TAmount-19A-01"/>
+<xs:element name="CurrencyAndCurrentInterestAmount" minOccurs="0" type="TAmount-19A-01"/>
+<xs:element name="CurrencyAndIncreaseDecreaseAmount" minOccurs="0" type="TAmount-19A-01"/>
+<xs:element name="InterestRate" type="TRate-92A-01"/>
+<xs:element name="NumberOfDaysAccrued" minOccurs="0" type="TNumberCount-99B-01"/>
+<xs:element name="LoanDepositParty1" type="TLoanDepositParty1"/>
+<xs:element name="LoanDepositParty2" type="TLoanDepositParty2"/>
+<xs:element name="OtherParties" type="TOtherParties" minOccurs="0"/>
+</xs:sequence>
+
+
+</xs:complexType>
+<xs:complexType name="TGeneralInformation">
+<xs:sequence>
+<xs:element name="SendersReference" type="TReference-20C-01"/>
+<xs:element name="DepositCommonReference" minOccurs="0" type="TReference-20C-01"/>
+<xs:element name="TypeOfOperation" type="TFunctionOfTheMessage-23G-01"/>
+<xs:element name="TypeOfLoanDepositEvent" type="TIndicator-22H-01"/>
+<xs:element name="BlockTradeIndicator" minOccurs="0" type="TIndicator-22H-01"/>
+<xs:element name="CurrentSettlementInstructionNumber" minOccurs="0" type="TNumberCount-99B-01"/>
+<xs:element name="TotalOfLinkedSettlementInstructions" minOccurs="0" type="TNumberCount-99B-01"/>
+<xs:element name="Linkage" type="TLinkage" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+
+
+</xs:complexType>
+<xs:complexType name="TLinkage">
+<xs:sequence>
+<xs:element name="LinkedMessage" minOccurs="0" type="TNumberIdentification-13AB-01"/>
+<xs:choice>
+<xs:element name="PoolReference" type="TReference-20C-01"/>
+<xs:element name="PreviousReference" type="TReference-20C-01"/>
+<xs:element name="RelatedReference" type="TReference-20C-01"/>
+</xs:choice>
+</xs:sequence>
+
+
+</xs:complexType>
+<xs:complexType name="TLoanDepositParty1">
+<xs:sequence>
+<xs:element name="LoanDepositCounterparty" type="TParty-95PQR-01"/>
+</xs:sequence>
+
+
+</xs:complexType>
+<xs:complexType name="TLoanDepositParty2">
+<xs:sequence>
+<xs:element name="Investor" minOccurs="0" type="TParty-95PQR-01"/>
+<xs:element name="SafekeepingAccount" type="TAccount-97A-01"/>
+</xs:sequence>
+
+
+</xs:complexType>
+<xs:complexType name="TOtherParties">
+<xs:sequence>
+<xs:element name="ExecutingBroker" minOccurs="0" type="TParty-95PQR-01"/>
+<xs:element name="MessageOriginator" minOccurs="0" type="TParty-95PQR-01"/>
+</xs:sequence>
+
+
+</xs:complexType>
+<xs:complexType name="TSettlementDetails">
+<xs:sequence>
+<xs:element name="PrincipalAndInterest" type="TIndicator-22H-01"/>
+<xs:element name="SettlementParty" type="TSettlementParty" maxOccurs="unbounded"/>
+</xs:sequence>
+
+
+</xs:complexType>
+<xs:complexType name="TSettlementParty">
+<xs:sequence>
+<xs:choice>
+<xs:element name="CashDeliveryAgent" type="TParty-95PQR-02"/>
+<xs:element name="SecondIntermediary" type="TParty-95PQR-02"/>
+<xs:element name="Intermediary" type="TParty-95PQR-02"/>
+<xs:element name="AccountWithInstitution" type="TParty-95PQR-02"/>
+<xs:element name="BeneficiaryOfMoney" type="TParty-95PQR-01"/>
+</xs:choice>
+<xs:element name="AlternateIdentification" minOccurs="0" type="TParty-95R-01"/>
+<xs:element name="CashAccount" minOccurs="0" type="TAccount-97A-01"/>
+<xs:element name="PartyContactNarrative" minOccurs="0" type="TNarrative-70C-01"/>
+</xs:sequence>
+
+
+</xs:complexType>
+</xs:schema>

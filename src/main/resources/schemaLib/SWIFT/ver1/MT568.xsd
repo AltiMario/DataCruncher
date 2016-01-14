@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+xmlns="urn:DataCruncher:swift:v1" targetNamespace="urn:DataCruncher:swift:v1"
+elementFormDefault="qualified" attributeFormDefault="unqualified">
+<xs:include schemaLocation="TypeDictionary.xsd"/>
+<xs:element name="CMFXML">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="ApplicationMessage">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="Header" type="THeader" minOccurs="0"/>
+<xs:element name="CorporateActionNarrative">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="GeneralInformation" type="TGeneralInformation"/>
+<xs:element name="UnderlyingSecurities" type="TUnderlyingSecurities" minOccurs="0"/>
+<xs:element name="AdditionalInformation" type="TAdditionalInformation"/>
+</xs:sequence>
+
+</xs:complexType>
+</xs:element>
+<xs:element name="Trailer" type="TTrailer" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:complexType name="TAdditionalInformation">
+<xs:sequence>
+<xs:element name="AdditionalText" minOccurs="0" maxOccurs="unbounded" type="TNarrative-70EF-01"/>
+<xs:element name="RegistrationDetails" minOccurs="0" maxOccurs="unbounded" type="TNarrative-70EF-01"/>
+<xs:element name="InformationConditions" minOccurs="0" maxOccurs="unbounded" type="TNarrative-70EF-01"/>
+<xs:element name="InformationToBeCompliedWith" minOccurs="0" maxOccurs="unbounded" type="TNarrative-70EF-01"/>
+<xs:element name="PartyContactNarrative" minOccurs="0" maxOccurs="unbounded" type="TNarrative-70E-01"/>
+<xs:element name="WebSiteAddress" minOccurs="0" maxOccurs="unbounded" type="TNarrative-70EF-01"/>
+<xs:element name="TaxationConditions" minOccurs="0" maxOccurs="unbounded" type="TNarrative-70EF-01"/>
+<xs:element name="Disclaimer" minOccurs="0" maxOccurs="unbounded" type="TNarrative-70EF-01"/>
+<xs:element name="OriginatorOfMessage" minOccurs="0" type="TParty-95PQR-01"/>
+<xs:element name="RecipientOfMessage" minOccurs="0" type="TParty-95PQR-01"/>
+</xs:sequence>
+
+
+</xs:complexType>
+<xs:complexType name="TFinancialInstrumentAttributes">
+<xs:sequence>
+<xs:element name="PlaceOfListing" minOccurs="0" type="TPlace-94B-01"/>
+<xs:element name="MethodOfInterestComputation" minOccurs="0" type="TIndicator-22F-01"/>
+<xs:element name="ClassificationType" minOccurs="0" type="TTypeOfFinancialInstrument-12AC-01"/>
+<xs:element name="CurrencyOfDenomination" minOccurs="0" type="TCurrency-11A-01"/>
+<xs:element name="CouponDate" minOccurs="0" type="TDate-98A-01"/>
+<xs:element name="ExpiryDate" minOccurs="0" type="TDate-98A-01"/>
+<xs:element name="FloatingRateFixingDate" minOccurs="0" type="TDate-98A-01"/>
+<xs:element name="MaturityDate" minOccurs="0" type="TDate-98A-01"/>
+<xs:element name="IssueDate" minOccurs="0" type="TDate-98A-01"/>
+<xs:element name="CallDate" minOccurs="0" type="TDate-98A-01"/>
+<xs:element name="PutDate" minOccurs="0" type="TDate-98A-01"/>
+<xs:element name="DatedDate" minOccurs="0" type="TDate-98A-01"/>
+<xs:element name="ConversionDate" minOccurs="0" type="TDate-98A-01"/>
+<xs:element name="PreviousFactor" minOccurs="0" type="TRate-92A-01"/>
+<xs:element name="NextFactor" minOccurs="0" type="TRate-92A-01"/>
+<xs:element name="InterestRate" minOccurs="0" type="TRate-92A-01"/>
+<xs:element name="NextInterestRate" minOccurs="0" type="TRate-92A-01"/>
+<xs:element name="MinimumNominalQuantity" minOccurs="0" type="TQuantityOfFinancialInstrument-36B-01"/>
+<xs:element name="MinimumExercisableQuantity" minOccurs="0" type="TQuantityOfFinancialInstrument-36B-01"/>
+<xs:element name="MinimumExercisableMultipleQuantity" minOccurs="0" type="TQuantityOfFinancialInstrument-36B-01"/>
+<xs:element name="ContractSize" minOccurs="0" type="TQuantityOfFinancialInstrument-36B-01"/>
+</xs:sequence>
+
+
+</xs:complexType>
+<xs:complexType name="TGeneralInformation">
+<xs:sequence>
+<xs:element name="CorporateActionReference" type="TReference-20C-01"/>
+<xs:element name="SendersReference" type="TReference-20C-01"/>
+<xs:element name="OfficialCorporateActionEventReference" minOccurs="0" type="TReference-20C-01"/>
+<xs:element name="FunctionOfTheMessage" type="TFunctionOfTheMessage-23G-01"/>
+<xs:element name="CorporateActionEventIndicator" type="TIndicator-22F-01"/>
+<xs:element name="PreparationDate" minOccurs="0" type="TDate-98AC-01"/>
+<xs:element name="Linkage" type="TLinkage" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+
+
+</xs:complexType>
+<xs:complexType name="TLinkage">
+<xs:sequence>
+<xs:element name="LinkageTypeIndicator" minOccurs="0" type="TIndicator-22F-01"/>
+<xs:element name="LinkedMessage" minOccurs="0" type="TNumberIdentification-13AB-01"/>
+<xs:choice>
+<xs:element name="PreviousReference" type="TReference-20C-01"/>
+<xs:element name="RelatedReference" type="TReference-20C-01"/>
+</xs:choice>
+</xs:sequence>
+
+
+</xs:complexType>
+<xs:complexType name="TUnderlyingSecurities">
+<xs:sequence>
+<xs:element name="AccountOwner" minOccurs="0" type="TParty-95PR-01"/>
+<xs:element name="SafekeepingAccount" type="TAccount-97AC-01"/>
+<xs:element name="PlaceOfSafekeeping" minOccurs="0" type="TPlace-94BCF-01"/>
+<xs:element name="FinancialInstrumentAttributes" type="TFinancialInstrumentAttributes" minOccurs="0"/>
+<xs:element name="TotalEligibleForCA" minOccurs="0" maxOccurs="unbounded" type="TBalance-93B-01"/>
+<xs:element name="Blocked" minOccurs="0" type="TBalance-93BC-01"/>
+<xs:element name="Borrowed" minOccurs="0" type="TBalance-93BC-01"/>
+<xs:element name="CollateralIn" minOccurs="0" type="TBalance-93BC-01"/>
+<xs:element name="CollateralOut" minOccurs="0" type="TBalance-93BC-01"/>
+<xs:element name="OnLoan" minOccurs="0" type="TBalance-93BC-01"/>
+<xs:element name="PendingDelivery" minOccurs="0" maxOccurs="unbounded" type="TBalance-93BC-01"/>
+<xs:element name="PendingReceipt" minOccurs="0" maxOccurs="unbounded" type="TBalance-93BC-01"/>
+<xs:element name="OutForRegistration" minOccurs="0" type="TBalance-93BC-01"/>
+<xs:element name="SettlementPosition" minOccurs="0" type="TBalance-93BC-01"/>
+<xs:element name="StreetPosition" minOccurs="0" type="TBalance-93BC-01"/>
+<xs:element name="TradeDatePosition" minOccurs="0" type="TBalance-93BC-01"/>
+<xs:element name="InTransshipment" minOccurs="0" type="TBalance-93BC-01"/>
+<xs:element name="Registered" minOccurs="0" type="TBalance-93BC-01"/>
+<xs:element name="Confirmed" minOccurs="0" type="TBalance-93BC-01"/>
+</xs:sequence>
+
+
+</xs:complexType>
+</xs:schema>

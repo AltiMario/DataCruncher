@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+xmlns="urn:DataCruncher:swift:v1" targetNamespace="urn:DataCruncher:swift:v1"
+elementFormDefault="qualified" attributeFormDefault="unqualified">
+<xs:include schemaLocation="TypeDictionary.xsd"/>
+<xs:element name="CMFXML">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="ApplicationMessage">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="Header" type="THeader" minOccurs="0"/>
+<xs:element name="StatementMessage" type="TStatementMessage"/>
+<xs:element name="Trailer" type="TTrailer" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:complexType name="TStatementMessage">
+<xs:sequence>
+<xs:element name="TransactionReferenceNumber" type="TReference-20x-01"/>
+<xs:element name="AccountIdentification" type="TAccount-25x-01"/>
+<xs:element name="StatementNumber" type="TNumberCount-28C-01"/>
+<xs:choice>
+<xs:element name="FirstOpeningBalance" type="TBalance-60F-01"/>
+<xs:element name="IntermediateOpeningBalance" type="TBalance-60M-01"/>
+</xs:choice>
+<xs:element name="StatementLine" type="TStatementLine-61x-01" minOccurs="0" maxOccurs="unbounded"/>
+<xs:choice>
+<xs:element name="FinalClosingBalance" type="TBalance-62F-01"/>
+<xs:element name="IntermediateClosingBalance" type="TBalance-62M-01"/>
+</xs:choice>
+<xs:element name="ClosingAvailableBalance" type="TBalance-64x-01" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>

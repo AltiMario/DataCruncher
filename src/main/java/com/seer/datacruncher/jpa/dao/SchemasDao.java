@@ -443,9 +443,16 @@ public class SchemasDao {
 		destroy.setMessage(I18n.getMessage("success.fieldCanc"));
 		return destroy;
 	}
-	
+
 	protected void destroyCustomErrors(long idSchema) {
-		//don't delete this empty method, it's overridden in other modules		
+		@SuppressWarnings("unchecked")
+		List<CustomErrorEntity> customErrorsEntityList = em.createNamedQuery("CustomErrorEntity.findBySchemaId")
+				.setParameter("schemaId", idSchema).getResultList();
+		if (customErrorsEntityList != null) {
+			for (CustomErrorEntity cee : customErrorsEntityList) {
+				em.remove(cee);
+			}
+		}
 	}
 	
 	public boolean checkName(Long idSchema, String name, int idSchemaType) {
@@ -590,4 +597,5 @@ public class SchemasDao {
 				.setParameter("idLinkedSchema", (int) schemaEntity.getIdSchema()).getResultList();
 		return list.size() == 0 ? null : list.get(0);
 	}
+
 }

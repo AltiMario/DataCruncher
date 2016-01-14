@@ -30,13 +30,9 @@
 <head>
     <script type="text/javascript">
 		function getHtmlMsgForCredits(showCredits) {
-			var moduleName = null; 
-			try {
-				moduleName = getModuleNameEE();
-			} catch (e) {
-				moduleName = (e instanceof ReferenceError) ? _message['moduleName']
+			var moduleName = (e instanceof ReferenceError) ? _message['moduleName']
 						: 'getHtmlMsgForCredits() :: unknown error';
-			}
+
 			return 'SeerDataCruncher <%=appInfo.getAppVersion()%>'
 				+ ' ' + moduleName
                 <%if (appInfo.getModule() != null) {%> + ' + <%=I18n.getMessage("label.module") + ' '+appInfo.getModule()%>' <%};%>

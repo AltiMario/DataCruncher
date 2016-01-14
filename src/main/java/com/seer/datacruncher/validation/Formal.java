@@ -98,8 +98,35 @@ public class Formal implements DaoSet {
     }
 
     protected String getErrorMessage(String msg, long idSchema, boolean isWarning) {
-		return I18n.getMessage(isWarning ? "error.validationFormalWarn" : "error.validationFormal") + ": " + errorMsgFilter(msg);
-	}
+        boolean isCustomErrorExists = getPrefix(msg, idSchema) != null;
+        return I18n.getMessage(isWarning ? "error.validationFormalWarn" : "error.validationFormal")
+                + (isCustomErrorExists ? ": " + getPrefix(msg, idSchema) : "") + ".<br><br>"
+                + I18n.getMessage("message.detailedError") + ": " + errorMsgFilter(msg);
+    }
+
+    private String getPrefix(String exceptionMsg, long idSchema) {
+        String[] customErrorsPaths = exceptionMsg.split("%%");
+        String prefixMsg = "";
+        if (customErrorsPaths.length > 1) {
+            int i = 1;
+            List<SchemaFieldEntity> list = schemaFieldsDao.listSchemaFields(idSchema);
+            for (String elem : customErrorsPaths) {
+                for (SchemaFieldEntity ent : list) {
+                    if (ent.getPath("\\").toUpperCase().equals(elem)) {
+                        if (ent.getIdCustomError() != 0) {
+                            // ent.getIdCustomError() == 0 for root node
+                            prefixMsg += customErrorsDao.find(ent.getIdCustomError()).getDescription();
+                        }
+                    }
+                }
+                if (++i == customErrorsPaths.length)
+                    break;
+            }
+            if (!prefixMsg.isEmpty())
+                return prefixMsg;
+        }
+        return null;
+    }
 
     protected String errorMsgFilter(String exceptionMessage) {
         if (exceptionMessage != null) {
@@ -112,7 +139,7 @@ public class Formal implements DaoSet {
         } else
             return "";
     }
-    
+
     /**
      * Checks whether problem field is warning.
      * 

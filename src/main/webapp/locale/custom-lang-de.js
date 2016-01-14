@@ -214,8 +214,8 @@ _message = {
     "customErrors": "Fehlers nachricht des Brauchs",
     "macro": "Makro",
     "exportPng": "Bild exportiert Diagram",
-    "optionInEE" : "Function available in<br/><br/><b>Enterprise Edition version</b>",
-    "moduleName" : "Open Edition",
+    "optionNotReady" : "Function not yet available",
+    "moduleName" : "Full Edition",
     "shareSchema": "Share with the world",
     "sendStream" : "Send stream",
     "noValuesForDisplay" : "No values to display",
@@ -593,3 +593,22 @@ _language = {
     "german" : "Deutsch",
     "russian": "Russisch"
 };
+
+_alert_ee = {
+
+},
+
+    _error_ee = {
+        "schemaLoadFieldsError": "Dieses Schema kann nicht sein, Makro"
+    },
+
+    _message_ee = {
+        "addMacro": "Addieren Makro",
+        "macroCorrectly": "Makro korrekt abgeschlossen ist",
+        "macroIncorrectly":"Mako Validierung fehlgeschlagen ist",
+        "macroEditing": "Makro bearbeiten"
+    },
+
+    _label_ee = {
+        "macroCompilation": "Macro-Compilation"
+    };

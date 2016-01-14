@@ -57,6 +57,8 @@
     <bean name="/emailError.json" class="com.seer.datacruncher.spring.EmailErrorController"/>
 
     <bean id="DaoServices" class="com.seer.datacruncher.jpa.dao.DaoServices">
+        <property name="customErrorsDao" ref="CustomErrorsDao" />
+        <property name="macrosDao" ref="MacrosDao" />
         <property name="activityDao" ref="ActivityDao"/>
         <property name="alertsDao" ref="AlertsDao"/>
         <property name="alertsAuditDao" ref="AlertsAuditDao"/>
@@ -97,8 +99,6 @@
         <property name="basenames">
             <list>
                 <value>classpath:locale/messages</value>
-                <value>classpath:locale/messagesEE</value>
-                <value>classpath:locale/messagesLicense</value>
             </list>
         </property>
     </bean>
@@ -596,6 +596,47 @@
 
     <!--bean id="ftpFileFilter" class="com.seer.datacruncher.services.ftp.camel.FTPFileFilter"/-->
     <!--bean class="com.seer.datacruncher.services.jms.JMSQueueListenerProcessor" id="JMSQueueListenerProcessor"/-->
+
+    <bean id="isEEModule" class="com.seer.datacruncher.utils.entity.DummyBean"/>
+
+    <!-- DAOs -->
+    <bean id="CustomErrorsDao" class="com.seer.datacruncher.jpa.dao.CustomErrorsDao">
+    </bean>
+    <bean id="MacrosDao" class="com.seer.datacruncher.jpa.dao.MacrosDao">
+    </bean>
+
+    <!-- Custom errors -->
+    <bean name="/customErrorsRead.json" class="com.seer.datacruncher.spring.CustomErrorsReadController"/>
+    <bean name="/customErrorsCreate.json" class="com.seer.datacruncher.spring.CustomErrorsCreateController"/>
+    <bean name="/customErrorsUpdate.json" class="com.seer.datacruncher.spring.CustomErrorsUpdateController"/>
+    <bean name="/customErrorsDestroy.json" class="com.seer.datacruncher.spring.CustomErrorsDestroyController"/>
+    <!-- Macros -->
+    <bean name="/macrosRead.json" class="com.seer.datacruncher.spring.MacrosReadController"/>
+    <bean name="/macrosCreate.json" class="com.seer.datacruncher.spring.MacrosCreateController"/>
+    <bean name="/macrosUpdate.json" class="com.seer.datacruncher.spring.MacrosUpdateController"/>
+    <bean name="/macrosDestroy.json" class="com.seer.datacruncher.spring.MacrosDestroyController"/>
+    <bean name="/macrosValidate.json" class="com.seer.datacruncher.spring.MacrosValidateController"/>
+    <bean name="/macrosIsActive.json" class="com.seer.datacruncher.spring.MacrosIsActiveController"/>
+    <!-- Triggers -->
+    <bean name="/eventTriggerCreate.json" class="com.seer.datacruncher.spring.EventTriggerCreateController"/>
+    <!-- SchemaFields -->
+    <bean name="/schemasCheckRoot.json" class="com.seer.datacruncher.spring.SchemasFieldsCheckRootController"/>
+    <bean name="/fieldsImportFromXSD.json" class="com.seer.datacruncher.spring.FieldsImportFromXSDController"/>
+    <bean name="/schemaXSDExportToPNG.json" class="com.seer.datacruncher.spring.SchemaXSDExportToPNGController">
+        <property name="methodNameResolver">
+            <ref bean="paramNameResolver"/>
+        </property>
+    </bean>
+    <bean name="/schemaExportToXSD.json" class="com.seer.datacruncher.spring.SchemaExportToXSDController">
+        <property name="methodNameResolver">
+            <ref bean="paramNameResolver"/>
+        </property>
+    </bean>
+    <bean id="paramNameResolver" class="org.springframework.web.servlet.mvc.multiaction.ParameterMethodNameResolver">
+        <property name="paramName">
+            <value>action</value>
+        </property>
+    </bean>
 
     <context:component-scan base-package="com.seer.datacruncher.spring"/>
     <context:component-scan base-package="com.seer.datacruncher.jpa.dao"/>

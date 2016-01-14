@@ -213,8 +213,8 @@ _message = {
 	"customErrors": "Custom message errors",
 	"macro": "Macro",
 	"exportPng" : "Export Image Diagram",
-	"optionInEE" : "Function available in<br/><br/><b>Enterprise Edition version</b>",
-	"moduleName" : "Open Edition",
+	"optionNotReady" : "Function not yet available",
+	"moduleName" : "Full Edition",
 	"shareSchema": "Share with the world",
 	"sendStream" : "Send stream",
 	"noValuesForDisplay" : "No values to display",
@@ -589,4 +589,22 @@ _language = {
     "russian": "Russian"
 };
 
- 
+
+_alert_ee = {
+
+},
+
+    _error_ee = {
+        "schemaLoadFieldsError" : "This schema can't have a macro"
+    },
+
+    _message_ee = {
+        "addMacro" : "Add Macro",
+        "macroCorrectly" : "Macro validation completed successfully",
+        "macroIncorrectly" : "Macro validation failed",
+        "macroEditing" : "Macro editing"
+    },
+
+    _label_ee = {
+        "macroCompilation" : "Macro compilation"
+    };

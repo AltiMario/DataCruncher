@@ -21,7 +21,9 @@ package com.seer.datacruncher.jpa.dao;
 import javax.persistence.EntityManager;
 
 public interface DaoSet {
-	
+
+	CustomErrorsDao customErrorsDao = DaoServices.getCustomErrorsDao();
+	MacrosDao macrosDao = DaoServices.getMacrosDao();
 	ActivityDao activityDao = DaoServices.getActivityDao();	
 	AlertsDao alertsDao = DaoServices.getAlertsDao();
 	AlertsAuditDao alertsAuditDao = DaoServices.getAlertsAuditDao();

@@ -213,8 +213,8 @@ _message = {
 	"customErrors": "Messaggi d'errore personalizzati",
     "macro": "Macro",
     "exportPng": "Esportazione Immagine XSD",
-	"optionInEE" : "Funzione disponibile nella versione<br/><br/><b>Enterprise Edition</b>",
-	"moduleName" : "Open Edition",
+	"optionNotReady" : "Funzione non ancora disponibile",
+	"moduleName" : "Full Edition",
 	"shareSchema": "Condividi con il mondo",
 	"sendStream" : "Invia flusso",
 	"noValuesForDisplay" : "Nessun dato da visualizzare",
@@ -580,3 +580,24 @@ _language = {
     "german" : "Tedesco",
     "russian": "Russo"
 };
+
+_alert_ee = {
+
+},
+
+    _error_ee = {
+        "schemaLoadFieldsError":"Questo schema non pu&ograve; avere una macro"
+    },
+
+    _message_ee = {
+        "addMacro": "Aggiungi macro",
+        "macroCorrectly": "Macro compilata correttamente",
+        "macroIncorrectly":"Validazione Macro fallita",
+        "macroEditing": "Modifica macro"
+    },
+
+    _label_ee = {
+        "macroCompilation": "Compilazione macro"
+    };
+
+

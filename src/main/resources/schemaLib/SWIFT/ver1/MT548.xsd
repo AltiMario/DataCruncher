@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+xmlns="urn:DataCruncher:swift:v1" targetNamespace="urn:DataCruncher:swift:v1"
+elementFormDefault="qualified" attributeFormDefault="unqualified">
+<xs:include schemaLocation="TypeDictionary.xsd"/>
+<xs:element name="CMFXML">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="ApplicationMessage">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="Header" type="THeader" minOccurs="0"/>
+<xs:element name="SettlementStatusProcessingAdvice">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="GeneralInformation" type="TGeneralInformation"/>
+<xs:element name="SettlementTransactionDetails" type="TSettlementTransactionDetails" minOccurs="0"/>
+<xs:element name="AdditionalInformation" type="TAdditionalInformation" minOccurs="0"/>
+</xs:sequence>
+
+</xs:complexType>
+</xs:element>
+<xs:element name="Trailer" type="TTrailer" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:complexType name="TAdditionalInformation">
+<xs:sequence>
+<xs:element name="OriginatorOfMessage" minOccurs="0" type="TParty-95PQR-01"/>
+<xs:element name="RecipientOfMessage" minOccurs="0" type="TParty-95PQR-01"/>
+<xs:element name="Investor" minOccurs="0" type="TParty-95CPQR-01"/>
+<xs:element name="QualifiedForeignIntermediary" minOccurs="0" type="TParty-95PQR-01"/>
+</xs:sequence>
+
+
+</xs:complexType>
+<xs:complexType name="TGeneralInformation">
+<xs:sequence>
+<xs:element name="SendersReference" type="TReference-20C-01"/>
+<xs:element name="FunctionOfTheMessage" type="TFunctionOfTheMessage-23G-01"/>
+<xs:element name="PreparationDate" minOccurs="0" type="TDate-98ACE-01"/>
+<xs:element name="Linkage" type="TLinkage" maxOccurs="unbounded"/>
+<xs:element name="Status" type="TStatus" maxOccurs="unbounded"/>
+</xs:sequence>
+
+
+</xs:complexType>
+<xs:complexType name="TLinkage">
+<xs:sequence>
+<xs:element name="LinkedMessage" minOccurs="0" type="TNumberIdentification-13AB-01"/>
+<xs:choice>
+<xs:element name="PoolReference" type="TReference-20C-01"/>
+<xs:element name="RelatedReference" type="TReference-20C-01"/>
+<xs:element name="PreviousReference" type="TReference-20C-01"/>
+<xs:element name="DealReference" type="TReference-20C-01"/>
+<xs:element name="CommonReference" type="TReference-20C-01"/>
+<xs:element name="CorporateActionReference" type="TReference-20C-01"/>
+<xs:element name="TripartyAgentCollateralTransactionReference" type="TReference-20C-01"/>
+<xs:element name="ClientsTripartyCollateralTransactionReference" type="TReference-20C-01"/>
+<xs:element name="MarketInfrastructureTransactionIdentification" type="TReference-20C-01"/>
+</xs:choice>
+</xs:sequence>
+
+
+</xs:complexType>
+<xs:complexType name="TReason">
+<xs:sequence>
+<xs:choice>
+<xs:element name="CancellationReason" type="TCode-24B-01"/>
+<xs:element name="PendingCancellationReason" type="TCode-24B-01"/>
+<xs:element name="RepoCallAcknowledgementReason" type="TCode-24B-01"/>
+<xs:element name="GeneratedReason" type="TCode-24B-01"/>
+<xs:element name="DeniedReason" type="TCode-24B-01"/>
+<xs:element name="PendingModificationReason" type="TCode-24B-01"/>
+<xs:element name="UnmatchedReason" type="TCode-24B-01"/>
+<xs:element name="AcknowledgementReason" type="TCode-24B-01"/>
+<xs:element name="PendingReason" type="TCode-24B-01"/>
+<xs:element name="PendingFailingReason" type="TCode-24B-01"/>
+<xs:element name="PendingProcessingReason" type="TCode-24B-01"/>
+<xs:element name="RejectionReason" type="TCode-24B-01"/>
+<xs:element name="RepairReason" type="TCode-24B-01"/>
+</xs:choice>
+<xs:element name="ReasonNarrative" minOccurs="0" type="TNarrative-70D-01"/>
+</xs:sequence>
+
+
+</xs:complexType>
+<xs:complexType name="TStatus">
+<xs:sequence>
+<xs:choice>
+<xs:element name="CancellationProcessingStatus" type="TCode-25D-01"/>
+<xs:element name="InstructionProcessingStatus" type="TCode-25D-01"/>
+<xs:element name="MatchingStatus" type="TCode-25D-01"/>
+<xs:element name="SettlementStatus" type="TCode-25D-01"/>
+<xs:element name="RequestForStatementStatusAdviceStatus" type="TCode-25D-01"/>
+<xs:element name="RepoCallRequestStatus" type="TCode-25D-01"/>
+<xs:element name="InferredMatchingStatus" type="TCode-25D-01"/>
+<xs:element name="ProcessingChangeCommandStatus" type="TCode-25D-01"/>
+</xs:choice>
+<xs:element name="Reason" type="TReason" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+
+
+</xs:complexType>
+<xs:complexType name="TSettlementTransactionDetails">
+<xs:sequence>
+<xs:element name="PlaceOfClearing" minOccurs="0" type="TPlace-94H-01"/>
+<xs:element name="PlaceOfTrade" minOccurs="0" type="TPlace-94B-01"/>
+<xs:element name="PlaceOfSafekeeping" minOccurs="0" type="TPlace-94BCF-01"/>
+<xs:element name="IdentificationOfTheFinancialInstrument" type="TIdentificationOfTheFinancialInstrument-35B-01"/>
+<xs:element name="QuantityOfFinancialInstrumentToBeSettled" maxOccurs="unbounded" type="TQuantityOfFinancialInstrument-36B-01"/>
+<xs:element name="OriginalCurrencyAndOrderedAmount" minOccurs="0" type="TAmount-19A-01"/>
+<xs:element name="SettlementAmount" minOccurs="0" type="TAmount-19A-01"/>
+<xs:element name="AccountOwner" minOccurs="0" type="TParty-95PR-01"/>
+<xs:element name="SafekeepingAccount" type="TAccount-97AB-02"/>
+<xs:element name="TypeOfSettlementTransactionIndicator" type="TIndicator-22F-01"/>
+<xs:element name="ReceiveDeliverIndicator" type="TIndicator-22H-01"/>
+<xs:element name="PaymentIndicator" type="TIndicator-22H-01"/>
+<xs:element name="SettlementTransactionConditionIndicator" minOccurs="0" maxOccurs="unbounded" type="TIndicator-22F-01"/>
+<xs:element name="PartyCapacityIndicator" minOccurs="0" type="TIndicator-22F-01"/>
+<xs:element name="StampDutyIndicator" minOccurs="0" type="TIndicator-22F-01"/>
+<xs:element name="SecuritiesRealTimeGrossSettlementIndicator" minOccurs="0" type="TIndicator-22F-01"/>
+<xs:element name="RegistrationIndicator" minOccurs="0" type="TIndicator-22F-01"/>
+<xs:element name="BeneficialOwnershipIndicator" minOccurs="0" type="TIndicator-22F-01"/>
+<xs:element name="CashSettlementSystemIndicator" minOccurs="0" type="TIndicator-22F-01"/>
+<xs:element name="TaxCapacityPartyIndicator" minOccurs="0" type="TIndicator-22F-01"/>
+<xs:element name="RepurchaseTypeIndicator" minOccurs="0" type="TIndicator-22F-01"/>
+<xs:element name="MarketSideIndicator" minOccurs="0" type="TIndicator-22F-01"/>
+<xs:element name="BlockTradeIndicator" minOccurs="0" type="TIndicator-22F-01"/>
+<xs:element name="Restrictions" minOccurs="0" type="TIndicator-22F-01"/>
+<xs:element name="SettlementSystemMethodIndicator" minOccurs="0" type="TIndicator-22F-01"/>
+<xs:element name="NettingEligibilityIndicator" minOccurs="0" type="TIndicator-22F-01"/>
+<xs:element name="CCPEligibilityIndicator" minOccurs="0" type="TIndicator-22F-01"/>
+<xs:element name="LetterOfGuaranteeIndicator" minOccurs="0" type="TIndicator-22F-01"/>
+<xs:element name="ExposureTypeIndicator" minOccurs="0" type="TIndicator-22F-01"/>
+<xs:element name="CollateralPoolIndicator" minOccurs="0" type="TIndicator-22F-01"/>
+<xs:element name="ExpectedSettlementDateTime" minOccurs="0" type="TDate-98AC-01"/>
+<xs:element name="SettlementDateTime" type="TDate-98ABC-01"/>
+<xs:element name="LateDeliveryDateTime" minOccurs="0" type="TDate-98AC-01"/>
+<xs:element name="TradeDateTime" minOccurs="0" type="TDate-98ABCE-01"/>
+<xs:element name="ExpectedValueDateTime" minOccurs="0" type="TDate-98AC-01"/>
+<xs:element name="SettlementInstructionProcessingNarrative" minOccurs="0" type="TNarrative-70E-01"/>
+<xs:element name="SettlementParties" type="TSettlementParty" maxOccurs="unbounded"/>
+</xs:sequence>
+
+
+</xs:complexType>
+<xs:complexType name="TSettlementParty">
+<xs:sequence>
+<xs:choice>
+<xs:element name="Buyer" type="TParty-95PQR-01"/>
+<xs:element name="DeliveringAgent" type="TParty-95PQR-01"/>
+<xs:element name="DeliverersCustodian" type="TParty-95PQR-01"/>
+<xs:element name="DeliverersIntermediary1" type="TParty-95PQR-01"/>
+<xs:element name="DeliverersIntermediary2" type="TParty-95PQR-01"/>
+<xs:element name="PlaceOfSettlement" type="TParty-95CPQ-01"/>
+<xs:element name="ReceivingAgent" type="TParty-95PQR-01"/>
+<xs:element name="ReceiversCustodian" type="TParty-95PQR-01"/>
+<xs:element name="ReceiversIntermediary1" type="TParty-95PQR-01"/>
+<xs:element name="ReceiversIntermediary2" type="TParty-95PQR-01"/>
+<xs:element name="Seller" type="TParty-95PQR-01"/>
+</xs:choice>
+<xs:element name="SafekeepingAccount" minOccurs="0" type="TAccount-97AB-02"/>
+<xs:element name="ProcessingReference" minOccurs="0" type="TReference-20C-01"/>
+</xs:sequence>
+
+
+</xs:complexType>
+</xs:schema>

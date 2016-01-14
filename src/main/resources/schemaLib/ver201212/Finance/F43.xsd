@@ -1,0 +1,2007 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns="urn:x12:schemas:V00201202:PCardAmericanExpressPaymentDocument" xmlns:X12.7="urn:x12:schemas:V00201002:X12.7" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:x12:schemas:V00201202:PCardAmericanExpressPaymentDocument" elementFormDefault="qualified" attributeFormDefault="unqualified" version="00201202" X12.7:PublicationDate="2012-02-12">
+	<!-- ==========  Document ========== -->
+	<xs:element name="PCardAmericanExpressPaymentDocument">
+		<xs:annotation>
+			<xs:documentation>PCard (Purchase Card) transaction for payment. | Process to create American Express PCard (Purchase Card) transactions for payment.  PCard refers to Business Accounts, either via a card or electronic account.  These can be held Corporately or per individual within Company.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="PCardHeaderDetailInformation" type="PCardLevel1PaymentModule" minOccurs="1" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>PCard (Purchase Card) Transaction detail information.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="PCardAuthorizationInformation" type="PCardAVSInformationModule" minOccurs="1" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>PCard (Purchase Card) information for Address Verification Systems.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Detail" maxOccurs="1">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="PCardLevel2Detail" type="PCardLevel2DetailAmericanExpressModule" minOccurs="0" maxOccurs="1">
+								<xs:annotation>
+									<xs:documentation>Level 2 Data elements for PCard (Purchase Card) transaction.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="PCardLevel3LineItemDetail" type="PCardLevel3LineItemDetailAmericanExpressModule" minOccurs="0" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>Line item detail within PCard (Purchase Card) transaction.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="PublicationVersion" type="PublicationVersionType" use="required"/>
+			<xs:attribute name="PublicationDate" type="xs:date" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<!-- ==========  Modules ========== -->
+	<xs:complexType name="PCardAVSInformationModule">
+		<xs:annotation>
+			<xs:documentation>Used for AVS (Address Verification Systems) when PCard (Purchase Card) processing in batch mode is not preauthorized.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="CardholderAddress" type="AddressBlock_5" minOccurs="1" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>Cardholder billing information for AVS (Address Verification System) purposes, used for batch authorizations.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="AccountName" type="OrganizationBlock_10" minOccurs="1" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>Name of individual or corporation on Card Account.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PCardLevel1PaymentModule">
+		<xs:annotation>
+			<xs:documentation>Transaction payment information necessary for PCard (Purchase Card) payment processing.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="FileDetail" type="DocumentDetailBlock_24" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Level 1 information for processing payment applicable to all PCard (Purchase Card) types.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TotalAmount" type="AmountBlock_14" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>PCard (Purchase Card) transaction amount.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CardIdentification" type="ResourceIdentificationBlock_16" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>PCard (Purchase Card) specific account information.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PCardLevel2DetailAmericanExpressModule">
+		<xs:annotation>
+			<xs:documentation>Level 2 PCard (Purchase Card) data for American Express transactions. Data pertains to the whole transaction at this level.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="MerchantInformation" type="DocumentDetailBlock_27" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Level 2 detail information on entire transaction for American Express PCard (Purchase Card).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SalesTaxAmount" type="AmountBlock_19" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Sales Tax Amount information on entire purchase.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FreightShippingAmount" type="AmountBlock_20" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Freight / Shipping Amount on entire purchase.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SupplierInformation" type="OrganizationContactAssembly_4" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Supplier Organization contact details.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RequestorInformation" type="OrganizationContactAssembly_5" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Requestor information</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BuyingGroupInformation" type="OrganizationContactAssembly_6" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Buying Group information</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ShippedFromInformation" type="OrganizationContactAssembly_7" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Shipped From information</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PCardLevel3LineItemDetailAmericanExpressModule">
+		<xs:annotation>
+			<xs:documentation>Line Item Detail for PCard (Purchase Card) data for American Express transactions.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="VendorContactInformation" type="OrganizationContactAssembly_11" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Vendor per line item information</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ReceiverContactInformation" type="OrganizationContactAssembly_9" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Receiver Contact information</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ShipToContactInformation" type="OrganizationContactAssembly_10" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Ship to contact information</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="LineItemInformation" type="ResourceInformationAssembly_3" minOccurs="1" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Line Item detail per PCard (Purchase Card) transaction</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TaxAmount" type="AmountBlock_24" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Tax information per line item within PCard (Purchase Card) transaction</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FreightAmount" type="AmountBlock_25" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Freight and Handling amounts per line item within PCard (Purchase Card) transaction.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="LineItemAmount" type="AmountBlock_26" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Line Item Total per PCard (Purchase Card) transaction.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AdditionalLineItemInformation" type="ResourceIdentificationBlock_19" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Optional data elements for line item detail information in PCard (Purchase Card) transaction.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- ==========  Assemblies ========== -->
+	<xs:complexType name="OrganizationContactAssembly_10">
+		<xs:annotation>
+			<xs:documentation>Information that identifies a specific name and electronic or physical location of an organization. | Shipped to Contact information per line item</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ShipToContact" type="OrganizationBlock_12" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Contact information per line item detail within PCard (Purchase Card) transaction.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ShipToAddress" type="EntityLocationAssembly_1" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Ship To information per line item within PCard (Purchase Card) transaction.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OrganizationContactAssembly_11">
+		<xs:annotation>
+			<xs:documentation>Information that identifies a specific name and electronic or physical location of an organization. | Contacts per line item detail for Vendor information within PCard (Purchase Card) transaction.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="VendorName" type="OrganizationBlock_12" minOccurs="1" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>Vendor Name per line item</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Address" type="AddressBlock_5" minOccurs="1" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>Vendor Address</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OrganizationContactAssembly_4">
+		<xs:annotation>
+			<xs:documentation>Information that identifies a specific name and electronic or physical location of an organization. | Supplier Organization Contact Details</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="SupplierName" type="OrganizationBlock_11" minOccurs="1" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>The name, expressed as text, for this supplier contact.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="SupplierAddress" type="EntityLocationAssembly_2" minOccurs="1" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>The postal address for this supplier contact.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OrganizationContactAssembly_5">
+		<xs:annotation>
+			<xs:documentation>Information that identifies a specific name and electronic or physical location of an organization. | Contact information for the Requestor Organization.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="RequestorName" type="OrganizationBlock_11" minOccurs="1" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>Information on Requestor</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="RequestorAddress" type="EntityLocationAssembly_1" minOccurs="1" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>Combination of information that defines a specified individual's or organization's electronic and physical location.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OrganizationContactAssembly_6">
+		<xs:annotation>
+			<xs:documentation>Information that identifies a specific name and electronic or physical location of an organization. | Buying Group Name, if applicable</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="BuyingGroupName" type="OrganizationBlock_11" minOccurs="1" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>Buying Group Name, if applicable.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="BuyingGroupAddress" type="EntityLocationAssembly_1" minOccurs="1" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>Address of Buying Group.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OrganizationContactAssembly_7">
+		<xs:annotation>
+			<xs:documentation>Information that identifies a specific name and electronic or physical location of an organization. | Shipped From information</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="ShippedFromName" type="OrganizationBlock_11" minOccurs="1" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>Name of participating party in PCard (Purchase Card) transaction.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="ShippedFromAddress" type="EntityLocationAssembly_1" minOccurs="1" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>Combination of information that defines a specified individual's or organization's electronic and physical location.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OrganizationContactAssembly_9">
+		<xs:annotation>
+			<xs:documentation>Information that identifies a specific name and electronic or physical location of an organization. | Receiver Contacts per line item detail within PCard (Purchase Card) transaction.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="ReceiverContactPerLineItem" type="OrganizationBlock_12" minOccurs="1" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>Contacts per line item detail within PCard (Purchase Card) transaction.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="ReceiverAddress" type="EntityLocationAssembly_1" minOccurs="1" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>Combination of information that defines a specified individual's or organization's electronic and physical location.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PhysicalPropertiesAssembly_2">
+		<xs:annotation>
+			<xs:documentation>Allows for the association of a variety of physical properties.  One use would be to identifying actual vs estimated properties. | Weight information on line item detail within PCard (Purchase Card) transaction.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="WeightInformation" type="PhysicalPropertiesBlock_5" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Weight informtion on line item detail within PCard (Purchase Card) transaction.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ResourceInformationAssembly_3">
+		<xs:annotation>
+			<xs:documentation>Assembly to be used to describe not only a resource but also the various details required to describe the level of service. | Reference numbers associated with line item detail within PCard (Purchase Card) transaction.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="LineItemDetailReferenceNumbers" type="ResourceIdentificationBlock_18" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Reference numbers associated with line item detail within PCard (Purchase Card) transaction.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="LineItemDetailWeightInformation" type="PhysicalPropertiesAssembly_2" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Weight information on line item detail within PCard (Purchase Card) transaction.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EntityLocationAssembly_1">
+		<xs:annotation>
+			<xs:documentation>Combination of information that defines a specified individual's or organization's electronic and physical location. | Combination of information that defines a specified individual's or organization's electronic and physical location.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Address" type="AddressBlock_1" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Describes what is commonly known as the mailing address.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EntityLocationAssembly_2">
+		<xs:annotation>
+			<xs:documentation>Combination of information that defines a specified individual's or organization's electronic and physical location. | Combination of information that defines a specified individual's or organization's electronic and physical location.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Address" type="AddressBlock_1" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Describes what is commonly known as the mailing address.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ElectronicLocation" type="ElectronicLocationBlock_1" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Combination of information that defines a specified individual's or organization's electronic location.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TelephoneDetail" type="TelephoneBlock_1" minOccurs="0" maxOccurs="3">
+				<xs:annotation>
+					<xs:documentation>Comprehensive telephone block, designed to provide definition for the telephone number and a variety of characteristics covering use and features.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- ==========  Blocks ========== -->
+	<xs:complexType name="AmountBlock_14">
+		<xs:annotation>
+			<xs:documentation>Describes the value and purpose of a monetary amount. Can also optionally include the value and reason for adjustments to an amount.  All concrete amount blocks must clearly state the purpose and effect of adjustments (indicate if an amount includes an ad | PCard (Purchase Card) transaction amount.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="TransactionTotalAmount" type="Amount_10" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Transaction Total Amount, amount to be applied to card.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DetailTransactionCode" type="ResourceTypeCode_9" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Debit or Credit Indicator (Sale = Debit, Return = Credit)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AmountBlock_19">
+		<xs:annotation>
+			<xs:documentation>Describes the value and purpose of a monetary amount. Can also optionally include the value and reason for adjustments to an amount.  All concrete amount blocks must clearly state the purpose and effect of adjustments (indicate if an amount includes an ad | Informational for Sales Tax usage on American Express transaction.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="SalesTaxIncludedIndicator" type="ResourceCode_16" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Code list; to notate whether non-taxable; provided; or not provided.  enumeration of code list: 1= non-taxable; 2= tax provided; 3= tax amount not provided.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SalesTaxAmount" type="Amount_12" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Sales tax amount for entire transaction</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AmountBlock_20">
+		<xs:annotation>
+			<xs:documentation>Describes the value and purpose of a monetary amount. Can also optionally include the value and reason for adjustments to an amount.  All concrete amount blocks must clearly state the purpose and effect of adjustments (indicate if an amount includes an ad | Informational amount for freight/shipping for total purchase.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="FreightShippingAmount" type="Amount_13" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Informational amount included in transaction total for total of freight/shipping amount.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AmountBlock_24">
+		<xs:annotation>
+			<xs:documentation>Describes the value and purpose of a monetary amount. Can also optionally include the value and reason for adjustments to an amount.  All concrete amount blocks must clearly state the purpose and effect of adjustments (indicate if an amount includes an ad | Used to identify type of tax information and tax amount per line item for PCard (Purchase Card) transaction.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="TaxType" type="ResourceCode_17" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>American Express additional choices for  Line Item Tax Amount.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TaxAmount" type="Amount_14" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Tax usage amount</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AmountBlock_25">
+		<xs:annotation>
+			<xs:documentation>Describes the value and purpose of a monetary amount. Can also optionally include the value and reason for adjustments to an amount.  All concrete amount blocks must clearly state the purpose and effect of adjustments (indicate if an amount includes an ad | Freight and Handling information per line item for PCard (Purchase Card) transactions.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="FreightAmountPerLineItem" type="Amount_13" minOccurs="1" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>Freight Amount per line item.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="HandlingAmount" type="AdjustmentAmountComponent_4" minOccurs="1" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>Handling Amount per line item.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AmountBlock_26">
+		<xs:annotation>
+			<xs:documentation>Describes the value and purpose of a monetary amount. Can also optionally include the value and reason for adjustments to an amount.  All concrete amount blocks must clearly state the purpose and effect of adjustments (indicate if an amount includes an ad | Total information per line item within PCard (Purchase Card) transaction.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="UnitCost" type="Amount_10" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Unit cost</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ItemandTotalperLineItem" type="AdjustmentAmountComponent_5" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Description and line total information.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PhysicalPropertiesBlock_5">
+		<xs:annotation>
+			<xs:documentation>Characteristics of an item(s) that are based on an objective scale of  measurement.  Non-measurable item(s) should be considered 'Qualities'. | Weight information per line item within PCard (Purchase Card) transaction.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Quantity" type="Quantity_4" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Quantity of item(s) purchased</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BilledWeight" type="WeightMeasure_3" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Unit weight of an item.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ActualNetWeight" type="WeightMeasure_3" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Unit weight of an item.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ResourceIdentificationBlock_16">
+		<xs:annotation>
+			<xs:documentation>Combination of constructs that together identify a specific resource. | PCard (Purchase Card) specific account information necessary for cardholder verification purposes.  Either Authorization Code or Card Expiration Date must be used based on information available, although both can be sent.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="AuthorizationCode" type="DescriptionText_7" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Authorization information. This information is provided for each individual transaction.  Mutually defined.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CardholderNumber" type="ResourceIdentifier_68" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>PCard (Purchase Card) Account Number</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CardExpirationDate" type="DateTimeText_6" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Card Expiration date.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ResourceIdentificationBlock_18">
+		<xs:annotation>
+			<xs:documentation>Combination of constructs that together identify a specific resource. | Information on line item detail within PCard (Purchase Card) transaction.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ResourceNumbersperLineItem" type="ParsedResourceIdentifierComponent_6" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Information to describe the line item detail within PCard transaction.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ManufacturerPartNumber" type="ResourceIdentifier_75" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>A part number is a designation used to uniquely identify a part used in a particular industry. Its purpose is to simplify referencing to that part.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="StockKeepingUnit" type="ResourceIdentifier_75" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Stock Keeping Unit (SKU), unique for each item purchased.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="UPCConsumerPackageCode" type="ResourceIdentifier_75" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>U.P.C. Consumer Package Code (1-5-5-1) Unique identifier assigned to the package.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="VendorPartNumber" type="ResourceIdentifier_75" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Unique product identifier assigned by seller.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PurchasingOrganizationPartNumber" type="ResourceIdentifier_75" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Purchasing Organization Part Number.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ResourceIdentificationBlock_19">
+		<xs:annotation>
+			<xs:documentation>Combination of constructs that together identify a specific resource. | Optional data elements for line item detail information in PCard (Purchase Card) transaction.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="JobPositionCode" type="ResourceIdentifier_75" minOccurs="1" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>A code (mnemonic) for designating a position.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="MaintenanceScheduleNumber" type="ResourceIdentifier_75" minOccurs="1" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>Maintenance Schedule Number</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="RentalAgreementNumber" type="ResourceIdentifier_75" minOccurs="1" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>A unique number assigned to a Rental Agreement.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="SerialNumber" type="ResourceIdentifier_75" minOccurs="1" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>A serial number is a unique number that is one of a series assigned for identification which varies from its successor or predecessor by a fixed discrete integer value.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="ServiceAgreementNumber" type="ResourceIdentifier_75" minOccurs="1" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>A unique number assigned to an Agreement for Services.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DocumentDetailBlock_24">
+		<xs:annotation>
+			<xs:documentation>Specifies a logical or physical document level of contextual information, unique identification number, creation date, etc. | PCard (Purchase Card) Level 1 information for processing payment.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="FileType" type="PurposeCode_5" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Connotes type of file submission. Authorization, Settlement, or Both.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TestProductionIndicator" type="ReasonCode_7" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Identifier of "Test" or "Production" data.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MerchantReferenceNumber" type="ResourceIdentifier_69" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>An invoice number that is a unique transaction identifier that is  provided by the seller.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MerchantIdentifier" type="PartyIdentifier_19" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Merchant ID.  Number assigned by processor to identify merchant.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TransactionDate" type="DateTimeText_5" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Date of transaction.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DocumentDetailBlock_27">
+		<xs:annotation>
+			<xs:documentation>Specifies a logical or physical document level of contextual information, unique identification number, creation date, etc. | Level 2 data used for American Express PCard (Purchase Card) transactions.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CardmemberReferenceNumber" type="ResourceIdentifier_77" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Customer defined data that they will use to recognize each transaction by. Examples can be PO Number, Cost Center, GL Account.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ChargeDescription" type="DescriptionText_10" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Text description of what was purchased in this transaction.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MerchantTaxIdentifier" type="ResourceIdentifier_71" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Federal Tax ID (US) or Value Added Tax (VAT) ID for non-US.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RecordofCharge" type="ResourceIdentifier_72" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Unique to American Express, an original Record of Charge (ROC) , or another number associated with this charge.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ServiceEstablishmentNumber" type="ResourceIdentifier_73" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>AMEX assigned merchant number.  Required for identification of merchant to American Express for funding purposes.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SupplierReferenceNumber" type="PartyIdentifier_23" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Merchant defined data, such as customer number, purchase order number.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OrderDate" type="DateTimeText_7" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>YYMMDD, date cardholder placed order</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AddressBlock_1">
+		<xs:annotation>
+			<xs:documentation>Grouping of information used to specify the location address. | Describes what is commonly known as the mailing address.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="StreetAddress" type="LocationText_9" minOccurs="1" maxOccurs="2">
+					<xs:annotation>
+						<xs:documentation>Specifies the set of details required to fully delineate a street number, as used in postal addressing schemes.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="SubsiteAddress" type="SubsiteAddressComponent_1" minOccurs="1" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>Detailed breakout of the information that is often found on the address lines of a mailing address such as apartment, building, department, floor, mail stop, room, and suite.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="City" type="LocationText_1" minOccurs="1" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>Text identifying a city.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="CountrySubdivision" type="LocationCode_2" minOccurs="1" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>Largest subdivision of a country.  Examples include US states and Canadian provcinces.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="PostalCode" type="LocationIdentifier_1" minOccurs="1" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>Defines international postal code.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Country" type="LocationCode_3" minOccurs="1" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>Code identifying a country.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AddressBlock_5">
+		<xs:annotation>
+			<xs:documentation>Grouping of information used to specify the location address. | Address information on parties within PCard (Purchase Card) transaction.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="StreetAddress" type="LocationText_11" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Street and number of billing address. PO boxes are not permitted.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="City" type="LocationText_12" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Billing address city</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="State" type="LocationCode_6" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Billing state, 2 position abbreviated.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PostalCode" type="LocationIdentifier_18" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Five or Nine digit US or Canadian postal code.  No dashes.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OrganizationBlock_10">
+		<xs:annotation>
+			<xs:documentation>Specifies the role and identity of an organization. | Card holder name.  If under a personal name, last name first. Corporate card name when card is a PCard (Purchase Card).</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CardHolderAccountName" type="NameText_11" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Card holder name.  If under a personal name, last name first. Corporate card name when card is a Pcard.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OrganizationBlock_11">
+		<xs:annotation>
+			<xs:documentation>Specifies the role and identity of an organization. | Name of participating party in PCard (Purchase Card) transaction.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="PartyinPCardProcess" type="NameText_14" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Supplier, Requestor, Buying Group, or Shipped From Name.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CAPNumber" type="PartyIdentifier_24" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>CAP (Chain Affiliated Property) Merchant number issued by American Express.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OrganizationBlock_12">
+		<xs:annotation>
+			<xs:documentation>Specifies the role and identity of an organization. | Contact information per line item detail within PCard (Purchase Card) transaction.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ContactperLineItem" type="NameText_4" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Contact information per line item detail within PCard transaction.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="LocationNumber" type="PartyIdentifier_24" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Location number when applicable.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TelephoneBlock_1">
+		<xs:annotation>
+			<xs:documentation>Comprehensive telephone block, designed to provide definition for the telephone number, and also a variety of characteristics covering use and features. | Comprehensive telephone block, designed to provide definition for the telephone number, and also a variety of characteristics covering use and features.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="TelephoneNumber" type="LocationText_4" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>A word or phrase that constitutes the designation of place.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TelephoneTimeRole" type="DateTimeCode_1" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Description not provided</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TelephoneLocationRole" type="LocationCode_4" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Description not provided</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TelephoneDevice" type="ResourceCode_1" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Description not provided</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TelephoneService" type="ResourceCode_2" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Description not provided</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ElectronicLocationBlock_1">
+		<xs:annotation>
+			<xs:documentation>Combination of information that defines a specified individual's or organization's electronic location. | Combination of information that defines a specified individual's or organization's electronic location.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="EmailAddress" type="LocationText_10" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>A word or phrase that constitutes the designation of place.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- ==========  Components ========== -->
+	<xs:complexType name="SubsiteAddressComponent_1">
+		<xs:annotation>
+			<xs:documentation>Detailed breakout of the information that is often found on the Address Lines of a mailing address such as apartment, building, department, floor, mail stop, room, and suite. | Detailed breakout of the information that is often found on the address lines of a mailing address such as apartment, building, department, floor, mail stop, room, or suite.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="Apartment" type="LocationText_2" minOccurs="1" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>A single residence in a multi unit dwelling.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Building" type="LocationText_7" minOccurs="1" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>A single structure.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Department" type="LocationText_7" minOccurs="1" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>A distinct usually specified division of a large organization.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Floor" type="LocationText_2" minOccurs="1" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>A story or level of a building.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Room" type="LocationText_2" minOccurs="1" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>An area seperated by walls or partitions from other similar parts of the building in which it is located.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Suite" type="LocationText_2" minOccurs="1" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>A series of connected rooms used as a living unit.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AdjustmentAmountComponent_4">
+		<xs:annotation>
+			<xs:documentation>An adjustment amount that alters another amount with the reason for the change. | Line item detail informaton on handling amounts</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="HandlingAmount" type="Amount_13" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Handling amount per line item.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="HandlingDescription" type="DescriptionText_11" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Information on handling per line item if applicable.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AdjustmentAmountComponent_5">
+		<xs:annotation>
+			<xs:documentation>An adjustment amount that alters another amount with the reason for the change. | Information on line item amounts for PCard (Purchase Card) Level 3.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ExtendedLineItemTotal" type="Amount_10" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>A total amount calculated by unit cost times quantity.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ItemDescription" type="DescriptionText_9" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Text description of item purchased.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ParsedResourceIdentifierComponent_6">
+		<xs:annotation>
+			<xs:documentation>A multi-part identifier that may be concatenated to uniquely identify a resource. | Information to describe the line item detail within PCard (Purchase Card) transaction.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="ClientDefinedAssetNumber" type="ResourceIdentifier_75" minOccurs="1" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>Buyer-defined Asset Number</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="CommodityCode" type="ResourceIdentifier_75" minOccurs="1" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>A product code recognized by both buyer and seller.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="PurchaseOrderNumber" type="ResourceIdentifier_75" minOccurs="1" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>Purchase Order number supplied by the buyer.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="CostCenterNumber" type="ResourceIdentifier_75" minOccurs="1" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>An Account Code, Cost Center Number used for data detail upon receipt of invoice.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="GeneralLedgerNumber" type="ResourceIdentifier_75" minOccurs="1" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>General Ledger Number is an Accounting Code used for data detail upon receipt of invoice.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- ==========  Primitives ========== -->
+	<xs:complexType name="Quantity_4">
+		<xs:annotation>
+			<xs:documentation>Describes the number of an item that is being referenced. | Quantity of item(s) purchased.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="Quantity_4_Content">
+				<xs:attribute name="UnitCode" type="xs:token" use="optional"/>
+				<xs:attribute name="UnitCodeListIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="UnitCodeListAgencyIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="UnitCodeListAgencyNameText" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="Quantity_4_Content">
+		<xs:restriction base="xs:decimal">
+			<xs:totalDigits value="12"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="Amount_10">
+		<xs:annotation>
+			<xs:documentation>A monetary amount. | Transaction Amount.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="Amount_10_Content">
+				<xs:attribute name="CurrencyIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="CurrencyCodeListVersionIdentifier" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="Amount_10_Content">
+		<xs:restriction base="xs:decimal">
+			<xs:totalDigits value="9"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="Amount_12">
+		<xs:annotation>
+			<xs:documentation>A monetary amount. | Sales tax for entire transaction.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="Amount_12_Content">
+				<xs:attribute name="CurrencyIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="CurrencyCodeListVersionIdentifier" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="Amount_12_Content">
+		<xs:restriction base="xs:decimal">
+			<xs:totalDigits value="6"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="Amount_13">
+		<xs:annotation>
+			<xs:documentation>A monetary amount. | Freight shipping amount in transaction.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="Amount_13_Content">
+				<xs:attribute name="CurrencyIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="CurrencyCodeListVersionIdentifier" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="Amount_13_Content">
+		<xs:restriction base="xs:decimal">
+			<xs:totalDigits value="15"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="Amount_14">
+		<xs:annotation>
+			<xs:documentation>A monetary amount. | Tax usage amount.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="Amount_14_Content">
+				<xs:attribute name="CurrencyIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="CurrencyCodeListVersionIdentifier" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="Amount_14_Content">
+		<xs:restriction base="xs:decimal">
+			<xs:totalDigits value="9"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="LocationIdentifier_1">
+		<xs:annotation>
+			<xs:documentation>An identifier that designates a place. | Defines international postal code.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="LocationIdentifier_1_Content">
+				<xs:attribute name="IDSchemeIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeAgencyIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeAgencyNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeVersionIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeDataURI" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeURI" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="LocationIdentifier_1_Content">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="3"/>
+			<xs:maxLength value="15"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="LocationIdentifier_18">
+		<xs:annotation>
+			<xs:documentation>An identifier that designates a place. | Five or Nine digit US or Canadian postal code.  No dashes.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="LocationIdentifier_18_Content">
+				<xs:attribute name="IDSchemeIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeAgencyIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeAgencyNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeVersionIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeDataURI" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeURI" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="LocationIdentifier_18_Content">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="5"/>
+			<xs:maxLength value="9"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="WeightMeasure_3">
+		<xs:annotation>
+			<xs:documentation>Heaviness or Mass of an object. | Unit Weight of an item.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="WeightMeasure_3_Content">
+				<xs:attribute name="UnitCode" type="xs:token" use="optional"/>
+				<xs:attribute name="UnitCodeListVersionIdentifier" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="WeightMeasure_3_Content">
+		<xs:restriction base="xs:decimal">
+			<xs:totalDigits value="9"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="ResourceTypeCode_9">
+		<xs:annotation>
+			<xs:documentation>Designates a resource type by means of a code that specifies a supply or support. | Debit or Credit Indicator (Sale = Debit, Return = Credit).</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="ResourceTypeCode_9_Content">
+				<xs:attribute name="ListIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="ListAgencyIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="ListAgencyNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="ListNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="ListVersionIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="LanguageIdentifier" type="xs:token" use="optional"/>
+				<xs:attribute name="ListURI" type="xs:string" use="optional"/>
+				<xs:attribute name="ListSchemeURI" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="ResourceTypeCode_9_Content">
+		<xs:restriction base="xs:token">
+			<xs:minLength value="2"/>
+			<xs:maxLength value="2"/>
+			<xs:enumeration value="CR">
+				<xs:annotation>
+					<xs:documentation>Credit</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="DE">
+				<xs:annotation>
+					<xs:documentation>Debit</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="LocationText_1">
+		<xs:annotation>
+			<xs:documentation>A word or phrase that describes a position or site. | A word or phrase that describes a position or site.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="LocationText_1_Content">
+				<xs:attribute name="LanguageIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="LanguageLocaleIdentifier" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="LocationText_1_Content">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="2"/>
+			<xs:maxLength value="30"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="LocationText_10">
+		<xs:annotation>
+			<xs:documentation>A word or phrase that describes a position or site. | Email Address</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="LocationText_10_Content">
+				<xs:attribute name="LanguageIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="LanguageLocaleIdentifier" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="LocationText_10_Content">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="256"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="LocationText_11">
+		<xs:annotation>
+			<xs:documentation>A word or phrase that describes a position or site. | Street and number of address. PO boxes are not permitted.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="LocationText_11_Content">
+				<xs:attribute name="LanguageIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="LanguageLocaleIdentifier" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="LocationText_11_Content">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="20"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="LocationText_12">
+		<xs:annotation>
+			<xs:documentation>A word or phrase that describes a position or site. | City name</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="LocationText_12_Content">
+				<xs:attribute name="LanguageIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="LanguageLocaleIdentifier" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="LocationText_12_Content">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="13"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="LocationText_2">
+		<xs:annotation>
+			<xs:documentation>A word or phrase that describes a position or site. | A specific identifier on a public way or thoroughfare.  i.e. Street Number.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="LocationText_2_Content">
+				<xs:attribute name="LanguageIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="LanguageLocaleIdentifier" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="LocationText_2_Content">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="20"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="LocationText_4">
+		<xs:annotation>
+			<xs:documentation>A word or phrase that describes a position or site. | Telephone Number</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="LocationText_4_Content">
+				<xs:attribute name="LanguageIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="LanguageLocaleIdentifier" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="LocationText_4_Content">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="20"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="LocationText_7">
+		<xs:annotation>
+			<xs:documentation>A word or phrase that describes a position or site. | A word or phrase that describes a position or site.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="LocationText_7_Content">
+				<xs:attribute name="LanguageIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="LanguageLocaleIdentifier" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="LocationText_7_Content">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="55"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="LocationText_9">
+		<xs:annotation>
+			<xs:documentation>A word or phrase that describes a position or site. | A word or phrase that describes a position or site.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="LocationText_9_Content">
+				<xs:attribute name="LanguageIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="LanguageLocaleIdentifier" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="LocationText_9_Content">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="80"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="LocationCode_2">
+		<xs:annotation>
+			<xs:documentation>A list of codes that designates a place. | The highest level of subdivision within a country.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="LocationCode_2_Content">
+				<xs:attribute name="ListIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="ListAgencyIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="ListAgencyNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="ListNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="ListVersionIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="LanguageIdentifier" type="xs:token" use="optional"/>
+				<xs:attribute name="ListURI" type="xs:string" use="optional"/>
+				<xs:attribute name="ListSchemeURI" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="LocationCode_2_Content">
+		<xs:restriction base="xs:token">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="3"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="LocationCode_3">
+		<xs:annotation>
+			<xs:documentation>A list of codes that designates a place. | Code identifying a country.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="LocationCode_3_Content">
+				<xs:attribute name="ListIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="ListAgencyIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="ListAgencyNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="ListNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="ListVersionIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="LanguageIdentifier" type="xs:token" use="optional"/>
+				<xs:attribute name="ListURI" type="xs:string" use="optional"/>
+				<xs:attribute name="ListSchemeURI" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="LocationCode_3_Content">
+		<xs:restriction base="xs:token">
+			<xs:minLength value="2"/>
+			<xs:maxLength value="3"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="LocationCode_4">
+		<xs:annotation>
+			<xs:documentation>A list of codes that designates a place. | Used to describe where a specific item is located.  Commonly used to differentiate between home and business."  Subelement Information:  (Put in description if don't have another location for now).  Subset of DE365,  Enum 'HP', 'WP'</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="LocationCode_4_Content">
+				<xs:attribute name="ListIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="ListAgencyIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="ListAgencyNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="ListNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="ListVersionIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="LanguageIdentifier" type="xs:token" use="optional"/>
+				<xs:attribute name="ListURI" type="xs:string" use="optional"/>
+				<xs:attribute name="ListSchemeURI" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="LocationCode_4_Content">
+		<xs:restriction base="xs:token">
+			<xs:minLength value="2"/>
+			<xs:maxLength value="2"/>
+			<xs:enumeration value="HP">
+				<xs:annotation>
+					<xs:documentation>Home Phone</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="WP">
+				<xs:annotation>
+					<xs:documentation>Work Phone</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="LocationCode_6">
+		<xs:annotation>
+			<xs:documentation>A list of codes that designates a place. | 2 byte abbreviated State</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="LocationCode_6_Content">
+				<xs:attribute name="ListIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="ListAgencyIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="ListAgencyNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="ListNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="ListVersionIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="LanguageIdentifier" type="xs:token" use="optional"/>
+				<xs:attribute name="ListURI" type="xs:string" use="optional"/>
+				<xs:attribute name="ListSchemeURI" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="LocationCode_6_Content">
+		<xs:restriction base="xs:token">
+			<xs:minLength value="2"/>
+			<xs:maxLength value="2"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="NameText_11">
+		<xs:annotation>
+			<xs:documentation>A word or phrase that constitutes the distinctive designation of a person or thing. | Card holder name.  If under a personal name, last name first. Otherwise use Corporate card name.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="NameText_11_Content">
+				<xs:attribute name="LanguageIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="LanguageLocaleIdentifier" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="NameText_11_Content">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="15"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="NameText_14">
+		<xs:annotation>
+			<xs:documentation>A word or phrase that constitutes the distinctive designation of a person or thing. | The Service Establishment name that appears on the store front and/or the customer receipts. Commonly referred to as DBA name.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="LanguageIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="LanguageLocaleIdentifier" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="NameText_4">
+		<xs:annotation>
+			<xs:documentation>A word or phrase that constitutes the distinctive designation of a person or thing. | A word or phrase that designates a person or thing.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="NameText_4_Content">
+				<xs:attribute name="LanguageIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="LanguageLocaleIdentifier" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="NameText_4_Content">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="35"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="PartyIdentifier_19">
+		<xs:annotation>
+			<xs:documentation>Identifier which uniquely specifies a party, either an Individual or an Organization. | Merchant ID.  Number assigned by processor to identify merchant.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="PartyIdentifier_19_Content">
+				<xs:attribute name="IDSchemeIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeAgencyIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeAgencyNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeVersionIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeDataURI" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeURI" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="PartyIdentifier_19_Content">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="16"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="PartyIdentifier_23">
+		<xs:annotation>
+			<xs:documentation>Identifier which uniquely specifies a party, either an Individual or an Organization. | Merchant defined data, such as customer number, purchase order number.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="PartyIdentifier_23_Content">
+				<xs:attribute name="IDSchemeIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeAgencyIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeAgencyNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeVersionIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeDataURI" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeURI" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="PartyIdentifier_23_Content">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="9"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="PartyIdentifier_24">
+		<xs:annotation>
+			<xs:documentation>Identifier which uniquely specifies a party, either an Individual or an Organization. | Card holder supplied identifier. Can be obtained from Purchase Order.  Cost Center or GL (General Ledger) per item purchased as examples.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="PartyIdentifier_24_Content">
+				<xs:attribute name="IDSchemeIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeAgencyIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeAgencyNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeVersionIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeDataURI" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeURI" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="PartyIdentifier_24_Content">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="25"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="ResourceCode_1">
+		<xs:annotation>
+			<xs:documentation>Specifies a supply or support. i.e. material or service. | Type of telephone. i.e. Facsimile, Landline, Mobile.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="ResourceCode_1_Content">
+				<xs:attribute name="ListIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="ListAgencyIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="ListAgencyNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="ListNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="ListVersionIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="LanguageIdentifier" type="xs:token" use="optional"/>
+				<xs:attribute name="ListURI" type="xs:string" use="optional"/>
+				<xs:attribute name="ListSchemeURI" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="ResourceCode_1_Content">
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="Fax">
+				<xs:annotation>
+					<xs:documentation>Facsimile</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Landline">
+				<xs:annotation>
+					<xs:documentation>Landline</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Mobile">
+				<xs:annotation>
+					<xs:documentation>Mobile</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Pager">
+				<xs:annotation>
+					<xs:documentation>Pager</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PDA">
+				<xs:annotation>
+					<xs:documentation>Personal Data Assistant</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="ResourceCode_16">
+		<xs:annotation>
+			<xs:documentation>Specifies a supply or support. i.e. material or service. | Code list; to notate whether non-taxable; provided; or not provided.  enumeration of code list: 1= non-taxable; 2= tax provided; 3= tax amount not provided.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="ResourceCode_16_Content">
+				<xs:attribute name="ListIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="ListAgencyIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="ListAgencyNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="ListNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="ListVersionIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="LanguageIdentifier" type="xs:token" use="optional"/>
+				<xs:attribute name="ListURI" type="xs:string" use="optional"/>
+				<xs:attribute name="ListSchemeURI" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="ResourceCode_16_Content">
+		<xs:restriction base="xs:token">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="1"/>
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>Non-taxable</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>Tax provided</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3">
+				<xs:annotation>
+					<xs:documentation>Tax amount not provided</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="ResourceCode_17">
+		<xs:annotation>
+			<xs:documentation>Specifies a supply or support. i.e. material or service. | List of specific taxes that can be reported per line item for PCard (Purchase Card) transactions.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="ResourceCode_17_Content">
+				<xs:attribute name="ListIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="ListAgencyIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="ListAgencyNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="ListNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="ListVersionIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="LanguageIdentifier" type="xs:token" use="optional"/>
+				<xs:attribute name="ListURI" type="xs:string" use="optional"/>
+				<xs:attribute name="ListSchemeURI" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="ResourceCode_17_Content">
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="AllTaxes">
+				<xs:annotation>
+					<xs:documentation>All Taxes</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CityTax">
+				<xs:annotation>
+					<xs:documentation>CityTax</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CountyParishSalesTax">
+				<xs:annotation>
+					<xs:documentation>County/Parish Sales Tax</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CountyTax">
+				<xs:annotation>
+					<xs:documentation>County Tax</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="EnvironmentalTax">
+				<xs:annotation>
+					<xs:documentation>Environmental Tax</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GoodsAndServicesTax">
+				<xs:annotation>
+					<xs:documentation>Goods and Services Tax</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="LocalSalesTax">
+				<xs:annotation>
+					<xs:documentation>Local Sales Tax</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="StateProvincialTax">
+				<xs:annotation>
+					<xs:documentation>State/Provincial Tax</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="StateSalesTax">
+				<xs:annotation>
+					<xs:documentation>State Sales Tax</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ValueAddedTax">
+				<xs:annotation>
+					<xs:documentation>Value Added Tax</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="ResourceCode_2">
+		<xs:annotation>
+			<xs:documentation>Specifies a supply or support. i.e. material or service. | Type of service expected for the telephone.  i.e. Answering service.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="ResourceCode_2_Content">
+				<xs:attribute name="ListIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="ListAgencyIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="ListAgencyNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="ListNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="ListVersionIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="LanguageIdentifier" type="xs:token" use="optional"/>
+				<xs:attribute name="ListURI" type="xs:string" use="optional"/>
+				<xs:attribute name="ListSchemeURI" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="ResourceCode_2_Content">
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="AS">
+				<xs:annotation>
+					<xs:documentation>Answering Service</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="OSB">
+				<xs:annotation>
+					<xs:documentation>Operator Standing By</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="VM">
+				<xs:annotation>
+					<xs:documentation>Voice Mail</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="ResourceIdentifier_68">
+		<xs:annotation>
+			<xs:documentation>Specified a supply or support, i.e. material or service. | PCard (Purchase Card) account number</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="ResourceIdentifier_68_Content">
+				<xs:attribute name="IDSchemeIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeAgencyIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeAgencyNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeVersionIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeDataURI" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeURI" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="ResourceIdentifier_68_Content">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="16"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="ResourceIdentifier_69">
+		<xs:annotation>
+			<xs:documentation>Specified a supply or support, i.e. material or service. | An invoice number that is a unique transaction identifier that is  provided by the seller.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="ResourceIdentifier_69_Content">
+				<xs:attribute name="IDSchemeIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeAgencyIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeAgencyNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeVersionIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeDataURI" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeURI" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="ResourceIdentifier_69_Content">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="25"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="ResourceIdentifier_71">
+		<xs:annotation>
+			<xs:documentation>Specified a supply or support, i.e. material or service. | Federal Tax ID (US) or Value Added Tax (VAT) ID for non-US.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="ResourceIdentifier_71_Content">
+				<xs:attribute name="IDSchemeIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeAgencyIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeAgencyNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeVersionIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeDataURI" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeURI" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="ResourceIdentifier_71_Content">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="15"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="ResourceIdentifier_72">
+		<xs:annotation>
+			<xs:documentation>Specified a supply or support, i.e. material or service. | Record of Charge (ROC) , unique to AMEX, and another number associated with this transaction.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="ResourceIdentifier_72_Content">
+				<xs:attribute name="IDSchemeIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeAgencyIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeAgencyNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeVersionIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeDataURI" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeURI" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="ResourceIdentifier_72_Content">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="10"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="ResourceIdentifier_73">
+		<xs:annotation>
+			<xs:documentation>Specified a supply or support, i.e. material or service. | AMEX assigned merchant number. Required for identification of merchant to AMEX funding purposes.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="ResourceIdentifier_73_Content">
+				<xs:attribute name="IDSchemeIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeAgencyIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeAgencyNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeVersionIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeDataURI" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeURI" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="ResourceIdentifier_73_Content">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="10"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="ResourceIdentifier_75">
+		<xs:annotation>
+			<xs:documentation>Specified a supply or support, i.e. material or service. | Reference Number of item recognized by Merchant.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="ResourceIdentifier_75_Content">
+				<xs:attribute name="IDSchemeIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeAgencyIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeAgencyNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeVersionIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeDataURI" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeURI" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="ResourceIdentifier_75_Content">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="20"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="ResourceIdentifier_77">
+		<xs:annotation>
+			<xs:documentation>Specified a supply or support, i.e. material or service. | Customer Code (Customer defined data used to recognize each transaction).  Examples include PO Number, Cost Center, GL Account.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="ResourceIdentifier_77_Content">
+				<xs:attribute name="IDSchemeIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeAgencyIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeAgencyNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeVersionIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeDataURI" type="xs:string" use="optional"/>
+				<xs:attribute name="IDSchemeURI" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="ResourceIdentifier_77_Content">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="17"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="ReasonCode_7">
+		<xs:annotation>
+			<xs:documentation>Something that supports a conclusion or explains a fact.  Describes or specifies the statement offered in explanation or justification or motivation.  May answer the question why. | Identifier of "Test" or "Production" data.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="ReasonCode_7_Content">
+				<xs:attribute name="ListIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="ListAgencyIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="ListAgencyNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="ListNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="ListVersionIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="LanguageIdentifier" type="xs:token" use="optional"/>
+				<xs:attribute name="ListURI" type="xs:string" use="optional"/>
+				<xs:attribute name="ListSchemeURI" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="ReasonCode_7_Content">
+		<xs:restriction base="xs:token">
+			<xs:minLength value="4"/>
+			<xs:maxLength value="4"/>
+			<xs:enumeration value="PROD">
+				<xs:annotation>
+					<xs:documentation>Production data</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="TEST">
+				<xs:annotation>
+					<xs:documentation>Test system data</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="PurposeCode_5">
+		<xs:annotation>
+			<xs:documentation>Describes or specifies the intended outcome. May answer the question what. | Connotates type of file submission. Authorization, Settlement, or Both.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="PurposeCode_5_Content">
+				<xs:attribute name="ListIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="ListAgencyIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="ListAgencyNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="ListNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="ListVersionIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="LanguageIdentifier" type="xs:token" use="optional"/>
+				<xs:attribute name="ListURI" type="xs:string" use="optional"/>
+				<xs:attribute name="ListSchemeURI" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="PurposeCode_5_Content">
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="AUTH">
+				<xs:annotation>
+					<xs:documentation>Authorization</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BOTH">
+				<xs:annotation>
+					<xs:documentation>Authorization and Settlement</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SETT">
+				<xs:annotation>
+					<xs:documentation>Settlement</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="DescriptionText_10">
+		<xs:annotation>
+			<xs:documentation>Discourse intended to give a mental image of something. | Text description of item purchased.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="DescriptionText_10_Content">
+				<xs:attribute name="LanguageIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="LanguageLocaleIdentifier" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="DescriptionText_10_Content">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="40"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="DescriptionText_11">
+		<xs:annotation>
+			<xs:documentation>Discourse intended to give a mental image of something. | Handling information</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="LanguageIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="LanguageLocaleIdentifier" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="DescriptionText_7">
+		<xs:annotation>
+			<xs:documentation>Discourse intended to give a mental image of something. | Authorization. Either this data or Card Expiration data must be supplied. Both can be supplied for American Express.  Expiration Date required for Authorization and Transaction Date required for Settlement. No Code Table. Provided by the bank for each ind</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="DescriptionText_7_Content">
+				<xs:attribute name="LanguageIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="LanguageLocaleIdentifier" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="DescriptionText_7_Content">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="6"/>
+			<xs:maxLength value="6"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="DescriptionText_9">
+		<xs:annotation>
+			<xs:documentation>Discourse intended to give a mental image of something. | Text description of item purchased.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="DescriptionText_9_Content">
+				<xs:attribute name="LanguageIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="LanguageLocaleIdentifier" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="DescriptionText_9_Content">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="26"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="DateTimeCode_1">
+		<xs:annotation>
+			<xs:documentation>Used for textual date time representations.  i.e.  When describing Day, Night, Morning, Afternoon, Evening, etc. | Represents a portion of the day that is commonly associated with the sun coming up and going down.  Subelement Information:  (Put in description if don't have another location for now)  Subset of DE365,  Enum  'NP',  Note:  Will have to add 'DP - Daytime</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="xs:token">
+				<xs:attribute name="ListIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="ListAgencyIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="ListAgencyNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="ListNameText" type="xs:string" use="optional"/>
+				<xs:attribute name="ListVersionIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="LanguageIdentifier" type="xs:token" use="optional"/>
+				<xs:attribute name="ListURI" type="xs:string" use="optional"/>
+				<xs:attribute name="ListSchemeURI" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="DateTimeText_5">
+		<xs:annotation>
+			<xs:documentation>Part of a complete date time combination. (i.e. Year as CCYY or Time as HHMM) | Date (month and day) expressed as MMDD</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="DateTimeText_5_Content">
+				<xs:attribute name="LanguageIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="LanguageLocaleIdentifier" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="DateTimeText_5_Content">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="4"/>
+			<xs:maxLength value="4"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="DateTimeText_6">
+		<xs:annotation>
+			<xs:documentation>Part of a complete date time combination. (i.e. Year as CCYY or Time as HHMM) | Date (year and month) expressed as YYMM</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="DateTimeText_6_Content">
+				<xs:attribute name="LanguageIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="LanguageLocaleIdentifier" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="DateTimeText_6_Content">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="4"/>
+			<xs:maxLength value="4"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="DateTimeText_7">
+		<xs:annotation>
+			<xs:documentation>Part of a complete date time combination. (i.e. Year as CCYY or Time as HHMM) | Date (year, month, day) expressed as YYMMDD</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="DateTimeText_7_Content">
+				<xs:attribute name="LanguageIdentifier" type="xs:string" use="optional"/>
+				<xs:attribute name="LanguageLocaleIdentifier" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="DateTimeText_7_Content">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="6"/>
+			<xs:maxLength value="6"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ==========  Common Derived Datatypes ========== -->
+	<xs:simpleType name="JulianDate">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="\d\d\d\d\d\d\d"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="JulianDayOfYear">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="\d\d\d"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ==========  Publication Version Type ========== -->
+	<xs:simpleType name="PublicationVersionType">
+		<xs:restriction base="xs:token">
+			<xs:pattern value="\d\d\d\d\d\d\d\d"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

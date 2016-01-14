@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+xmlns="urn:DataCruncher:swift:v1" targetNamespace="urn:DataCruncher:swift:v1"
+elementFormDefault="qualified" attributeFormDefault="unqualified">
+<xs:include schemaLocation="TypeDictionary.xsd"/>
+	<xs:element name="CMFXML">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ApplicationMessage">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Header" type="THeader" minOccurs="0"/>
+							<xs:element name="CorporateActionStatusAndProcessingAdvice">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="GeneralInformation" type="TGeneralInformation"/>
+										<xs:element name="CorporateActionDetails" type="TCorporateActionDetails" minOccurs="0"/>
+										<xs:element name="AdditionalInformation" type="TAdditionalInformation" minOccurs="0"/>
+									</xs:sequence>
+									
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="Trailer" type="TTrailer" minOccurs="0"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="TAdditionalInformation">
+		<xs:sequence>
+			<xs:element name="AdditionalText" minOccurs="0" maxOccurs="unbounded" type="TNarrative-70E-01"/>
+			<xs:element name="PartyContactNarrative" minOccurs="0" maxOccurs="unbounded" type="TNarrative-70E-01"/>
+			<xs:element name="OriginatorOfMessage" minOccurs="0" type="TParty-95PQR-01"/>
+			<xs:element name="RecipientOfMessage" minOccurs="0" type="TParty-95PQR-01"/>
+		</xs:sequence>
+		
+		
+	</xs:complexType>
+	<xs:complexType name="TCorporateActionDetails">
+		<xs:sequence>
+			<xs:element name="CAOptionNumber" minOccurs="0" type="TNumberIdentification-13A-01"/>
+			<xs:element name="CorporateActionOptionCode" minOccurs="0" type="TIndicator-22FH-01"/>
+			<xs:element name="AccountOwner" minOccurs="0" type="TParty-95PR-01"/>
+			<xs:element name="SafekeepingAccount" minOccurs="0" type="TAccount-97A-01"/>
+			<xs:element name="CashAccount" minOccurs="0" type="TAccount-97AE-01"/>
+			<xs:element name="PlaceOfSafekeeping" minOccurs="0" type="TPlace-94BCF-01"/>
+			<xs:element name="IdentificationOfTheFinancialInstrument" type="TIdentificationOfTheFinancialInstrument-35B-01" minOccurs="0"/>
+			<xs:choice minOccurs="0">
+				<xs:element name="StatusQuantity" maxOccurs="unbounded" type="TQuantityOfFinancialInstrument-36B-01"/>
+				<xs:element name="QuantityToReceive" maxOccurs="unbounded" type="TQuantityOfFinancialInstrument-36B-01"/>
+			</xs:choice>
+			<xs:element name="CapitalGainsAmount" minOccurs="0" type="TAmount-19B-01"/>
+			<xs:element name="IndemnityAmount" minOccurs="0" type="TAmount-19B-01"/>
+			<xs:element name="CashInLieuOfSecurities" minOccurs="0" type="TAmount-19B-01"/>
+			<xs:element name="ChargesFees" minOccurs="0" type="TAmount-19B-01"/>
+			<xs:element name="FullyFrankedAmount" minOccurs="0" type="TAmount-19B-01"/>
+			<xs:element name="UnfrankedAmount" minOccurs="0" type="TAmount-19B-01"/>
+			<xs:element name="TaxFreeAmount" minOccurs="0" type="TAmount-19B-01"/>
+			<xs:element name="TaxDeferred" minOccurs="0" type="TAmount-19B-01"/>
+			<xs:element name="SundryOtherIncome" minOccurs="0" type="TAmount-19B-01"/>
+			<xs:element name="GrossAmount" minOccurs="0" type="TAmount-19B-01"/>
+			<xs:element name="InterestAmount" minOccurs="0" type="TAmount-19B-01"/>
+			<xs:element name="IncomePortion" minOccurs="0" type="TAmount-19B-01"/>
+			<xs:element name="MarketClaim" minOccurs="0" type="TAmount-19B-01"/>
+			<xs:element name="NetCashAmount" minOccurs="0" type="TAmount-19B-01"/>
+			<xs:element name="PrincipalOfCorpus" minOccurs="0" type="TAmount-19B-01"/>
+			<xs:element name="ReinvestmentAmount" minOccurs="0" type="TAmount-19B-01"/>
+			<xs:element name="AmountOfTaxCredit" minOccurs="0" type="TAmount-19B-01"/>
+			<xs:element name="WithholdingTaxAmount" minOccurs="0" type="TAmount-19B-01"/>
+			<xs:element name="WithholdingOfForeignTax" minOccurs="0" type="TAmount-19B-01"/>
+			<xs:element name="WithholdingOfLocalTax" minOccurs="0" type="TAmount-19B-01"/>
+			<xs:element name="RedemptionPremiumAmount" minOccurs="0" type="TAmount-19B-01"/>
+			<xs:element name="AdditionalTax" minOccurs="0" type="TAmount-19B-01"/>
+			<xs:element name="CountryNationalFederalTax" minOccurs="0" type="TAmount-19B-01"/>
+			<xs:element name="ExecutionBrokersCommission" minOccurs="0" type="TAmount-19B-01"/>
+			<xs:element name="IssueDiscountAllowance" minOccurs="0" type="TAmount-19B-01"/>
+			<xs:element name="PaymentLevyTax" minOccurs="0" type="TAmount-19B-01"/>
+			<xs:element name="LocalTax" minOccurs="0" type="TAmount-19B-01"/>
+			<xs:element name="LocalBrokersCommission" minOccurs="0" type="TAmount-19B-01"/>
+			<xs:element name="PayingSubPayingAgentCommission" minOccurs="0" type="TAmount-19B-01"/>
+			<xs:element name="PostageAmount" minOccurs="0" type="TAmount-19B-01"/>
+			<xs:element name="RegulatoryFees" minOccurs="0" type="TAmount-19B-01"/>
+			<xs:element name="Shipping" minOccurs="0" type="TAmount-19B-01"/>
+			<xs:element name="SolicitationFee" minOccurs="0" type="TAmount-19B-01"/>
+			<xs:element name="SpecialConcessions" minOccurs="0" type="TAmount-19B-01"/>
+			<xs:element name="StampDuty" minOccurs="0" type="TAmount-19B-01"/>
+			<xs:element name="StockExchangeTax" minOccurs="0" type="TAmount-19B-01"/>
+			<xs:element name="AdditionalSubscriptionCosts" minOccurs="0" type="TAmount-19B-01"/>
+			<xs:element name="TransferTax" minOccurs="0" type="TAmount-19B-01"/>
+			<xs:element name="TransactionTax" minOccurs="0" type="TAmount-19B-01"/>
+			<xs:element name="ValueAddedTax" minOccurs="0" type="TAmount-19B-01"/>
+			<xs:element name="ReclaimOfTaxes" minOccurs="0" type="TAmount-19B-01"/>
+			<xs:element name="TotalEligibleForCA" minOccurs="0" type="TBalance-93B-01"/>
+			<xs:element name="InstructedBalance" minOccurs="0" type="TBalance-93B-01"/>
+			<xs:element name="UninstructedBalance" minOccurs="0" type="TBalance-93B-01"/>
+		</xs:sequence>
+		
+		
+	</xs:complexType>
+	<xs:complexType name="TGeneralInformation">
+		<xs:sequence>
+			<xs:element name="CorporateActionReference" type="TReference-20C-01"/>
+			<xs:element name="SendersReference" type="TReference-20C-01"/>
+			<xs:element name="OfficialCorporateActionEventReference" minOccurs="0" type="TReference-20C-01"/>
+			<xs:element name="FunctionOfTheMessage" type="TFunctionOfTheMessage-23G-01"/>
+			<xs:element name="CorporateActionEventIndicator" type="TIndicator-22F-01"/>
+			<xs:element name="PreparationDate" minOccurs="0" type="TDate-98AC-01"/>
+			<xs:element name="Linkage" type="TLinkage" maxOccurs="unbounded"/>
+			<xs:element name="Status" type="TStatus" maxOccurs="unbounded"/>
+		</xs:sequence>
+		
+		
+	</xs:complexType>
+	<xs:complexType name="TLinkage">
+		<xs:sequence>
+			<xs:element name="LinkedMessage" minOccurs="0" type="TNumberIdentification-13AB-01"/>
+			<xs:choice>
+				<xs:element name="CorporateActionReference" type="TReference-20C-01"/>
+				<xs:element name="PreviousMessageReference" type="TReference-20C-01"/>
+				<xs:element name="RelatedReference" type="TReference-20C-01"/>
+				<xs:element name="CaseNumber" type="TReference-20C-01"/>
+				<xs:element name="OfficialCorporateActionEventReference" type="TReference-20C-01"/>
+			</xs:choice>
+		</xs:sequence>
+		
+		
+	</xs:complexType>
+	<xs:complexType name="TReason">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="PendingReason" type="TCode-24B-01"/>
+				<xs:element name="RejectionReason" type="TCode-24B-01"/>
+				<xs:element name="CancellationReason" type="TCode-24B-01"/>
+				<xs:element name="CancellationPendingReason" type="TCode-24B-01"/>
+				<xs:element name="AcknowledgedAcceptedReason" type="TCode-24B-01"/>
+			</xs:choice>
+			<xs:element name="ReasonNarrative" type="TNarrative-70D-01"/>
+		</xs:sequence>
+		
+		
+	</xs:complexType>
+	<xs:complexType name="TStatus">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="CancellationProcessingStatus" type="TCode-25D-01"/>
+				<xs:element name="CorporateActionEventProcessingStatus" type="TCode-25D-01"/>
+				<xs:element name="InstructionProcessingStatus" type="TCode-25D-01"/>
+			</xs:choice>
+			<xs:element name="Reason" type="TReason" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		
+		
+	</xs:complexType>
+</xs:schema>
