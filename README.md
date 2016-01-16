@@ -3,19 +3,13 @@ SeerDataCruncher is a Data Quality Firewall, Data Quality Monitor and ETL middle
 
 
 ----------------------------- 
-**SeerDataCruncher modules**
+**To run**
 
-There's one parent-module (seerdatacruncher-parent) which has only one pom and no other files. This pom is parent for all child modules, and has dependencies which are common for all child modules. This means that all new common dependencies must be introduced in this pom.
+1. Install MySQL
 
-1. To build project first of all you should checkout parent-module and then seerdatacruncher from git into local workspace.
+2. Modify the persistence.xml and create an empty db (MySQL by default) called datacruncher
 
-2. Build projects in this order: seerdatacruncher-parent, seerdatacruncher. The maven command can be like this: 'mvn clean install -U'
-
-3. Modify the persistence.xml and create an empty db (MySQL by default) called datacruncher
-
-4. If 2 builds are successfully completed, you'll find war in seerdatacruncher/target. It can be deployed on tomcat (version > 7.0).
-
-5. Install mongodb
+3. Install Mongodb
 
 
 ----------------------------- 
