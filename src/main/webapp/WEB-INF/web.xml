@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~   SeerDataCruncher is a Data Quality Firewall, a Data Quality Monitor and an ETL middleware to manage data streams on the fly.
+  ~   SeerDataCruncher is released under AGPL license.
+  ~   Copyright (c) 2015 foreSEE-Revolution ltd
+  ~   All rights reserved
+  ~
+  ~   Site: http://www.see-r.com
+  ~   Contact:  info@see-r.com
+  -->
+
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 		 xmlns="http://java.sun.com/xml/ns/javaee" 
 		 xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" 
@@ -29,8 +39,7 @@
 		<servlet-name>spring</servlet-name>
 		<url-pattern>*.json</url-pattern>				
 	</servlet-mapping>
-	
-	
+
 	<!-- Browser does not support put, delete and other method, by the filter to /blog?_method=Delete converted to standard http delete method -->
     <filter>
         <filter-name>HiddenHttpMethodFilter</filter-name>
@@ -71,7 +80,22 @@
   		<servlet-class>com.seer.datacruncher.listeners.TimeStampServlet</servlet-class>
   		<load-on-startup>2</load-on-startup>
 	</servlet>
-    <session-config>
+
+	<servlet>
+		<servlet-name>RestServiceContainer</servlet-name>
+		<servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
+		<init-param>
+			<param-name>javax.ws.rs.Application</param-name>
+			<param-value>com.seer.datacruncher.services.webService.RestfulApp</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>RestServiceContainer</servlet-name>
+		<url-pattern>/rest/*</url-pattern>
+	</servlet-mapping>
+
+	<session-config>
         <session-timeout>
             60
         </session-timeout>

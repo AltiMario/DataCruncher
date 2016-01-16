@@ -20,9 +20,6 @@
 <%@page import="com.seer.datacruncher.spring.AppContext"%>
 <%@page import="com.seer.datacruncher.spring.AppInfoBean"%>
 <%@page import="com.seer.datacruncher.utils.generic.I18n"%>
-<%@ page import="java.text.SimpleDateFormat" %>
-<%@ page import="java.util.Date" %>
-<%@ page import="java.text.ParseException" %>
 <%
 	AppInfoBean appInfo = (AppInfoBean) AppContext.getApplicationContext().getBean("appInfoBean");
 %>
@@ -30,16 +27,7 @@
 <head>
     <script type="text/javascript">
 		function getHtmlMsgForCredits(showCredits) {
-			var moduleName = (e instanceof ReferenceError) ? _message['moduleName']
-						: 'getHtmlMsgForCredits() :: unknown error';
-
-			return 'SeerDataCruncher <%=appInfo.getAppVersion()%>'
-				+ ' ' + moduleName
-                <%if (appInfo.getModule() != null) {%> + ' + <%=I18n.getMessage("label.module") + ' '+appInfo.getModule()%>' <%};%>
-				<%if (appInfo.getDealer() != null) {%> + '<br/><%=I18n.getMessage("label.marketedBy") + ' '+appInfo.getDealer()%>' <%};%>
-				<%if (appInfo.getClient() != null) {%> + '<br/><%=I18n.getMessage("label.for") + ' '+appInfo.getClient()%>' <%};%>
-                <%if (appInfo.getValidity() != null) {%> + '<br/><%=I18n.getMessage("label.valid-until" + (appInfo.isExpired() ? "-exp" : "")) + ' '+appInfo.getValidity()%><br/>'<%};%>
-                    + (showCredits ? _message['credits'] : '');
+			return 'SeerDataCruncher release <%=appInfo.getAppVersion()%>' + (showCredits ? _message['credits'] : '');
 		}
     </script>
 </head>

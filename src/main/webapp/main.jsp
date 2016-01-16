@@ -60,7 +60,6 @@
 		var language = '<%=language%>';
 		document.write("<script charset=\"UTF-8\" type=\"text/javascript\" src=\"./extjs/locale/ext-lang-" + language + ".js\"></scr" + "ipt>")
 		document.write("<script charset=\"UTF-8\" type=\"text/javascript\" src=\"./locale/custom-lang-" + language + ".js\"></scr" + "ipt>")
-		document.write("<script charset=\"UTF-8\" type=\"text/javascript\" src=\"./locale/ee/custom-lang-" + language + ".js\"></scr" + "ipt>")	
 		
 		Ext.Ajax.request({
 			params: {
@@ -98,7 +97,6 @@
     <link rel="stylesheet" type="text/css" href="./css/style.css"/>
     <script type="text/javascript" src="./js/applicationsContent.js"></script>
     <script type="text/javascript" src="./js/applicationsPopup.js"></script>
-    <script type="text/javascript" src="./js/constants.js"></script>    
     <script type="text/javascript" src="./js/databasesContent.js"></script>
     <script type="text/javascript" src="./js/databasesPopup.js"></script>
     <script type="text/javascript" src="./js/loadingStreamPopup.js"></script>
@@ -147,20 +145,13 @@
 	<script type="text/javascript" src="./js/profiler/common/home.js"></script>
 	<script type="text/javascript" src="./js/profiler/data/data.js"></script>
 	
-    <!-- includes.js is for ee-module -->
+
 	<script type="text/javascript" src="./js/index.js"></script>
 	<script type="text/javascript" src="js/includes.js"></script>	
 	<%
 		AppInfoBean appInfo = (AppInfoBean) AppContext.getApplicationContext().getBean("appInfoBean");
-	%>	
-   	<%if (request.getParameter("isLicenseExpired") != null) { %>
-   	    <script type="text/javascript">
-   	    	Ext.onReady(function() {
-				callAlert('<%=I18n.getMessage("label.valid-until-exp") + "<br>" + appInfo.getValidity()%>');
-			});
-		</script>
-	<%}%>
-	
+	%>
+
 </head>
 
 </html>

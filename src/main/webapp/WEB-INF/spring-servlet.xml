@@ -419,12 +419,6 @@
 
     <bean id="plannerJobMapBean" class="com.seer.datacruncher.services.scheduler.PlannerJobMap"/>
 
-    <!-- License-->
-    <bean id="expiredLicenseEmails" class="com.seer.datacruncher.spring.ExpiredLicenseEmails">
-        <property name="mailFrom" value="info@see-r.com"/>
-        <property name="velocityEngine" ref="velocityEngine"/>
-        <property name="mailTemplate" value="templates/license_exp"/>
-    </bean>
     <!-- planner's beans (scheduler's jobs) -->
     <bean name="alertsStarterJob" init-method="executeInternal"
           class="com.seer.datacruncher.services.scheduler.AlertsStarterJob">

@@ -93,13 +93,8 @@ public class SchemaLibDao {
     public ArrayList<SchemaLibEntity> findAll() {
         ArrayList<SchemaLibEntity> listLibEntity = new ArrayList<SchemaLibEntity>();
         try {
-            if (CommonUtils.isEEModule()){
-                listLibEntity = (ArrayList<SchemaLibEntity>) em.createNamedQuery("SchemaLibEntity.findAll")
+             listLibEntity = (ArrayList<SchemaLibEntity>) em.createNamedQuery("SchemaLibEntity.findAll")
                         .getResultList();
-            }else{
-                listLibEntity = (ArrayList<SchemaLibEntity>) em.createNamedQuery("SchemaLibEntity.findAllByAvailability")
-                        .setParameter("availability", 1).getResultList();
-            }
         } catch (Exception exception) {
             log.error("SchemaLibDao - findAll : " + exception);
         }
@@ -110,10 +105,6 @@ public class SchemaLibDao {
         SchemaLibEntity schemaLibEntity = null;
         try {
             schemaLibEntity = em.find(SchemaLibEntity.class, idSchemaLib);
-            if (!CommonUtils.isEEModule() && schemaLibEntity.getAvailability() == 2) {
-                schemaLibEntity = null;
-                throw new EntityNotFoundException();
-            }
         } catch (Exception exception) {
             log.error("SchemasLibDao - find : " + exception);
         }
@@ -123,20 +114,10 @@ public class SchemaLibDao {
     public ReadList readByLibTypeAndVersion(int libType , String version) {
         ReadList readList = new ReadList();
         try {
-
-            if (CommonUtils.isEEModule()){
-                readList.setResults(em.createNamedQuery("SchemaLibEntity.findByLibTypeAndVersion")
+             readList.setResults(em.createNamedQuery("SchemaLibEntity.findByLibTypeAndVersion")
                         .setParameter("libType", libType)
                         .setParameter("version", version)
                         .getResultList());
-            }else{
-                readList.setResults(em.createNamedQuery("SchemaLibEntity.findByLibTypeAndVersionAndAvailability")
-                        .setParameter("availability", 1)
-                        .setParameter("libType", libType)
-                        .setParameter("version", version)
-                        .getResultList());
-            }
-
         } catch (Exception exception) {
             log.error("SchemaLibDao - readByLibTypeAndVersion : " + exception);
             readList.setSuccess(false);
@@ -151,16 +132,9 @@ public class SchemaLibDao {
     public ReadList readByLibType(int libType) {
         ReadList readList = new ReadList();
         try {
-            if (CommonUtils.isEEModule()){
-                readList.setResults(em.createNamedQuery("SchemaLibEntity.findByLibType")
+            readList.setResults(em.createNamedQuery("SchemaLibEntity.findByLibType")
                         .setParameter("libType", libType)
                         .getResultList());
-            }else{
-                readList.setResults(em.createNamedQuery("SchemaLibEntity.findByLibTypeAndAvailability")
-                        .setParameter("availability", 1)
-                        .setParameter("libType", libType)
-                        .getResultList());
-            }
             List<SchemaLibEntity> listEntity = (List<SchemaLibEntity>)readList.getResults();
             List<SchemaLibEntity> listResults = new ArrayList<SchemaLibEntity>();
             Set<String> setLibVersion = new HashSet<String>();
@@ -209,7 +183,7 @@ public class SchemaLibDao {
     private void insLib(Long idSchemaLib,int libType,String version,String libPath,String defaultNsLib,String libFile,String libName, int availability) {
         SchemaLibEntity schemaLibEntity;
         try {
-            schemaLibEntity = new SchemaLibEntity(idSchemaLib,libType,version,libPath,defaultNsLib,libFile,libName,availability);
+            schemaLibEntity = new SchemaLibEntity(idSchemaLib,libType,version,libPath,defaultNsLib,libFile,libName);
             commonDao.persist(schemaLibEntity);
         } catch(Exception exception) {
             log.error("SchemaLibDao - insLib2 : " + exception);

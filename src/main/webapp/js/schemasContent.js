@@ -70,19 +70,12 @@ var storeSchemaTriggers = new Ext.data.Store({
 			write: function(store, operation){
 				var respText = operation.response.responseText;			
 				if (respText) {
-					if (respText.withoutQuots().startsWith(constants.licenseError)) {
-						//reload the store, because record is modified in 'save' handler
-						//here rejectChanges() is not working since sync() was called.
-						storeSchemaTriggers.load();
-						callAlert(respText.withoutQuots().split('%%')[1]);
-					} else {
 						var responseObj = Ext.decode(respText);
 						App.setAlert(true,responseObj.message);
 						if (responseObj.extraMessage) App.setAlert(true, responseObj.extraMessage);
 						if (operation.action == 'update') {
 							storeSchemaTriggers.load();
 						}
-					}
 				}
 	        }   	
 	    }

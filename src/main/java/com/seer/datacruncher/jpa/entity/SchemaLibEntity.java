@@ -31,10 +31,10 @@ import javax.persistence.*;
         @NamedQuery(name = "SchemaLibEntity.findByLibType", query = "SELECT j FROM SchemaLibEntity j WHERE j.libType = :libType"),
         @NamedQuery(name = "SchemaLibEntity.findByVersion", query = "SELECT j FROM SchemaLibEntity j WHERE j.version = :version"),
 
-        @NamedQuery(name = "SchemaLibEntity.findAllByAvailability", query = "SELECT j FROM SchemaLibEntity j WHERE j.availability = :availability"),
-        @NamedQuery(name = "SchemaLibEntity.findByLibTypeAndVersionAndAvailability", query = "SELECT j FROM SchemaLibEntity j WHERE j.libType = :libType AND j.version = :version AND j.availability = :availability"),
-        @NamedQuery(name = "SchemaLibEntity.findByLibTypeAndAvailability", query = "SELECT j FROM SchemaLibEntity j WHERE j.libType = :libType AND j.availability = :availability"),
-        @NamedQuery(name = "SchemaLibEntity.findByVersionAndAvailability", query = "SELECT j FROM SchemaLibEntity j WHERE j.version = :version AND j.availability = :availability")
+        @NamedQuery(name = "SchemaLibEntity.findAllByAvailability", query = "SELECT j FROM SchemaLibEntity j"),
+        @NamedQuery(name = "SchemaLibEntity.findByLibTypeAndVersionAndAvailability", query = "SELECT j FROM SchemaLibEntity j WHERE j.libType = :libType AND j.version = :version"),
+        @NamedQuery(name = "SchemaLibEntity.findByLibTypeAndAvailability", query = "SELECT j FROM SchemaLibEntity j WHERE j.libType = :libType"),
+        @NamedQuery(name = "SchemaLibEntity.findByVersionAndAvailability", query = "SELECT j FROM SchemaLibEntity j WHERE j.version = :version")
 
 })
 
@@ -63,22 +63,13 @@ public class SchemaLibEntity{
     @Column(name = "lib_file")
     private String libFile;
 
-    /*
-    * availability value:
-    * 1 --> Open Version
-    * 2 --> Enterprise Version
-    * */
-    @Column(name = "availability")
-    private int availability;
-
 	/**
 	 * Default constructor otherwise hibernate finder methods will be failed on this entity.
 	 */
     public SchemaLibEntity() {
-    	//
     }
 
-    public SchemaLibEntity(Long idSchemaLib,int libType,String version,String libPath,String defaultNsLib, String libFile,String libName, int availability) {
+    public SchemaLibEntity(Long idSchemaLib,int libType,String version,String libPath,String defaultNsLib, String libFile,String libName) {
         this.idSchemaLib = idSchemaLib;
         this.libType = libType;
         this.version = version;
@@ -86,7 +77,6 @@ public class SchemaLibEntity{
         this.defaultNsLib= defaultNsLib;
         this.libFile = libFile;
         this.libName = libName;
-        this.availability = availability;
 
     }
 
@@ -143,11 +133,5 @@ public class SchemaLibEntity{
     public void setLibFile(String libFile) {
         this.libFile = libFile;
     }
-    public int getAvailability() {
-        return availability;
-    }
 
-    public void setAvailability(int availability) {
-        this.availability = availability;
-    }
 }

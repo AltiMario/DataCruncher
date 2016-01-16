@@ -58,13 +58,8 @@ public class SchemaExtraCheckReadController implements Controller, DaoSet {
 		if(type != null && type.equals("regExps")) {
             out.write(mapper.writeValueAsBytes(checksTypeDao.readRegExps(Integer.parseInt(start), Integer.parseInt(limit))));
 		} else {
-            if (CommonUtils.isEEModule()){
-                out.write(mapper.writeValueAsBytes(checksTypeDao.readComplete(Integer.parseInt(start), Integer.parseInt(limit))));
-            }else{
-                out.write(mapper.writeValueAsBytes(checksTypeDao.read(Integer.parseInt(start), Integer.parseInt(limit))));
-            }
-
-		}		
+			out.write(mapper.writeValueAsBytes(checksTypeDao.readComplete(Integer.parseInt(start), Integer.parseInt(limit))));
+		}
 		out.flush();
 		out.close();
 		return null;

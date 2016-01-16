@@ -79,30 +79,12 @@ public class CommonUtils  implements DaoSet {
 	private CommonUtils() {}
 	
 	/**
-	 * Checks whether current application module 'Core' or 'EE'
-	 * 
-	 * @return 'true' for EE module, 'false' for 'Core'
-	 */
-	public static synchronized boolean isEEModule() {
-		boolean result = true;
-		try {
-			AppContext.getApplicationContext().getBean("isEEModule");
-		} catch (NoSuchBeanDefinitionException e) {
-			result = false;
-		}
-		return result;		
-	}
-	
-	/**
 	 * MongoDB support is only inside EE module for Datastream entity. 
 	 * 
 	 * @return 'true' if MongoDB support exists and is checked in the form, 'false' otherwise
 	 */
 	public static synchronized boolean isMongoDB() {
-		boolean isEE = isEEModule();
-        boolean isMongoChecked = getMongoChecked();
-		return isEE && isMongoChecked;
-        //return true;
+        return getMongoChecked();
 	}
 
     //TODO: get the value from the checkbox

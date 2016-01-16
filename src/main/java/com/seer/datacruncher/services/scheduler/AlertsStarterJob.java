@@ -18,14 +18,10 @@
 
 package com.seer.datacruncher.services.scheduler;
 
-import com.seer.datacruncher.spring.AppContext;
-import com.seer.datacruncher.spring.ExpiredLicenseEmails;
-import com.seer.datacruncher.utils.generic.CommonUtils;
 import org.apache.log4j.Logger;
 import org.quartz.*;
 
-import java.util.HashMap;
-import java.util.Map;
+
 
 public class AlertsStarterJob {
     private Logger log = Logger.getLogger(this.getClass());
@@ -39,33 +35,6 @@ public class AlertsStarterJob {
         this.scheduler = scheduler;
     }
 
-    public void executeInternal() {
-        if (CommonUtils.isEEModule() || CommonUtils.isModule()) {
-            String cron ="0 0 1 * * ?";
-            JobKey jobKeyLicenseEmail = new JobKey("jobLicenseEmail", "group1");
-
-            JobDetail jobLicenseEmail = JobBuilder.newJob(ExpiredLicenseEmails.class)
-                    .withIdentity(jobKeyLicenseEmail).build();
-
-            Trigger triggerLicenseEmail = TriggerBuilder
-                    .newTrigger()
-                    .withIdentity("dummyTriggerLicenseEmail", "group1")
-                    .withSchedule(CronScheduleBuilder.cronSchedule(cron))
-                    .build();
-
-            try {
-                ExpiredLicenseEmails  expiredLicenseEmails = (ExpiredLicenseEmails)AppContext.getApplicationContext().getBean("expiredLicenseEmails");
-                Map<String, Object> jobData = new HashMap<String, Object>();
-                jobData.put("mailTemplate", expiredLicenseEmails.getMailTemplate());
-                jobData.put("mailFrom", expiredLicenseEmails.getMailFrom());
-                jobData.put("velocityEngine", expiredLicenseEmails.getVelocityEngine());
-                jobLicenseEmail.getJobDataMap().putAll(jobData);
-                scheduler.scheduleJob(jobLicenseEmail, triggerLicenseEmail);
-                log.info("Generated cron expression for jobLicenseEmail , is: " + cron);
-            } catch (SchedulerException e) {
-                log.error("AlertsStarterJob: license planner's job can not be started");
-            }
-        }
-    }
+    public void executeInternal() {}
 
 }

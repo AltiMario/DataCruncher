@@ -1,12 +1,19 @@
 /*
- *   SeerDataCruncher is a Data Quality Firewall, a Data Quality Monitor and an ETL middleware to manage data streams on the fly.
- *   SeerDataCruncher is released under AGPL license.
-
- *   Copyright (c) 2015 foreSEE-Revolution ltd
- *   All rights reserved
+ * Copyright (c) 2015  www.see-r.com
+ * All rights reserved
  *
- *   Site: http://www.see-r.com
- *   Contact:  info@see-r.com
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 new Ext.data.JsonStore ( {
@@ -63,18 +70,11 @@ new Ext.data.JsonStore ( {
 		write : function(store, operation) {
 			var respText = operation.response.responseText;
 			if (respText) {
-				if (respText.withoutQuots().startsWith(constants.licenseError)) {
-					//reload the store, because record is modified in 'save' handler
-					//here rejectChanges() is not working since sync() was called.
-					this.load();
-					callAlert(respText.withoutQuots().split('%%')[1]);
-				} else {
 					var responseObj = Ext.decode(respText);
 					App.setAlert(true, responseObj.message);
 					if (operation.action == 'update') {
 						this.load();
 					}
-				}
 			}
 		}
 	}

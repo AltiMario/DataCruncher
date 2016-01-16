@@ -69,9 +69,6 @@ public class LoginController implements Controller, DaoSet {
 				userEntity.setRoleActivities((List<String>) readList.getResults());
 				session.setAttribute("userId", userEntity.getIdUser());
 				session.setAttribute("user", userEntity);
-				if (CommonUtils.isEEModule() && isLicenseExpired()) {
-					out.write(("licenseIsExpired%%").getBytes());
-				}
 				out.write(mapper.writeValueAsBytes(userEntity));
 			}
 		} else {
@@ -80,11 +77,6 @@ public class LoginController implements Controller, DaoSet {
 		out.flush();
 		out.close();
  		return null;
-	}
-
-	//this method is overridden in other modules
-	protected boolean isLicenseExpired() {
-		return false;
 	}
 
 	// -------------HELPERS-------------

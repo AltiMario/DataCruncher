@@ -215,7 +215,6 @@ _message = {
     "macro": "Makro",
     "exportPng": "Bild exportiert Diagram",
     "optionNotReady" : "Function not yet available",
-    "moduleName" : "Full Edition",
     "shareSchema": "Share with the world",
     "sendStream" : "Send stream",
     "noValuesForDisplay" : "No values to display",

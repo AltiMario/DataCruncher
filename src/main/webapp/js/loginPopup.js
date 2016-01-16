@@ -117,24 +117,13 @@ function popupLogin() {
 																		_error['userNotEnabled']);
 													} else {
 														var r = result.responseText;
-														var constant = 'licenseIsExpired';
-														var isExp = false;
-														if (r
-																.startsWith(constant)) {
-															isExp = true;
-															// get user entity
-															// to futher decode
-															r = r.split('%%')[1];
-														}
 														var responseObj = Ext
 																.decode(r);
 														role = responseObj.idRole;
 														roleActivities = responseObj.roleActivities
 																.toString();
 														userId = responseObj.idUser;
-														window.location = 'main.jsp'
-																+ (isExp ? ('?isLicenseExpired=1')
-																		: '');
+														window.location = 'main.jsp';
 													}
 												},
 												url : './login.json'

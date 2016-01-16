@@ -44,7 +44,7 @@ public class DatastreamsValidator implements DaoSet {
                     if (numElemChecked > 0)
                         resultValidation = new Logical().logicalValidation(datastreamDTO, resultValidation.getJaxbObject());
 
-					if (resultValidation.isValid() && CommonUtils.isEEModule()) {
+					if (resultValidation.isValid()) {
                         MacroRulesValidation macro = (MacroRulesValidation) AppContext.getApplicationContext().getBean(
                                 "MacroRulesValidation");
                         resultValidation = macro.doValidation(datastreamDTO);

@@ -64,13 +64,7 @@ public class EventTriggerDao {
         		query.setMaxResults(limit);
         	}
         	readList.setTotal(count.get(0).longValue());
-            if(CommonUtils.isEEModule()) {
                 readList.setResults(query.getResultList());
-            }else{
-                List<EventTriggerEntity> listResults =  new ArrayList<EventTriggerEntity>();
-                listResults.add((EventTriggerEntity)em.createNamedQuery("EventTriggerEntity.findAllNoSys").getResultList().get(0));
-                readList.setResults(listResults);
-            }
         } catch (Exception exception) {
             log.error("EventTriggerDao - read : " + exception);
             readList.setSuccess(false);

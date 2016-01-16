@@ -34,8 +34,6 @@
         }
 	    document.write("<script charset=\"UTF-8\" type=\"text/javascript\" src=\"./extjs/locale/ext-lang-" + language + ".js\"></scr" + "ipt>")
 	    document.write("<script charset=\"UTF-8\" type=\"text/javascript\" src=\"./locale/custom-lang-" + language + ".js\"></scr" + "ipt>")
-		document.write("<script charset=\"UTF-8\" type=\"text/javascript\" src=\"./locale/ee/custom-lang-" + language + ".js\"></scr" + "ipt>")	
-		
 	    
 	    var isApplicationConfigured = true;
 	    

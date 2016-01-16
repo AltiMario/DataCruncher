@@ -214,7 +214,6 @@ _message = {
     "macro": "Macro",
     "exportPng": "Esportazione Immagine XSD",
 	"optionNotReady" : "Funzione non ancora disponibile",
-	"moduleName" : "Full Edition",
 	"shareSchema": "Condividi con il mondo",
 	"sendStream" : "Invia flusso",
 	"noValuesForDisplay" : "Nessun dato da visualizzare",

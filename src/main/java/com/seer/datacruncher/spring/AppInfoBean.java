@@ -25,8 +25,7 @@ import java.io.InputStream;
 import java.util.Properties;
 
 public class AppInfoBean {
-	protected String client, dealer, appVersion, module, validity;
-	protected boolean isExpired;
+	protected String appVersion;
 	private Logger log = Logger.getLogger(AppInfoBean.class);
 	
 	{
@@ -40,22 +39,6 @@ public class AppInfoBean {
 		}
 	}
 
-	public String getClient() {
-		return client;
-	}
-
-	public void setClient(String client) {
-		this.client = client;
-	}
-
-	public String getDealer() {
-		return dealer;
-	}
-
-	public void setDealer(String dealer) {
-		this.dealer = dealer;
-	}
-
 	public String getAppVersion() {
 		return appVersion;
 	}
@@ -64,27 +47,4 @@ public class AppInfoBean {
 		this.appVersion = appVersion;
 	}
 
-    public String getModule() {
-        return module;
-    }
-
-    public void setModule(String module) {
-        this.module = module;
-    }
-
-    public String getValidity() {
-        return validity;
-    }
-
-    public void setValidity(String validity) {
-        this.validity = validity;
-    }
-
-	public boolean isExpired() {
-		return isExpired;
-	}
-
-	public void setIsExpired(boolean isExpired) {
-		this.isExpired = isExpired;
-	}
 }
