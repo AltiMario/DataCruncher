@@ -423,9 +423,8 @@
 			<artifactId>commons-vfs2-sandbox</artifactId>
 			<version>2.1-SNAPSHOT</version>
 		</dependency>
-
 		<dependency>
-			<groupId>forecast</groupId>
+			<groupId>com.github.lbordowitz.openforecast</groupId>
 			<artifactId>openforecast</artifactId>
 			<version>0.5.0</version>
 		</dependency>
