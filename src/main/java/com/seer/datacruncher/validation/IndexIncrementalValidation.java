@@ -38,78 +38,110 @@ import com.seer.datacruncher.persistence.manager.QuickDBRecognizer;
 import com.seer.datacruncher.utils.generic.I18n;
 
 public class IndexIncrementalValidation implements DaoSet {
-	
+
 	private static Logger log = Logger.getLogger(IndexIncrementalValidation.class);
 
-	private IndexIncrementalValidation() {}
+	private IndexIncrementalValidation() {
+	}
 
 	public static String validate(long schemaId) {
-		
+
 		class Pair {
 			int id;
 			BigDecimal value;
 		}
 
-		String message = null;
 		SchemaEntity schemaEntity = schemasDao.find(schemaId);
-		if (schemaEntity.getIsIndexedIncrement() && schemaEntity.getPublishToDb() && schemaEntity.getIdDatabase() > 0) {
-			List<SchemaFieldEntity> list = schemasDao.retrieveAllLeaves(schemaEntity.getIdSchema());
-			String schemaName = QuickDBRecognizer.getSchemaNamePlusVersion(schemaEntity);
-			Connection connection = ConnectionPoolsSet.getConnection(schemaEntity.getIdDatabase());
-			try {
-				for (SchemaFieldEntity ent : list) {
-					if (ent.isIndexIncremental() && ent.getIdFieldType() == FieldType.numeric) {
-						String fieldName = ent.getName();
-						String sql = MessageFormat.format("SELECT id, {0} FROM {1}", fieldName, schemaName);
-			            Statement statement = connection.createStatement();
-			            ResultSet rs = statement.executeQuery(sql);
-			            List<Pair> resList = new ArrayList<Pair>();
-			            while (rs.next()) {
-			            	Pair pair = new Pair();
-			            	pair.id = rs.getInt(1);
-			            	pair.value = new BigDecimal(rs.getObject(2).toString());
-			            	resList.add(pair);
-			            }
-			            rs.close();
-			            statement.close();
-			            
-			            // Verifica che i valori siano in progressione
-			            BigDecimal previous = null;
-			            for ( Pair pair : resList ) {
-			            	if ( pair == null ) {
-			            		continue;
-			            	}
-			            	if ( previous == null ) {
-			            		previous = pair.value;
-			            		continue;
-			            	}
-			            	if ( previous.compareTo(pair.value) < 0 ) {
-			            		previous = pair.value;
-			            		continue;
-			            	}
 
-							String deletesql = MessageFormat.format("DELETE FROM {0} WHERE id = {1}", schemaName, pair.id);
-				            statement = connection.createStatement();
-				            statement.executeUpdate(deletesql);
-				            statement.close();
+		if (!schemaEntity.getIsIndexedIncrement()) {
+			return null;
+		}
 
-				            message = MessageFormat.format(I18n.getMessage("message.indexIncrementWarn"), pair.value);
-				            
-			            }
-					}
+		if (!schemaEntity.getPublishToDb()) {
+			return null;
+		}
+
+		if (schemaEntity.getIdDatabase() <= 0) {
+			return null;
+		}
+
+		String message = null;
+		List<SchemaFieldEntity> list = schemasDao.retrieveAllLeaves(schemaEntity.getIdSchema());
+		String schemaName = QuickDBRecognizer.getSchemaNamePlusVersion(schemaEntity);
+		Connection connection = ConnectionPoolsSet.getConnection(schemaEntity.getIdDatabase());
+
+		try {
+
+			for (SchemaFieldEntity ent : list) {
+
+				if (!ent.isIndexIncremental()) {
+					continue;
 				}
+
+				if (ent.getIdFieldType() != FieldType.numeric) {
+					continue;
+				}
+
+				String fieldName = ent.getName();
+				String sql = MessageFormat.format("SELECT id, {0} FROM {1}", fieldName, schemaName);
+				Statement statement = connection.createStatement();
+				ResultSet rs = statement.executeQuery(sql);
+				List<Pair> resList = new ArrayList<Pair>();
+				while (rs.next()) {
+					Pair pair = new Pair();
+					pair.id = rs.getInt(1);
+					pair.value = new BigDecimal(rs.getObject(2).toString());
+					resList.add(pair);
+				}
+				rs.close();
+				statement.close();
+
+				// Verifica che i valori siano in progressione
+				BigDecimal previous = null;
+				for (Pair pair : resList) {
+					
+					if (pair == null) {
+						continue;
+					}
+					
+					if (previous == null) {
+						previous = pair.value;
+						continue;
+					}
+					
+					if (previous.compareTo(pair.value) < 0) {
+						previous = pair.value;
+						continue;
+					}
+
+					String deletesql = MessageFormat.format("DELETE FROM {0} WHERE id = {1}", schemaName, pair.id);
+					statement = connection.createStatement();
+					statement.executeUpdate(deletesql);
+					statement.close();
+
+					if ( message == null ) {
+						message = MessageFormat.format(I18n.getMessage("message.indexIncrementWarn"), pair.value);
+					}
+					else {
+						message = message += ", " + MessageFormat.format(I18n.getMessage("message.indexIncrementWarn"), pair.value);
+					}
+
+				}
+
+			}
+
+		} catch (SQLException e) {
+			log.error("Sql Query execution error", e);
+		} finally {
+			try {
+				connection.close();
 			} catch (SQLException e) {
 				log.error("Sql Query execution error", e);
 			}
-			finally {
-	            try {
-					connection.close();
-				} catch (SQLException e) {
-					log.error("Sql Query execution error", e);
-				}
-			}
 		}
+
 		return message;
+
 	}
-	
+
 }

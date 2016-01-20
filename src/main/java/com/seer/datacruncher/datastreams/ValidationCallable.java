@@ -52,24 +52,23 @@ public class ValidationCallable implements Callable<Map<String, Object>>, DaoSet
 	private String stream;
 	private byte[] bytes;
 	private boolean isUnitTest;
-	
+
 	private boolean okEvent = false;
 	private boolean koEvent = false;
 	private boolean warnEvent = false;
 	private List<EventTriggerEntity> okEventList;
 	private List<EventTriggerEntity> koEventList;
 	private List<EventTriggerEntity> warnEventList;
-    private Object jvObject;
-    private long numElemChecked;
-    private ApplicationEntity appEntity;
-    private String defaultNsLib;
-    private boolean isLast;
-    private boolean isFirst;
+	private Object jvObject;
+	private long numElemChecked;
+	private ApplicationEntity appEntity;
+	private String defaultNsLib;
+	private boolean isLast;
 
 	ValidationCallable(Long idSchema, SchemaEntity schemaEntity, String stream, byte[] bytes, boolean isUnitTest,
 			boolean okEvent, boolean koEvent, boolean warnEvent, List<EventTriggerEntity> okEventList,
-			List<EventTriggerEntity> koEventList, List<EventTriggerEntity> warnEventList, Object object, long numElemChecked,
-			ApplicationEntity appEntity, String defaultNsLib, boolean isFirst, boolean isLast) {
+			List<EventTriggerEntity> koEventList, List<EventTriggerEntity> warnEventList, Object object,
+			long numElemChecked, ApplicationEntity appEntity, String defaultNsLib, boolean last) {
 		this.idSchema = idSchema;
 		this.schemaEntity = schemaEntity;
 		this.stream = stream;
@@ -81,12 +80,12 @@ public class ValidationCallable implements Callable<Map<String, Object>>, DaoSet
 		this.okEventList = okEventList;
 		this.koEventList = koEventList;
 		this.warnEventList = warnEventList;
-        this.jvObject = object;
-        this.numElemChecked = numElemChecked;
-        this.appEntity = appEntity;
-        this.defaultNsLib = defaultNsLib;
-        this.isFirst = isFirst;
-        this.isLast = isLast;
+		this.jvObject = object;
+		this.numElemChecked = numElemChecked;
+		this.appEntity = appEntity;
+		this.defaultNsLib = defaultNsLib;
+		this.isLast = last;
+		System.out.println("Last: " + last);
 	}
 
 	@Override
@@ -94,19 +93,187 @@ public class ValidationCallable implements Callable<Map<String, Object>>, DaoSet
 		Map<String, Object> resMap = new HashMap<String, Object>();
 		boolean bSuccess = true;
 		int idStreamType = schemaEntity.getIdStreamType();
+
 		DatastreamDTO datastreamDTO = new DatastreamDTO();
+		DatastreamEntity datastreamEntity = new DatastreamEntity();
+
+		setupDatastream(idStreamType, datastreamDTO, datastreamEntity);
+
+		if (!isUnitTest) {
+			if (appEntity != null && appEntity.getIsActive() != null) {
+				if (appEntity.getIsActive() == 0) {
+					resMap.put(DatastreamsInput._SINGLE_STR_RESP, I18n.getMessage("error.deactivatedApplication"));
+					resMap.put(DatastreamsInput._SINGLE_SUCC_RESP, false);
+					return resMap;
+				} else if (schemaEntity.getIsActive() != null && schemaEntity.getIsActive() == 0) {
+					resMap.put(DatastreamsInput._SINGLE_STR_RESP, I18n.getMessage("error.deactivatedSchema"));
+					resMap.put(DatastreamsInput._SINGLE_SUCC_RESP, false);
+					return resMap;
+				}
+			}
+		}
+
+		if (schemaEntity.getIdSchemaType() == SchemaType.STANDARD) { // Standard
+																		// schema
+			if (datastreamDTO.getSuccess()) {
+				DatastreamsValidator dsValidator = new DatastreamsValidator();
+
+				// TODO validazione standard di un datastreamDTO versa una
+				// singola entity (XML contro il suo XSD)
+				dsValidator.standardValidation(datastreamDTO, schemaEntity);
+
+				if (datastreamDTO.getSuccess()) {
+					datastreamEntity.setChecked(1);
+				} else if (!datastreamDTO.getSuccess() && !datastreamDTO.isWarning()) {
+					datastreamEntity.setChecked(0);
+					bSuccess = false;
+				} else if (!datastreamDTO.getSuccess() && datastreamDTO.isWarning()) {
+					datastreamEntity.setChecked(2);
+					bSuccess = false;
+				}
+			} else {
+				bSuccess = false;
+			}
+		} else {
+			
+			if (!datastreamDTO.getSuccess()) {
+				bSuccess = false;
+			}
+			else {
+				
+				boolean isWarning;
+				boolean isKO;
+				boolean isNotAvailable;
+				
+				if (schemaEntity.getIsAvailable() != null && schemaEntity.getIsAvailable() == 0) {
+					isWarning = true;
+					isNotAvailable = true;
+					isKO = false;
+
+				} else {
+					DatastreamsValidator dsValidator = new DatastreamsValidator();
+					dsValidator.allValidation(datastreamDTO, numElemChecked);
+					isWarning = !datastreamDTO.getSuccess() && datastreamDTO.isWarning();
+					isKO = !datastreamDTO.getSuccess() && !datastreamDTO.isWarning();
+					isNotAvailable = false;
+				}
+
+				if (datastreamDTO.getSuccess() || isWarning) {
+					
+					datastreamEntity.setChecked(isWarning ? 2 : 1);
+
+					synchronized ("mutex") {
+						if (!isUnitTest && schemaEntity.getPublishToDb()
+								&& datastreamDTO.getErrorLevel() != ValidationStep.FORMAL) {
+							if (!isWarning/* success */ || (isWarning && schemaEntity.getIsWarnTolerance())) {
+								StreamsUtils.publishStreamToDB(datastreamDTO);
+							}
+						}
+						SchemaEntity loadingStream = schemasDao.hasLoadingStream(schemaEntity);
+						if (loadingStream != null) {
+							StreamsUtils.loadingStreamToDB(datastreamDTO, loadingStream);
+						}
+						if (!isNotAvailable) {
+							String res = ForcastedFieldsValidation.validate(schemaEntity.getIdSchema());
+							if (res != null) {
+								isWarning = true;
+								datastreamDTO.setWarning(true);
+								datastreamDTO.setSuccess(false);
+								datastreamDTO.setMessage(res);
+								datastreamEntity.setChecked(2);
+								
+							}
+
+						}
+					}
+					
+					if (isNotAvailable) {
+						datastreamDTO.setWarning(true);
+						datastreamDTO.setSuccess(false);
+						datastreamDTO.setMessage(I18n.getMessage("error.unavailableSchema"));
+						datastreamEntity.setChecked(2);
+						datastreamEntity.setMessage(I18n.getMessage("error.unavailableSchema"));
+					}
+					
+					bSuccess = manageWarning(datastreamDTO, isWarning);
+
+				} else if (isKO) {
+					datastreamEntity.setChecked(0);
+					bSuccess = false;
+
+					if (koEvent) {
+						startEvent(koEventList, datastreamDTO);
+					}
+
+				}
+			} // Datastream success
+			
+			if (isLast) {
+
+				String res = IndexIncrementalValidation.validate(schemaEntity.getIdSchema());
+				boolean isWarning = false;
+				if (res != null) {
+					isWarning = true;
+					datastreamDTO.setWarning(true);
+					datastreamDTO.setSuccess(false);
+					datastreamDTO.setMessage(res);
+					datastreamEntity.setChecked(2);
+				}
+
+				// After that last datastream was save (in
+				// case a user submits a CSV file)
+				// all informations saved on DB are cleaned
+				try {
+					deleteData();
+				} catch (SQLException e) {
+					isWarning = true;
+					datastreamDTO.setWarning(true);
+					datastreamDTO.setSuccess(false);
+					datastreamDTO.setMessage(I18n.getMessage("error.impossibleToEmptySavedData"));
+					datastreamEntity.setChecked(2);
+				}
+
+				bSuccess = manageWarning(datastreamDTO, isWarning);
+
+			}			
+		}
+
+		datastreamEntity.setMessage(datastreamDTO.getMessage());
+		if ((schemaEntity.getIsValid() == 1 && datastreamDTO.getSuccess() && !datastreamDTO.isWarning())
+				|| (schemaEntity.getIsInValid() == 1 && !datastreamDTO.getSuccess() && !datastreamDTO.isWarning())
+				|| (schemaEntity.getIsWarning() == 1 && !datastreamDTO.getSuccess() && datastreamDTO.isWarning())) {
+			resMap.put(DatastreamsInput._SINGLE_STREAMENT_RESP, datastreamEntity);
+		}
+		resMap.put(DatastreamsInput._SINGLE_STR_RESP, datastreamDTO.getMessage().replaceAll("\n", "<br>"));
+		resMap.put(DatastreamsInput._SINGLE_SUCC_RESP, bSuccess);
+		return resMap;
+
+	}
+
+	private boolean manageWarning(DatastreamDTO datastreamDTO, boolean isWarning) {
+		
+		if (okEvent && !isWarning) {
+			startEvent(okEventList, datastreamDTO);
+		}
+		if (warnEvent && isWarning) {
+			startEvent(warnEventList, datastreamDTO);
+		}
+
+		return ! isWarning;
+		
+	}
+
+	private void setupDatastream(int idStreamType, DatastreamDTO datastreamDTO, DatastreamEntity datastreamEntity) {
 		datastreamDTO.setIdSchema(idSchema);
 		datastreamDTO.setIdStreamType(schemaEntity.getIdStreamType());
 		datastreamDTO.setInput(stream);
-        datastreamDTO.setJvObject(jvObject);
-		DatastreamEntity datastreamEntity = new DatastreamEntity();
+		datastreamDTO.setJvObject(jvObject);
+
 		datastreamEntity.setIdSchema(datastreamDTO.getIdSchema());
 		if (schemaEntity.getIdSchemaType() == SchemaType.STANDARD) {
 			datastreamDTO.setSuccess(true);
 			datastreamDTO.setOutput(datastreamDTO.getInput());
-			datastreamDTO.setInput(datastreamDTO.getOutput().replaceAll(
-					" xmlns=" + defaultNsLib + " ",
-					" "));
+			datastreamDTO.setInput(datastreamDTO.getOutput().replaceAll(" xmlns=" + defaultNsLib + " ", " "));
 			datastreamEntity.setDatastream(datastreamDTO.getInput());
 		} else {
 			datastreamEntity.setDatastream(datastreamDTO.getInput());
@@ -146,144 +313,6 @@ public class ValidationCallable implements Callable<Map<String, Object>>, DaoSet
 				}
 			}
 		}
-		if (!isUnitTest) {
-			if (appEntity != null && appEntity.getIsActive() != null) {
-				if (appEntity.getIsActive() == 0) {
-					resMap.put(DatastreamsInput._SINGLE_STR_RESP, I18n.getMessage("error.deactivatedApplication"));
-                    resMap.put(DatastreamsInput._SINGLE_SUCC_RESP, false);
-					return resMap;
-				} else if (schemaEntity.getIsActive() != null && schemaEntity.getIsActive() == 0) {
-					resMap.put(DatastreamsInput._SINGLE_STR_RESP, I18n.getMessage("error.deactivatedSchema"));
-                    resMap.put(DatastreamsInput._SINGLE_SUCC_RESP, false);
-					return resMap;
-				}
-			}
-		}
-		
-		if (schemaEntity.getIdSchemaType() == SchemaType.STANDARD) { // Standard schema
-			if (datastreamDTO.getSuccess()) {
-				DatastreamsValidator dsValidator = new DatastreamsValidator();
-				
-				// TODO validazione standard di un datastreamDTO versa una singola entity (XML contro il suo XSD)
-				dsValidator.standardValidation(datastreamDTO, schemaEntity);
-				
-				if (datastreamDTO.getSuccess()) {
-					datastreamEntity.setChecked(1);
-				} else if (!datastreamDTO.getSuccess() && !datastreamDTO.isWarning()) {
-					datastreamEntity.setChecked(0);
-					bSuccess = false;
-				} else if (!datastreamDTO.getSuccess() && datastreamDTO.isWarning()) {
-					datastreamEntity.setChecked(2);
-					bSuccess = false;
-				}
-			} else {
-				bSuccess = false;
-			}
-		} else {
-			if (datastreamDTO.getSuccess()) {
-                boolean isWarning;
-                boolean isKO;
-                boolean isNotAvailable;
-                if(schemaEntity.getIsAvailable() != null && schemaEntity.getIsAvailable() == 0) {
-                    isWarning = true;
-                    isNotAvailable = true;
-                    isKO = false;
-
-                } else{
-                    DatastreamsValidator dsValidator = new DatastreamsValidator();
-                    dsValidator.allValidation(datastreamDTO, numElemChecked);
-                    isWarning = !datastreamDTO.getSuccess() && datastreamDTO.isWarning();
-                    isKO = !datastreamDTO.getSuccess() && !datastreamDTO.isWarning();
-                    isNotAvailable = false;
-                }
-
-				if (datastreamDTO.getSuccess() || isWarning) {
-					datastreamEntity.setChecked(isWarning ? 2 : 1);
-					
-					synchronized("mutex") {
-						if (!isUnitTest && schemaEntity.getPublishToDb() && datastreamDTO.getErrorLevel() != ValidationStep.FORMAL) {
-							if (!isWarning/*success*/ || (isWarning && schemaEntity.getIsWarnTolerance())) {
-								StreamsUtils.publishStreamToDB(datastreamDTO);
-							}
-						}
-						SchemaEntity loadingStream = schemasDao.hasLoadingStream(schemaEntity);
-						if (loadingStream != null) {
-							StreamsUtils.loadingStreamToDB(datastreamDTO, loadingStream);
-						}
-                        if(!isNotAvailable){
-                            String res = ForcastedFieldsValidation.validate(schemaEntity.getIdSchema());
-                            if (res != null) {
-                                isWarning = true;
-                                datastreamDTO.setWarning(true);
-                                datastreamDTO.setSuccess(false);
-                                datastreamDTO.setMessage(res);
-                                datastreamEntity.setChecked(2);
-                            }
-                            else {
-                            	if ( isLast ) {
-                            		
-	                                res = IndexIncrementalValidation.validate(schemaEntity.getIdSchema());
-	                                if (res != null) {
-	                                    isWarning = true;
-	                                    datastreamDTO.setWarning(true);
-	                                    datastreamDTO.setSuccess(false);
-	                                    datastreamDTO.setMessage(res);
-	                                    datastreamEntity.setChecked(2);
-	                                }
-
-	                        		// After that last datastream was save (in case a user submits a CSV file)
-	                        		// all informations saved on DB are cleaned
-	                        		try {
-	                        			deleteData();
-	                        		} catch (SQLException e) {
-	                                    isWarning = true;
-	                                    datastreamDTO.setWarning(true);
-	                                    datastreamDTO.setSuccess(false);
-	                                    datastreamDTO.setMessage(I18n.getMessage("error.impossibleToEmptySavedData"));
-	                                    datastreamEntity.setChecked(2);
-	                        		}
-
-                            	}
-                            }
-                            
-                        }
-					}
-					if(isNotAvailable){
-                        datastreamDTO.setWarning(true);
-                        datastreamDTO.setSuccess(false);
-                        datastreamDTO.setMessage(I18n.getMessage("error.unavailableSchema"));
-                        datastreamEntity.setChecked(2);
-                        datastreamEntity.setMessage(I18n.getMessage("error.unavailableSchema"));
-                    }
-                    if (okEvent && !isWarning)
-                        startEvent(okEventList, datastreamDTO);
-                    if (warnEvent && isWarning)
-                        startEvent(warnEventList, datastreamDTO);
-
-					if (isWarning) bSuccess = false;
-
-				} else if (isKO) {
-					datastreamEntity.setChecked(0);
-					bSuccess = false;
-
-					if (koEvent)
-						startEvent(koEventList, datastreamDTO);
-
-				}
-			} else {
-				bSuccess = false;
-			}
-		}
-		datastreamEntity.setMessage(datastreamDTO.getMessage());
-		if ((schemaEntity.getIsValid() == 1 && datastreamDTO.getSuccess() && !datastreamDTO.isWarning())
-				|| (schemaEntity.getIsInValid() == 1 && !datastreamDTO.getSuccess() && !datastreamDTO.isWarning())
-				|| (schemaEntity.getIsWarning() == 1 && !datastreamDTO.getSuccess() && datastreamDTO.isWarning())) {
-			resMap.put(DatastreamsInput._SINGLE_STREAMENT_RESP, datastreamEntity);
-		}
-		resMap.put(DatastreamsInput._SINGLE_STR_RESP, datastreamDTO.getMessage().replaceAll("\n", "<br>"));
-		resMap.put(DatastreamsInput._SINGLE_SUCC_RESP, bSuccess);
-		return resMap;
-
 	}
 
 	private void deleteData() throws SQLException {
@@ -291,9 +320,9 @@ public class ValidationCallable implements Callable<Map<String, Object>>, DaoSet
 		Connection connection = ConnectionPoolsSet.getConnection(schemaEntity.getIdDatabase());
 		String deletesql = MessageFormat.format("DELETE FROM {0}", schemaName);
 		Statement statement = connection.createStatement();
-        statement.executeUpdate(deletesql);
-        statement.close();
-		
+		statement.executeUpdate(deletesql);
+		statement.close();
+
 	}
 
 	private void startEvent(List<EventTriggerEntity> eventList, DatastreamDTO datastreamDTO) {
