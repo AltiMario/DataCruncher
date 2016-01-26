@@ -196,7 +196,8 @@ public class DatastreamsInput implements DaoSet {
                             numElemChecked, 
                             appEntity,
                             defaultNsLib,
-                            index == streamsList.size() - 1);
+                            index == streamsList.size() - 1,
+                            skipHeader ? index == 1 : index == 0 );
                     Future<Map<String, Object>> submit = executor.submit(callee);
                     list.add(submit);
                 }

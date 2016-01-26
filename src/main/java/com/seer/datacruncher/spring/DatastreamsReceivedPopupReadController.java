@@ -22,6 +22,7 @@ import com.seer.datacruncher.jpa.ReadList;
 import com.seer.datacruncher.jpa.dao.DaoSet;
 import com.seer.datacruncher.jpa.entity.DatastreamEntity;
 import com.seer.datacruncher.jpa.entity.SchemaEntity;
+import com.seer.datacruncher.utils.generic.DomToOtherFormat;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -35,6 +36,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
@@ -48,6 +51,18 @@ public class DatastreamsReceivedPopupReadController implements Controller,
 		DaoSet {
 
 	Logger log = Logger.getLogger(this.getClass());
+	
+	public static void main(String[] args) throws TransformerException {
+		TransformerFactory transformerFactory = TransformerFactory.newInstance();
+		Transformer transformer = transformerFactory.newTransformer();
+		// transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+		// transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
+		// transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+		StringReader xmlReader = new StringReader("<root>michele e' bello</root>");
+		StringWriter xmlWriter = new StringWriter();
+		transformer.transform(new StreamSource(xmlReader), new StreamResult(xmlWriter));
+		System.out.println(xmlWriter.toString());
+	}
 	
 	public ModelAndView handleRequest(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
@@ -84,10 +99,20 @@ public class DatastreamsReceivedPopupReadController implements Controller,
 				transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 						
 				for(DatastreamEntity dtoInstance : listDatastreamDTO) {
-					StringReader xmlReader = new StringReader(dtoInstance.getDatastream());
-					StringWriter xmlWriter = new StringWriter();
-					transformer.transform(new StreamSource(xmlReader), new StreamResult(xmlWriter));
-					dtoInstance.setDatastream(xmlWriter.toString());
+					if ( DomToOtherFormat.isXml(dtoInstance.getDatastream())) {
+						try {
+							StringReader xmlReader = new StringReader(dtoInstance.getDatastream());
+							StringWriter xmlWriter = new StringWriter();
+							transformer.transform(new StreamSource(xmlReader), new StreamResult(xmlWriter));
+							dtoInstance.setDatastream(xmlWriter.toString());
+						}
+						catch (Throwable t) {
+							dtoInstance.setDatastream(dtoInstance.getDatastream());
+						}
+					}
+					else {
+						dtoInstance.setDatastream(dtoInstance.getDatastream());
+					}
 				}
 			} catch(Exception exception) {
 				log.error("DatastremsReceived - Indenting XML : " + exception);

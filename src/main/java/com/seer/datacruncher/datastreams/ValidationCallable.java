@@ -64,11 +64,12 @@ public class ValidationCallable implements Callable<Map<String, Object>>, DaoSet
 	private ApplicationEntity appEntity;
 	private String defaultNsLib;
 	private boolean isLast;
+	private boolean isFirst;
 
 	ValidationCallable(Long idSchema, SchemaEntity schemaEntity, String stream, byte[] bytes, boolean isUnitTest,
 			boolean okEvent, boolean koEvent, boolean warnEvent, List<EventTriggerEntity> okEventList,
 			List<EventTriggerEntity> koEventList, List<EventTriggerEntity> warnEventList, Object object,
-			long numElemChecked, ApplicationEntity appEntity, String defaultNsLib, boolean last) {
+			long numElemChecked, ApplicationEntity appEntity, String defaultNsLib, boolean last, boolean first) {
 		this.idSchema = idSchema;
 		this.schemaEntity = schemaEntity;
 		this.stream = stream;
@@ -85,7 +86,7 @@ public class ValidationCallable implements Callable<Map<String, Object>>, DaoSet
 		this.appEntity = appEntity;
 		this.defaultNsLib = defaultNsLib;
 		this.isLast = last;
-		System.out.println("Last: " + last);
+		this.isFirst = first;
 	}
 
 	@Override
@@ -135,7 +136,17 @@ public class ValidationCallable implements Callable<Map<String, Object>>, DaoSet
 				bSuccess = false;
 			}
 		} else {
-			
+
+			// Before validation of index incremental, DB must be erased
+			if ( isFirst ) {
+				// After that last datastream was save (in case a user submits a CSV file) 
+				// all informations saved on DB are cleaned
+				try {
+					deleteData();
+				} catch (SQLException e) {
+				}
+			}
+
 			if (!datastreamDTO.getSuccess()) {
 				bSuccess = false;
 			}
@@ -217,19 +228,6 @@ public class ValidationCallable implements Callable<Map<String, Object>>, DaoSet
 					datastreamDTO.setWarning(true);
 					datastreamDTO.setSuccess(false);
 					datastreamDTO.setMessage(res);
-					datastreamEntity.setChecked(2);
-				}
-
-				// After that last datastream was save (in
-				// case a user submits a CSV file)
-				// all informations saved on DB are cleaned
-				try {
-					deleteData();
-				} catch (SQLException e) {
-					isWarning = true;
-					datastreamDTO.setWarning(true);
-					datastreamDTO.setSuccess(false);
-					datastreamDTO.setMessage(I18n.getMessage("error.impossibleToEmptySavedData"));
 					datastreamEntity.setChecked(2);
 				}
 
