@@ -5,11 +5,9 @@ SeerDataCruncher is a Data Quality Firewall, Data Quality Monitor and ETL middle
 ----------------------------- 
 **To run**
 
-1. Install MySQL
+1. Modify the persistence.xml and create an empty SQL db (we use MySQL as default) called datacruncher
 
-2. Modify the persistence.xml and create an empty db (MySQL by default) called datacruncher
-
-3. Install Mongodb
+2. Install Mongodb
 
 
 ----------------------------- 
@@ -29,23 +27,6 @@ The credential for the access (the requested info of the login popup) is admin:a
 -XX:MaxPermSize=256m
 
 -XX:NewSize=256m
-
-------------------------------------------------
-**New item in menu**
-
-For adding new menu item we need to do following:
-
-1) Add the entry in Activity.java
-
-2) Add same  entries for required roles in RoleActivityDao.java
-
-3) clear the following db tables:
-
-    a- jv_activity
-
-    b- jv_role_activity
-
-4) add js code in index.js related to the new entity
 
 -----------------------------------------------
 **Architecture**
