@@ -11,7 +11,7 @@
 
             <property name="hibernate.connection.autocommit" value="true"/>
             <property name="hibernate.connection.username" value="root"/>
-            <property name="hibernate.connection.password" value="pippo80"/>
+            <property name="hibernate.connection.password" value="temporary"/>
             <property name="hibernate.show_sql" value="false"/>
             <property name="hibernate.hbm2ddl.auto" value="update"/>
 
