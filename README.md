@@ -2,10 +2,10 @@
 SeerDataCruncher is a Data Quality Firewall, Data Quality Monitor and ETL middleware to manage data streams on the fly.
 
 
------------------------------ 
+-----------------------------
 ### To run
 
-1. Download last stable [war](http://see-r.com/wp-content/upload/SeerDataCruncher-1.1.war) or generate it from the source code.
+1. Download the last stable [WAR](http://see-r.com/wp-content/uploads/SeerDataCruncher-1.1.war) or build it from the source code.
 
 2. Create a new SQL database called "datacruncher", we use MySQL as default but you can choose whatever you like.
 
@@ -13,14 +13,16 @@ SeerDataCruncher is a Data Quality Firewall, Data Quality Monitor and ETL middle
 
 4. Install Mongodb to store the datastreams (optional)
 
+5. Deploy the war on Tomcat
 
 -----------------------------
 ### To access
 
-The credential for the access (required via a login popup) is admin:admin
+The credentials required by the login popup are
+admin:admin
 
 -----------------------------
-### JVM configuration parameters
+### JVM configuration parameters for better performance
 
 -Xms512m
 
