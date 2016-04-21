@@ -159,7 +159,7 @@ public class DatastreamsInput implements DaoSet {
                 }
                 ExecutorService executor = Executors.newFixedThreadPool(poolSize);
                 
-                // On case of IndexInrement thread executor is forced to be 
+                // On case of IndexIncrement thread executor is forced to be
                 // single thred to guarantee order of task executions
                 if ( schemaEntity.getIsIndexedIncrement() ) {
                 	executor = Executors.newSingleThreadExecutor();

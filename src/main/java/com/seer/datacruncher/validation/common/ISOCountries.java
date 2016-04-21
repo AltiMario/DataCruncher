@@ -34,14 +34,6 @@ import com.seer.datacruncher.utils.validation.SingleValidation;
 import com.seer.datacruncher.validation.ResultStepValidation;
 import org.apache.commons.lang.Validate;
 
-/**
- * Helper class to validate ISO Country codes
- * 
- * @author www.prowidesoftware.com
- * @since 3.3
- * @version $Id: ISOCountries.java,v 1.2 2010/10/17 01:22:01 zubri Exp $
- */
-
 public class ISOCountries extends PropertyResource implements SingleValidation {
     private static final ISOCountries instance = new ISOCountries();
 

@@ -34,13 +34,6 @@ import org.apache.log4j.Logger;
 import java.io.InputStream;
 import java.util.Properties;
 
-/**
- * Common code for subclasses.
- * 
- * @author www.prowidesoftware.com
- * @since 3.3
- * @version $Id: PropertyResource.java,v 1.3 2010/10/18 03:22:38 zubri Exp $
- */
 public abstract class PropertyResource {
 
     private static Logger log = Logger.getLogger(PropertyResource.class);

@@ -31,10 +31,6 @@
  * else
  * 		System.out.println("problem with iban: "+iban.getInvalidCause());
  * </pre></code>
- *
- * @author www.prowidesoftware.com
- * @since 3.3
- * @version $Id: IBAN.java,v 1.2 2010/10/17 01:22:01 zubri Exp $
  */
 package com.seer.datacruncher.validation.common;
 import com.seer.datacruncher.utils.validation.SingleValidation;

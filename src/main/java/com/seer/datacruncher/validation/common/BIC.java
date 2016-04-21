@@ -16,13 +16,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/**
- * Helper class to validate a BIC
- * 
- * @author www.prowidesoftware.com
- * @since 3.3
- * @version $Id: BIC.java,v 1.2 2010/10/17 01:22:01 zubri Exp $
- */
 package com.seer.datacruncher.validation.common;
 
 import com.seer.datacruncher.validation.ResultStepValidation;

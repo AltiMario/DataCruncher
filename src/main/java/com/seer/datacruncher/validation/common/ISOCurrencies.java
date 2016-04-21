@@ -34,13 +34,7 @@ import com.seer.datacruncher.utils.validation.SingleValidation;
 import com.seer.datacruncher.validation.ResultStepValidation;
 import org.apache.commons.lang.Validate;
 
-/**
- * Helper class to validate ISO Currency codes
- * 
- * @author www.prowidesoftware.com
- * @since 3.3
- * @version $Id: ISOCurrencies.java,v 1.2 2010/10/17 01:22:01 zubri Exp $
- */
+
 public class ISOCurrencies extends PropertyResource implements SingleValidation {
     private static final ISOCurrencies instance = new ISOCurrencies();
 
