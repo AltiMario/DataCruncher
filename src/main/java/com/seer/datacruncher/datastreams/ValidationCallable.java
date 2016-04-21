@@ -138,7 +138,7 @@ public class ValidationCallable implements Callable<Map<String, Object>>, DaoSet
 		} else {
 
 			// Before validation of index incremental, DB must be erased
-			if ( isFirst ) {
+			if ( isFirst && (schemaEntity.getIdDatabase() != 0)) {
 				// After that last datastream was save (in case a user submits a CSV file) 
 				// all informations saved on DB are cleaned
 				try {
