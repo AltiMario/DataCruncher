@@ -468,14 +468,15 @@
     <!-- End of activeMQ JMS configuration  -->
 
     <!-- Starts and stops the FTP server as the context is started and stopped -->
-    <bean name="userAuthManagerFactory" class="com.seer.datacruncher.services.ftp.UserAuthenticationManagerFactory"/>
+    <!--<bean name="userAuthManagerFactory" class="com.seer.datacruncher.services.ftp.UserAuthenticationManagerFactory"/>
     <bean class="com.seer.datacruncher.services.ftp.FtpServerHandler"
           init-method="init" destroy-method="destroy">
-    </bean>
+    </bean-->
+    <!-- Close configuration for internal FTP server -->
+
     <bean name="serverJobBean" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
         <property name="jobClass" value="com.seer.datacruncher.services.ServiceScheduledJob"/>
     </bean>
-    <!-- Close configuration for internal FTP server -->
 
     <bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
         <property name="velocityProperties">
@@ -583,13 +584,14 @@
     <bean id="LogDao" class="com.seer.datacruncher.jpa.dao.LogDao"/>
     <bean id="ForecastDao" class="com.seer.datacruncher.jpa.dao.ForecastDao"/>
 
-    <!--camel:camelContext id="camel2">
+    <!--camel:camelContext id="camel1">
         <camel:package>com.seer.datacruncher.services.ftp.camel</camel:package>
+    </camel:camelContext>
+    <bean id="ftpFileFilter" class="com.seer.datacruncher.services.ftp.camel.FTPFileFilter"/-->
+    <camel:camelContext id="camel2">
         <camel:package>com.seer.datacruncher.services.jms.camel</camel:package>
-    </camel:camelContext-->
-
-    <!--bean id="ftpFileFilter" class="com.seer.datacruncher.services.ftp.camel.FTPFileFilter"/-->
-    <!--bean class="com.seer.datacruncher.services.jms.JMSQueueListenerProcessor" id="JMSQueueListenerProcessor"/-->
+    </camel:camelContext>
+    <bean class="com.seer.datacruncher.services.jms.JMSQueueListenerProcessor" id="JMSQueueListenerProcessor"/>
 
     <bean id="isEEModule" class="com.seer.datacruncher.utils.entity.DummyBean"/>
 
