@@ -3,7 +3,7 @@ SeerDataCruncher is a Data Quality Firewall, Data Quality Monitor and ETL middle
 
 
 -----------------------------
-### To run in a standard way
+### To run in manually
 
 1. Download the last stable [WAR](http://see-r.com/wp-content/uploads/SeerDataCruncher-1.1.war) or build it from the source code.
 
@@ -17,7 +17,9 @@ SeerDataCruncher is a Data Quality Firewall, Data Quality Monitor and ETL middle
 
 ### or run via docker
 
-docker run altimario/seerdatacruncher
+  - `docker-compose up -d`
+  - data and logs will be stored in `./data`
+
 
 -----------------------------
 ### To access

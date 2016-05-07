@@ -1,29 +1,24 @@
-web:
-  image: altimario/seerdatacruncher
-  hostname: "webapp"
-  ports:
-   - 80:8080
-  volumes:
-   - /tmp/logs:/opt/tomcat/logs
-  links:
-   - mysql
-   - mongo
+version: '2'
+services:
+  web:
+    image: altimario/seerdatacruncher
+    ports:
+     - 80:8080
+    volumes:
+     - ./data/logs:/opt/tomcat/logs
+    links:
+     - mysql
+     - mongo
 
-mysql:
-  image: mysql
-  hostname: "mysql"
-  ports:
-     - "3306:3306"
-  expose:
-     - "3306"
-  volumes:
-     - /tmp/data/mysql:/var/lib/mysql
-  environment:
-    MYSQL_ROOT_PASSWORD: temporary
-    MYSQL_DATABASE: datacruncher
+  mysql:
+    image: mysql
+    volumes:
+       - ./data/mysql:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: temporary
+      MYSQL_DATABASE: datacruncher
 
-mongo:
-  image: mongo
-  hostname: "mongo"
-  volumes:
-   - /tmp/data/mongo:/data/db
+  mongo:
+    image: mongo
+    volumes:
+     - ./data/mongo:/data/db
