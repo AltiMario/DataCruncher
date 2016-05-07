@@ -1,20 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence       http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+    <!--
+      ************************************
+      DIALECTS
+      ************************************
+      DB2 – org.hibernate.dialect.DB2Dialect
+      HypersonicSQL – org.hibernate.dialect.HSQLDialect
+      Informix – org.hibernate.dialect.InformixDialect
+      Ingres – org.hibernate.dialect.IngresDialect
+      Interbase – org.hibernate.dialect.InterbaseDialect
+      Pointbase – org.hibernate.dialect.PointbaseDialect
+      PostgreSQL – org.hibernate.dialect.PostgreSQLDialect
+      Mckoi SQL – org.hibernate.dialect.MckoiDialect
+      Microsoft SQL Server – org.hibernate.dialect.SQLServerDialect
+      MySQL – org.hibernate.dialect.MySQLDialect
+      Oracle (any version) – org.hibernate.dialect.OracleDialect
+      Oracle 9 – org.hibernate.dialect.Oracle9Dialect
+      Progress – org.hibernate.dialect.ProgressDialect
+      FrontBase – org.hibernate.dialect.FrontbaseDialect
+      SAP DB – org.hibernate.dialect.SAPDBDialect
+      Sybase – org.hibernate.dialect.SybaseDialect
+      Sybase Anywhere – org.hibernate.dialect.SybaseAnywhereDialect
+-->
     <persistence-unit name="DataCruncher" transaction-type="RESOURCE_LOCAL">
-        <!--provider>org.hibernate.ejb.HibernatePersistence</provider-->
         <properties>
             <!--  MYSQL properties-->
             <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
             <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/datacruncher"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
-
-
             <property name="hibernate.connection.autocommit" value="true"/>
             <property name="hibernate.connection.username" value="root"/>
             <property name="hibernate.connection.password" value="temporary"/>
             <property name="hibernate.show_sql" value="false"/>
             <property name="hibernate.hbm2ddl.auto" value="update"/>
-
 
             <!-- Connection Pooling settings -->
             <property name="hibernate.connection.provider_class"
@@ -72,7 +90,7 @@
 	        <property name="bonecp.idleConnectionTestPeriod" value="120" />
 	        <property name="bonecp.partitionCount" value="3" />
 	        <property name="bonecp.maxConnectionsPerPartition" value="10" />
-	        <property name="bonecp.minConnectionsPerPartition" value="5" />            
+	        <property name="bonecp.minConnectionsPerPartition" value="5" />
         </properties>
     </persistence-unit>
     
@@ -82,34 +100,11 @@
 	        <property name="kundera.nodes" value="localhost" />
 	        <property name="kundera.port" value="27017" />
 	        <!-- keyspace == collection name -->
-	        <property name="kundera.keyspace" value="jv" />
+	        <property name="kundera.keyspace" value="datacruncher" />
 	        <property name="kundera.dialect" value="mongodb" />
 	        <property name="kundera.client.lookup.class" value="com.impetus.client.mongodb.MongoDBClientFactory" />
 	        <property name="kundera.cache.provider.class" value="com.impetus.kundera.cache.ehcache.EhCacheProvider" />
 	        <property name="kundera.cache.config.resource" value="/ehcache-test.xml" />
 	    </properties>
 	</persistence-unit>
-	
-    <!--
-          ************************************
-          DIALECTS
-          ************************************
-          DB2 – org.hibernate.dialect.DB2Dialect
-          HypersonicSQL – org.hibernate.dialect.HSQLDialect
-          Informix – org.hibernate.dialect.InformixDialect
-          Ingres – org.hibernate.dialect.IngresDialect
-          Interbase – org.hibernate.dialect.InterbaseDialect
-          Pointbase – org.hibernate.dialect.PointbaseDialect
-          PostgreSQL – org.hibernate.dialect.PostgreSQLDialect
-          Mckoi SQL – org.hibernate.dialect.MckoiDialect
-          Microsoft SQL Server – org.hibernate.dialect.SQLServerDialect
-          MySQL – org.hibernate.dialect.MySQLDialect
-          Oracle (any version) – org.hibernate.dialect.OracleDialect
-          Oracle 9 – org.hibernate.dialect.Oracle9Dialect
-          Progress – org.hibernate.dialect.ProgressDialect
-          FrontBase – org.hibernate.dialect.FrontbaseDialect
-          SAP DB – org.hibernate.dialect.SAPDBDialect
-          Sybase – org.hibernate.dialect.SybaseDialect
-          Sybase Anywhere – org.hibernate.dialect.SybaseAnywhereDialect
-    -->
 </persistence>

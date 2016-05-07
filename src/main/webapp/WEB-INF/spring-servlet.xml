@@ -491,6 +491,9 @@
     <bean id="entityManagerFactory"
           class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="persistenceUnitName" value="DataCruncher"/>
+        <property name="persistenceUnitPostProcessors">
+            <bean class="com.seer.datacruncher.utils.DockerExternalEnv"/>
+        </property>
         <property name="loadTimeWeaver">
             <bean class="org.springframework.instrument.classloading.InstrumentationLoadTimeWeaver"/>
         </property>
