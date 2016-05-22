@@ -34,11 +34,14 @@ public class SendToWebservice {
             Call call = (Call) service.createCall();
             call.setTargetEndpointAddress(new URL(url));
             call.setOperationName("datastreamsInputWS");
-            call.setPassword("pwd");
-            call.setUsername("usr");
+            call.setPassword("admin");
+            call.setUsername("pwd"); //authorize the user (dispatcher) for that schema
             Object[] params = new Object[2];
-            params[0] = "<root><field>mario</ciccio></field>";
-            params[1] = (long) 1;
+            params[0] =
+                    "1;2;6\n" +
+                    "3;4;5\n" +
+                    "4;;6"; //csv as example
+            params[1] = (long) 1;  //id schema
             Object result = call.invoke(params);
             System.out.println("Result : " + result.toString());
         } catch(Exception exception) {

@@ -114,13 +114,9 @@ public class ValidationCallable implements Callable<Map<String, Object>>, DaoSet
 			}
 		}
 
-		if (schemaEntity.getIdSchemaType() == SchemaType.STANDARD) { // Standard
-																		// schema
+		if (schemaEntity.getIdSchemaType() == SchemaType.STANDARD) { // Standard schema
 			if (datastreamDTO.getSuccess()) {
 				DatastreamsValidator dsValidator = new DatastreamsValidator();
-
-				// TODO validazione standard di un datastreamDTO versa una
-				// singola entity (XML contro il suo XSD)
 				dsValidator.standardValidation(datastreamDTO, schemaEntity);
 
 				if (datastreamDTO.getSuccess()) {
@@ -138,7 +134,7 @@ public class ValidationCallable implements Callable<Map<String, Object>>, DaoSet
 		} else {
 
 			// Before validation of index incremental, DB must be erased
-			if ( isFirst && (schemaEntity.getIdDatabase() != 0)) {
+			if ( isFirst && (schemaEntity.getIdDatabase() != 0) && (schemaEntity.getIsIndexedIncrement() == true)) {
 				// After that last datastream was save (in case a user submits a CSV file) 
 				// all informations saved on DB are cleaned
 				try {

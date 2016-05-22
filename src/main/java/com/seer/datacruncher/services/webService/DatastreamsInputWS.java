@@ -28,8 +28,10 @@ import org.apache.axis.AxisFault;
 import org.apache.axis.MessageContext;
 import org.apache.log4j.Logger;
 
+import javax.jws.WebService;
 import java.util.Locale;
 
+@WebService
 public class DatastreamsInputWS implements DaoSet {
 
 	private static Logger log = Logger.getLogger(DatastreamsInputWS.class);
