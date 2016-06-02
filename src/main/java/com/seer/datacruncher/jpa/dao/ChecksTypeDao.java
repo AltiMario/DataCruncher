@@ -49,6 +49,7 @@ public class ChecksTypeDao {
     private static final String MONTHWORDS_IT_PATTERN = "(Gennaio|Febbraio|Marzo|Aprile|Maggio|Giugno|Luglio|Agosto|Settembre|Ottobre|Novembre|Dicembre)*"; //TODO: not case-sensitive
     private static final String NOHTML_PATTERN = "[^(&lt;.+&gt;)]*";
     private static final String ALPHABETIC_PATTERN = "[a-zA-Z\\s]*";
+	private static final String POUND_STERLING = "£?(([1-9]{1,3}(,\\d{3})*(\\.\\d{2})?)|(0\\.[1-9]\\d)|(0\\.0[1-9]))";
 
     /*** Matches following phone numbers:
          (123)456-7890, 123-456-7890, 1234567890, (123)-456-7890
@@ -262,7 +263,9 @@ public class ChecksTypeDao {
 				em.persist(checksTypeEntity);
 				checksTypeEntity = new ChecksTypeEntity("@creditcard", "Finance -> Credit Card", "Generic credit card number", "Coded", true, null, null,"common.CreditCard");
 				em.persist(checksTypeEntity);
-                checksTypeEntity = new ChecksTypeEntity("@country", "Generic -> Country", "Country code, ISO 3166-1 alpha-2", "Coded", true, null, null,"common.ISOCountries");
+				checksTypeEntity = new ChecksTypeEntity(null, "Finance -> Pound Sterling", "UK Money format", "Regular Expression", true, "regexps.pound_sterling", POUND_STERLING, null);
+				em.persist(checksTypeEntity);
+				checksTypeEntity = new ChecksTypeEntity("@country", "Generic -> Country", "Country code, ISO 3166-1 alpha-2", "Coded", true, null, null,"common.ISOCountries");
                 em.persist(checksTypeEntity);
                 checksTypeEntity = new ChecksTypeEntity("@domain", "Internet -> Domain name", "Internet domain name", "Coded", true, null, null,"common.Domain");
 				em.persist(checksTypeEntity);
