@@ -520,7 +520,7 @@ function popupUserProfile() {
 			xtype : 'textfield',
 			width : 205,
 			y : 30,
-			value : 'info@see-r.com'
+			value : 'altimario@gmail.com'
 		}, {
 			value : _label['language'],
 			x : 545,

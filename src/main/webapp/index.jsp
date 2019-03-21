@@ -22,7 +22,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html">
-	<title>SeerDataCruncher</title>
+	<title>DataCruncher</title>
 	<link rel="stylesheet" type="text/css" href="./extjs/css/ext-all-neptune.css"/>
 	<link href="./images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <script type="text/javascript" src="./extjs/ext-all.js"></script>
@@ -92,7 +92,7 @@
 <body>
 	<div id="loading_background"></div>
 	<div id="loading">
-        <a href='http://www.see-r.com' target='_blank'><img src="./images/logo.png" alt="SeerDataCruncher"></a>
+        <a href='http://altimario.github.io/DataCruncher/' target='_blank'><img src="./images/logo.png" alt="DataCruncher"></a>
 			<p class="copyright">
 				<script type="text/javascript">
 					document.write(getHtmlMsgForCredits(true));

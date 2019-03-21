@@ -27,7 +27,7 @@
 <head>
     <script type="text/javascript">
 		function getHtmlMsgForCredits(showCredits) {
-			return 'SeerDataCruncher release <%=appInfo.getAppVersion()%>' + (showCredits ? _message['credits'] : '');
+			return 'DataCruncher release <%=appInfo.getAppVersion()%>' + (showCredits ? _message['credits'] : '');
 		}
     </script>
 </head>

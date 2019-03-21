@@ -983,7 +983,7 @@ function logout(){
 var header = ({	
 	collapsible: true,
 	html: [ "<table width=\"100%\"><tr><td align=\"left\" valign=\"top\">",
-            "&nbsp;<a href='http://www.see-r.com' target='_blank'><img src=\"./images/logo.png\" alt='SeerDataCruncher'></a></td><td align=\"right\" valign=\"top\">",
+            "&nbsp;<a href='http://www.see-r.com' target='_blank'><img src=\"./images/logo.png\" alt='DataCruncher'></a></td><td align=\"right\" valign=\"top\">",
             getHtmlMsgForCredits(),
             "&nbsp;&nbsp;</td></tr>",
             "</table>" 

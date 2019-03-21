@@ -49,7 +49,7 @@
     <bean name="/logout.json" class="com.seer.datacruncher.spring.LogoutController"/>
     <bean name="/captcha.json" class="com.seer.datacruncher.spring.CaptchaController"/>
     <bean name="/forgetPassword.json" class="com.seer.datacruncher.spring.ForgetPasswordController">
-        <property name="mailFrom" value="info@see-r.com"/>
+        <property name="mailFrom" value="altimario@gmail.com"/>
         <property name="mailSubject" value="SEE-R - Forget Password"/>
         <property name="velocityEngine" ref="velocityEngine"/>
         <property name="mailTemplate" value="templates/forget_password"/>
@@ -126,16 +126,16 @@
     <bean name="/applicationIsActive.json" class="com.seer.datacruncher.spring.ApplicationIsActiveController"/>
     <!-- Contact us -->
     <bean name="/contactsCreate.json" class="com.seer.datacruncher.spring.ContactsCreateController">
-        <property name="mailFrom" value="info@see-r.com"/>
-        <property name="mailTo" value="info@see-r.com"/>
+        <property name="mailFrom" value="altimario@gmail.com"/>
+        <property name="mailTo" value="altimario@gmail.com"/>
         <property name="mailSubject" value="DataCruncher - Contactus Form"/>
         <property name="velocityEngine" ref="velocityEngine"/>
         <property name="mailTemplate" value="templates/contact_us"/>
     </bean>
     <bean name="/contactsRead.json" class="com.seer.datacruncher.spring.ContactsReadController"/>
     <bean name="/contactsUpdate.json" class="com.seer.datacruncher.spring.ContactsUpdateController">
-        <property name="mailFrom" value="info@see-r.com"/>
-        <property name="mailTo" value="info@see-r.com"/>
+        <property name="mailFrom" value="altimario@gmail.com"/>
+        <property name="mailTo" value="altimario@gmail.com"/>
         <property name="mailSubject" value="DataCruncher - Contactus Form"/>
         <property name="velocityEngine" ref="velocityEngine"/>
         <property name="mailTemplate" value="templates/contact_us"/>
@@ -199,7 +199,7 @@
     <!-- Users -->
     <bean name="/usersRead.json" class="com.seer.datacruncher.spring.UsersReadController"/>
     <bean name="/usersCreate.json" class="com.seer.datacruncher.spring.UsersCreateController">
-        <property name="mailFrom" value="info@see-r.com"/>
+        <property name="mailFrom" value="altimario@gmail.com"/>
         <property name="mailSubject" value="SEE-R - User Registration"/>
         <property name="velocityEngine" ref="velocityEngine"/>
         <property name="mailTemplate" value="templates/userRegistration"/>
@@ -274,8 +274,8 @@
     <bean name="/appConfigDestroy.json" class="com.seer.datacruncher.spring.ApplicationConfigDestroyController"/>
     <bean name="/appConfigRead.json" class="com.seer.datacruncher.spring.ApplicationConfigReadController"/>
     <bean name="/appConfigCheck.json" class="com.seer.datacruncher.spring.ApplicationConfigCheckController">
-        <property name="mailFrom" value="info@see-r.com"/>
-        <property name="mailTo" value="info@see-r.com"/>
+        <property name="mailFrom" value="altimario@gmail.com"/>
+        <property name="mailTo" value="altimario@gmail.com"/>
         <property name="mailSubject" value="DataCruncher - Email Configuration Check"/>
         <property name="velocityEngine" ref="velocityEngine"/>
         <property name="mailTemplate" value="templates/emailConfiguration_check"/>
@@ -360,7 +360,7 @@
     <!-- Alerts -->
     <bean name="/alertsRead.json" class="com.seer.datacruncher.spring.AlertReadController"/>
     <bean id="alertsByMail" class="com.seer.datacruncher.alerts.AlertsByMail">
-        <property name="mailFrom" value="info@see-r.com"/>
+        <property name="mailFrom" value="altimario@gmail.com"/>
         <property name="mailSubject" value="SEE-R - DataStreamAlert"/>
         <property name="velocityEngine" ref="velocityEngine"/>
         <property name="mailTemplate" value="templates/datastreamAlert"/>
