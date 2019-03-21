@@ -17,9 +17,9 @@
   --%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<%@page import="com.seer.datacruncher.spring.AppContext"%>
-<%@page import="com.seer.datacruncher.spring.AppInfoBean"%>
-<%@page import="com.seer.datacruncher.utils.generic.I18n"%>
+<%@page import="com.datacruncher.spring.AppContext"%>
+<%@page import="com.datacruncher.spring.AppInfoBean"%>
+<%@page import="com.datacruncher.utils.generic.I18n"%>
 <%
 	AppInfoBean appInfo = (AppInfoBean) AppContext.getApplicationContext().getBean("appInfoBean");
 %>

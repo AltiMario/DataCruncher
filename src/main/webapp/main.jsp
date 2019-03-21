@@ -17,11 +17,11 @@
   --%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<%@ page import="com.seer.datacruncher.jpa.entity.UserEntity" session="true" %>
+<%@ page import="com.datacruncher.jpa.entity.UserEntity" session="true" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.seer.datacruncher.spring.AppContext"%>
-<%@ page import="com.seer.datacruncher.spring.AppInfoBean"%>
-<%@ page import="com.seer.datacruncher.utils.generic.I18n"%>
+<%@ page import="com.datacruncher.spring.AppContext"%>
+<%@ page import="com.datacruncher.spring.AppInfoBean"%>
+<%@ page import="com.datacruncher.utils.generic.I18n"%>
 <jsp:include page="jsp/utils.jsp" />
 <html>
 <head>

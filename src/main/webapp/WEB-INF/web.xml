@@ -51,7 +51,7 @@
     </filter-mapping>
 
     <listener>
-    	<listener-class>com.seer.datacruncher.listeners.ApplicationListener</listener-class>
+    	<listener-class>com.datacruncher.listeners.ApplicationListener</listener-class>
 	</listener>
     
 	<servlet>
@@ -77,7 +77,7 @@
 	
 	<servlet>
   		<servlet-name>StartupServlet</servlet-name>
-  		<servlet-class>com.seer.datacruncher.listeners.TimeStampServlet</servlet-class>
+  		<servlet-class>com.datacruncher.listeners.TimeStampServlet</servlet-class>
   		<load-on-startup>2</load-on-startup>
 	</servlet>
 
@@ -86,7 +86,7 @@
 		<servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
 		<init-param>
 			<param-name>javax.ws.rs.Application</param-name>
-			<param-value>com.seer.datacruncher.services.webService.RestfulApp</param-value>
+			<param-value>com.datacruncher.services.webService.RestfulApp</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>

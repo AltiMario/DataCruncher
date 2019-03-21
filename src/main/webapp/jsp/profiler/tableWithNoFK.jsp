@@ -1,4 +1,4 @@
-<%@ page import="java.util.Hashtable, com.seer.datacruncher.profiler.framework.rdbms.TableRelationInfo" %>
+<%@ page import="java.util.Hashtable, com.datacruncher.profiler.framework.rdbms.TableRelationInfo" %>
 <%--
   ~ Copyright (c) 2019  Altimari Mario
   ~ All rights reserved
