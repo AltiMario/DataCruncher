@@ -1,5 +1,5 @@
-# SeerDataCruncher release 1.1
-SeerDataCruncher is a Data Quality Firewall, Data Quality Monitor and ETL middleware to manage data streams on the fly.
+# DataCruncher release 2.0
+DataCruncher is a Data Quality Firewall, Data Quality Monitor and ETL middleware to manage data streams on the fly.
 
 
 -----------------------------
@@ -40,7 +40,3 @@ admin:admin
 
 -XX:NewSize=256m
 
------------------------------------------------
-### Architecture
-
-![datacruncher_architecture.png](http://see-r.com/wp-content/uploads/2016/04/architecture.png)
