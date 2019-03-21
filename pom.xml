@@ -12,7 +12,9 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
-	<description>DataCruncher is a Data Quality Firewall, Data Quality Monitor and ETL middleware to manage data streams on the fly.</description>
+    <description>DataCruncher is a Data Quality Firewall, Data Quality Monitor and ETL middleware to manage data streams
+        on the fly.
+    </description>
 	<url>https://github.com/AltiMario/DataCruncher/</url>
 
     <build>
@@ -194,6 +196,11 @@
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
             <version>3.6.8.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>6.0.15.Final</version>
         </dependency>
         <dependency>
             <groupId>org.codehaus.jackson</groupId>
