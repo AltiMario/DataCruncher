@@ -1,7 +1,0 @@
-{
-  "name": "DataCruncher",
-  "tagline": "is a Data Quality Firewall, Data Quality Monitor and ETL middleware to manage data streams on the fly.",
-  "body": "### The problem\r\nMillions of data streams are coming in your system and you realized there is too much garbage inside.\r\n\r\n### The solution\r\nInstead of cleaning your db when it's too late, why don't you block the bad data before they occur?\r\nDataCruncher is built to do that. Protect the quality of your data in real-time.\r\n\r\n### How to use\r\nAfter Installation, you have to configure and certify the source data, the data type and the values expected using a simple web interface (no technical skill required).  \r\nLike a network firewall, when it's up and running you don't know what is going on in background but with DataCruncher you have an amazing dashboard to manage and view everything.\r\n \r\n### Support\r\nCheck out the [documentation](https://github.com/altimario/DataCruncher) or [contact me](https://www.linkedin.com/in/altimario/) and I’ll help you sort it out.\r\n\r\n",
-  "google": "UA-49109406-1",
-  "note": "Don't delete this file! It's used internally to help with page regeneration."
-}
