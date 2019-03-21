@@ -1,5 +1,5 @@
 <%--
-  ~ Copyright (c) 2015  www.see-r.com
+  ~ Copyright (c) 2019  Altimari Mario
   ~ All rights reserved
   ~
   ~ This program is free software: you can redistribute it and/or modify
@@ -125,13 +125,11 @@
     <script type="text/javascript" src="./js/usersContent.js"></script>
     <script type="text/javascript" src="./js/usersPopup.js"></script>
     <script type="text/javascript" src="./js/utils.js"></script>    
-    <script type="text/javascript" src="./js/creditsContent.js"></script>
     <script type="text/javascript" src="./js/reportContent.js"></script>
     <script type="text/javascript" src="./js/reportsPopup.js"></script>
     <script type="text/javascript" src="./js/generationStreamSend.js"></script>
     <script type="text/javascript" src="./js/standardPopup.js"></script>
     <script type="text/javascript" src="./js/loginPopup.js"></script>
-    <script type="text/javascript" src="./js/profilerContents.js"></script>
 	<script type="text/javascript" src="./js/loadingStreamFieldsPopup.js"></script>
     <script type="text/javascript" src="./js/contactUs.js"></script>
     <script type="text/javascript" src="./js/forecastContentPopup.js"></script>
@@ -140,11 +138,6 @@
     <script type="text/javascript" src="./ux/Printer.js"></script> 
 	<script type="text/javascript" src="./ux/MultiSelect.js"></script> 
 	<script type="text/javascript" src="./ux/ItemSelector.js"></script>
-	<script type="text/javascript" src="./js/profiler/common/condition.js"></script>
-	<script type="text/javascript" src="./js/profiler/common/connection.js"></script>
-	<script type="text/javascript" src="./js/profiler/common/home.js"></script>
-	<script type="text/javascript" src="./js/profiler/data/data.js"></script>
-	
 
 	<script type="text/javascript" src="./js/index.js"></script>
 	<script type="text/javascript" src="js/includes.js"></script>	

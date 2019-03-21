@@ -1,6 +1,6 @@
 <%@ page language="java" session="true" contentType="text/html; charset=iso-8859-1" %>
 <%--
-  ~ Copyright (c) 2015  www.see-r.com
+  ~ Copyright (c) 2019  Altimari Mario
   ~ All rights reserved
   ~
   ~ This program is free software: you can redistribute it and/or modify

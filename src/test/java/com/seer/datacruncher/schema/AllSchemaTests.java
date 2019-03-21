@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015  www.see-r.com
+ * Copyright (c) 2019  Altimari Mario
  * All rights reserved
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,11 +23,11 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-	//SchemaCreateTest.class, 
-	//SchemaEditTest.class,
+	SchemaCreateTest.class,
+	SchemaEditTest.class,
 	SchemaFieldCreateTest.class,
 	SchemaFieldEditTest.class,
-	//SchemaDeleteTest.class
+	SchemaDeleteTest.class
 })
 public class AllSchemaTests {
 

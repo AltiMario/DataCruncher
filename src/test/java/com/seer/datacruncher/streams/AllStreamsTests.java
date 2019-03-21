@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015  www.see-r.com
+ * Copyright (c) 2019  Altimari Mario
  * All rights reserved
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,14 +23,14 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-	XMLStreamTest.class, 
-	XMLEXIStreamTest.class,
-	DelimiterStreamTest.class,
-	FixedPosStreamTest.class,
-	ExcelStreamTest.class,
-	JsonDataStreamTest.class,
-	ZipStreamTest.class
+        XMLStreamTest.class,
+        XMLEXIStreamTest.class,
+        DelimiterStreamTest.class,
+        FixedPosStreamTest.class,
+        ExcelStreamTest.class,
+        JsonDataStreamTest.class,
+        ZipStreamTest.class
 })
 public class AllStreamsTests {
-		
+    // FIXME Unexpected character (''' (code 39)): was expecting double-quote to start field name
 }

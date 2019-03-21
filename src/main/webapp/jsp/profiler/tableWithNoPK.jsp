@@ -1,6 +1,6 @@
 <%@ page import="java.util.Hashtable, com.seer.datacruncher.profiler.framework.rdbms.TableRelationInfo" %>
 <%--
-  ~ Copyright (c) 2015  www.see-r.com
+  ~ Copyright (c) 2019  Altimari Mario
   ~ All rights reserved
   ~
   ~ This program is free software: you can redistribute it and/or modify

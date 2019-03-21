@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?> 
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Copyright (c) 2015  www.see-r.com
+  ~ Copyright (c) 2019  Altimari Mario
   ~ All rights reserved
   ~
   ~ This program is free software: you can redistribute it and/or modify
@@ -21,12 +21,12 @@
 	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	   xmlns:p="http://www.springframework.org/schema/p"
 	   xmlns:context="http://www.springframework.org/schema/context"
-	   xmlns:amq="http://activemq.apache.org/schema/core" 	   
+	   xmlns:amq="http://activemq.apache.org/schema/core"
 	   xmlns:jms="http://www.springframework.org/schema/jms"
 	   xmlns:ftp="http://mina.apache.org/ftpserver/spring/v1"
 	   xmlns:tx="http://www.springframework.org/schema/tx"
 	   xmlns:aop="http://www.springframework.org/schema/aop"
-	   xsi:schemaLocation="http://www.springframework.org/schema/beans         
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
 	   					   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd         
 	   					   http://www.springframework.org/schema/context         
 	   					   http://www.springframework.org/schema/context/spring-context-3.0.xsd
@@ -37,10 +37,10 @@
 	   					   http://www.springframework.org/schema/tx 
 	   					   http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
 	   					   http://www.springframework.org/schema/aop 
-	   					   http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">       
+	   					   http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
 	<bean name="testDummyBean" class="java.lang.Object"/>
 	<bean name="/login.json" class="com.seer.datacruncher.spring.LoginController" />
-	
+
 	<!--  Reports -->
  	<bean name="/realTimeGraph.json" class="com.seer.datacruncher.spring.RealTimeGraphController" />
 	<!-- Applications -->
@@ -48,7 +48,7 @@
 	<bean name="/applicationsCreate.json" class="com.seer.datacruncher.spring.ApplicationsCreateController"/>
 	<bean name="/applicationsUpdate.json" class="com.seer.datacruncher.spring.ApplicationsUpdateController"/>
 	<bean name="/applicationsDestroy.json" class="com.seer.datacruncher.spring.ApplicationsDestroyController"/>
-	<bean name="/applicationIsActive.json" class="com.seer.datacruncher.spring.ApplicationIsActiveController"/>	
+	<bean name="/applicationIsActive.json" class="com.seer.datacruncher.spring.ApplicationIsActiveController"/>
 	<!-- Databases -->
 	<bean name="/databasesRead.json" class="com.seer.datacruncher.spring.DatabasesReadController"/>
 	<bean name="/databasesCreate.json" class="com.seer.datacruncher.spring.DatabasesCreateController"/>
@@ -69,13 +69,13 @@
 	<bean name="/schemaFieldsTreePopupCreate.json" class="com.seer.datacruncher.spring.SchemaFieldsTreePopupCreateController"/>
 	<bean name="/schemaFieldsTreePopupDestroy.json" class="com.seer.datacruncher.spring.SchemaFieldsTreePopupDestroyController"/>
 	<bean name="/schemaFieldsTreePopupMove.json" class="com.seer.datacruncher.spring.SchemaFieldsTreePopupMoveController"/>
-	<bean name="/schemaDuplicate.json" class="com.seer.datacruncher.spring.SchemaDuplicateController"/>	
+	<bean name="/schemaDuplicate.json" class="com.seer.datacruncher.spring.SchemaDuplicateController"/>
 	<bean name="/schemaFieldsPopupRead.json" class="com.seer.datacruncher.spring.SchemaFieldsPopupReadController"/>
 	<bean name="/schemaFieldsPopupUpdate.json" class="com.seer.datacruncher.spring.SchemaFieldsPopupUpdateController"/>
-	<bean name="/schemaValidate.json" class="com.seer.datacruncher.spring.SchemaValidateController"/>		
+	<bean name="/schemaValidate.json" class="com.seer.datacruncher.spring.SchemaValidateController"/>
     <!-- Application Context -->
     <bean id="contextApplicationContextProvider" class="com.seer.datacruncher.spring.AppContext" />
-	
+
 	<bean id="DaoServices" class="com.seer.datacruncher.jpa.dao.DaoServices">
 		<property name="activityDao" ref="ActivityDao" />
 		<property name="alertsDao" ref="AlertsDao" />
@@ -88,7 +88,6 @@
 		<property name="fileDao" ref="FileDao" />
 		<property name="jobsDao" ref="JobsDao" />
 		<property name="numericFieldDao" ref="NumericFieldValuesDao" />
-		<property name="creditsDao" ref="CreditsDao" />
 		<property name="roleActivityDao" ref="RoleActivityDao" />
 		<property name="roleDao" ref="RoleDao" />
 		<property name="schemaFieldsDao" ref="SchemaFieldsDao" />
@@ -101,14 +100,15 @@
 		<property name="usersDao" ref="UsersDao" />
         <property name="eventTriggerDao" ref="EventTriggerDao" />
         <property name="schemaTriggerStatusDao" ref="SchemaTriggerStatusDao" />
-	</bean>	
-	
+		<property name="macrosDao" ref="MacrosDao" />
+	</bean>
+
 	<bean id="messageSource"
-		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">	
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
 		<property name="defaultEncoding" value="UTF-8"/>
 		<property name="basename" value="locale/messages" />
-	</bean>		
-	
+	</bean>
+
     <!-- Define entityManagerFactory -->
 	<bean id="entityManagerFactory"
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
@@ -125,7 +125,7 @@
         </property>
 
     </bean>
-	
+
 	<!-- JPA TX configuration using AOP -->
 	<bean id="txManager" class="org.springframework.orm.jpa.JpaTransactionManager">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
@@ -157,8 +157,6 @@
 	</bean>
 	<bean id="NumericFieldValuesDao" class="com.seer.datacruncher.jpa.dao.NumericFieldValuesDao">
 	</bean>
-	<bean id="CreditsDao" class="com.seer.datacruncher.jpa.dao.CreditsDao">
-	</bean>
 	<bean id="RoleActivityDao" class="com.seer.datacruncher.jpa.dao.RoleActivityDao">
 	</bean>
 	<bean id="RoleDao" class="com.seer.datacruncher.jpa.dao.RoleDao">
@@ -183,11 +181,13 @@
     </bean>
     <bean id="SchemaTriggerStatusDao" class="com.seer.datacruncher.jpa.dao.SchemaTriggerStatusDao">
     </bean>
+	<bean id="MacrosDao" class="com.seer.datacruncher.jpa.dao.MacrosDao"/>
+	<bean id="MacroRulesValidation" class="com.seer.datacruncher.validation.MacroRulesValidation"/>
 	<context:component-scan base-package="com.seer.datacruncher.spring" />
 	<context:component-scan base-package="com.seer.datacruncher.jpa.dao" />
 	<context:annotation-config/>
-	
+
 	<!-- Overridden in submodules beans -->
 	<bean name="FormalValidation" class="com.seer.datacruncher.validation.Formal" />
-	<bean id="CreateXSDJAXB" class="com.seer.datacruncher.datastreams.CreateXSDJAXB"/>		
+	<bean id="CreateXSDJAXB" class="com.seer.datacruncher.datastreams.CreateXSDJAXB"/>
 </beans>        

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015  www.see-r.com
+ * Copyright (c) 2019  Altimari Mario
  * All rights reserved
  *
  * This program is free software: you can redistribute it and/or modify
@@ -51,7 +51,6 @@ public enum Activity {
 	SCHEMA_HELP(22,"schemaHelp"),
 	SCHEMA_EXTRA_CHECK(58,"schemaExtraCheck"),
 	SCHEMA_TRIGGERS(73,"schemaTriggers"),
-	SCHEMA_SITE_GENERATION(113, "schemaSiteGeneration"),
     SCHEMA_FORECASTING(120, "forecastForm"),
 	
 	//Standard Schema Menu
@@ -127,45 +126,6 @@ public enum Activity {
 	ADMIN_LOG(77,"adminLog"),
 	ADMIN_FTP(75,"adminFTP"),
 	USER_LOGOUT(45,"logoutUser"),	
-	
-	//DB Info Menu
-	DBINFO_GENERAL(78,"dbInfoGeneral"),	
-	DBINFO_SUPPORT(79,"dbInfoSupport"),
-	DBINFO_LIMITATION(80,"dbInfoLimitation"),
-	DBINFO_FUNCITON(81,"dbInfoFunction"),
-	DBINFO_STD_SQL_TYPE(82,"dbInfoStdSqlType"),
-	DBINFO_USER_DEFINE_TYPE(83,"dbInfoUserDefineType"),
-	DBINFO_CATALOG(84,"dbInfoCatalog"),
-	DBINFO_SCHEMA(85,"dbInfoSchema"),
-	DBINFO_PROCEDURE(86,"dbInfoProcedure"),
-	DBINFO_PARAMETER(87,"dbInfoParameter"),
-	DBINFO_INDEX(88,"dbInfoIndex"),
-	DBINFO_TABLE_MODEL(89,"dbInfoTableModel"),
-	DBINFO_DB_METADATA(90,"dbInfoDbMetadata"),
-	DBINFO_TABLE_METADATA(91,"dbInfoTableMetadata"),
-	DBINFO_DATA(92,"dbInfoData"),
-	DBINFO_ALL_TABLES(93,"dbInfoAllTables"),
-	DBINFO_TABLE(94,"dbInfoTable"),
-	DBINFO_COLUMN(95,"dbInfoColumn"),
-	
-	//Data Quality Menu
-	DATA_QUALITY_DUPLICATE(96,"dqDuplicate"),	
-	DATA_QUALITY_SIMILARITY(97,"dqSimilarity"),
-	DATA_QUALITY_STANDARDIZATION(98,"dqStandardization"),
-	DATA_QUALITY_REPLACE_NULL(99,"dqReplaceNull"),
-	DATA_QUALITY_AND(100,"dqAnd"),
-	DATA_QUALITY_OR(101,"dqOr"),
-	DATA_QUALITY_MATCHED(102,"dqMatched"),
-	DATA_QUALITY_UNMATCHED(103,"dqUnMatched"),
-	DATA_QUALITY_UPPER_CASE(104,"dqUpperCase"),
-	DATA_QUALITY_LOWER_CASE(105,"dqLowerCase"),
-	DATA_QUALITY_TITLE_CASE(106,"dqTitleCase"),
-	DATA_QUALITY_SENTENCE_CASE(107,"dqSentenceCase"),
-	DATA_QUALITY_DESCRETE_MATCH(108,"dqDescreteMatch"),
-	DATA_QUALITY_DESCRETE_NO_MATCH(109,"dqDescreteNoMatch"),
-	DATA_QUALITY_CARDINALITY(110,"dqCardinality"),
-	DATA_QUALITY_CARDINALITY_EDITABLE(111,"dqCardinalityEditable"),
-	DATA_QUALITY_TABLE_COMPARISON(112,"dqTableComparison")
 	;
 	
 	private int dbCode;

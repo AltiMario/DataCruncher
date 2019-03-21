@@ -73,7 +73,6 @@
         <property name="fileDao" ref="FileDao"/>
         <property name="jobsDao" ref="JobsDao"/>
         <property name="numericFieldDao" ref="NumericFieldValuesDao"/>
-        <property name="creditsDao" ref="CreditsDao"/>
         <property name="roleActivityDao" ref="RoleActivityDao"/>
         <property name="roleDao" ref="RoleDao"/>
         <property name="schemaFieldsDao" ref="SchemaFieldsDao"/>
@@ -145,25 +144,6 @@
     <bean name="/databasesCreate.json" class="com.seer.datacruncher.spring.DatabasesCreateController"/>
     <bean name="/databasesUpdate.json" class="com.seer.datacruncher.spring.DatabasesUpdateController"/>
     <bean name="/databasesDestroy.json" class="com.seer.datacruncher.spring.DatabasesDestroyController"/>
-    <!-- Profiler -->   
-    <bean name="/profilerLoad.json" class="com.seer.datacruncher.profiler.spring.ProfilerLoadController">
-        <property name="methodNameResolver">
-            <ref bean="paramResolver"/>
-        </property>
-    </bean>
-    <bean name="/profilerHome.json" class="com.seer.datacruncher.profiler.spring.ProfilerHomeController"/>
-    <bean name="/profilerTree.json" class="com.seer.datacruncher.profiler.spring.ProfilerTreeController"/>
-    <bean name="/profilerInfo.json" class="com.seer.datacruncher.profiler.spring.ProfilerInfoController"/>
-    <bean name="/profilerInfoUpdate.json" class="com.seer.datacruncher.profiler.spring.ProfilerInfoUpdateController"/>
-    <bean name="/dbInfo.json" class="com.seer.datacruncher.profiler.spring.DbInfoController"/>
-    <bean name="/exporter.json" class="com.seer.datacruncher.profiler.spring.ExporterController"/>
-    <bean name="/numberAnalytics.json" class="com.seer.datacruncher.profiler.spring.NumberAnalyticsController"/>
-    <bean name="/dataQuality.json" class="com.seer.datacruncher.profiler.spring.DataQualityController"/>
-    <bean name="/stringAnalytics.json" class="com.seer.datacruncher.profiler.spring.StringAnalyticsController"/>
-    <bean name="/compareTable.json" class="com.seer.datacruncher.profiler.spring.CompareTableController"/>
-    <bean name="/profilerFileUpload.json" class="com.seer.datacruncher.profiler.spring.FileUploadController"/>
-    <bean name="/profilerMisc.json" class="com.seer.datacruncher.profiler.spring.MiscController"/>
-    <bean name="/testConnection.json" class="com.seer.datacruncher.profiler.spring.TestConnectionController"/>
     <!-- Status -->
     <bean name="/statusRead.json" class="com.seer.datacruncher.spring.StatusReadController"/>
     <!-- Schemas -->
@@ -188,7 +168,6 @@
     <bean name="/schemasLibRead.json" class="com.seer.datacruncher.spring.SchemasLibReadController"/>
     <bean name="/isExtraCheckCodeValid.json" class="com.seer.datacruncher.spring.ExtraCheckCustomCodeValidator"/>
 	<bean name="/downloadstream.json" class="com.seer.datacruncher.spring.DownloadStreamController" />
-	<bean name="/siteSchemaGenerateCreate.json" class="com.seer.datacruncher.spring.SiteSchemaGeneratorCreateController"/>
 
     <!-- Triggers -->
     <bean name="/eventTriggerRead.json" class="com.seer.datacruncher.spring.EventTriggerReadController"/>
@@ -353,8 +332,6 @@
             <value>action</value>
         </property>
     </bean>
-    <!-- Credits -->
-    <bean name="/creditsRead.json" class="com.seer.datacruncher.spring.CreditsReadController"/>
     <!-- Forecasting -->
     <bean name="/forecastContentPopup.json" class="com.seer.datacruncher.spring.ForecastReadController"/>
     <!-- Alerts -->
@@ -554,8 +531,6 @@
     <bean id="JobsDao" class="com.seer.datacruncher.jpa.dao.JobsDao">
     </bean>
     <bean id="NumericFieldValuesDao" class="com.seer.datacruncher.jpa.dao.NumericFieldValuesDao">
-    </bean>
-    <bean id="CreditsDao" class="com.seer.datacruncher.jpa.dao.CreditsDao">
     </bean>
     <bean id="RoleActivityDao" class="com.seer.datacruncher.jpa.dao.RoleActivityDao">
     </bean>

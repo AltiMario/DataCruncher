@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015  www.see-r.com
+ * Copyright (c) 2019  Altimari Mario
  * All rights reserved
  *
  * This program is free software: you can redistribute it and/or modify
@@ -135,7 +135,6 @@ public class RoleActivityDao {
 				Activity.SCHEMA_HELP,
 				Activity.SCHEMA_EXTRA_CHECK,
 				Activity.SCHEMA_TRIGGERS,
-				Activity.SCHEMA_SITE_GENERATION,
                 Activity.SCHEMA_FORECASTING,
 				
 				//Standard Schema Menu
@@ -208,45 +207,6 @@ public class RoleActivityDao {
 				Activity.ADMIN_INFO,
 				Activity.ADMIN_LOG,
 				Activity.USER_LOGOUT,	
-				
-				//DB Info Menu
-				Activity.DBINFO_GENERAL,	
-				Activity.DBINFO_SUPPORT,
-				Activity.DBINFO_LIMITATION,
-				Activity.DBINFO_FUNCITON,
-				Activity.DBINFO_STD_SQL_TYPE,
-				Activity.DBINFO_USER_DEFINE_TYPE,
-				Activity.DBINFO_CATALOG,
-				Activity.DBINFO_SCHEMA,
-				Activity.DBINFO_PROCEDURE,
-				Activity.DBINFO_PARAMETER,
-				Activity.DBINFO_INDEX,
-				Activity.DBINFO_TABLE_MODEL,
-				Activity.DBINFO_DB_METADATA,
-				Activity.DBINFO_TABLE_METADATA,
-				Activity.DBINFO_DATA,
-				Activity.DBINFO_ALL_TABLES,
-				Activity.DBINFO_TABLE,
-				Activity.DBINFO_COLUMN,
-				
-				//Data Quality Menu
-				Activity.DATA_QUALITY_DUPLICATE,	
-				Activity.DATA_QUALITY_SIMILARITY,
-				Activity.DATA_QUALITY_STANDARDIZATION,
-				Activity.DATA_QUALITY_REPLACE_NULL,
-				Activity.DATA_QUALITY_AND,
-				Activity.DATA_QUALITY_OR,
-				Activity.DATA_QUALITY_MATCHED,
-				Activity.DATA_QUALITY_UNMATCHED,
-				Activity.DATA_QUALITY_UPPER_CASE,
-				Activity.DATA_QUALITY_LOWER_CASE,
-				Activity.DATA_QUALITY_TITLE_CASE,
-				Activity.DATA_QUALITY_SENTENCE_CASE,
-				Activity.DATA_QUALITY_DESCRETE_MATCH,
-				Activity.DATA_QUALITY_DESCRETE_NO_MATCH,
-				Activity.DATA_QUALITY_CARDINALITY,
-				Activity.DATA_QUALITY_CARDINALITY_EDITABLE,
-				Activity.DATA_QUALITY_TABLE_COMPARISON
 		};
 		return appManagerActivities;
 	}
@@ -281,7 +241,6 @@ public class RoleActivityDao {
                 Activity.SCHEMA_IMPORT_FROM_XSD,
 				Activity.SCHEMA_EXPORT_XSD_IMAGE,
 				Activity.SCHEMA_SHARE_WITH_WORLD,
-				Activity.SCHEMA_SITE_GENERATION,
 				Activity.SCHEMA_HELP,
 				Activity.SCHEMA_EXTRA_CHECK,
 				Activity.SCHEMA_TRIGGERS,

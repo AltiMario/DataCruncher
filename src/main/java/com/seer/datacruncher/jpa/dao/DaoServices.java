@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015  www.see-r.com
+ * Copyright (c) 2019  Altimari Mario
  * All rights reserved
  *
  * This program is free software: you can redistribute it and/or modify
@@ -40,7 +40,6 @@ public class DaoServices {
     private static FileDao fileDao;
     private static JobsDao jobsDao;
     private static NumericFieldValuesDao numericFieldDao;
-    private static CreditsDao creditsDao;
     private static RoleActivityDao roleActivityDao;
     private static RoleDao roleDao;    
     private static SchemaFieldsDao schemaFieldsDao;
@@ -188,14 +187,6 @@ public class DaoServices {
 
 	public void setNumericFieldDao(NumericFieldValuesDao numericFieldDao) {
 		DaoServices.numericFieldDao = numericFieldDao;
-	}
-
-	public static CreditsDao getCreditsDao() {
-		return creditsDao;
-	}
-
-	public void setCreditsDao(CreditsDao creditsDao) {
-		DaoServices.creditsDao = creditsDao;
 	}
 
 	public static RoleActivityDao getRoleActivityDao() {

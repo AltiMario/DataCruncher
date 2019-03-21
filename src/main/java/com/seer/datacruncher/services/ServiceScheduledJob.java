@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015  www.see-r.com
+ * Copyright (c) 2019  Altimari Mario
  * All rights reserved
  *
  * This program is free software: you can redistribute it and/or modify
@@ -27,38 +27,9 @@ import com.seer.datacruncher.factories.streams.StreamGenerationUtils;
 import com.seer.datacruncher.fileupload.FileExtensionType;
 import com.seer.datacruncher.jpa.dao.ConnectionsDao;
 import com.seer.datacruncher.jpa.dao.DaoSet;
-import com.seer.datacruncher.jpa.entity.ConnectionsEntity;
-import com.seer.datacruncher.jpa.entity.EventTriggerEntity;
-import com.seer.datacruncher.jpa.entity.JobsEntity;
-import com.seer.datacruncher.jpa.entity.SchemaEntity;
-import com.seer.datacruncher.jpa.entity.TasksEntity;
+import com.seer.datacruncher.jpa.entity.*;
 import com.seer.datacruncher.spring.AppContext;
 import com.seer.datacruncher.utils.generic.CommonUtils;
-
-import java.io.BufferedWriter;
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.lang.reflect.Field;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
-
-import org.apache.commons.httpclient.DefaultHttpMethodRetryHandler;
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpException;
-import org.apache.commons.httpclient.HttpStatus;
-import org.apache.commons.httpclient.methods.PostMethod;
-import org.apache.commons.httpclient.methods.multipart.FilePart;
-import org.apache.commons.httpclient.methods.multipart.MultipartRequestEntity;
-import org.apache.commons.httpclient.methods.multipart.Part;
-import org.apache.commons.httpclient.params.HttpMethodParams;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.vfs2.FileObject;
 import org.apache.commons.vfs2.Selectors;
@@ -66,49 +37,68 @@ import org.apache.commons.vfs2.impl.StandardFileSystemManager;
 import org.apache.commons.vfs2.provider.ftp.FtpFileProvider;
 import org.apache.commons.vfs2.provider.http.HttpFileProvider;
 import org.apache.commons.vfs2.provider.smb.SmbFileProvider;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpException;
+import org.apache.http.HttpStatus;
+import org.apache.http.client.HttpRequestRetryHandler;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.protocol.HttpContext;
+import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 
-public class ServiceScheduledJob extends QuartzJobBean implements DaoSet {
-	private static Logger log = Logger.getLogger(ServiceScheduledJob.class);
+import java.io.*;
+import java.lang.reflect.Field;
+import java.util.*;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
-	@Override
-	protected synchronized void executeInternal(JobExecutionContext arg0) throws JobExecutionException {
+public class ServiceScheduledJob extends QuartzJobBean implements DaoSet {
+    private static Logger log = Logger.getLogger(ServiceScheduledJob.class);
+
+    @Override
+    protected synchronized void executeInternal(JobExecutionContext arg0) throws JobExecutionException {
         long jobId = arg0.getJobDetail().getJobDataMap().getLong("jobId");
         JobsEntity jobEntity = jobsDao.find(jobId);
-        if(!jobEntity.isWorking()){
+        if (!jobEntity.isWorking()) {
 
-            if(jobsDao.setWorkStatus(jobId,true)){
-                try{
+            if (jobsDao.setWorkStatus(jobId, true)) {
+                try {
                     long eventTriggerId = arg0.getJobDetail().getJobDataMap().getString("eventTriggerId") == null ? -1l : Long.parseLong(arg0.getJobDetail().getJobDataMap().getString("eventTriggerId"));
-                    if(eventTriggerId > 0) {
+                    if (eventTriggerId > 0) {
                         EventTriggerEntity entity = eventTriggerDao.findEventTriggerById(eventTriggerId);
                         String className = entity.getName();
                         try {
                             String sourceCode = entity.getCode();
                             EventTrigger eventTrigger;
                             String response;
-                            eventTrigger = (EventTrigger)CommonUtils.getClassInstance(className,"com.seer.datacruncher.eventtrigger.EventTrigger",EventTrigger.class,sourceCode);
+                            eventTrigger = (EventTrigger) CommonUtils.getClassInstance(className, "com.seer.datacruncher.eventtrigger.EventTrigger", EventTrigger.class, sourceCode);
                             assert eventTrigger != null;
                             response = eventTrigger.trigger();
-                            log.info("Response From EventTrigger("+className+") :"+response);
-                        } catch(Exception e) {
+                            log.info("Response From EventTrigger(" + className + ") :" + response);
+                        } catch (Exception e) {
                             e.printStackTrace();
-                            log.error("EventTrigger("+className+") :"+e.getMessage(),e);
-                            logDao.setErrorLogMessage("EventTrigger("+className+") :"+e.getMessage());
-                        }catch(NoClassDefFoundError err){
-                            log.error("EventTrigger("+className+") :"+err.getMessage(),err);
-                            logDao.setErrorLogMessage("EventTrigger("+className+") :"+err.getMessage());
+                            log.error("EventTrigger(" + className + ") :" + e.getMessage(), e);
+                            logDao.setErrorLogMessage("EventTrigger(" + className + ") :" + e.getMessage());
+                        } catch (NoClassDefFoundError err) {
+                            log.error("EventTrigger(" + className + ") :" + err.getMessage(), err);
+                            logDao.setErrorLogMessage("EventTrigger(" + className + ") :" + err.getMessage());
                         }
                         return;
                     }
 
                     int day = arg0.getJobDetail().getJobDataMap().getString("day") == null ? -1 : Integer.parseInt(arg0.getJobDetail().getJobDataMap().getString("day"));
                     int month = arg0.getJobDetail().getJobDataMap().getString("month") == null ? -1 : Integer.parseInt(arg0.getJobDetail().getJobDataMap().getString("month"));
-                    if((day > 0 && day != Calendar.getInstance().get(Calendar.DAY_OF_MONTH)) || (month > 0 && month != (Calendar.getInstance().get(Calendar.MONTH) + 1))) {
+                    if ((day > 0 && day != Calendar.getInstance().get(Calendar.DAY_OF_MONTH)) || (month > 0 && month != (Calendar.getInstance().get(Calendar.MONTH) + 1))) {
                         return;
                     }
                     StandardFileSystemManager fsManager = new StandardFileSystemManager();
@@ -120,32 +110,32 @@ public class ServiceScheduledJob extends QuartzJobBean implements DaoSet {
                         //long jobId = arg0.getJobDetail().getJobDataMap().getLong("jobId");
                         long connectionId = arg0.getJobDetail().getJobDataMap().getLong("connectionId");
 
-                        String datastream ="";
+                        String datastream = "";
                         int idSchemaType = schemasDao.find(schemaId).getIdSchemaType();
 
                         TasksEntity taskEntity = tasksDao.find(schedulerId);
                         //JobsEntity jobEntity = jobsDao.find(jobId);
-                        if(taskEntity.getIsOneShoot()) {
+                        if (taskEntity.getIsOneShoot()) {
                             jobEntity.setIsActive(0);
                             jobsDao.update(jobEntity);
                         }
-                        if(idSchemaType == SchemaType.GENERATION ){
+                        if (idSchemaType == SchemaType.GENERATION) {
                             StreamGenerationUtils sgu = new StreamGenerationUtils();
                             datastream = sgu.getStream(schemaId);
 
-                            log.debug("Content stream: "+ schemaId);
+                            log.debug("Content stream: " + schemaId);
 
-                            if(datastream.trim().length() > 0){
-                                log.debug("Datastream to validate: "+datastream);
+                            if (datastream.trim().length() > 0) {
+                                log.debug("Datastream to validate: " + datastream);
                                 DatastreamsInput datastreamsInput = new DatastreamsInput();
                                 String result = datastreamsInput.datastreamsInput(datastream, schemaId, null);
-                                log.debug("Validation result: "+result);
-                            } else{
+                                log.debug("Validation result: " + result);
+                            } else {
                                 isDataStream = false;
                                 log.debug("No datastream create");
                             }
                         }
-                        if(connectionId !=0){
+                        if (connectionId != 0) {
                             int serviceId = Integer.parseInt(arg0.getJobDetail().getJobDataMap().getString("serviceId"));
 
                             String hostName = arg0.getJobDetail().getJobDataMap().getString("ftpServerIp");
@@ -161,49 +151,49 @@ public class ServiceScheduledJob extends QuartzJobBean implements DaoSet {
 
                             if (inputDirectory == null || inputDirectory.trim().length() == 0) {
                                 inputDirectory = fileName;
-                            }else if(!(conn.getIdConnType() ==  GenericType.uploadTypeConn && serviceId == Servers.HTTP.getDbCode())){
-                                inputDirectory = inputDirectory+ "/" + fileName;
+                            } else if (!(conn.getIdConnType() == GenericType.uploadTypeConn && serviceId == Servers.HTTP.getDbCode())) {
+                                inputDirectory = inputDirectory + "/" + fileName;
                             }
 
-                            log.info("(jobId:"+jobEntity.getName() + ") - Trying to Server polling at server ["+ hostName + ":" + port + "] with user[" + userName + "].");
+                            log.info("(jobId:" + jobEntity.getName() + ") - Trying to Server polling at server [" + hostName + ":" + port + "] with user[" + userName + "].");
                             String url = "";
-                            if(serviceId == Servers.SAMBA.getDbCode()) {
-                                 if(!fsManager.hasProvider("smb")) {
-                                     fsManager.addProvider("smb", new SmbFileProvider());
-                                 }
-                                 url = "smb://" + userName + ":" + password + "@" + hostName + ":" + port + "/" + inputDirectory;
-                            } else if(serviceId == Servers.HTTP.getDbCode()) {
-                                 if(!fsManager.hasProvider("http")) {
-                                     fsManager.addProvider("http", new HttpFileProvider());
-                                 }
-                                 url = "http://" + hostName + ":" + port + "/" + inputDirectory;
-                            }  else if(serviceId == Servers.FTP.getDbCode()) {
-                                if(!fsManager.hasProvider("ftp")) {
+                            if (serviceId == Servers.SAMBA.getDbCode()) {
+                                if (!fsManager.hasProvider("smb")) {
+                                    fsManager.addProvider("smb", new SmbFileProvider());
+                                }
+                                url = "smb://" + userName + ":" + password + "@" + hostName + ":" + port + "/" + inputDirectory;
+                            } else if (serviceId == Servers.HTTP.getDbCode()) {
+                                if (!fsManager.hasProvider("http")) {
+                                    fsManager.addProvider("http", new HttpFileProvider());
+                                }
+                                url = "http://" + hostName + ":" + port + "/" + inputDirectory;
+                            } else if (serviceId == Servers.FTP.getDbCode()) {
+                                if (!fsManager.hasProvider("ftp")) {
                                     fsManager.addProvider("ftp", new FtpFileProvider());
                                 }
                                 url = "ftp://" + userName + ":" + password + "@" + hostName + ":" + port + "/" + inputDirectory;
                             }
-                            log.info("url:"+url);
+                            log.info("url:" + url);
                             final FileObject fileObject = fsManager.resolveFile(url);
 
-                            if(conn.getIdConnType() ==  GenericType.DownloadTypeConn ){
+                            if (conn.getIdConnType() == GenericType.DownloadTypeConn) {
 
                                 if (conn.getFileDateTime() != null && conn.getFileDateTime().getTime() == fileObject.getContent().getLastModifiedTime()) {
-                                    log.info("There is no New or Updated '"+fileName+"' file on server to validate. Returning ...");
+                                    log.info("There is no New or Updated '" + fileName + "' file on server to validate. Returning ...");
                                     return;
                                 } else {
-                                    log.info("There is New or Updated '"+fileName+"' file on server to validate. Validating ...");
+                                    log.info("There is New or Updated '" + fileName + "' file on server to validate. Validating ...");
                                     ConnectionsEntity connection = connectionsDao.find(connectionId);
                                     connection.setFileDateTime(new Date(fileObject.getContent().getLastModifiedTime()));
                                     ApplicationContext ctx = AppContext.getApplicationContext();
                                     ConnectionsDao connDao = (ctx.getBean(ConnectionsDao.class));
 
-                                    if(connDao != null) {
+                                    if (connDao != null) {
                                         connDao.update(connection);
                                     }
 
                                     Map<String, byte[]> resultMap = new HashMap<String, byte[]>();
-                                    byte data[] = new byte[(int)fileObject.getContent().getSize()];
+                                    byte data[] = new byte[(int) fileObject.getContent().getSize()];
                                     fileObject.getContent().getInputStream().read(data);
                                     resultMap.put(fileObject.getName().getBaseName(), data);
 
@@ -221,38 +211,37 @@ public class ServiceScheduledJob extends QuartzJobBean implements DaoSet {
                                                 result = "No schema found in database with Id [" + longSchemaId + "]";
                                                 log.error(result);
                                                 logDao.setErrorLogMessage(result);
-                                            }
-                                            else {
-                                                if(strFileName.endsWith(FileExtensionType.ZIP.getAbbreviation())) {
+                                            } else {
+                                                if (strFileName.endsWith(FileExtensionType.ZIP.getAbbreviation())) {
                                                     // Case 1: When user upload a Zip file - All ZIP entries should be validate one by one
                                                     ZipInputStream inStream = null;
-                                                    try{
+                                                    try {
                                                         inStream = new ZipInputStream(new ByteArrayInputStream(resultMap.get(fileName)));
-                                                        ZipEntry entry ;
+                                                        ZipEntry entry;
                                                         while (!(isStreamClose(inStream)) && (entry = inStream.getNextEntry()) != null) {
-                                                            if(! entry.isDirectory()){
-                                                                DatastreamsInput datastreamsInput = new DatastreamsInput ();
+                                                            if (!entry.isDirectory()) {
+                                                                DatastreamsInput datastreamsInput = new DatastreamsInput();
                                                                 datastreamsInput.setUploadedFileName(entry.getName());
                                                                 byte[] byteInput = IOUtils.toByteArray(inStream);
-                                                                result+= datastreamsInput.datastreamsInput(
-                                                                        new String(byteInput) , longSchemaId , byteInput);
+                                                                result += datastreamsInput.datastreamsInput(
+                                                                        new String(byteInput), longSchemaId, byteInput);
                                                             }
                                                             inStream.closeEntry();
                                                         }
                                                         log.debug(result);
-                                                    }catch(IOException ex){
+                                                    } catch (IOException ex) {
                                                         result = "Error occured during fetch records from ZIP file.";
                                                         log.error(result);
                                                         logDao.setErrorLogMessage(result);
-                                                    }finally{
-                                                        if(inStream != null )
+                                                    } finally {
+                                                        if (inStream != null)
                                                             inStream.close();
                                                     }
-                                                }else {
-                                                    DatastreamsInput datastreamsInput = new DatastreamsInput ();
+                                                } else {
+                                                    DatastreamsInput datastreamsInput = new DatastreamsInput();
                                                     datastreamsInput.setUploadedFileName(strFileName);
                                                     result = datastreamsInput.datastreamsInput(new String(resultMap.get(strFileName)),
-                                                            longSchemaId,  resultMap.get(strFileName));
+                                                            longSchemaId, resultMap.get(strFileName));
                                                     log.debug(result);
                                                 }
                                             }
@@ -265,7 +254,7 @@ public class ServiceScheduledJob extends QuartzJobBean implements DaoSet {
                                         }
                                     }
                                 }
-                            } else if(isDataStream && (conn.getIdConnType() ==  GenericType.uploadTypeConn) ) {
+                            } else if (isDataStream && (conn.getIdConnType() == GenericType.uploadTypeConn)) {
 
                                 File uploadFile = File.createTempFile(fileName, ".tmp");
 
@@ -274,7 +263,7 @@ public class ServiceScheduledJob extends QuartzJobBean implements DaoSet {
                                     bw.write(datastream);
                                     bw.flush();
                                     bw.close();
-                                } catch(IOException ioex) {
+                                } catch (IOException ioex) {
                                     log.error("Datastream file can't be created");
                                     logDao.setErrorLogMessage("Datastream file can't be created");
                                     return;
@@ -282,27 +271,8 @@ public class ServiceScheduledJob extends QuartzJobBean implements DaoSet {
 
                                 if (serviceId == Servers.HTTP.getDbCode()) {
                                     try {
-                                        HttpClient httpclient = new HttpClient();
-                                        PostMethod method = new PostMethod(url);
-
-                                        method.getParams().setParameter(HttpMethodParams.RETRY_HANDLER,
-                                                new DefaultHttpMethodRetryHandler(3, false));
-
-                                        Part[] parts = new Part[] { new FilePart("file", uploadFile.getName(), uploadFile) };
-                                        method.setRequestEntity(new MultipartRequestEntity(parts, method.getParams()));
-                                        method.setDoAuthentication(true);
-
-                                        int statusCode = httpclient.executeMethod(method);
-
-                                        String responseBody = new String(method.getResponseBody());
-
-                                        if (statusCode != HttpStatus.SC_OK) {
-                                            throw new HttpException(method.getStatusLine().toString());
-                                        } else {
-                                            System.out.println(responseBody);
-                                        }
-
-                                        method.releaseConnection();
+                                        String responseBody = postFileRemote(url, uploadFile);
+                                        System.out.println(responseBody);
 
                                     } catch (Exception ex) {
                                         log.error("Exception occurred during uploading of file at HTTP Server: " + ex.getMessage());
@@ -313,10 +283,10 @@ public class ServiceScheduledJob extends QuartzJobBean implements DaoSet {
                                         FileObject localFileObject = fsManager.resolveFile(uploadFile.getAbsolutePath());
                                         fileObject.copyFrom(localFileObject, Selectors.SELECT_SELF);
                                         System.out.println("File uploaded at : " + new Date());
-                                        if(uploadFile.exists()) {
+                                        if (uploadFile.exists()) {
                                             uploadFile.delete();
                                         }
-                                    } catch(Exception ex) {
+                                    } catch (Exception ex) {
                                         log.error("Exception occurred during uploading of file: " + ex.getMessage());
                                         logDao.setErrorLogMessage("Exception occurred during uploading of file: " + ex.getMessage());
                                     }
@@ -328,29 +298,64 @@ public class ServiceScheduledJob extends QuartzJobBean implements DaoSet {
                     } finally {
                         fsManager.close();
                     }
-                }finally {
-                    jobsDao.setWorkStatus(jobId,false);
+                } finally {
+                    jobsDao.setWorkStatus(jobId, false);
                 }
-            } else{
-                log.error("Can not set "+jobEntity.getName()+"working.");
+            } else {
+                log.error("Can not set " + jobEntity.getName() + "working.");
             }
-        } else{
-            log.debug("Job "+jobEntity.getName()+" is working.");
+        } else {
+            log.debug("Job " + jobEntity.getName() + " is working.");
         }
 
-	}
-	private boolean isStreamClose(ZipInputStream inStream) {
-		try {
-			@SuppressWarnings("rawtypes")
-			Class c = inStream.getClass();
-			Field in;
-			in = c.getDeclaredField("closed");
-			in.setAccessible(true);
-			Boolean inReader = (Boolean) in.get(inStream);
-			return inReader;
-		} catch (Exception e) {
-			log.error(e);
-		}
-		return false;
-	}
+    }
+
+    String postFileRemote(String url, File uploadFile) throws IOException, HttpException {
+        String responseBody = null;
+        CloseableHttpClient httpClient = HttpClients.custom()
+                .setRetryHandler(new HttpRequestRetryHandler() {
+                    @Override
+                    public boolean retryRequest(IOException e, int executionCount, HttpContext httpContext) {
+                        return executionCount < 3;
+                    }
+                })
+                .build();
+        try {
+            HttpPost httpPost = new HttpPost(url);
+            MultipartEntityBuilder multipartBuilder = MultipartEntityBuilder.create();
+            multipartBuilder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
+            multipartBuilder.addBinaryBody("file", uploadFile, ContentType.DEFAULT_BINARY, uploadFile.getName());
+            httpPost.setEntity(multipartBuilder.build());
+            CloseableHttpResponse response = httpClient.execute(httpPost);
+            try {
+                final HttpEntity responseEntity = response.getEntity();
+                if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
+                    throw new HttpException(response.getStatusLine().toString());
+                } else {
+                    responseBody = EntityUtils.toString(responseEntity);
+                }
+                EntityUtils.consume(responseEntity);
+            } finally {
+                response.close();
+            }
+        } finally {
+            httpClient.close();
+        }
+        return responseBody;
+    }
+
+    private boolean isStreamClose(ZipInputStream inStream) {
+        try {
+            @SuppressWarnings("rawtypes")
+            Class c = inStream.getClass();
+            Field in;
+            in = c.getDeclaredField("closed");
+            in.setAccessible(true);
+            Boolean inReader = (Boolean) in.get(inStream);
+            return inReader;
+        } catch (Exception e) {
+            log.error(e);
+        }
+        return false;
+    }
 }

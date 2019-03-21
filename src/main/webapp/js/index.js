@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015  www.see-r.com
+ * Copyright (c) 2019  Altimari Mario
  * All rights reserved
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,7 +23,6 @@ var isEmailErrorFound = false;
 var required = '<span style="color:black;font-weight:bold" data-qtip="Required">*</span>';
 var App = new Ext.App();
 var graphLoadTimer;
-var creditsGrid;
 
 //Application menu
 var addAppObj = new Object();
@@ -159,12 +158,6 @@ shareWithWorldSchemaObj.iconCls =  'schema_share';
 shareWithWorldSchemaObj.text =  _message['shareSchema'];
 shareWithWorldSchemaObj.leaf =  true;
 shareWithWorldSchemaObj.id =  'schemaShareWithWorld';
-
-var siteSchemaGeneration = new Object();
-siteSchemaGeneration.iconCls =  'schema_site_generation';
-siteSchemaGeneration.text =  _message['schemaSiteGeneration'];
-siteSchemaGeneration.leaf =  true;
-siteSchemaGeneration.id =  'schemaSiteGeneration';
 
 var forecastFormObj = new Object();
 forecastFormObj.iconCls =  'forecasting';
@@ -514,217 +507,6 @@ helpReportObj.text = _message['help'];
 helpReportObj.leaf = true;
 helpReportObj.id = 'reportHelp';
 
-//DBInfo Menu
-var dbInfoGeneralObj = new Object();
-dbInfoGeneralObj.iconCls = 'profiler';
-dbInfoGeneralObj.text = _message['dbInfoGeneral'];
-dbInfoGeneralObj.leaf = true;
-dbInfoGeneralObj.id = 'dbInfoGeneral';
-
-var dbInfoSupportObj = new Object();
-dbInfoSupportObj.iconCls = 'profiler';
-dbInfoSupportObj.text = _message['dbInfoSupport'];
-dbInfoSupportObj.leaf = true;
-dbInfoSupportObj.id = 'dbInfoSupport';
-
-var dbInfoLimitationObj = new Object();
-dbInfoLimitationObj.iconCls = 'profiler';
-dbInfoLimitationObj.text = _message['dbInfoLimitation'];
-dbInfoLimitationObj.leaf = true;
-dbInfoLimitationObj.id = 'dbInfoLimitation';
-
-var dbInfoFunctionsObj = new Object();
-dbInfoFunctionsObj.iconCls = 'profiler';
-dbInfoFunctionsObj.text = _message['dbInfoFunction'];
-dbInfoFunctionsObj.leaf = true;
-dbInfoFunctionsObj.id = 'dbInfoFunction';
-
-var dbInfoStdSqlTypeObj = new Object();
-dbInfoStdSqlTypeObj.iconCls = 'profiler';
-dbInfoStdSqlTypeObj.text = _message['dbInfoStdSqlType'];
-dbInfoStdSqlTypeObj.leaf = true;
-dbInfoStdSqlTypeObj.id = 'dbInfoStdSqlType';
-
-var dbInfoUserDefineTypeObj = new Object();
-dbInfoUserDefineTypeObj.iconCls = 'profiler';
-dbInfoUserDefineTypeObj.text = _message['dbInfoUserDefineType'];
-dbInfoUserDefineTypeObj.leaf = true;
-dbInfoUserDefineTypeObj.id = 'dbInfoUserDefineType';
-
-var dbInfoCatalogObj = new Object();
-dbInfoCatalogObj.iconCls = 'profiler';
-dbInfoCatalogObj.text = _message['dbInfoCatalog'];
-dbInfoCatalogObj.leaf = true;
-dbInfoCatalogObj.id = 'dbInfoCatalog';
-
-var dbInfoSchemaObj = new Object();
-dbInfoSchemaObj.iconCls = 'profiler';
-dbInfoSchemaObj.text = _message['dbInfoSchema'];
-dbInfoSchemaObj.leaf = true;
-dbInfoSchemaObj.id = 'dbInfoSchema';
-
-var dbInfoProcedureObj = new Object();
-dbInfoProcedureObj.iconCls = 'profiler';
-dbInfoProcedureObj.text = _message['dbInfoProcedure'];
-dbInfoProcedureObj.leaf = true;
-dbInfoProcedureObj.id = 'dbInfoProcedure';
-
-var dbInfoParameterObj = new Object();
-dbInfoParameterObj.iconCls = 'profiler';
-dbInfoParameterObj.text = _message['dbInfoParameter'];
-dbInfoParameterObj.leaf = true;
-dbInfoParameterObj.id = 'dbInfoParameter';
-
-var dbInfoIndexObj = new Object();
-dbInfoIndexObj.iconCls = 'profiler';
-dbInfoIndexObj.text = _message['dbInfoIndex'];
-dbInfoIndexObj.leaf = true;
-dbInfoIndexObj.id = 'dbInfoIndex';
-
-var dbInfoTableModelObj = new Object();
-dbInfoTableModelObj.iconCls = 'profiler';
-dbInfoTableModelObj.text = _message['dbInfoTableModel'];
-dbInfoTableModelObj.leaf = true;
-dbInfoTableModelObj.id = 'dbInfoTableModel';
-
-var dbInfoDbMetaDataObj = new Object();
-dbInfoDbMetaDataObj.iconCls = 'profiler';
-dbInfoDbMetaDataObj.text = _message['dbInfoDbMetadata'];
-dbInfoDbMetaDataObj.leaf = true;
-dbInfoDbMetaDataObj.id = 'dbInfoDbMetadata';
-
-var dbInfoTableMetaDataObj = new Object();
-dbInfoTableMetaDataObj.iconCls = 'profiler';
-dbInfoTableMetaDataObj.text = _message['dbInfoTableMetadata'];
-dbInfoTableMetaDataObj.leaf = true;
-dbInfoTableMetaDataObj.id = 'dbInfoTableMetadata';
-
-var dbInfoDataObj = new Object();
-dbInfoDataObj.iconCls = 'profiler';
-dbInfoDataObj.text = _message['dbInfoData'];
-dbInfoDataObj.leaf = true;
-dbInfoDataObj.id = 'dbInfoData';
-
-var dbInfoAllTablesObj = new Object();
-dbInfoAllTablesObj.iconCls = 'profiler';
-dbInfoAllTablesObj.text = _message['dbInfoAllTables'];
-dbInfoAllTablesObj.leaf = true;
-dbInfoAllTablesObj.id = 'dbInfoAllTables';
-
-var dbInfoTableObj = new Object();
-dbInfoTableObj.iconCls = 'profiler';
-dbInfoTableObj.text = _message['dbInfoTable'];
-dbInfoTableObj.leaf = true;
-dbInfoTableObj.id = 'dbInfoTable';
-
-var dbInfoColumnObj = new Object();
-dbInfoColumnObj.iconCls = 'profiler';
-dbInfoColumnObj.text = _message['dbInfoColumn'];
-dbInfoColumnObj.leaf = true;
-dbInfoColumnObj.id = 'dbInfoColumn';
-
-//Data Quality Menu
-var dqDuplicateObj = new Object();
-dqDuplicateObj.iconCls = 'profiler';
-dqDuplicateObj.text = _message['dqDuplicate'];
-dqDuplicateObj.leaf = true;
-dqDuplicateObj.id = 'dqDuplicate';
-
-var dqSimilarityObj = new Object();
-dqSimilarityObj.iconCls = 'profiler';
-dqSimilarityObj.text = _message['dqSimilarity'];
-dqSimilarityObj.leaf = true;
-dqSimilarityObj.id = 'dqSimilarity';
-
-var dqStandardisationObj = new Object();
-dqStandardisationObj.iconCls = 'profiler';
-dqStandardisationObj.text = _message['dqStandardization'];
-dqStandardisationObj.leaf = true;
-dqStandardisationObj.id = 'dqStandardization';
-
-var dqReplaceNullObj = new Object();
-dqReplaceNullObj.iconCls = 'profiler';
-dqReplaceNullObj.text = _message['dqReplaceNull'];
-dqReplaceNullObj.leaf = true;
-dqReplaceNullObj.id = 'dqReplaceNull';
-
-var dqAndObj = new Object();
-dqAndObj.iconCls = 'profiler';
-dqAndObj.text = _message['dqAnd'];
-dqAndObj.leaf = true;
-dqAndObj.id = 'dqAnd';
-
-var dqOrObj = new Object();
-dqOrObj.iconCls = 'profiler';
-dqOrObj.text = _message['dqOr'];
-dqOrObj.leaf = true;
-dqOrObj.id = 'dqOr';
-
-var dqMatchedObj = new Object();
-dqMatchedObj.iconCls = 'profiler';
-dqMatchedObj.text = _message['dqMatched'];
-dqMatchedObj.leaf = true;
-dqMatchedObj.id = 'dqMatched';
-
-var dqUnMatchedObj = new Object();
-dqUnMatchedObj.iconCls = 'profiler';
-dqUnMatchedObj.text = _message['dqUnMatched'];
-dqUnMatchedObj.leaf = true;
-dqUnMatchedObj.id = 'dqUnMatched';
-
-var dqUpperCaseObj = new Object();
-dqUpperCaseObj.iconCls = 'profiler';
-dqUpperCaseObj.text = _message['dqUpperCase'];
-dqUpperCaseObj.leaf = true;
-dqUpperCaseObj.id = 'dqUpperCase';
-
-var dqLowerCaseObj = new Object();
-dqLowerCaseObj.iconCls = 'profiler';
-dqLowerCaseObj.text = _message['dqLowerCase'];
-dqLowerCaseObj.leaf = true;
-dqLowerCaseObj.id = 'dqLowerCase';
-
-var dqTitleCaseObj = new Object();
-dqTitleCaseObj.iconCls = 'profiler';
-dqTitleCaseObj.text = _message['dqTitleCase'];
-dqTitleCaseObj.leaf = true;
-dqTitleCaseObj.id = 'dqTitleCase';
-
-var dqSentenceCaseObj = new Object();
-dqSentenceCaseObj.iconCls = 'profiler';
-dqSentenceCaseObj.text = _message['dqSentenceCase'];
-dqSentenceCaseObj.leaf = true;
-dqSentenceCaseObj.id = 'dqSentenceCase';
-
-var dqDescreteMatchObj = new Object();
-dqDescreteMatchObj.iconCls = 'profiler';
-dqDescreteMatchObj.text = _message['dqDescreteMatch'];
-dqDescreteMatchObj.leaf = true;
-dqDescreteMatchObj.id = 'dqDescreteMatch';
-
-var dqDescreteNoMatchObj = new Object();
-dqDescreteNoMatchObj.iconCls = 'profiler';
-dqDescreteNoMatchObj.text = _message['dqDescreteNoMatch'];
-dqDescreteNoMatchObj.leaf = true;
-dqDescreteNoMatchObj.id = 'dqDescreteNoMatch';
-
-var dqCardinalityObj = new Object();
-dqCardinalityObj.iconCls = 'profiler';
-dqCardinalityObj.text = _message['dqCardinality'];
-dqCardinalityObj.leaf = true;
-dqCardinalityObj.id = 'dqCardinality';
-
-var dqCardinalityEditableObj = new Object();
-dqCardinalityEditableObj.iconCls = 'profiler';
-dqCardinalityEditableObj.text = _message['dqCardinalityEditable'];
-dqCardinalityEditableObj.leaf = true;
-dqCardinalityEditableObj.id = 'dqCardinalityEditable';
-
-var dqTableComparisonObj = new Object();
-dqTableComparisonObj.iconCls = 'profiler';
-dqTableComparisonObj.text = _message['dqTableComparison'];
-dqTableComparisonObj.leaf = true;
-dqTableComparisonObj.id = 'dqTableComparison';
 // Admin Menu
 var serverAdminObj = new Object();
 serverAdminObj.iconCls = 'server';
@@ -770,7 +552,7 @@ var streamLoadingJsIds = [ listStreamLoadingObj, addStreamLoadingObj,
 		deleteStreamLoadingObj, editStreamLoadingObj,
 		editFieldsStreamLoadingObj, helpStreamLoadingObj ];
 var schemasJsIds = [listSchemaObj,addSchemaObj,deleteSchemaObj,editSchemaObj,duplicateSchemaObj,editFieldsSchemaObj,loadFieldsSchemaObj, errorsSchemaObj,
-	validTraceSchemaObj,dataStreamReceivedSchemaObj,extraCheckSchemaObj,macroSchemaObj,triggerSchemaObj,shareWithWorldSchemaObj,siteSchemaGeneration,exportToXSDSchemaObj,exportToImageXSDSchemaObj,importFromXSDSchemaObj,docSchemaObj,forecastFormObj,helpSchemaObj];
+	validTraceSchemaObj,dataStreamReceivedSchemaObj,extraCheckSchemaObj,macroSchemaObj,triggerSchemaObj,shareWithWorldSchemaObj,exportToXSDSchemaObj,exportToImageXSDSchemaObj,importFromXSDSchemaObj,docSchemaObj,forecastFormObj,helpSchemaObj];
 var standardSchemasJsIds = [listStandardSchemaObj,addStandardSchemaObj,deleteStandardSchemaObj,editStandardSchemaObj,duplicateStandardSchemaObj,validTraceStandardSchemaObj,dataStreamReceivedStandardSchemaObj,docStandardSchemaObj,supportedStandardSchemaObj,helpStandardSchemaObj];
 var userTreeJsIds = [addUserObj,deleteUserObj,editUserObj,logoutUserObj,helpUserObj];
 var connectionsJsIds = [addConnObj,deleteConnObj,editConnObj,refreshConnObj,helpConnObj];
@@ -778,8 +560,6 @@ var jobsJsIds = [addJobsObj,deleteJobsObj,editJobsObj,helpJobsObj];
 var schedulerJsIds = [addSchedulerObj,deleteSchedulerObj,editSchedulerObj,helpSchedulerObj];
 var reportsJsIds = [realtimeReportObj,detailedReportObj,monthlyReportObj,annualStateReportObj,helpReportObj];
 var adminJsIds = [logAdminObj,emailAdminObj,serverAdminObj,infoAdminObj,ftpAdminObj,helpAdminObj];
-var dbInfoJsIds = [dbInfoGeneralObj,dbInfoSupportObj,dbInfoLimitationObj,dbInfoFunctionsObj,dbInfoStdSqlTypeObj, dbInfoUserDefineTypeObj, dbInfoCatalogObj, dbInfoSchemaObj, dbInfoProcedureObj, dbInfoParameterObj, dbInfoIndexObj, dbInfoTableModelObj, dbInfoDbMetaDataObj, dbInfoTableMetaDataObj, dbInfoDataObj, dbInfoAllTablesObj, dbInfoTableObj, dbInfoColumnObj];
-var dataQualityJsIds = [dqDuplicateObj,dqSimilarityObj,dqStandardisationObj,dqReplaceNullObj, dqAndObj, dqOrObj, dqMatchedObj, dqUnMatchedObj, dqUpperCaseObj, dqLowerCaseObj, dqTitleCaseObj, dqSentenceCaseObj, dqDescreteMatchObj, dqDescreteNoMatchObj, dqCardinalityObj, dqCardinalityEditableObj, dqTableComparisonObj];
 var menuChlds = new Array();
 var contentChlds = new Array();
 var applicationChlds = new Array();
@@ -794,8 +574,6 @@ var jobsChlds = new Array();
 var schedulerChlds = new Array();
 var reportChlds = new Array();
 var adminChlds = new Array();
-var dbInfoChlds = new Array();
-var dataQualityChlds = new Array();
 
 var appChCnt = 0;
 for(i=0;i<applicationTreeJsIds.length;i++){
@@ -947,30 +725,6 @@ for(i=0;i<adminJsIds.length;i++){
 		aChCnt++;
 	}	
 }
-var dbInfoChCnt = 0;
-for(i=0;i<dbInfoJsIds.length;i++){
-	if(roleActivities!=null && roleActivities.indexOf(dbInfoJsIds[i].id)!=-1){
-		dbInfoChlds[dbInfoChCnt] = {
-			iconCls: dbInfoJsIds[i].iconCls,
-			text: dbInfoJsIds[i].text,
-			leaf:dbInfoJsIds[i].leaf,
-			id:dbInfoJsIds[i].id			
-		};
-		dbInfoChCnt++;
-	}	
-}
-var dqChCnt = 0;
-for(i=0;i<dataQualityJsIds.length;i++){
-	if(roleActivities!=null && roleActivities.indexOf(dataQualityJsIds[i].id)!=-1){
-		dataQualityChlds[dqChCnt] = {
-			iconCls: dataQualityJsIds[i].iconCls,
-			text: dataQualityJsIds[i].text,
-			leaf:dataQualityJsIds[i].leaf,
-			id:dataQualityJsIds[i].id			
-		};
-		dqChCnt++;
-	}	
-}
 
 function logout(){
 	Ext.Ajax.request({
@@ -983,7 +737,7 @@ function logout(){
 var header = ({	
 	collapsible: true,
 	html: [ "<table width=\"100%\"><tr><td align=\"left\" valign=\"top\">",
-            "&nbsp;<a href='http://www.see-r.com' target='_blank'><img src=\"./images/logo.png\" alt='DataCruncher'></a></td><td align=\"right\" valign=\"top\">",
+            "&nbsp;<a href='http://altimario.github.io/DataCruncher' target='_blank'><img src=\"./images/logo.png\" alt='DataCruncher'></a></td><td align=\"right\" valign=\"top\">",
             getHtmlMsgForCredits(),
             "&nbsp;&nbsp;</td></tr>",
             "</table>" 
@@ -1103,8 +857,6 @@ var schemas = ({
 				schemaShareWithWorld();
 			} else if(rec.get('id')=='schemaTrigger'){
 				schemaTrigger();
-			} else if(rec.get('id')=='schemaSiteGeneration') {
-				schemaSiteGeneration();
             } else if(rec.get('id')=='forecastForm') {
                 showForecastForm();
             } else {
@@ -1444,138 +1196,6 @@ var streamManagement = ({
 	}
 });
 
-var dbInfo = ( {
-	frame : false,
-	id : 'dbInfoTreePanel',
-	listeners : {
-		expand : function() {
-			//Ext.getCmp('databasesGrid').store.load();
-			//Ext.getCmp('content').layout.setActiveItem('databasesGrid');
-		},
-		itemclick : function(view, rec, item, index, eventObj) {
-			
-			if (rec.get('id') == 'dbInfoGeneral') {
-				loadDBInfo('General Information','geninfo');
-			} else if (rec.get('id') == 'dbInfoSupport') {
-				loadDBInfo('Support Information','supinfo');
-			} else if (rec.get('id') == 'dbInfoLimitation') {
-				loadDBInfo('Limitation Information','limitinfo');
-			} else if (rec.get('id') == 'dbInfoFunction') {
-				loadDBInfo('Functions Information','funcinfo');
-			} else if (rec.get('id') == 'dbInfoStdSqlType') {
-				loadDBInfo('Standard SQL Type Information','standardsqlinfo');
-			} else if (rec.get('id') == 'dbInfoUserDefineType') {
-				loadDBInfo('User Define Type Information','usersqlinfo');
-			} else if (rec.get('id') == 'dbInfoCatalog') {
-				loadDBInfo('Catalog Information','cataloginfo');
-			} else if (rec.get('id') == 'dbInfoSchema') {
-				loadDBInfo('Schema Information','schemainfo');
-			} else if (rec.get('id') == 'dbInfoProcedure') {
-				loadDBInfo('Procedure Information','procedureinfo');
-			} else if (rec.get('id') == 'dbInfoParameter') {
-				loadDBInfo('Parameter Information','parameterinfo');
-			} else if (rec.get('id') == 'dbInfoIndex') {
-				loadDBInfo('Index Information','indexinfo');
-			} else if (rec.get('id') == 'dbInfoTableModel') {
-				tableModelInfoTab('tablemodelinfo');
-			} else if (rec.get('id') == 'dbInfoDbMetadata') {
-				loadDBInfo('DB Metadata Information','dbmetadatainfo');
-			} else if (rec.get('id') == 'dbInfoTableMetadata') {
-				slowInputDialog('Table Metadata Information','tablemetadatainfo');
-			} else if (rec.get('id') == 'dbInfoData') {
-				loadDBInfo('Data Information','datainfo');
-			} else if (rec.get('id') == 'dbInfoAllTables') {
-				loadDBInfo('All Tables Information','alltableprivinfo');
-			} else if (rec.get('id') == 'dbInfoTable') {
-				slowInputDialog('Table Infomation','tableprivilegeinfo');
-			} else if (rec.get('id') == 'dbInfoColumn') {
-				slowInputDialog('Column Infomation','columnprivilegeinfo');
-			}
-		}
-	},
-	root : {
-		children : dbInfoChlds
-	},
-	rootVisible : false,
-	title : _label['dbInfo'],
-	useArrows : true,
-	xtype : 'treepanel'
-});
-var dataQuality = ( {
-	frame : false,
-	id : 'dataQualityTreePanel',
-	listeners : {
-		expand : function() {
-			//Ext.getCmp('databasesGrid').store.load();
-			//Ext.getCmp('content').layout.setActiveItem('databasesGrid');
-		},
-		itemclick : function(view, rec, item, index, eventObj) {
-			if (rec.get('id') == 'dqDuplicate') {
-				loadPopUpForm('duplicate');
-			} else if (rec.get('id') == 'dqSimilarity') {
-				loadPopUpForm('similarity');
-			} else if (rec.get('id') == 'dqStandardization') {
-				loadPopUpForm('standard');
-			} else if (rec.get('id') == 'dqReplaceNull') {
-				loadPopUpForm('replacenull');
-			} else if (rec.get('id') == 'dqAnd') {
-				loadPopUpForm('inclusive');
-			} else if (rec.get('id') == 'dqOr') {
-				loadPopUpForm('exclusive');
-			} else if (rec.get('id') == 'dqMatched') {
-				loadPopUpForm('format');
-			} else if (rec.get('id') == 'dqUnMatched') {
-				loadPopUpForm('formatnomatch');
-			} else if (rec.get('id') == 'dqUpperCase') {
-				loadPopUpForm('uppercase');
-			} else if (rec.get('id') == 'dqLowerCase') {
-				loadPopUpForm('lowercase');
-			} else if (rec.get('id') == 'dqTitleCase') {
-				loadPopUpForm('titlecase');
-			} else if (rec.get('id') == 'dqSentenceCase') {
-				loadPopUpForm('sentencecase');
-			} else if (rec.get('id') == 'dqDescreteMatch') {
-				loadPopUpForm('descrete');
-			} else if (rec.get('id') == 'dqDescreteNoMatch') {
-				loadPopUpForm('descretenomatch');
-			} else if (rec.get('id') == 'dqCardinality') {
-				loadCardinalityForm('',false);
-			} else if (rec.get('id') == 'dqCardinalityEditable') {
-				loadCardinalityForm('',true);
-			} else if (rec.get('id') == 'dqTableComparison') {
-				loadPopUpForm('comparison');
-			}
-		}
-	},
-	root : {
-		children : dataQualityChlds
-	},
-	rootVisible : false,
-	title : _label['dataQuality'],
-	useArrows : true,
-	xtype : 'treepanel'
-});
-var profilers = ({
-	collapsible: true,
-	frame: false,
-	id: 'profilerMainPanel',
-	iconCls : 'profiler',
-	activeItem : 0,	
-	items : [dbInfo,  dataQuality],
-    layout: 'accordion',
-    padding: '0 0 0 5',
-    style : 'background: #fff',
-	region: 'center',
-	title: _label['profiler'],
-	listeners : {
-		expand : function() {
-			Ext.getCmp('home-center').removeAll();
-			Ext.getCmp('content').layout.setActiveItem('databasesGridReadOnlyPanel');
-			Ext.getCmp('dbInfoTreePanel').expand();
-		}
-	}
-});
-
 clearTimeout(graphLoadTimer);
 
 var reports = ({
@@ -1678,21 +1298,6 @@ var admin = ({
 	xtype: 'treepanel'
 });
 
-//credits
-var credits = ({
-	frame: false,	
-	id: 'credits',	
-	iconCls : 'credits',
-	items: [lblCredits, btnContactus],
-	title: _label['credits'],
-	listeners:{
-		expand: function() {
-			readCredits.load();
-			Ext.getCmp('content').layout.setActiveItem('creditsGrid');
-		}
-	}
-});
-
 //applications
 var menuChldCnt=0;
 var contentChldCnt=0;
@@ -1756,15 +1361,6 @@ if(reportChlds.length>0){
 	contentChldCnt++;
 	menuChldCnt++
 }
-//profiler
-if(dbInfoChlds.length>0 || dataQualityChlds.length>0){
-	menuChlds[menuChldCnt] = profilers;
-	contentChlds[contentChldCnt]=databasesGridReadOnly;	
-	contentChldCnt++;
-	contentChlds[contentChldCnt]=databasesGridReadOnly;	
-	contentChldCnt++;
-	menuChldCnt++;
-}
 //Admin
 if(adminChlds.length>0){
 	menuChlds[menuChldCnt] = admin;
@@ -1773,8 +1369,6 @@ if(adminChlds.length>0){
 	menuChldCnt++;
 }
 
-menuChlds[menuChldCnt] = credits;
-contentChlds[contentChldCnt]=creditsGrid;
 var menu = ({
 	collapsible: true,
 	frame: false,

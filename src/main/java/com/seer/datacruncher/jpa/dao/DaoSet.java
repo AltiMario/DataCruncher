@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015  www.see-r.com
+ * Copyright (c) 2019  Altimari Mario
  * All rights reserved
  *
  * This program is free software: you can redistribute it and/or modify
@@ -38,7 +38,6 @@ public interface DaoSet {
 	FileDao fileDao = DaoServices.getFileDao();
 	JobsDao jobsDao = DaoServices.getJobsDao();	
 	NumericFieldValuesDao numericFieldDao = DaoServices.getNumericFieldDao();
-	CreditsDao creditsDao = DaoServices.getCreditsDao();
 	RoleActivityDao roleActivityDao = DaoServices.getRoleActivityDao();
 	RoleDao roleDao = DaoServices.getRoleDao();	
 	SchemaFieldsDao schemaFieldsDao = DaoServices.getSchemaFieldsDao();

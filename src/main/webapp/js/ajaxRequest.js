@@ -2,14 +2,14 @@
  *   DataCruncher is a Data Quality Firewall, a Data Quality Monitor and an ETL middleware to manage data streams on the fly.
  *   DataCruncher is released under AGPL license.
 
- *   Copyright (c) 2015 foreSEE-Revolution ltd
+ *   Copyright (c) 2019 Altimari Mario
  *   All rights reserved
  *
- *   Site: http://www.see-r.com
+ *   Site: http://altimario.github.io/DataCruncher
  *   Contact:  altimario@gmail.com
  */
 
-var DEPLOYMENT_PATH = '';
+var DEPLOYMENT_PATH = '/DataCruncher_war';
 var DOMAIN_PREFIX = 'http://localhost:8008' + DEPLOYMENT_PATH;
 var meWindow = this.window;
 /**
