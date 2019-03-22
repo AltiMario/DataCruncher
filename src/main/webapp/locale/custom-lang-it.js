@@ -214,7 +214,6 @@ _message = {
     "macro": "Macro",
     "exportPng": "Esportazione Immagine XSD",
 	"optionNotReady" : "Funzione non ancora disponibile",
-	"shareSchema": "Condividi con il mondo",
 	"sendStream" : "Invia flusso",
 	"noValuesForDisplay" : "Nessun dato da visualizzare",
     "infoSharing": 'Questo schema di validazione verr&agrave; condiviso con tutti sul sito http://altimario.github.io/DataCruncher ,previa autorizzazione da parte dell\'amministratore di sistema.<br/>Grazie per la partecipazione!' ,

@@ -214,7 +214,6 @@ _message = {
     "macro": "Макро",
     "exportPng": "Диаграмма Экспорт изображения",
     "optionNotReady" : "Function not yet available",
-    "shareSchema": "Share with the world",
     "sendStream" : "Отправить поток",
     "noValuesForDisplay" : "Нет значений для отображения",
     "infoSharing": 'This schema validation will be shared with everyone on the site http://altimario.github.io/DataCruncher ,authorized in advance by the system administrator.<br/>Thanks for participating!',

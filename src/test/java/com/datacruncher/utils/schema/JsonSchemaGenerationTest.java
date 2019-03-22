@@ -25,7 +25,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.module.jsonSchema.JsonSchema;
 import com.fasterxml.jackson.module.jsonSchema.JsonSchemaGenerator;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang.ArrayUtils;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -70,7 +70,7 @@ public class JsonSchemaGenerationTest {
                 "-sourcepath",
                 targetDirectory.getPath(),
         };
-        compileArgs = ArrayUtils.addAll(compileArgs, sourceFiles);
+        compileArgs = (String[]) ArrayUtils.addAll(compileArgs, sourceFiles);
         JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
         int compileResult = compiler.run(null, System.out, System.out, compileArgs);
         if (compileResult != 0) {

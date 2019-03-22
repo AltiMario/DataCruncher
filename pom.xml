@@ -518,7 +518,6 @@
             <artifactId>standard</artifactId>
             <version>1.1.2</version>
         </dependency>
-
         <!-- Kundera (noSQL persistence) -->
         <dependency>
             <groupId>com.impetus.core</groupId>
@@ -531,7 +530,6 @@
                 </exclusion>
             </exclusions>
         </dependency>
-
         <dependency>
             <groupId>com.impetus.kundera.client</groupId>
             <artifactId>kundera-mongo</artifactId>
@@ -543,6 +541,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
+
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-plus</artifactId>

@@ -153,12 +153,6 @@ importFromXSDSchemaObj.text =  _message['importSchema'];
 importFromXSDSchemaObj.leaf =  true;
 importFromXSDSchemaObj.id =  'schemaImportFromXSD';
 
-var shareWithWorldSchemaObj = new Object();
-shareWithWorldSchemaObj.iconCls =  'schema_share';
-shareWithWorldSchemaObj.text =  _message['shareSchema'];
-shareWithWorldSchemaObj.leaf =  true;
-shareWithWorldSchemaObj.id =  'schemaShareWithWorld';
-
 var forecastFormObj = new Object();
 forecastFormObj.iconCls =  'forecasting';
 forecastFormObj.text =  _message['forecasting'];
@@ -552,7 +546,7 @@ var streamLoadingJsIds = [ listStreamLoadingObj, addStreamLoadingObj,
 		deleteStreamLoadingObj, editStreamLoadingObj,
 		editFieldsStreamLoadingObj, helpStreamLoadingObj ];
 var schemasJsIds = [listSchemaObj,addSchemaObj,deleteSchemaObj,editSchemaObj,duplicateSchemaObj,editFieldsSchemaObj,loadFieldsSchemaObj, errorsSchemaObj,
-	validTraceSchemaObj,dataStreamReceivedSchemaObj,extraCheckSchemaObj,macroSchemaObj,triggerSchemaObj,shareWithWorldSchemaObj,exportToXSDSchemaObj,exportToImageXSDSchemaObj,importFromXSDSchemaObj,docSchemaObj,forecastFormObj,helpSchemaObj];
+	validTraceSchemaObj,dataStreamReceivedSchemaObj,extraCheckSchemaObj,macroSchemaObj,triggerSchemaObj,exportToXSDSchemaObj,exportToImageXSDSchemaObj,importFromXSDSchemaObj,docSchemaObj,forecastFormObj,helpSchemaObj];
 var standardSchemasJsIds = [listStandardSchemaObj,addStandardSchemaObj,deleteStandardSchemaObj,editStandardSchemaObj,duplicateStandardSchemaObj,validTraceStandardSchemaObj,dataStreamReceivedStandardSchemaObj,docStandardSchemaObj,supportedStandardSchemaObj,helpStandardSchemaObj];
 var userTreeJsIds = [addUserObj,deleteUserObj,editUserObj,logoutUserObj,helpUserObj];
 var connectionsJsIds = [addConnObj,deleteConnObj,editConnObj,refreshConnObj,helpConnObj];
@@ -853,8 +847,6 @@ var schemas = ({
 				helpSchema();
 			} else if(rec.get('id')=='schemaExtraCheck'){
 				extraCheckSchema();
-			} else if(rec.get('id')=='schemaShareWithWorld') {
-				schemaShareWithWorld();
 			} else if(rec.get('id')=='schemaTrigger'){
 				schemaTrigger();
             } else if(rec.get('id')=='forecastForm') {
