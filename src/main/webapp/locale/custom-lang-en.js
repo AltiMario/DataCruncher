@@ -194,7 +194,7 @@ _message = {
     "connectionsHelpMessage" : "To access an external system, to get the datastream of one or more files, you need to enter the access info and file info and verify the availability.",
     "plannerHelpMessage" : "The planner let start one or more tasks whenever necessary, without requiring manual intervention.",
     "jobsHelpMessage" : "The job enables the connection according to the times determined in the planner, picks up the requested file and sends it to referenced schema.",
-    "adminHelpMessage": "The firewall listens in for data streams coming in from the various kinds of available services.<br/>Activating all of them involves enabling the client to benefit from the best available service for its goals.<br/>Activating only those that are strictly needed means a significant performance gain by not listening in for those services which will never be used.<br/>Deactivating all of them allows for data streams validation only by means of a testing tool accessible via 'Schemas->Validate Datastream'.",
+    "adminHelpMessage": "The firewall listens coming data streams through many different services.<br/>Activating only those that are strictly needed.",
     "version": "<strong>Version </strong>",
     "credits": "<br/>&copy; 2019 Altimari Mario. All rights reserved.<br/>More information at <a href='http://altimario.github.io/DataCruncher' target='_blank'>http://altimario.github.io/DataCruncher</a>",
     "refresh": "Refresh",
