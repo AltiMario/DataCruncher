@@ -518,23 +518,6 @@
             <artifactId>standard</artifactId>
             <version>1.1.2</version>
         </dependency>
-        <!-- takes the content of the html crawled -->
-        <dependency>
-            <groupId>edu.uci.ics</groupId>
-            <artifactId>crawler4j</artifactId>
-            <version>3.5</version>
-            <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>net.sourceforge.htmlunit</groupId>
-            <artifactId>htmlunit</artifactId>
-            <version>2.12</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpcore</artifactId>
-            <version>4.3.2</version>
-        </dependency>
 
         <!-- Kundera (noSQL persistence) -->
         <dependency>
