@@ -50,7 +50,6 @@ public enum Activity {
 	SCHEMA_HELP(22,"schemaHelp"),
 	SCHEMA_EXTRA_CHECK(58,"schemaExtraCheck"),
 	SCHEMA_TRIGGERS(73,"schemaTriggers"),
-    SCHEMA_FORECASTING(120, "forecastForm"),
 	
 	//Standard Schema Menu
 	STANDARD_SCHEMA_LIST(62,"standardSchemasList"),

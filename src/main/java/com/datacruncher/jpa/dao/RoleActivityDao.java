@@ -134,7 +134,6 @@ public class RoleActivityDao {
 				Activity.SCHEMA_HELP,
 				Activity.SCHEMA_EXTRA_CHECK,
 				Activity.SCHEMA_TRIGGERS,
-                Activity.SCHEMA_FORECASTING,
 				
 				//Standard Schema Menu
 				Activity.STANDARD_SCHEMA_LIST,
@@ -242,7 +241,6 @@ public class RoleActivityDao {
 				Activity.SCHEMA_HELP,
 				Activity.SCHEMA_EXTRA_CHECK,
 				Activity.SCHEMA_TRIGGERS,
-                Activity.SCHEMA_FORECASTING,
 				
 				//Standard Schema Menu
 				Activity.STANDARD_SCHEMA_LIST,

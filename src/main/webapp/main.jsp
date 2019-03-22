@@ -132,7 +132,6 @@
     <script type="text/javascript" src="./js/loginPopup.js"></script>
 	<script type="text/javascript" src="./js/loadingStreamFieldsPopup.js"></script>
     <script type="text/javascript" src="./js/contactUs.js"></script>
-    <script type="text/javascript" src="./js/forecastContentPopup.js"></script>
     
     <link rel="stylesheet" type="text/css" href="./css/ItemSelector.css" />
     <script type="text/javascript" src="./ux/Printer.js"></script> 

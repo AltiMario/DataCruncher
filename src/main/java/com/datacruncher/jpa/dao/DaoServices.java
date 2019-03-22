@@ -56,7 +56,6 @@ public class DaoServices {
     private static ApplicationConfigDao applicationConfigDao;
     private static SchemaSQLDao schemaSQLDao;
     private static LogDao logDao;
-    private static ForecastDao forecastDao;
 	private static CustomErrorsDao customErrorsDao;
 	private static MacrosDao macrosDao;
 
@@ -314,14 +313,6 @@ public class DaoServices {
 
     public void setLogDao(LogDao logDao) {
     	DaoServices.logDao = logDao;
-    }
-
-    public static ForecastDao getForecastDao() {
-        return forecastDao;
-    }
-
-    public void setForecastDao(ForecastDao forecastDao) {
-        DaoServices.forecastDao = forecastDao;
     }
 
 }

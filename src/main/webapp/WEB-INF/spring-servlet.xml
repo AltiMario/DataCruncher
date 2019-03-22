@@ -89,7 +89,6 @@
         <property name="applicationConfigDao" ref="ApplicationConfigDao"/>
         <property name="schemaSQLDao" ref="SchemaSQLDao"/>
         <property name="logDao" ref="LogDao"/>
-        <property name="forecastDao" ref="ForecastDao"/>
     </bean>
 
     <bean id="messageSource"
@@ -332,8 +331,6 @@
             <value>action</value>
         </property>
     </bean>
-    <!-- Forecasting -->
-    <bean name="/forecastContentPopup.json" class="com.datacruncher.spring.ForecastReadController"/>
     <!-- Alerts -->
     <bean name="/alertsRead.json" class="com.datacruncher.spring.AlertReadController"/>
     <bean id="alertsByMail" class="com.datacruncher.alerts.AlertsByMail">
@@ -560,7 +557,6 @@
     </bean>
     <bean id="SchemaSQLDao" class="com.datacruncher.jpa.dao.SchemaSQLDao"/>
     <bean id="LogDao" class="com.datacruncher.jpa.dao.LogDao"/>
-    <bean id="ForecastDao" class="com.datacruncher.jpa.dao.ForecastDao"/>
 
     <!--camel:camelContext id="camel1">
         <camel:package>com.datacruncher.services.ftp.camel</camel:package>

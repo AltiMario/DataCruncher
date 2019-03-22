@@ -54,5 +54,4 @@ public interface DaoSet {
 	ApplicationConfigDao applicationConfigDao = DaoServices.getApplicationConfigDao();
     SchemaSQLDao schemaSQLDao =  DaoServices.getSchemaSQLDao();
     LogDao logDao =  DaoServices.getLogDao();
-    ForecastDao forecastDao =  DaoServices.getForecastDao();
 }

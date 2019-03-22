@@ -153,12 +153,6 @@ importFromXSDSchemaObj.text =  _message['importSchema'];
 importFromXSDSchemaObj.leaf =  true;
 importFromXSDSchemaObj.id =  'schemaImportFromXSD';
 
-var forecastFormObj = new Object();
-forecastFormObj.iconCls =  'forecasting';
-forecastFormObj.text =  _message['forecasting'];
-forecastFormObj.leaf =  true;
-forecastFormObj.id =  'forecastForm';
-
 var helpSchemaObj = new Object();
 helpSchemaObj.iconCls =  'help';
 helpSchemaObj.text =  _message['help'];
@@ -546,7 +540,7 @@ var streamLoadingJsIds = [ listStreamLoadingObj, addStreamLoadingObj,
 		deleteStreamLoadingObj, editStreamLoadingObj,
 		editFieldsStreamLoadingObj, helpStreamLoadingObj ];
 var schemasJsIds = [listSchemaObj,addSchemaObj,deleteSchemaObj,editSchemaObj,duplicateSchemaObj,editFieldsSchemaObj,loadFieldsSchemaObj, errorsSchemaObj,
-	validTraceSchemaObj,dataStreamReceivedSchemaObj,extraCheckSchemaObj,macroSchemaObj,triggerSchemaObj,exportToXSDSchemaObj,exportToImageXSDSchemaObj,importFromXSDSchemaObj,docSchemaObj,forecastFormObj,helpSchemaObj];
+	validTraceSchemaObj,dataStreamReceivedSchemaObj,extraCheckSchemaObj,macroSchemaObj,triggerSchemaObj,exportToXSDSchemaObj,exportToImageXSDSchemaObj,importFromXSDSchemaObj,docSchemaObj,helpSchemaObj];
 var standardSchemasJsIds = [listStandardSchemaObj,addStandardSchemaObj,deleteStandardSchemaObj,editStandardSchemaObj,duplicateStandardSchemaObj,validTraceStandardSchemaObj,dataStreamReceivedStandardSchemaObj,docStandardSchemaObj,supportedStandardSchemaObj,helpStandardSchemaObj];
 var userTreeJsIds = [addUserObj,deleteUserObj,editUserObj,logoutUserObj,helpUserObj];
 var connectionsJsIds = [addConnObj,deleteConnObj,editConnObj,refreshConnObj,helpConnObj];
@@ -849,8 +843,6 @@ var schemas = ({
 				extraCheckSchema();
 			} else if(rec.get('id')=='schemaTrigger'){
 				schemaTrigger();
-            } else if(rec.get('id')=='forecastForm') {
-                showForecastForm();
             } else {
 				try {
 					if (rec.get('id') == 'macro') {

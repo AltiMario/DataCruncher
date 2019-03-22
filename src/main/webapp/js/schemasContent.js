@@ -710,7 +710,3 @@ function extraCheckSchema() {
 function schemaTrigger(){
 	popupTrigger();
 };
-
-function forecastForm() {
-    showForecastSchemaForm();
-};
