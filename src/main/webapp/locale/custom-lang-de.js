@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2019  Altimari Mario
- * All rights reserved
+ * DataCruncher
+ * Copyright (c) Mario Altimari. All rights reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -205,8 +205,8 @@ _message = {
     "schemaDocuments": "Papieren",
     "fieldNameNum": "Field Name sollte nicht mit Ziffer beginnen",
     "nameFieldInvalidFormate": "Das Feld Name muss mit dem Zeichen beginnen [a..z] oder [A..Z] oder [_]",
-    "exportSchema": "Export Schema",
-    "importSchema": "Import Schema",
+    "exportSchema": "Export as XSD",
+    "importSchema": "Import XSD",
     "forgetPasswordMsg": "Eine E-Mail mit neuen Passwort gesendet werden",
     "captchaNotClear": "nicht klar, für neue Bild klicken",
     "successDuplicateSchema": "Schema ist doppelt erfolgreich",

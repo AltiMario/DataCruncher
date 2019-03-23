@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2019  Altimari Mario
- * All rights reserved
+ * DataCruncher
+ * Copyright (c) Mario Altimari. All rights reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -204,8 +204,8 @@ _message = {
     "schemaDocuments": "Документы",
     "fieldNameNum": "Имя поля не должно начинаться с номера",
     "nameFieldInvalidFormate": "имя поля должно начинаться с символов [a..z] или  [A..Z] или  [_] ",
-    "exportSchema": "Экспорт схемы",
-    "importSchema": "Import Schema",
+    "exportSchema": "Export as XSD",
+    "importSchema": "Import XSD",
     "forgetPasswordMsg": "Вам будет выслано письмо с новым паролем",
     "captchaNotClear":"Не ясно Нажмите для нового просмотра",
     "successDuplicateSchema": "Схема успешно продублирована",

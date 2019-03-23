@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2019  Altimari Mario
- * All rights reserved
+ * DataCruncher
+ * Copyright (c) Mario Altimari. All rights reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -14,12 +14,14 @@
  *
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
  */
 
 package com.datacruncher.spring;
 
 import com.datacruncher.constants.FileInfo;
 import com.datacruncher.jpa.dao.DaoSet;
+import com.datacruncher.jpa.entity.ConnectionsEntity;
 import com.datacruncher.utils.CryptoUtil;
 import com.datacruncher.utils.generic.I18n;
 import com.datacruncher.utils.schema.SchemaValidator;
@@ -68,7 +70,7 @@ public class SchemaExportToXSDController extends MultiActionController implement
             OutputStream ostr = response.getOutputStream();
             response.setContentType("application/binary");
             response.setHeader("Content-Disposition", fileName);
-            ostr.write(new CryptoUtil().encrypt(strSchemaXSD).getBytes("UTF-8"));
+            ostr.write(keptXSD.getBytes());
             ostr.flush();
             ostr.close();
         } catch (Exception e) {
