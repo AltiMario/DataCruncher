@@ -15,7 +15,7 @@
     <description>DataCruncher is a Data Quality Firewall, Data Quality Monitor and ETL middleware to manage data streams
         on the fly.
     </description>
-	<url>https://github.com/AltiMario/DataCruncher/</url>
+    <url>https://github.com/AltiMario/DataCruncher/</url>
 
     <build>
         <defaultGoal>install</defaultGoal>
@@ -67,7 +67,7 @@
                 <version>2.11</version>
                 <configuration>
                     <includes>
-                        <include>**/AllUtilsTests.java</include>
+                        <include>**/All*Tests.java</include>
                     </includes>
                 </configuration>
             </plugin>
@@ -128,12 +128,12 @@
         <dependency>
             <groupId>com.sun.xml.bind</groupId>
             <artifactId>jaxb-impl</artifactId>
-            <version>2.1.17</version>
+            <version>2.3.2</version>
         </dependency>
         <dependency>
             <groupId>com.sun.xml.bind</groupId>
             <artifactId>jaxb-xjc</artifactId>
-            <version>2.1.17</version>
+            <version>2.3.2</version>
         </dependency>
         <dependency>
             <groupId>org.quartz-scheduler</groupId>
@@ -196,6 +196,12 @@
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
             <version>3.6.8.Final</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>javassist</groupId>
+                    <artifactId>javassist</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.hibernate.validator</groupId>
@@ -229,14 +235,25 @@
             <version>[2.2,)</version>
         </dependency>
         <dependency>
-            <groupId>com.fasterxml.jackson.module</groupId>
-            <artifactId>jackson-module-jsonSchema</artifactId>
-            <version>[2.2,)</version>
+            <groupId>com.kjetland</groupId>
+            <artifactId>mbknor-jackson-jsonschema_2.12</artifactId>
+            <version>1.0.33</version>
         </dependency>
         <dependency>
-            <groupId>javassist</groupId>
+            <groupId>com.github.krasa</groupId>
+            <artifactId>krasa-jaxb-tools</artifactId>
+            <version>1.5</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.eclipse.persistence</groupId>
+                    <artifactId>javax.persistence</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.javassist</groupId>
             <artifactId>javassist</artifactId>
-            <version>3.12.1.GA</version>
+            <version>3.18.1-GA</version>
         </dependency>
         <dependency>
             <groupId>javax.transaction</groupId>
@@ -518,6 +535,7 @@
             <artifactId>standard</artifactId>
             <version>1.1.2</version>
         </dependency>
+
         <!-- Kundera (noSQL persistence) -->
         <dependency>
             <groupId>com.impetus.core</groupId>
@@ -525,23 +543,41 @@
             <version>2.9</version>
             <exclusions>
                 <exclusion>
-                    <artifactId>persistence-api</artifactId>
                     <groupId>javax.persistence</groupId>
+                    <artifactId>persistence-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>javassist</groupId>
+                    <artifactId>javassist</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
+
         <dependency>
             <groupId>com.impetus.kundera.client</groupId>
             <artifactId>kundera-mongo</artifactId>
             <version>2.9.1</version>
             <exclusions>
                 <exclusion>
-                    <artifactId>persistence-api</artifactId>
                     <groupId>javax.persistence</groupId>
+                    <artifactId>persistence-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>javassist</groupId>
+                    <artifactId>javassist</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
-
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>[3,4)</version>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish</groupId>
+            <artifactId>javax.el</artifactId>
+            <version>3.0.1-b08</version>
+        </dependency>
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-plus</artifactId>

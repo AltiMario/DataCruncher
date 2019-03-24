@@ -21,8 +21,6 @@ package com.datacruncher.spring;
 
 import com.datacruncher.constants.FileInfo;
 import com.datacruncher.jpa.dao.DaoSet;
-import com.datacruncher.jpa.entity.ConnectionsEntity;
-import com.datacruncher.utils.CryptoUtil;
 import com.datacruncher.utils.generic.I18n;
 import com.datacruncher.utils.schema.SchemaValidator;
 import org.apache.log4j.Logger;
@@ -46,9 +44,9 @@ public class SchemaExportToXSDController extends MultiActionController implement
 
     public ModelAndView checkValidity(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-		Map<String, String> resMap;
+        Map<String, String> resMap;
 
-    	Long idSchema = Long.parseLong(request.getParameter("idSchema"));
+        Long idSchema = Long.parseLong(request.getParameter("idSchema"));
         schemasXSDDao.destroy(idSchema);
         SchemaValidator schemaValidator = new SchemaValidator();
         resMap = schemaValidator.validateSchema(idSchema);

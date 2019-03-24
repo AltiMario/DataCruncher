@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2019  Altimari Mario
- * All rights reserved
+ * DataCruncher
+ * Copyright (c) Mario Altimari. All rights reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -14,6 +14,7 @@
  *
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
  */
 
 var isalphanumeric = false;
@@ -133,7 +134,7 @@ var macroTreesPanel = {
 									var beginStr = text.substr(0, i + 1);
 									Ext.getCmp("jmc").setValue(beginStr + ' ');
 									addVARIABLE(record.data.var_name, sql.jv_format(token, word), 'Alphanumeric');
-									Ext.getCmp("diverse").disable();
+									Ext.getCmp("different").disable();
 									Ext.getCmp("equal").disable();
 								}
 							}
@@ -162,7 +163,7 @@ var macroTreesPanel = {
 					{xtype: 'button',text: _button["OR"],x: 65,y: 65,width: 50,disabled: true,id: 'OR', handler:function(){addOR();}},
 					{xtype: 'button',text: 'NULL',x: 125,y: 65,width: 50,disabled: true,id: 'null',handler:function(){addNULL();}},
 					{xtype: 'button',text: _button["EMPTY"],x: 185,y: 65,width: 50,id: 'empty',disabled: true,handler:function(){addEMPTY();}},					
-					{xtype: 'button',text: _button["DIVERSE"],x: 5,y: 95,width: 56,disabled: true,id: 'diverse',handler:function(){addNOT();}},
+					{xtype: 'button',text: _button["DIFFERENT"],x: 5,y: 95,width: 56,disabled: true,id: 'different',handler:function(){addNOT();}},
 					{xtype: 'button',text: _button["EQUAL"],x: 65,y: 95,width: 50,disabled: true,id: 'equal',handler:function(){addCOMPARE();}},
 					{xtype: 'button',text: '&lt;',x: 125,y: 95,disabled: true,width: 50,id: '<',handler:function(){addMINOR();}},
 					{xtype: 'button',text: '&gt;',x: 185,y: 95,disabled: true,width: 50,id: '>',handler:function(){addMAJOR();}},
@@ -295,7 +296,7 @@ function addTHEN(){
 	Ext.getCmp("-").disable();
 	Ext.getCmp("*").disable();
 	Ext.getCmp("/").disable();
-	Ext.getCmp("diverse").disable();
+	Ext.getCmp("different").disable();
 	Ext.getCmp("equal").disable();
 	Ext.getCmp("null").disable();
 	Ext.getCmp("empty").disable();
@@ -320,7 +321,7 @@ function addAND(){
 	Ext.getCmp("*").disable();
 	Ext.getCmp("/").disable();
 	Ext.getCmp("null").disable();
-	Ext.getCmp("diverse").disable();
+	Ext.getCmp("different").disable();
 	Ext.getCmp("equal").disable();
 	Ext.getCmp("<").disable();
 	Ext.getCmp(">").disable();
@@ -342,7 +343,7 @@ function addOR(){
 	Ext.getCmp("*").disable();
 	Ext.getCmp("/").disable();
 	Ext.getCmp("null").disable();
-	Ext.getCmp("diverse").disable();
+	Ext.getCmp("different").disable();
 	Ext.getCmp("equal").disable();
 	Ext.getCmp("<").disable();
 	Ext.getCmp(">").disable();
@@ -352,7 +353,7 @@ function addOR(){
 }
 
 function addNOT(){
-	Ext.getCmp("ruleText").setValue(Ext.getCmp("ruleText").getValue()+' '+_button["DIVERSE"]+' ');
+	Ext.getCmp("ruleText").setValue(Ext.getCmp("ruleText").getValue()+' '+_button["DIFFERENT"]+' ');
 	Ext.getCmp("jmc").setValue(Ext.getCmp("jmc").getValue()+'!=');
 	Ext.getCmp("AND").disable();
 	Ext.getCmp("OR").disable();
@@ -380,7 +381,7 @@ function addNOT(){
 		Ext.getCmp("valueT").enable();
 	}
 	
-	Ext.getCmp("diverse").disable();
+	Ext.getCmp("different").disable();
 	Ext.getCmp("equal").disable();
 	Ext.getCmp("<").disable();
 	Ext.getCmp(">").disable();	
@@ -399,7 +400,7 @@ function addNULL(){
 	Ext.getCmp("*").disable();
 	Ext.getCmp("/").disable();
 	Ext.getCmp("null").disable();
-	Ext.getCmp("diverse").disable();
+	Ext.getCmp("different").disable();
 	Ext.getCmp("equal").disable();
 	Ext.getCmp("<").disable();
 	Ext.getCmp(">").disable();
@@ -424,7 +425,7 @@ function addEMPTY(){
 	Ext.getCmp("*").disable();
 	Ext.getCmp("/").disable();
 	Ext.getCmp("null").disable();
-	Ext.getCmp("diverse").disable();
+	Ext.getCmp("different").disable();
 	Ext.getCmp("equal").disable();
 	Ext.getCmp("<").disable();
 	Ext.getCmp(">").disable();
@@ -449,7 +450,7 @@ function addMINOR(){
 	Ext.getCmp("*").disable();
 	Ext.getCmp("/").disable();
 	Ext.getCmp("null").disable();
-	Ext.getCmp("diverse").disable();
+	Ext.getCmp("different").disable();
 	Ext.getCmp("equal").disable();
 	Ext.getCmp("<").disable();
 	Ext.getCmp(">").disable();
@@ -474,7 +475,7 @@ function addMAJOR(){
 	Ext.getCmp("*").disable();
 	Ext.getCmp("/").disable();
 	Ext.getCmp("null").disable();
-	Ext.getCmp("diverse").disable();
+	Ext.getCmp("different").disable();
 	Ext.getCmp("equal").disable();
 	Ext.getCmp("<").disable();
 	Ext.getCmp(">").disable();
@@ -516,7 +517,7 @@ function addCOMPARE(){
 		Ext.getCmp("valueT").enable();
 	}
 	
-	Ext.getCmp("diverse").disable();
+	Ext.getCmp("different").disable();
 	Ext.getCmp("equal").disable();
 	Ext.getCmp("<").disable();
 	Ext.getCmp(">").disable();
@@ -557,7 +558,7 @@ function addPLUS(){
 	Ext.getCmp("*").disable();
 	Ext.getCmp("/").disable();
 	Ext.getCmp("null").disable();
-	Ext.getCmp("diverse").disable();
+	Ext.getCmp("different").disable();
 	Ext.getCmp("equal").disable();
 	Ext.getCmp("<").disable();
 	Ext.getCmp(">").disable();
@@ -580,7 +581,7 @@ function addMINUS(){
 	Ext.getCmp("*").disable();
 	Ext.getCmp("/").disable();
 	Ext.getCmp("null").disable();
-	Ext.getCmp("diverse").disable();
+	Ext.getCmp("different").disable();
 	Ext.getCmp("equal").disable();
 	Ext.getCmp("<").disable();
 	Ext.getCmp(">").disable();
@@ -602,7 +603,7 @@ function addDIVISION(){
 	Ext.getCmp("*").disable();
 	Ext.getCmp("/").disable();
 	Ext.getCmp("null").disable();
-	Ext.getCmp("diverse").disable();
+	Ext.getCmp("different").disable();
 	Ext.getCmp("equal").disable();
 	Ext.getCmp("<").disable();
 	Ext.getCmp(">").disable();
@@ -624,7 +625,7 @@ function addMULTIPLICATION(){
 	Ext.getCmp("*").disable();
 	Ext.getCmp("/").disable();
 	Ext.getCmp("null").disable();
-	Ext.getCmp("diverse").disable();
+	Ext.getCmp("different").disable();
 	Ext.getCmp("equal").disable();
 	Ext.getCmp("<").disable();
 	Ext.getCmp(">").disable();
@@ -651,7 +652,7 @@ function addVALUE(){
 	Ext.getCmp("jmc").setValue(Ext.getCmp("jmc").getValue()+''+Ext.getCmp("valueT").getValue()+'');
 	Ext.getCmp("valueT").setValue('');
 	Ext.getCmp("valueT").disable();
-	Ext.getCmp("diverse").enable();
+	Ext.getCmp("different").enable();
 	Ext.getCmp("equal").enable();
 	Ext.getCmp("string").disable();
 	Ext.getCmp("value").disable();
@@ -697,7 +698,7 @@ function addSTRING(){
 	Ext.getCmp("*").disable();
 	Ext.getCmp("/").disable();
 	Ext.getCmp("null").disable();
-	Ext.getCmp("diverse").disable();
+	Ext.getCmp("different").disable();
 	Ext.getCmp("equal").disable();
 	Ext.getCmp("<").disable();
 	Ext.getCmp(">").disable();
@@ -740,7 +741,7 @@ function addVARIABLE(input, expertModeText, fieldType){
 		Ext.getCmp("*").enable();
 		Ext.getCmp("/").enable();
 		Ext.getCmp("null").disable();
-		Ext.getCmp("diverse").enable();
+		Ext.getCmp("different").enable();
 		Ext.getCmp("equal").enable();
 		Ext.getCmp("<").enable();
 		Ext.getCmp(">").enable();
@@ -761,7 +762,7 @@ function addVARIABLE(input, expertModeText, fieldType){
 		Ext.getCmp("*").enable();
 		Ext.getCmp("/").enable();
 		Ext.getCmp("null").disable();
-		Ext.getCmp("diverse").enable();
+		Ext.getCmp("different").enable();
 		Ext.getCmp("equal").enable();
 		Ext.getCmp("<").enable();
 		Ext.getCmp(">").enable();
@@ -781,7 +782,7 @@ function addVARIABLE(input, expertModeText, fieldType){
 		Ext.getCmp("*").disable();
 		Ext.getCmp("/").disable();
 		Ext.getCmp("null").disable();
-		Ext.getCmp("diverse").enable();
+		Ext.getCmp("different").enable();
 		Ext.getCmp("equal").enable();
 		Ext.getCmp("<").disable();
 		Ext.getCmp(">").disable();
@@ -804,7 +805,7 @@ function addVARIABLE(input, expertModeText, fieldType){
 		Ext.getCmp("<").disable();
 		Ext.getCmp(">").disable();
 		Ext.getCmp("null").disable();
-		Ext.getCmp("diverse").enable();
+		Ext.getCmp("different").enable();
 		Ext.getCmp("equal").enable();		
 		Ext.getCmp("empty").disable();
 		Ext.getCmp("string").disable();
@@ -815,7 +816,7 @@ function addVARIABLE(input, expertModeText, fieldType){
 	
 	macroTreeEnable(false);		
 	if(isalphanumeric == true && isnumeric == true) {
-		Ext.getCmp("diverse").disable();
+		Ext.getCmp("different").disable();
 		Ext.getCmp("equal").disable();
 		Ext.getCmp("AND").disable();
 		Ext.getCmp("OR").disable();

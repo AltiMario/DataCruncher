@@ -66,7 +66,7 @@ Minimum version can be easily determined by @since Javadoc of used features or G
 </dependency>
 ```
 
-Read mora about Maven version ranges: https://docs.oracle.com/middleware/1212/core/MAVEN/maven_version.htm#MAVEN402
+Read more about Maven version ranges: https://docs.oracle.com/middleware/1212/core/MAVEN/maven_version.htm#MAVEN402
 
 ### Testing
 

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2019  Altimari Mario
- * All rights reserved
+ * DataCruncher
+ * Copyright (c) Mario Altimari. All rights reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -14,6 +14,7 @@
  *
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
  */
 
 package com.datacruncher.jpa.entity;
@@ -174,6 +175,7 @@ public class DatastreamEntity  {
 		} else if (CommonUtils.isJSON(datastream)){
 			//bson compression for json streams
 			try {
+				// FIXME JsonParseException: Unexpected character (''' (code 39)): was expecting double-quote to start field name
 				@SuppressWarnings("unchecked")
 				Map<String,Object> map =
 				        new ObjectMapper().readValue(datastream, Map.class);

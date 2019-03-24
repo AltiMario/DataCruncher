@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2019  Altimari Mario
- * All rights reserved
+ * DataCruncher
+ * Copyright (c) Mario Altimari. All rights reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -14,11 +14,12 @@
  *
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
  */
-
 package com.datacruncher.utils.schema;
 
 import com.sun.tools.xjc.Driver;
+import org.apache.commons.lang3.ArrayUtils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -40,15 +41,18 @@ public class XsdSchemaSourceGenerator {
      * @param schemaLocation
      * @throws IOException
      */
-    void generateSourceFromSchema(String genLocation, String genPackage, String schemaLocation) throws SchemaParsingException {
+    void generateSourceFromSchema(String genLocation, String genPackage, String schemaLocation, String[] extraArgs) throws SchemaParsingException {
         String infoMsg = "Source from schema generation";
         String errMsg = "XJC compiler could not able to parse schema - [" + schemaLocation + "].";
         try {
-            String[] str = new String[]{"-d", genLocation, "-p", genPackage, schemaLocation};
+            String[] args = new String[]{"-d", genLocation, "-p", genPackage, schemaLocation};
+            if (extraArgs != null) {
+                args = ArrayUtils.addAll(args, extraArgs);
+            }
             System.setProperty("java.net.useSystemProxies", "true");
             try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
                 PrintStream ps = new PrintStream(baos);
-                int result = Driver.run(str, System.out, ps);
+                int result = Driver.run(args, System.out, ps);
                 if (result != 0) {
                     genResults.addFailureResult(infoMsg, errMsg + "\n\r" + baos.toString());
                 }

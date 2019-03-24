@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2019  Altimari Mario
- * All rights reserved
+ * DataCruncher
+ * Copyright (c) Mario Altimari. All rights reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -14,6 +14,7 @@
  *
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
  */
 
 var columns = '';
@@ -182,149 +183,11 @@ var databasesGrid =  Ext.create('Ext.grid.Panel', {
 	}),
 	store: storeDatabases,
 	title: _label['database'],
-	listeners: {
-		itemclick: function(grid, record, item, index, e) {
-   			var id = record.data.idDatabase;
-
-   			Ext.Ajax.request({
-   				url: "./profilerLoad.json?action=loadProfile&_dbId=" + id,
-   				disableCaching: false,
-   				success: function ( result, request ) {
-   					var response = Ext.decode(result.responseText);			
-   					if(response.success == true){
-   						
-					var sampleTreeStore = Ext.create('Ext.data.TreeStore', {
-							autoSync:true,
-   							proxy : {
-   								type : 'ajax',
-   								url : 'profilerTree.json'
-   							},
-   							sorters : [ {
-   								property : 'leaf',
-   								direction : 'ASC'
-   							}, {
-   								property : 'text',
-   								direction : 'ASC'
-   							} ]
-   						}); 
-						sampleTreeStore.setRootNode({
-							id: '0',
-							text: 'Data Base',
-							leaf: false,
-							expanded: true // If true, the store load's itself immediately; we want that to happen!
-						});
-   						var sampleTree = Ext.create('Ext.tree.Panel', {
-   							autoScroll: true,
-   							id: 'dbTableTree',
-   							store:sampleTreeStore,
-   							singleExpand: true,
-   							rootVisible: true,
-   							useArrows:true,
-   							listeners : {
-   								itemclick : function(view, record, item, index, e) {
-   									reloadTab(record.get('text'), record.isLeaf(),
-   											record.parentNode.get('text'));
-   								}
-   							}
-   						});
-   						
-   						if(Ext.getCmp('centerPanel').items.length > 0) {
-   							Ext.getCmp('centerPanel').removeAll();
-   						}
-   						
-   						Ext.getCmp('centerPanel').add(sampleTree);
-   						
-   						Ext.Ajax.request( {
-   							url : './profilerLoad.json?action=getColumnNames',
-   							success: function (result) {				
-   								var temp = result.responseText;
-   								temp = temp.substring(1, (temp.length - 1));
-   								columns = Ext.JSON.decode(temp);
-   							},
-   							failure : function() {
-   							
-   							}
-   						});
-
-   						Ext.Ajax.request( {
-   							url : './profilerLoad.json?action=getTableNames',
-   							success: function (result) {
-   								var temp = result.responseText;
-   								temp = temp.substring(1, (temp.length - 1));
-   								tables = Ext.JSON.decode(temp);
-   							},
-   							failure : function() {
-   							
-   							}
-   						});
-   					} else {	    		
-   						App.setAlert(false ,response.message);
-   					}
-   				}
-   			}); 		    
-   		   }
-	},
 	features: [
 			Ext.create('NoMarkDirtyFeature')
 	]
 });
 
-var databasesGridReadOnly = Ext.create('Ext.Panel',{
-    frame:false,
-    border:false,
-    collapsible:false,
-    id: 'databasesGridReadOnlyPanel',
-    title: '',
-    layout:'border',
-    items:[{
-      region: 'center', 
-      id:'westPanel',
-      title:'',
-      xtype:'panel',
-      layout:'fit',
-      monitorResize:true,
-      border: true,
-      items:[{
-   	   xtype:'panel',
-   	   layout:'fit',
-   	   border : false,
-   	   autoScroll: false,
-   	   monitorResize:true,
-   	   frame : false,
-   	   id: 'home-center'
-      }]
-    },         
-    {
-       region: 'east',     
-       id:'centerPanel',
-       width:'20%',
-       collapseMode: 'mini',
-       xtype:'panel',
-       layout:'fit',
-       collapsible:true,
-       autoScroll: false,
-       border: false,
-       baseCls:'x-plain',
-       split: true ,
-       title:''
-    }]
-  });
-
-function connectionToDB(id) {
-	Ext.Ajax.request({
-		url: "./profilerLoad.json?_dbId=" + id,
-		disableCaching: false,
-		success: function ( result, request ) {
-			var response = Ext.decode(result.responseText);			
-			if(response.success == true){
-				//window.location = "profilerHome.json";	
-				window.open("profilerHome.json");
-			} else {	    		
-				App.setAlert(false ,response.message);
-			}
-		}
-	});
-}
 function addDatabase() {
 	var record = new databasesGrid.store.model();
 	record.set('idDatabaseType' , 1);

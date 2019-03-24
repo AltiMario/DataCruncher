@@ -1,6 +1,6 @@
 <%--
-  ~ Copyright (c) 2019  Altimari Mario
-  ~ All rights reserved
+  ~ DataCruncher
+  ~ Copyright (c) Mario Altimari. All rights reserved.
   ~
   ~ This program is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU Affero General Public License as
@@ -14,6 +14,7 @@
   ~
   ~ You should have received a copy of the GNU Affero General Public License
   ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  ~
   --%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -132,7 +133,7 @@
     <script type="text/javascript" src="./js/loginPopup.js"></script>
 	<script type="text/javascript" src="./js/loadingStreamFieldsPopup.js"></script>
     <script type="text/javascript" src="./js/contactUs.js"></script>
-    
+
     <link rel="stylesheet" type="text/css" href="./css/ItemSelector.css" />
     <script type="text/javascript" src="./ux/Printer.js"></script> 
 	<script type="text/javascript" src="./ux/MultiSelect.js"></script> 
