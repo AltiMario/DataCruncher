@@ -47,6 +47,7 @@ public enum Activity {
 	SCHEMA_DOCS(20,"schemaDocuments"),
 	SCHEMA_EXPORT_TO_XSD(21,"schemaExportToXSD"),
     SCHEMA_IMPORT_FROM_XSD(71,"schemaImportFromXSD"),
+	SCHEMA_SHOW_FORM(121,"showForm"),
 	SCHEMA_EXPORT_XSD_IMAGE(46,"schemaXSDExportToPNG"),
 	SCHEMA_HELP(22,"schemaHelp"),
 	SCHEMA_EXTRA_CHECK(58,"schemaExtraCheck"),

@@ -622,6 +622,10 @@ function schemaDocuments() {
     popupSchemaDocuments(record);
 };
 
+function showForm() {
+	popupSchemaHelp();
+};
+
 function schemaImportFromJv() {
     editorSchemas.cancelEdit();
     var idApplication = storeApplications.getAt(0).get('idApplication');

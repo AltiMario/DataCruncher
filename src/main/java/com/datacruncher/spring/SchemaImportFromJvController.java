@@ -33,7 +33,6 @@ import com.datacruncher.jpa.dao.DaoSet;
 import com.datacruncher.jpa.entity.SchemaEntity;
 import com.datacruncher.jpa.entity.SchemaFieldEntity;
 import com.datacruncher.utils.generic.CommonUtils;
-import com.datacruncher.utils.CryptoUtil;
 import com.datacruncher.utils.generic.I18n;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -77,7 +76,7 @@ public class SchemaImportFromJvController extends MultiActionController implemen
 		
 		try {
             Create create = new Create();
-			String fileContent = new CryptoUtil().decrypt(new String(multipartFile.getBytes()));
+			String fileContent = new String(multipartFile.getBytes());
 			if  (fileContent ==null) {
                 create.setSuccess(false);
                 create.setMessage("The file can not be read.");

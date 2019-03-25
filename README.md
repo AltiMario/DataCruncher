@@ -77,3 +77,21 @@ Some tests use embedded HTTP server (Jetty). Server is started on port described
 ```jetty.port=8999```
 
 Check that this port is free before tests run or specify different port number.
+
+
+### New item in menu
+
+For adding new menu item we need to do following:
+
+1) Add the entry in Activity.java
+
+2) Add same  entries for required roles in RoleActivityDao.java
+
+3) clear the following db tables:
+
+    a- jv_activity
+
+    b- jv_role_activity
+
+4) add js code in index.js related to the new entity
+

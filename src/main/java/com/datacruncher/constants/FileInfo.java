@@ -29,6 +29,6 @@ public class FileInfo {
     public static String GENERATED_FOLDER = "/generated";
     public static String CLASSPATH_FOLDER = "/WEB-INF/classes";
     public static String TESTS_WORKING_PATH;
-    public static String EXIMPORT_FILE_EXTENSION =".jv";
+    public static String EXIMPORT_FILE_EXTENSION =".xsd";
 
 }

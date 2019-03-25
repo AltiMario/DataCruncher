@@ -107,6 +107,9 @@ body {
 .schema_import_schema{
     background: url(../images/schema_import.png);
 }
+.form{
+	background: url(../images/form.png);
+}
 .schema_valid_trace{
      background: url(../images/valid_trace.png);
  }

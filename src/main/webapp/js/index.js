@@ -154,6 +154,12 @@ importFromXSDSchemaObj.text =  _message['importSchema'];
 importFromXSDSchemaObj.leaf =  true;
 importFromXSDSchemaObj.id =  'schemaImportFromXSD';
 
+var showFormObj = new Object();
+showFormObj.iconCls =  'form';
+showFormObj.text =  _message['showForm'];
+showFormObj.leaf =  true;
+showFormObj.id =  'showForm';
+
 var helpSchemaObj = new Object();
 helpSchemaObj.iconCls =  'help';
 helpSchemaObj.text =  _message['help'];
@@ -541,7 +547,7 @@ var streamLoadingJsIds = [ listStreamLoadingObj, addStreamLoadingObj,
 		deleteStreamLoadingObj, editStreamLoadingObj,
 		editFieldsStreamLoadingObj, helpStreamLoadingObj ];
 var schemasJsIds = [listSchemaObj,addSchemaObj,deleteSchemaObj,editSchemaObj,duplicateSchemaObj,editFieldsSchemaObj,loadFieldsSchemaObj, errorsSchemaObj,
-	validTraceSchemaObj,dataStreamReceivedSchemaObj,extraCheckSchemaObj,macroSchemaObj,triggerSchemaObj,exportToXSDSchemaObj,exportToImageXSDSchemaObj,importFromXSDSchemaObj,docSchemaObj,helpSchemaObj];
+	validTraceSchemaObj,dataStreamReceivedSchemaObj,extraCheckSchemaObj,macroSchemaObj,triggerSchemaObj,exportToXSDSchemaObj,exportToImageXSDSchemaObj,importFromXSDSchemaObj,showFormObj,docSchemaObj,helpSchemaObj];
 var standardSchemasJsIds = [listStandardSchemaObj,addStandardSchemaObj,deleteStandardSchemaObj,editStandardSchemaObj,duplicateStandardSchemaObj,validTraceStandardSchemaObj,dataStreamReceivedStandardSchemaObj,docStandardSchemaObj,supportedStandardSchemaObj,helpStandardSchemaObj];
 var userTreeJsIds = [addUserObj,deleteUserObj,editUserObj,logoutUserObj,helpUserObj];
 var connectionsJsIds = [addConnObj,deleteConnObj,editConnObj,refreshConnObj,helpConnObj];
@@ -838,6 +844,8 @@ var schemas = ({
 				schemaDocuments();
             } else if(rec.get('id')=='schemaImportFromXSD'){
                 schemaImportFromJv();
+			} else if(rec.get('id')=='showForm'){
+				showForm();
 			} else if(rec.get('id')=='schemaHelp'){
 				helpSchema();
 			} else if(rec.get('id')=='schemaExtraCheck'){
