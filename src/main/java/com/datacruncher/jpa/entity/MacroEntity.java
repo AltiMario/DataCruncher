@@ -42,6 +42,10 @@ public class MacroEntity {
 	@Lob
     @Column(name = "description")
     private String description;
+
+	@Lob
+	@Column(name = "tags")
+	private String tags;
 	
 	@Lob
     @Column(name = "vars")
@@ -111,7 +115,15 @@ public class MacroEntity {
     public void setDescription(String description) {
         this.description = description;
     }
-    
+
+	public String getTags() {
+		return tags;
+	}
+
+	public void setTags(String tags) {
+		this.tags = tags;
+	}
+
 	public String getVars() {
         return vars;
     }

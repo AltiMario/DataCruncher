@@ -24,7 +24,6 @@ import com.datacruncher.jpa.entity.ChecksTypeEntity;
 import com.datacruncher.jpa.entity.SchemaXSDEntity;
 import com.datacruncher.utils.generic.I18n;
 import com.datacruncher.utils.language.LanguagesList;
-import com.datacruncher.jpa.*;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,12 +50,12 @@ public class ChecksTypeDao {
     private static final String MONTHWORDS_IT_PATTERN = "(Gennaio|Febbraio|Marzo|Aprile|Maggio|Giugno|Luglio|Agosto|Settembre|Ottobre|Novembre|Dicembre)*"; //TODO: not case-sensitive
     private static final String NOHTML_PATTERN = "[^(&lt;.+&gt;)]*";
     private static final String ALPHABETIC_PATTERN = "[a-zA-Z\\s]*";
-	private static final String POUND_STERLING = "£?(([1-9]{1,3}(,\\d{3})*(\\.\\d{2})?)|(0\\.[1-9]\\d)|(0\\.0[1-9]))";
-
-    /*** Matches following phone numbers:
-         (123)456-7890, 123-456-7890, 1234567890, (123)-456-7890
-     */
+	private static final String POUND_STERLING_PATTERN = "£?(([1-9]{1,3}(,\\d{3})*(\\.\\d{2})?)|(0\\.[1-9]\\d)|(0\\.0[1-9]))";
+    // Matches following phone numbers: (123)456-7890, 123-456-7890, 1234567890, (123)-456-7890
     private static final String PHONE_PATTERN = ".*\\(?(\\d{3})\\)?[-]?(\\d{3})[-]?(\\d{4}).*";
+	//source: https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/488478/Bulk_Data_Transfer_-_additional_validation_valid_from_12_November_2015.pdf
+	private static final String POSTCODE_UK_PATTERN = "^([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([AZa-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9]?[A-Za-z])))) [0-9][A-Za-z]{2})$";
+	private static final String MONETARY_PATTERN = "-?(([1-9][0-9]*)|0)";
 
 
 	Logger log = Logger.getLogger(this.getClass());
@@ -227,7 +226,7 @@ public class ChecksTypeDao {
 				em.remove(o);
 			}
 			for (LanguagesList langShort : LanguagesList.values()) {
-				ChecksTypeEntity checksTypeEntity = new ChecksTypeEntity("@spellcheck", "Spell Check -> " + langShort, "Spell check with "+ langShort +" language vocabulary", "Coded", true, null, null,null);
+				ChecksTypeEntity checksTypeEntity = new ChecksTypeEntity("@spellcheck", "Spell Check -> " + langShort, "Spell check with "+ langShort +" language vocabulary", "Words, Spell check","Coded", true, null, null,null);
 				em.persist(checksTypeEntity);
 			}			
 		}
@@ -241,105 +240,109 @@ public class ChecksTypeDao {
 			List<Long> result = em.createNamedQuery("ChecksTypeEntity.count").getResultList();
 			if (result.get(0) == 0L) {
 				addSpellChecks();
-                checksTypeEntity = new ChecksTypeEntity("@iban", "Finance -> IBAN", "International Bank Account Number", "Coded", true, null, null,"common.IBAN");
+                checksTypeEntity = new ChecksTypeEntity("@iban", "IBAN", "International Bank Account Number","Finance", "Coded", true, null, null,"common.IBAN");
 				em.persist(checksTypeEntity);
-                checksTypeEntity = new ChecksTypeEntity("@bic", "Finance -> BIC", "Business Identifier Codes, ISO 9362", "Coded", true, null, null,"common.BIC");
+                checksTypeEntity = new ChecksTypeEntity("@bic", "BIC", "Business Identifier Codes, ISO 9362", "Finance", "Coded", true, null, null,"common.BIC");
                 em.persist(checksTypeEntity);
-                checksTypeEntity = new ChecksTypeEntity("@currency", "Finance -> Currency", "Circulating currency, ISO 4218", "Coded", true, null, null,"common.ISOCurrencies");
-                em.persist(checksTypeEntity);
-                checksTypeEntity = new ChecksTypeEntity("@codicefiscale:nome", "Finance -> Codice Fiscale -> Nome", "Italian tax identifier - name","Coded", true, null, null,"custom.CodiceFiscale");
+                checksTypeEntity = new ChecksTypeEntity("@currency", "Currency", "Circulating currency, ISO 4218", "Finance","Coded", true, null, null,"common.ISOCurrencies");
 				em.persist(checksTypeEntity);
-				checksTypeEntity = new ChecksTypeEntity("@codicefiscale:cognome", "Finance -> Codice Fiscale -> Cognome", "Italian tax identifier - surname","Coded", true, null, null,"custom.CodiceFiscale");
+				checksTypeEntity = new ChecksTypeEntity(null, "Pound Sterling", "UK Money format", "Finance","Regular Expression", true, "regexps.pound_sterling", POUND_STERLING_PATTERN, null);
 				em.persist(checksTypeEntity);
-				checksTypeEntity = new ChecksTypeEntity("@codicefiscale:sesso", "Finance -> Codice Fiscale -> Sesso (M/F)", "Italian tax identifier - sex","Coded", true, null, null,"custom.CodiceFiscale");
+				checksTypeEntity = new ChecksTypeEntity(null, "Monetary", "Monetary type","Finance", "Regular Expression", true, "regexps.monetary_type", MONETARY_PATTERN, null);
+                em.persist(checksTypeEntity);
+                checksTypeEntity = new ChecksTypeEntity("@codicefiscale:nome", "Codice Fiscale -> Nome", "Italian tax identifier - name","Finance, Codice Fiscale, Italy","Coded", true, null, null,"custom.CodiceFiscale");
 				em.persist(checksTypeEntity);
-				checksTypeEntity = new ChecksTypeEntity("@codicefiscale:dataNascita", "Finance -> Codice Fiscale -> Data di Nascita (gg/mm/aaaa)", "Italian tax identifier - birth day","Coded", true, null, null,"custom.CodiceFiscale");
+				checksTypeEntity = new ChecksTypeEntity("@codicefiscale:cognome", "Codice Fiscale -> Cognome", "Italian tax identifier - surname","Finance, Codice Fiscale, Italy","Coded", true, null, null,"custom.CodiceFiscale");
 				em.persist(checksTypeEntity);
-				checksTypeEntity = new ChecksTypeEntity("@codicefiscale:comuneNascita", "Finance -> Codice Fiscale -> Comune di Nascita", "Italian tax identifier - birth place","Coded", true, null, null,"custom.CodiceFiscale");
+				checksTypeEntity = new ChecksTypeEntity("@codicefiscale:sesso", "Codice Fiscale -> Sesso (M/F)", "Italian tax identifier - sex","Finance, Codice Fiscale, Italy","Coded", true, null, null,"custom.CodiceFiscale");
 				em.persist(checksTypeEntity);
-				checksTypeEntity = new ChecksTypeEntity("@codicefiscale:provinciaNascita", "Finance -> Codice Fiscale -> Provincia di Nascita", "Italian tax identifier- birth place","Coded", true, null, null,"custom.CodiceFiscale");
+				checksTypeEntity = new ChecksTypeEntity("@codicefiscale:dataNascita", "Codice Fiscale -> Data di Nascita (gg/mm/aaaa)", "Italian tax identifier - birth day","Finance, Codice Fiscale, Italy","Coded", true, null, null,"custom.CodiceFiscale");
 				em.persist(checksTypeEntity);
-				checksTypeEntity = new ChecksTypeEntity("@codicefiscale:codiceFiscale", "Finance -> Codice Fiscale", "Italian tax identifier - italian tax","Coded", true, null, null,"custom.CodiceFiscale");
+				checksTypeEntity = new ChecksTypeEntity("@codicefiscale:comuneNascita", "Codice Fiscale -> Comune di Nascita", "Italian tax identifier - birth place","Finance, Codice Fiscale, Italy","Coded", true, null, null,"custom.CodiceFiscale");
 				em.persist(checksTypeEntity);
-				checksTypeEntity = new ChecksTypeEntity("@partitaiva", "Finance -> Partita IVA", "Italian company registration number / Italian VAT number", "Coded", true, null, null,"custom.PartitaIVA");
+				checksTypeEntity = new ChecksTypeEntity("@codicefiscale:provinciaNascita", "Codice Fiscale -> Provincia di Nascita", "Italian tax identifier- birth place","Finance, Codice Fiscale, Italy","Coded", true, null, null,"custom.CodiceFiscale");
 				em.persist(checksTypeEntity);
-				checksTypeEntity = new ChecksTypeEntity("@creditcard", "Finance -> Credit Card", "Generic credit card number", "Coded", true, null, null,"common.CreditCard");
+				checksTypeEntity = new ChecksTypeEntity("@codicefiscale:codiceFiscale", "Codice Fiscale", "Italian tax identifier - italian tax","Finance, Codice Fiscale, Italy","Coded", true, null, null,"custom.CodiceFiscale");
 				em.persist(checksTypeEntity);
-				checksTypeEntity = new ChecksTypeEntity(null, "Finance -> Pound Sterling", "UK Money format", "Regular Expression", true, "regexps.pound_sterling", POUND_STERLING, null);
+				checksTypeEntity = new ChecksTypeEntity("@partitaiva", "Partita IVA", "Italian company registration number / Italian VAT number","Finance, Italy", "Coded", true, null, null,"custom.PartitaIVA");
 				em.persist(checksTypeEntity);
-				checksTypeEntity = new ChecksTypeEntity("@country", "Generic -> Country", "Country code, ISO 3166-1 alpha-2", "Coded", true, null, null,"common.ISOCountries");
-                em.persist(checksTypeEntity);
-                checksTypeEntity = new ChecksTypeEntity("@domain", "Internet -> Domain name", "Internet domain name", "Coded", true, null, null,"common.Domain");
+				checksTypeEntity = new ChecksTypeEntity("@creditcard", "Credit Card", "Generic credit card number", "Finance","Coded", true, null, null,"common.CreditCard");
 				em.persist(checksTypeEntity);
-                checksTypeEntity = new ChecksTypeEntity("@latitude", "Internet -> Latitude", "Geographic coordinate", "Coded", true, null, null,"common.Latitude");
+				checksTypeEntity = new ChecksTypeEntity("@country", "Country", "Country code, ISO 3166-1 alpha-2", "GEO","Coded", true, null, null,"common.ISOCountries");
                 em.persist(checksTypeEntity);
-                checksTypeEntity = new ChecksTypeEntity("@longitude", "Internet -> Longitude", "Geographic coordinate", "Coded", true, null, null,"common.Longitude");
-                em.persist(checksTypeEntity);
-                checksTypeEntity = new ChecksTypeEntity("@isbn", "Generic -> ISBN","International Standard Book Number", "Coded", true, null, null,"common.ISBN");
+                checksTypeEntity = new ChecksTypeEntity("@domain", "Domain name", "Internet domain name", "Internet","Coded", true, null, null,"common.Domain");
 				em.persist(checksTypeEntity);
-				checksTypeEntity = new ChecksTypeEntity("@url", "Internet -> URL", "Uniform Resource Locator, formal check", "Coded", true, null, null,"common.Url");
+                checksTypeEntity = new ChecksTypeEntity("@latitude", "Latitude", "Geographic coordinate", "GEO","Coded", true, null, null,"common.Latitude");
                 em.persist(checksTypeEntity);
-                checksTypeEntity = new ChecksTypeEntity("@urlExisting", "Internet -> URL Existing", "Uniform Resource Locator, formal and connection check", "Coded", true, null, null,"common.UrlExisting");
+                checksTypeEntity = new ChecksTypeEntity("@longitude", "Longitude", "Geographic coordinate", "GEO","Coded", true, null, null,"common.Longitude");
                 em.persist(checksTypeEntity);
-                checksTypeEntity = new ChecksTypeEntity("@inetaddress", "Internet -> IP", "Internet Protocol address", "Coded", true, null, null,"common.InetAddress");
-                em.persist(checksTypeEntity);
-                checksTypeEntity = new ChecksTypeEntity("@serverport", "Internet -> Server Port", "Server port", "Coded", true, null, null,"common.ServerPort");
+                checksTypeEntity = new ChecksTypeEntity("@isbn", "ISBN","International Standard Book Number", "GEO","Book", true, null, null,"common.ISBN");
 				em.persist(checksTypeEntity);
-				checksTypeEntity = new ChecksTypeEntity("@comuniitaliani:istat", "Comuni Italiani -> ISTAT", "ISTAT code number", "Coded", true, null, null,"custom.ComuniItaliani");
+				checksTypeEntity = new ChecksTypeEntity("@url", "URL", "Uniform Resource Locator, formal check", "Internet","Coded", true, null, null,"common.Url");
+                em.persist(checksTypeEntity);
+                checksTypeEntity = new ChecksTypeEntity("@urlExisting", "URL Existing", "Uniform Resource Locator, formal and connection check","Internet", "Coded", true, null, null,"common.UrlExisting");
+                em.persist(checksTypeEntity);
+                checksTypeEntity = new ChecksTypeEntity("@inetaddress", "IP", "Internet Protocol address","Internet", "Coded", true, null, null,"common.InetAddress");
+                em.persist(checksTypeEntity);
+                checksTypeEntity = new ChecksTypeEntity("@serverport", "Server Port", "Server port", "Internet","Coded", true, null, null,"common.ServerPort");
 				em.persist(checksTypeEntity);
-				checksTypeEntity = new ChecksTypeEntity("@comuniitaliani:cap", "Comuni Italiani -> CAP", "Italian postal code number", "Coded", true, null, null,"custom.ComuniItaliani");
+				checksTypeEntity = new ChecksTypeEntity("@comuniitaliani:istat", "ISTAT", "ISTAT code number","Comuni, Italy", "Coded", true, null, null,"custom.ComuniItaliani");
 				em.persist(checksTypeEntity);
-				checksTypeEntity = new ChecksTypeEntity("@comuniitaliani:comune", "Comuni Italiani -> Comune", "Italian town", "Coded", true, null, null,"custom.ComuniItaliani");
+				checksTypeEntity = new ChecksTypeEntity("@comuniitaliani:cap", "CAP", "Italian postal code number", "Comuni, Italy, Post code","Coded", true, null, null,"custom.ComuniItaliani");
 				em.persist(checksTypeEntity);
-				checksTypeEntity = new ChecksTypeEntity("@comuniitaliani:provincia", "Comuni Italiani -> Provincia", "Italian province", "Coded", true, null, null,"custom.ComuniItaliani");
+				checksTypeEntity = new ChecksTypeEntity("@comuniitaliani:comune", "Comune", "Italian town", "Comuni, Italy","Coded", true, null, null,"custom.ComuniItaliani");
 				em.persist(checksTypeEntity);
-				checksTypeEntity = new ChecksTypeEntity("@comuniitaliani:regione", "Comuni Italiani -> Regione", "Italian region", "Coded", true, null, null,"custom.ComuniItaliani");
+				checksTypeEntity = new ChecksTypeEntity("@comuniitaliani:provincia", "Provincia", "Italian province", "Comuni, Italy","Coded", true, null, null,"custom.ComuniItaliani");
 				em.persist(checksTypeEntity);
-				checksTypeEntity = new ChecksTypeEntity("@comuniitaliani:prefisso", "Comuni Italiani -> Prefisso", "Italian area code", "Coded", true, null, null,"custom.ComuniItaliani");
+				checksTypeEntity = new ChecksTypeEntity("@comuniitaliani:regione", "Regione", "Italian region", "Comuni, Italy", "Coded", true, null, null,"custom.ComuniItaliani");
 				em.persist(checksTypeEntity);
-				checksTypeEntity = new ChecksTypeEntity("@comuniitaliani:codfisco", "Comuni Italiani -> Codice Fisco", "Italian town tax identifier", "Coded", true, null, null,"custom.ComuniItaliani");
-                em.persist(checksTypeEntity);
-                checksTypeEntity = new ChecksTypeEntity("@emailexisting", "Internet -> E-Mail Existing", "Existence check of electronic mail", "Coded", true, null, null,"custom.EmailExisting");
-                em.persist(checksTypeEntity);
-				checksTypeEntity = new ChecksTypeEntity(null, "Internet -> E-Mail", "Electronic mail", "Regular Expression", true, "regexps.email", EMAIL_PATTERN, null);
+				checksTypeEntity = new ChecksTypeEntity("@comuniitaliani:prefisso", "Prefisso", "Italian area code", "Comuni, Italy","Coded", true, null, null,"custom.ComuniItaliani");
 				em.persist(checksTypeEntity);
-                checksTypeEntity = new ChecksTypeEntity("@emailjoined", "Internet -> E-Mails joined", "Electronic mails joined by separator", "Coded", true, null, null,"custom.EmailJoined");
+				checksTypeEntity = new ChecksTypeEntity("@comuniitaliani:codfisco", "Codice Fisco", "Italian town tax identifier", "Comuni, Italy", "Coded", true, null, null,"custom.ComuniItaliani");
                 em.persist(checksTypeEntity);
-                checksTypeEntity = new ChecksTypeEntity(null, "Generic -> Telephone number", "Telephone number", "Regular Expression", true, "regexps.telephone", PHONE_PATTERN, null);
+                checksTypeEntity = new ChecksTypeEntity("@emailexisting", "E-Mail Existing", "Existence check of electronic mail", "Internet","Coded", true, null, null,"custom.EmailExisting");
                 em.persist(checksTypeEntity);
-                checksTypeEntity = new ChecksTypeEntity(null, "Generic -> Safe Text", "Lower and upper case letters and all digits", "Regular Expression", true, "regexps.safetext", SAFETEXT_PATTERN, null);
-                em.persist(checksTypeEntity);
-                checksTypeEntity = new ChecksTypeEntity(null, "Generic -> Digit Words EN", "The English words representing the digits 0 to 9", "Regular Expression", true, "regexps.digitwords_en", DIGITWORDS_EN_PATTERN, null);
-                em.persist(checksTypeEntity);
-                checksTypeEntity = new ChecksTypeEntity(null, "Generic -> Digit Words IT", "The Italian words representing the digits 0 to 9", "Regular Expression", true, "regexps.digitwords_it", DIGITWORDS_IT_PATTERN, null);
-                em.persist(checksTypeEntity);
-                checksTypeEntity = new ChecksTypeEntity(null, "Generic -> ZIP", "US zip code with optional dash-four", "Regular Expression", true, "regexps.zip_us", ZIP_US_PATTERN, null);
-                em.persist(checksTypeEntity);
-                checksTypeEntity = new ChecksTypeEntity(null, "Generic -> US States", "Two letter state abbreviations", "Regular Expression", true, "regexps.state_us", STATE_US_PATTERN, null);
-                em.persist(checksTypeEntity);
-                checksTypeEntity = new ChecksTypeEntity("@passwordcheck", "Generic -> Passwords", "4 to 8 character password requiring numbers, lowercase letters, and uppercase letters", "Coded", true, null, null,"custom.PasswordCheck");
-                em.persist(checksTypeEntity);
-                checksTypeEntity = new ChecksTypeEntity(null, "Generic -> Month words abbreviations EN", "3 characters abbreviations for the months, English", "Regular Expression", true, "regexps.month3chars_en", MONTH3CHARS_EN_PATTERN, null);
-                em.persist(checksTypeEntity);
-                checksTypeEntity = new ChecksTypeEntity(null, "Generic -> Month words abbreviations IT", "3 characters abbreviations for the months, Italian", "Regular Expression", true, "regexps.month3chars_it", MONTH3CHARS_IT_PATTERN, null);
-                em.persist(checksTypeEntity);
-                checksTypeEntity = new ChecksTypeEntity(null, "Generic -> Month words IT", "Italian months", "Regular Expression", true, "regexps.monthwords_it", MONTHWORDS_IT_PATTERN, null);
-                em.persist(checksTypeEntity);
-                checksTypeEntity = new ChecksTypeEntity(null, "Generic -> Month words EN", "English months", "Regular Expression", true, "regexps.monthwords_en", MONTHWORDS_EN_PATTERN, null);
-                em.persist(checksTypeEntity);
-                checksTypeEntity = new ChecksTypeEntity(null, "Internet -> No HTML", "No HTML allowed", "Regular Expression", true, "regexps.nohtml", NOHTML_PATTERN, null);
-                em.persist(checksTypeEntity);
-                checksTypeEntity = new ChecksTypeEntity(null, "Generic -> Alphabetic Characters", "Alphabetic characters allowed", "Regular Expression", true, "regexps.alphabetic", ALPHABETIC_PATTERN, null);
-                em.persist(checksTypeEntity);
-                checksTypeEntity = new ChecksTypeEntity("@phonenumberextractorit", "Generic -> Telephone number extractor (Italian)", "Find the presence of telephone numbers in italian text (ex: zero zero trecentoquarantanove ...)", "Coded", true, null, null,"custom.PhoneNumberExtractorIT");
-                em.persist(checksTypeEntity);
-                checksTypeEntity = new ChecksTypeEntity("@phonenumberextractoren", "Generic -> Telephone number extractor (English)", "Find the presence of telephone numbers in english text (ex: zero zero three hundred forty nine ...)", "Coded", true, null, null,"custom.PhoneNumberExtractorEN");
-                em.persist(checksTypeEntity);
-                checksTypeEntity = new ChecksTypeEntity("@italian:nomemaschile", "Generic -> Italian -> Nome Maschile", "Italian male name", "Coded", true, null, null,"custom.NomiItaliani");
+				checksTypeEntity = new ChecksTypeEntity(null, "E-Mail", "Electronic mail", "Internet","Regular Expression", true, "regexps.email", EMAIL_PATTERN, null);
 				em.persist(checksTypeEntity);
-				checksTypeEntity = new ChecksTypeEntity("@italian:nomefemminile", "Generic -> Italian -> Nome Femminile", "Italian female name", "Coded", true, null, null,"custom.NomiItaliani");
-				em.persist(checksTypeEntity);				
-				checksTypeEntity = new ChecksTypeEntity("@italian:cognome", "Generic -> Italian -> Cognome", "Italian surname", "Coded", true, null, null,"custom.NomiItaliani");
+                checksTypeEntity = new ChecksTypeEntity("@emailjoined", "E-Mails joined", "Electronic mails joined by separator", "Internet","Coded", true, null, null,"custom.EmailJoined");
+                em.persist(checksTypeEntity);
+                checksTypeEntity = new ChecksTypeEntity(null, "Telephone number", "Telephone number", "Phone number","Regular Expression", true, "regexps.telephone", PHONE_PATTERN, null);
+                em.persist(checksTypeEntity);
+                checksTypeEntity = new ChecksTypeEntity(null, "Safe Text", "Lower and upper case letters and all digits", "Security","Regular Expression", true, "regexps.safetext", SAFETEXT_PATTERN, null);
+                em.persist(checksTypeEntity);
+                checksTypeEntity = new ChecksTypeEntity(null, "Digit Words EN", "The English words representing the digits 0 to 9", "Words","Regular Expression", true, "regexps.digitwords_en", DIGITWORDS_EN_PATTERN, null);
+                em.persist(checksTypeEntity);
+                checksTypeEntity = new ChecksTypeEntity(null, "Digit Words IT", "The Italian words representing the digits 0 to 9", "Words, Italy","Regular Expression", true, "regexps.digitwords_it", DIGITWORDS_IT_PATTERN, null);
+                em.persist(checksTypeEntity);
+                checksTypeEntity = new ChecksTypeEntity(null, "US ZIP", "US zip code with optional dash-four", "Post code","Regular Expression", true, "regexps.zip_us", ZIP_US_PATTERN, null);
+				em.persist(checksTypeEntity);
+				checksTypeEntity = new ChecksTypeEntity(null, "UK POST", "UK post code", "Post code","Regular Expression", true, "regexps.postcode_uk", POSTCODE_UK_PATTERN, null);
+				em.persist(checksTypeEntity);
+                checksTypeEntity = new ChecksTypeEntity(null, "US States", "Two letter state abbreviations", "GEO", "Regular Expression", true, "regexps.state_us", STATE_US_PATTERN, null);
+                em.persist(checksTypeEntity);
+                checksTypeEntity = new ChecksTypeEntity("@passwordcheck", "Passwords", "4 to 8 character password requiring numbers, lowercase letters, and uppercase letters", "Security","Coded", true, null, null,"custom.PasswordCheck");
+                em.persist(checksTypeEntity);
+                checksTypeEntity = new ChecksTypeEntity(null, "Month words abbreviations EN", "3 characters abbreviations for the months, English","Date, Words", "Regular Expression", true, "regexps.month3chars_en", MONTH3CHARS_EN_PATTERN, null);
+                em.persist(checksTypeEntity);
+                checksTypeEntity = new ChecksTypeEntity(null, "Month words abbreviations IT", "3 characters abbreviations for the months, Italian", "Date, Words, Italy","Regular Expression", true, "regexps.month3chars_it", MONTH3CHARS_IT_PATTERN, null);
+                em.persist(checksTypeEntity);
+                checksTypeEntity = new ChecksTypeEntity(null, "Month words IT", "Italian months", "Date, Words, Italy","Regular Expression", true, "regexps.monthwords_it", MONTHWORDS_IT_PATTERN, null);
+                em.persist(checksTypeEntity);
+                checksTypeEntity = new ChecksTypeEntity(null, "Month words EN", "English months", "Date, Words","Regular Expression", true, "regexps.monthwords_en", MONTHWORDS_EN_PATTERN, null);
+                em.persist(checksTypeEntity);
+                checksTypeEntity = new ChecksTypeEntity(null, "No HTML", "No HTML allowed", "Internet, Security","Regular Expression", true, "regexps.nohtml", NOHTML_PATTERN, null);
+                em.persist(checksTypeEntity);
+                checksTypeEntity = new ChecksTypeEntity(null, "Alphabetic Characters", "Alphabetic characters allowed", "Words","Regular Expression", true, "regexps.alphabetic", ALPHABETIC_PATTERN, null);
+                em.persist(checksTypeEntity);
+                checksTypeEntity = new ChecksTypeEntity("@phonenumberextractorit", "Telephone number extractor (Italian)", "Find the presence of telephone numbers in italian text (ex: zero zero trecentoquarantanove ...)", "Phone number, Italy","Coded", true, null, null,"custom.PhoneNumberExtractorIT");
+                em.persist(checksTypeEntity);
+                checksTypeEntity = new ChecksTypeEntity("@phonenumberextractoren", "Telephone number extractor (English)", "Find the presence of telephone numbers in english text (ex: zero zero three hundred forty nine ...)", "Phone number","Coded", true, null, null,"custom.PhoneNumberExtractorEN");
+                em.persist(checksTypeEntity);
+                checksTypeEntity = new ChecksTypeEntity("@italian:nomemaschile", "Nome Maschile", "Italian male name", "Words, Italy","Coded", true, null, null,"custom.NomiItaliani");
+				em.persist(checksTypeEntity);
+				checksTypeEntity = new ChecksTypeEntity("@italian:nomefemminile", "Nome Femminile", "Italian female name", "Words, Italy","Coded", true, null, null,"custom.NomiItaliani");
+				em.persist(checksTypeEntity);
+				checksTypeEntity = new ChecksTypeEntity("@italian:cognome", "Cognome", "Italian surname", "Words, Italy","Coded", true, null, null,"custom.NomiItaliani");
 				em.persist(checksTypeEntity);
                 String SampleValidationCode="" +
                         "import ResultStepValidation;\n" +
@@ -374,7 +377,7 @@ public class ChecksTypeDao {
                         "        return result;\n" +
                         "    }\n" +
                         "}";
-                checksTypeEntity = new ChecksTypeEntity("@SampleValidation", "SampleValidation", "Sample validation class ready for testing", "Custom Code", false, null, SampleValidationCode,"SampleValidation");
+                checksTypeEntity = new ChecksTypeEntity("@SampleValidation", "SampleValidation", "Sample validation class ready for testing","Sample", "Custom Code", false, null, SampleValidationCode,"SampleValidation");
                 em.persist(checksTypeEntity);
             } else {
 				addSpellChecks();

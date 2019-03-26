@@ -39,6 +39,7 @@ Ext.define('schemaExtraCheck', {
         {name: 'idCheckType', type:'int'},
         {name: 'name', type:'string'},
 		{name: 'description', type:'string'},
+		{name: 'tags', type:'string'},
 		{name: 'type', type:'string'},
 		{name: 'value', type:'string'},
 		{name: 'systemRule', type:'boolean'},
@@ -55,7 +56,7 @@ function popupSchemaExtraCheck() {
 		model: 'schemaExtraCheck',
 		idProperty:'idCheckType',
 		pageSize: 20,
-		fields: ['id', 'name', 'description', 'type', 'systemRule', 'value','tokenRule'],
+		fields: ['id', 'name', 'description', 'tags', 'type', 'systemRule', 'value','tokenRule'],
 		proxy: {
 			type: 'ajax',
 			api: {
@@ -106,6 +107,7 @@ function popupSchemaExtraCheck() {
   		{align: 'center' , dataIndex: 'idCheckType' , header: 'Id' , sortable: true , width: 50},
   		{dataIndex: 'name' , header: 'Name' , sortable: true , flex: 1},
   		{dataIndex: 'description' , header: 'Description' , sortable: true , flex: 1},
+		{dataIndex: 'tags' , header: 'Tags' , sortable: true , flex: 1},
   		{dataIndex: 'extraCheckType' , header: 'Type' , sortable: true , flex: 1, renderer: function(value, cell, record, rowIndex,
   				colIndex, store) {
   			if (record.data.value == 'MACRO'){
