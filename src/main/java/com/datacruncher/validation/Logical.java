@@ -26,6 +26,7 @@ import com.datacruncher.jpa.dao.DaoSet;
 import com.datacruncher.jpa.entity.ChecksTypeEntity;
 import com.datacruncher.jpa.entity.SchemaFieldEntity;
 import com.datacruncher.jpa.entity.SchemaXSDEntity;
+import com.datacruncher.jpa.entity.ValidationCheckInfo;
 import com.datacruncher.utils.generic.CommonUtils;
 import com.datacruncher.utils.generic.I18n;
 import com.datacruncher.utils.language.LanguagesList;
@@ -44,7 +45,7 @@ import java.util.*;
 public class Logical implements DaoSet {
 
     private final Logger log = Logger.getLogger(this.getClass());
-    public static Map<String,Set<String>> mapExtraCheck = new HashMap<String, Set<String>>();
+    public static Map<String, Set<String>> mapExtraCheck = new HashMap<String, Set<String>>();
 
     private boolean isWarningField(SchemaFieldEntity fieldEntity) {
         return fieldEntity.getErrorType() == StreamStatus.Warning.getCode();
@@ -56,8 +57,7 @@ public class Logical implements DaoSet {
      *
      * @param fieldEntity
      * @param retValue
-     * @param errMsg
-     *            - for failed schemaField
+     * @param errMsg      - for failed schemaField
      */
     private void setErrorOrWarn(SchemaFieldEntity fieldEntity, ResultStepValidation retValue, String errMsg) {
         boolean isErrorExists = !retValue.isValid && !retValue.isWarning;
@@ -99,146 +99,143 @@ public class Logical implements DaoSet {
             }
 
             keys = mapExtraCheck.keySet();
-            Map<String,List<String>> mapMultiClass= new HashMap<String,List<String>>();
+            Map<String, List<String>> mapMultiClass = new HashMap<String, List<String>>();
 
             for (String fieldPath : keys) {
                 try {
-                    boolean isValid= false;
-					Set<String> setClass = mapExtraCheck.get(fieldPath);
-					SchemaFieldEntity fieldEntity = schemaFieldsDao.getFieldByPath(fieldPath, idSchema, "/");
+                    boolean isValid = false;
+                    Set<String> setClass = mapExtraCheck.get(fieldPath);
+                    SchemaFieldEntity fieldEntity = schemaFieldsDao.getFieldByPath(fieldPath, idSchema, "/");
 
-					String suggestions = "";
-					String elementValue = CommonUtils.parseXMLandInvokeDoSomething(new ByteArrayInputStream(datastreamDTO
+                    String suggestions = "";
+                    String elementValue = CommonUtils.parseXMLandInvokeDoSomething(new ByteArrayInputStream(datastreamDTO
                             .getOutput().getBytes()), fieldPath, jaxbObject);
-					if (elementValue == null) {
-						isValid = true;
-					} else {
+                    if (elementValue == null) {
+                        isValid = true;
+                    } else {
+                        if (setClass != null && setClass.size() > 0) {
+                            for (String checkInfo : setClass) {
+                                ValidationCheckInfo validationCheckInfo = ValidationCheckInfo.parse(checkInfo);
+                                String checkType = validationCheckInfo.getCheckType();
+                                String extraCheckType = validationCheckInfo.getExtraCheckType();
+                                String className = validationCheckInfo.getClassName();
 
-						if (setClass != null && setClass.size() > 0) {
-							for (String checkInfo : setClass) {
-								String checkType = checkInfo.substring(checkInfo.indexOf(":") + 1, checkInfo.lastIndexOf("_"));
-								String extraCheckType = checkInfo.substring(checkInfo.indexOf("_") + 1,
-										checkInfo.lastIndexOf("-"));
-								String className = checkInfo.substring(checkInfo.lastIndexOf("-") + 1);
+                                if (checkType.contains("@spellcheck")) {
 
-								if (checkType.contains("@spellcheck")) {
+                                    long idCheckType = Long.parseLong(className);
+                                    ChecksTypeEntity checksTypeEntity = checksTypeDao.find(idCheckType);
 
-									long idCheckType = Long.parseLong(className);
-									ChecksTypeEntity checksTypeEntity = checksTypeDao.find(idCheckType);
+                                    if (checksTypeEntity == null) {
+                                        continue;
+                                    }
+                                    String description = checksTypeEntity.getName();
+                                    Locale locale = Locale.ENGLISH;
+                                    for (LanguagesList langs : LanguagesList.values()) {
+                                        if (description.endsWith(langs.toString())) {
+                                            locale = langs.getLocale();
+                                            break;
+                                        }
+                                    }
+                                    SpellChecker spellChecker = new SpellChecker(locale.getLanguage());
 
-									if (checksTypeEntity == null) {
-										continue;
-									}
-									String description = checksTypeEntity.getName();
-									Locale locale = Locale.ENGLISH;
-									for (LanguagesList langs : LanguagesList.values()) {
-										if (description.endsWith(langs.toString())) {
-											locale = langs.getLocale();
-											break;
-										}
-									}
-									SpellChecker spellChecker = new SpellChecker(locale.getLanguage());
+                                    if (!spellChecker.exist(elementValue)) {
+                                        String suggestion = MessageFormat.format(I18n.getMessage("message.spellCheckError"),
+                                                getPrefix(fieldEntity), elementValue,
+                                                Arrays.toString(spellChecker.getSuggestions(elementValue))).concat("\n");
+                                        suggestions += suggestion;
+                                    } else {
+                                        isValid = true;
+                                        break;
+                                    }
+                                } else if (checkType.contains("singleValidation")) {
+                                    if (!extraCheckType.equalsIgnoreCase("Custom code")
+                                            && !className.contains("com.datacruncher.validation."))
+                                        className = "com.datacruncher.validation." + className;
 
-									if (!spellChecker.exist(elementValue)) {
-										String suggestion = MessageFormat.format(I18n.getMessage("message.spellCheckError"),
-												getPrefix(fieldEntity), elementValue,
-												Arrays.toString(spellChecker.getSuggestions(elementValue))).concat("\n");
-										suggestions += suggestion;
-									} else {
-										isValid = true;
-										break;
-									}
-								} else if (checkType.contains("singleValidation")) {
-									if (!extraCheckType.equalsIgnoreCase("Custom code")
-											&& !className.contains("com.datacruncher.validation."))
-										className = "com.datacruncher.validation." + className;
+                                    if (extraCheckType.equalsIgnoreCase("Custom Code")) {
+                                        validationObj = getCustomCodeInstance(
+                                                checkType.equalsIgnoreCase("singleValidation"), className);
+                                    } else {
+                                        validationClass = Class.forName(className);
+                                        try {
+                                            factoryMethod = validationClass.getDeclaredMethod("getInstance");
+                                            validationObj = factoryMethod.invoke(null, (Object[]) null);
+                                        } catch (Exception exception) {
+                                            validationObj = validationClass.newInstance();
+                                        }
+                                    }
+                                    if (validationObj != null && validationObj instanceof SingleValidation) {
+                                        SingleValidation singleValidation = (SingleValidation) validationObj;
+                                        ResultStepValidation localRetValue = singleValidation.checkValidity(elementValue);
+                                        if (localRetValue != null && !localRetValue.isValid()) {
+                                            suggestions += getPrefix(fieldEntity) + localRetValue.getMessageResult() + "\n";
+                                        } else {
+                                            isValid = true;
+                                            break;
+                                        }
+                                    } else {
+                                        suggestions += getPrefix(fieldEntity)
+                                                + MessageFormat.format(I18n.getMessage("error.validationClass"), className)
+                                                + "\n";
+                                    }
+                                } else if (checkType.contains("multipleValidation")) {
+                                    if (!className.contains("com.datacruncher.validation."))
+                                        className = "com.datacruncher.validation." + className;
+                                    if (mapMultiClass.size() > 0 && mapMultiClass.containsKey(className)) {
+                                        List<String> info = mapMultiClass.get(className);
 
-									if (extraCheckType.equalsIgnoreCase("Custom Code")) {
-										validationObj = getCustomCodeInstance(checkType, className);
-									} else {
-										validationClass = Class.forName(className);
-										try {
-											factoryMethod = validationClass.getDeclaredMethod("getInstance");
-											validationObj = factoryMethod.invoke(null, (Object[]) null);
-										} catch (Exception exception) {
-											validationObj = validationClass.newInstance();
-										}
-									}
-									if (validationObj != null && validationObj instanceof SingleValidation) {
-										SingleValidation singleValidation = (SingleValidation) validationObj;
-										ResultStepValidation localRetValue = singleValidation.checkValidity(elementValue);
-										if (localRetValue != null && !localRetValue.isValid()) {
-											suggestions += getPrefix(fieldEntity) + localRetValue.getMessageResult() + "\n";
-										} else {
-											isValid = true;
-											break;
-										}
-									} else {
-										suggestions += getPrefix(fieldEntity)
-												+ MessageFormat.format(I18n.getMessage("error.validationClass"), className)
-												+ "\n";
-									}
+                                        if (info.get(0) != null && info.get(0).equals("true")) {
+                                            isValid = true;
+                                            break;
+                                        } else {
+                                            if (info.get(1) != null)
+                                                suggestions += info.get(1);
+                                        }
+                                    } else {
+                                        validationClass = Class.forName(className);
+                                        validationObj = validationClass.newInstance();
+                                        if (validationObj != null && validationObj instanceof MultipleValidation) {
+                                            List<String> info;
+                                            MultipleValidation multipleValidation = (MultipleValidation) validationObj;
+                                            ResultStepValidation localRetValue = multipleValidation.checkValidity(datastreamDTO,
+                                                    jaxbObject, schemaXSDEntity);
+                                            if (!localRetValue.isValid()) {
+                                                String msg = localRetValue.getMessageResult();
+                                                String postfix = msg.endsWith("\n") ? msg.substring(0, msg.length() - 2) : msg;
+                                                msg = getPrefix(fieldEntity) + postfix + "\n";
+                                                suggestions += msg;
+                                                info = new ArrayList<String>();
+                                                info.add(0, "false");
+                                                info.add(1, "");
+                                                mapMultiClass.put(className, info);
+                                            } else {
+                                                info = new ArrayList<String>();
+                                                info.add(0, "true");
+                                                info.add(1, "");
+                                                mapMultiClass.put(className, info);
+                                                isValid = true;
+                                                break;
+                                            }
+                                        } else {
+                                            suggestions += getPrefix(fieldEntity)
+                                                    + MessageFormat.format(I18n.getMessage("error.validationClass"), className)
+                                                    + "\n";
+                                        }
+                                    }
+                                }
+                            }
+                        }
 
-								} else if (checkType.contains("multipleValidation")) {
-									if (!className.contains("com.datacruncher.validation."))
-										className = "com.datacruncher.validation." + className;
-									if (mapMultiClass.size() > 0 && mapMultiClass.containsKey(className)) {
-										List<String> info = mapMultiClass.get(className);
-
-										if (info.get(0) != null && info.get(0).equals("true")) {
-											isValid = true;
-											break;
-										} else {
-											if (info.get(1) != null)
-												suggestions += info.get(1);
-										}
-									} else {
-										validationClass = Class.forName(className);
-										validationObj = validationClass.newInstance();
-										if (validationObj != null && validationObj instanceof MultipleValidation) {
-											List<String> info;
-											MultipleValidation multipleValidation = (MultipleValidation) validationObj;
-											ResultStepValidation localRetValue = multipleValidation.checkValidity(datastreamDTO,
-													jaxbObject, schemaXSDEntity);
-											if (!localRetValue.isValid()) {
-												String msg = localRetValue.getMessageResult();
-												String postfix = msg.endsWith("\n") ? msg.substring(0, msg.length() - 2) : msg;
-												msg = getPrefix(fieldEntity) + postfix + "\n";
-												suggestions += msg;
-												info = new ArrayList<String>();
-												info.add(0, "false");
-												info.add(1, "");
-												mapMultiClass.put(className, info);
-											} else {
-												info = new ArrayList<String>();
-												info.add(0, "true");
-												info.add(1, "");
-												mapMultiClass.put(className, info);
-												isValid = true;
-												break;
-											}
-										} else {
-											suggestions += getPrefix(fieldEntity)
-													+ MessageFormat.format(I18n.getMessage("error.validationClass"), className)
-													+ "\n";
-										}
-									}
-
-								}
-							}
-						}
-
-						if (!isValid) {
-							setErrorOrWarn(fieldEntity, retValue, suggestions);
-							if (!suggestions.equals("")) {
-								if (suggestions.endsWith("\n"))
-									suggestions = suggestions.substring(0, suggestions.length() - 1);
-								appendStrToResult(retValue, suggestions);
-							}
-						}
-
+                        if (!isValid) {
+                            // TODO Use CompositeResultStepValidation
+                            setErrorOrWarn(fieldEntity, retValue, suggestions);
+                            if (!suggestions.equals("")) {
+                                if (suggestions.endsWith("\n"))
+                                    suggestions = suggestions.substring(0, suggestions.length() - 1);
+                                appendStrToResult(retValue, suggestions);
+                            }
+                        }
                     }
-
                 } catch (Exception exception) {
                     log.error("Logical Validation - Exception : " + exception);
                     retValue.setValid(false);
@@ -247,7 +244,7 @@ public class Logical implements DaoSet {
                 }
             }
 
-            if (retValue.getMessageResult() != null && retValue.getMessageResult().equals("")){
+            if (retValue.getMessageResult() != null && retValue.getMessageResult().equals("")) {
                 retValue.setMessageResult(I18n.getMessage("success.validationOK"));
             }
         } catch (Exception exception) {
@@ -259,28 +256,56 @@ public class Logical implements DaoSet {
         return retValue;
     }
 
-    private Object getCustomCodeInstance(String checkType, String className){
+    public ResultStepValidation performSingleCheck(ChecksTypeEntity checkType, String elementValue) {
+        ResultStepValidation result = null;
+        try {
+            Object validationObject;
+            if (checkType.isCustomCode()) {
+                validationObject = getCustomCodeInstance(checkType.isSingleValidation(), checkType.getRealClassName());
+            } else {
+                Class<?> validationClass;
+                validationClass = Class.forName(checkType.getRealClassName());
+                try {
+                    Method factoryMethod = validationClass.getDeclaredMethod("getInstance");
+                    validationObject = factoryMethod.invoke(null, (Object[]) null);
+                } catch (Exception exception) {
+                    validationObject = validationClass.newInstance();
+                }
+            }
+            if (validationObject != null && validationObject instanceof SingleValidation) {
+                SingleValidation singleValidation = (SingleValidation) validationObject;
+                result = singleValidation.checkValidity(elementValue);
+            }
+        } catch (Exception ex) {
+            log.error("Logical Validation - Exception", ex);
+            result = new ResultStepValidation();
+            result.setValid(false);
+            appendStrToResult(result, I18n.getMessage("error.system"));
+        }
+        return result;
+    }
+
+    private Object getCustomCodeInstance(boolean singleValidation, String className) {
         try {
             ReadList list = checksTypeDao.findCustomCodeByName(className);
             if (list == null || CollectionUtils.isEmpty(list.getResults())) {
                 return null;
             }
-            ChecksTypeEntity checksTypeEntity = (ChecksTypeEntity)list.getResults().get(0);
+            ChecksTypeEntity checksTypeEntity = (ChecksTypeEntity) list.getResults().get(0);
             String sourceCode = checksTypeEntity.getValue();
-            if(StringUtils.isEmpty(sourceCode)){
+            if (StringUtils.isEmpty(sourceCode)) {
                 return null;
             }
             Class<?> implementedClass;
             String classFullName;
-            if(checkType.equalsIgnoreCase("singleValidation")){
+            if (singleValidation) {
                 implementedClass = SingleValidation.class;
                 classFullName = "SingleValidation";
-            }else{
+            } else {
                 implementedClass = MultipleValidation.class;
                 classFullName = "MultipleValidation";
             }
             return CommonUtils.getClassInstance(className, classFullName, implementedClass, sourceCode);
-
         } catch (IOException e) {
             e.printStackTrace();
         } catch (Exception e) {
@@ -288,5 +313,4 @@ public class Logical implements DaoSet {
         }
         return null;
     }
-
 }

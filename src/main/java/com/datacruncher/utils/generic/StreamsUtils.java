@@ -31,6 +31,7 @@ import com.datacruncher.jpa.entity.SchemaEntity;
 import com.datacruncher.jpa.entity.SchemaFieldEntity;
 import javassist.CannotCompileException;
 import javassist.NotFoundException;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -278,8 +279,9 @@ public class StreamsUtils implements DaoSet {
 						}
 					}
 				}
+
 				String sql = MessageFormat.format("INSERT INTO {0} ({1}) VALUES ({2})", entry.getKey(),
-						CommonUtils.stringAsCommaSeparated(arrSqlFields), CommonUtils.stringAsCommaSeparated(arrSqlValues));
+						StringUtils.join(arrSqlFields, ", "), StringUtils.join(arrSqlValues, ", "));
 				try {
 					connection.setAutoCommit(false);
 					Statement stmt = null;

@@ -48,7 +48,7 @@ function request(currEl, validationSchema) {
 			if ('success' in data) {
 				var token = data.success;
 				var paramsObj = getParametersObject(form);
-				paramsObj.fSchema = validationSchema;
+				paramsObj.schema = validationSchema;
 				paramsObj.tokenParameter = token;
 				var jsonp2 = new JSONP('json2');
 				jsonp2.get(DOMAIN_PREFIX + '/rest/formvalidate', paramsObj,

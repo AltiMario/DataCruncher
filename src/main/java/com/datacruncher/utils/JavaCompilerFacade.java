@@ -28,6 +28,8 @@ import org.apache.log4j.Logger;
 import javax.tools.JavaCompiler;
 import javax.tools.ToolProvider;
 import java.io.File;
+import java.net.URLClassLoader;
+import java.util.Arrays;
 
 public class JavaCompilerFacade {
     private static final Logger LOGGER = Logger.getLogger(JavaCompilerFacade.class);
@@ -69,6 +71,14 @@ public class JavaCompilerFacade {
                 "-sourcepath",
                 sourceDirectory.getPath(),
         };
+        String[] classpathUrls = StringUtils.split( System.getProperty("java.class.path"), System.getProperty("path.separator"));
+        // When called from Jersey service there are no WAR libraries in classpath, fix that with context class loader
+        if (!Arrays.stream(classpathUrls).anyMatch(c -> c.toString().matches(".*validation\\-api.+"))) {
+            classpathUrls = Arrays.stream(((URLClassLoader)Thread.currentThread().getContextClassLoader()).getURLs())
+                    .map(u -> u.toString()).toArray(String[]::new);
+            String classpath = StringUtils.join(classpathUrls, System.getProperty("path.separator"));
+            compileArgs = ArrayUtils.addAll(compileArgs, new String[]{"-classpath", classpath});
+        }
         compileArgs = ArrayUtils.addAll(compileArgs, sourceFiles);
         LOGGER.debug(StringUtils.join(compileArgs, " "));
         JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();

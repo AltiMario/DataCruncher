@@ -16,13 +16,13 @@
   ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   ~
   --%>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ page import="com.datacruncher.jpa.entity.UserEntity" session="true" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.datacruncher.spring.AppContext"%>
 <%@ page import="com.datacruncher.spring.AppInfoBean"%>
 <%@ page import="com.datacruncher.utils.generic.I18n"%>
+<%@ page import="org.apache.commons.lang3.StringUtils" %>
 <jsp:include page="jsp/utils.jsp" />
 <html>
 <head>
@@ -57,7 +57,7 @@
 		}
 	%>
     <script type="text/javascript">
-		
+		var APPLICATION_CONTEXT_URL = '<%= StringUtils.removeEnd(request.getRequestURL().toString(), request.getServletPath()) %>';
 		var language = '<%=language%>';
 		document.write("<script charset=\"UTF-8\" type=\"text/javascript\" src=\"./extjs/locale/ext-lang-" + language + ".js\"></scr" + "ipt>")
 		document.write("<script charset=\"UTF-8\" type=\"text/javascript\" src=\"./locale/custom-lang-" + language + ".js\"></scr" + "ipt>")
@@ -144,7 +144,5 @@
 	<%
 		AppInfoBean appInfo = (AppInfoBean) AppContext.getApplicationContext().getBean("appInfoBean");
 	%>
-
 </head>
-
 </html>

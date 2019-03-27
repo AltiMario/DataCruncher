@@ -16,17 +16,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
+package com.datacruncher.services.webService;
 
-package com.datacruncher.services;
+import java.util.ArrayList;
+import java.util.List;
 
-import com.datacruncher.services.webService.JsonFormBuilderTest;
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
+public class JsonFormErrorResult {
+    private List<String> errors = new ArrayList<>();
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-        ServiceScheduledJobTest.class,
-        JsonFormBuilderTest.class,
-})
-public class AllServicesTests {
+    public List<String> getErrors() {
+        return errors;
+    }
+
+    public void setErrors(List<String> errors) {
+        this.errors = errors;
+    }
 }

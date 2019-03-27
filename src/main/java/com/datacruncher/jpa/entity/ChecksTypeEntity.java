@@ -1,4 +1,3 @@
-
 /*
  * DataCruncher
  * Copyright (c) Mario Altimari. All rights reserved.
@@ -17,14 +16,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-
 package com.datacruncher.jpa.entity;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "jv_checks_types")
-
 @NamedNativeQuery(
 		name="ChecksTypeEntity.findAllComplete",
 		query="SELECT id_check_type, token_rule, name, description, tags, is_system_rule, " +
@@ -35,7 +32,6 @@ import javax.persistence.*;
 				"FROM jv_macros ORDER BY name ASC",
 		resultClass=ChecksTypeEntity.class
 )
-
 @NamedQueries({
 		@NamedQuery(name = "ChecksTypeEntity.findAll", query         		= "SELECT j FROM ChecksTypeEntity j ORDER BY j.name ASC"),
 		@NamedQuery(name = "ChecksTypeEntity.count", query           		= "SELECT COUNT (j) FROM ChecksTypeEntity j"),
@@ -51,8 +47,9 @@ import javax.persistence.*;
 		@NamedQuery(name = "ChecksTypeEntity.findBySchemaFieldId", query	= "SELECT j FROM ChecksTypeEntity j, SchemaFieldCheckTypesEntity S WHERE j.idCheckType = s.idCheckType AND s.schemaFieldEntity.idSchemaField=:idSchemaField"),
 		@NamedQuery(name = "ChecksTypeEntity.findLogicalCheckBySchemaFieldId", query  = "SELECT c  FROM ChecksTypeEntity c , SchemaFieldCheckTypesEntity  t WHERE  t.schemaFieldEntity.idSchemaField = :idSchemaField AND t.idCheckType = c.idCheckType AND c.tokenRule != null AND (c.className != null OR c.tokenRule='@spellcheck') ORDER BY c.className ASC")
 })
-
 public class ChecksTypeEntity {
+    public static final String EXTRA_CHECK_CODED = "Coded";
+    public static final String EXTRA_CHECK_CUSTOM_CODE = "Custom Code";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -110,29 +107,51 @@ public class ChecksTypeEntity {
 		this.className = className;
 	}
 
+	public boolean isSingleValidation() {
+		return tokenRule != null && tokenRule.indexOf(':') < 0;
+	}
+
+	public boolean isCoded() {
+		return extraCheckType != null
+				&& (EXTRA_CHECK_CODED.equalsIgnoreCase(extraCheckType) || EXTRA_CHECK_CUSTOM_CODE.equalsIgnoreCase(extraCheckType));
+	}
+
+	public boolean isCustomCode() {
+		return extraCheckType != null && EXTRA_CHECK_CUSTOM_CODE.equalsIgnoreCase(extraCheckType);
+	}
+
+	public String getRealClassName() {
+		if (className == null || !isCoded()) {
+			return null;
+		}
+		return !extraCheckType.equalsIgnoreCase("Custom code") && !className.contains("com.datacruncher.validation.")
+				? "com.datacruncher.validation." + className
+				: className;
+	}
+
 	public long getIdCheckType() {
 		return idCheckType;
 	}
 
-	public void setIdCheckType(long idCheckType) {
-		this.idCheckType = idCheckType;
-	}
+    public void setIdCheckType(long idCheckType) {
+        this.idCheckType = idCheckType;
+    }
 
-	public String getTokenRule() {
-		return tokenRule;
-	}
+    public String getTokenRule() {
+        return tokenRule;
+    }
 
-	public void setTokenRule(String tokenRule) {
-		this.tokenRule = tokenRule;
-	}
+    public void setTokenRule(String tokenRule) {
+        this.tokenRule = tokenRule;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
 	public String getDescription() {
 		return description;
@@ -231,6 +250,4 @@ public class ChecksTypeEntity {
 		}
 		return false;
 	}
-
-
 }

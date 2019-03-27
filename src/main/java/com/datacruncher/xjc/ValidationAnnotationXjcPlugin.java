@@ -81,13 +81,13 @@ public class ValidationAnnotationXjcPlugin extends Plugin {
                                 }
                             }
                         });
-                        JAnnotationUse classAnnotation = classOutline.getImplClass().annotate(JsonSchemaInject.class);
-                        final JAnnotationArrayMember annotationStrings = classAnnotation.paramArray("strings");
-                        for (Map.Entry<String, String> orphanProperty : orphanProperties.entrySet()) {
-                            JAnnotationUse annotationUse = annotationStrings.annotate(JsonSchemaString.class);
-                            annotationUse.param("path", orphanProperty.getKey());
-                            annotationUse.param("value", orphanProperty.getValue());
-                        }
+//                        JAnnotationUse classAnnotation = classOutline.getImplClass().annotate(JsonSchemaInject.class);
+//                        final JAnnotationArrayMember annotationStrings = classAnnotation.paramArray("strings");
+//                        for (Map.Entry<String, String> orphanProperty : orphanProperties.entrySet()) {
+//                            JAnnotationUse annotationUse = annotationStrings.annotate(JsonSchemaString.class);
+//                            annotationUse.param("path", orphanProperty.getKey());
+//                            annotationUse.param("value", orphanProperty.getValue());
+//                        }
                     });
             return true;
         } catch (Exception e) {
