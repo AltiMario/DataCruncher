@@ -1,10 +1,19 @@
 # DataCruncher 
 DataCruncher is a Data Quality Firewall suite.
 
-It includes an advanced UI for schema definition, governance, real-time data monitoring, ETL, business rules, automatic forms generation, alerting, mobile interface.
+It includes:
+* advanced UI for schema definition
+* frontend and backend validation
+* automatic forms generation
+* business rules
+* governance
+* real-time data monitoring
+* ETL
+* alerting
+* mobile interface
 
 ## What's new on the release 2.0
-After long time on idle, the project is back on activity!!!
+After long time on idle, the *project is back on activity!!!*
 
 Two big feature are just released; the client side data validation and the automatic forms generation.
 
