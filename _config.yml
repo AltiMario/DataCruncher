@@ -1,5 +1,6 @@
 title: DataCruncher
-description: is a Data Quality Firewall, Data Quality Monitor and ETL middleware to manage data streams on the fly.
+description: DataCruncher is a Data Quality Firewall suite.
+It includes an advanced UI for schema definition, governance, real-time data monitoring, ETL, business rules, automatic forms generation, alerting, mobile interface.
 google_analytics: UA-49109406-1
 show_downloads: true
 theme: jekyll-theme-architect
