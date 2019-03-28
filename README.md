@@ -1,9 +1,17 @@
-# DataCruncher release 2.0
-DataCruncher is a Data Quality Firewall, Data Quality Monitor and ETL middleware to manage data streams on the fly.
+# DataCruncher 
+DataCruncher is a Data Quality Firewall suite.
 
+It includes an advanced UI for schema definition, governance, real-time data monitoring, ETL, business rules, automatic forms generation, alerting, mobile interface.
+
+## What's new on the release 2.0
+After long time on idle, the project is back on activity!!!
+
+Two big feature are just released; the client side data validation and the automatic forms generation.
+
+New things are coming to make it more updated, secure, stable and scalable.
 
 -----------------------------
-### To run in manually
+### To run manually
 
 1. Build it from the source code
 
@@ -28,6 +36,8 @@ The credentials required by the login popup are
 admin:admin
 
 -----------------------------
+## Development info
+
 ### JVM configuration parameters for better performance
 
 -Xms512m
@@ -39,8 +49,6 @@ admin:admin
 -XX:MaxPermSize=256m
 
 -XX:NewSize=256m
-
-## Development
 
 ### Dependencies
 
