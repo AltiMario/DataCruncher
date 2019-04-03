@@ -93,7 +93,7 @@ public class AlertsByMail extends AlertDispatcher {
 		return mailContent;
 	}
 	private String getMailContent(DatastreamEntity dataStreamEntity,SchemaEntity schemaEntity,String serverUrl){
-		Map<String,String> model = new HashMap<String,String>();
+		Map<String,Object> model = new HashMap<>();
 		model.put("streamStatus", StreamStatus.getStatus(String.valueOf(dataStreamEntity.getChecked())).name());
 		Date date = dataStreamEntity.getReceivedDate();
 		SimpleDateFormat dFormat = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss");

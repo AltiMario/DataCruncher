@@ -25,6 +25,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -36,29 +37,43 @@ import java.util.stream.StreamSupport;
  * @see https://jsonform.github.io/jsonform/playground/index.html
  */
 public class JsonFormBuilder {
+    private final ObjectMapper objectMapper;
+    private JsonNode jsonSchema;
+
+    public JsonFormBuilder() {
+        this.objectMapper = new ObjectMapper();
+    }
 
     public JsonForm build(File xsdSchemaFile, File workingDirectory) throws Exception {
         final JsonSchemaGenerator jsonSchemaGenerator = new JsonSchemaGenerator(xsdSchemaFile);
-        final JsonNode jsonSchema = jsonSchemaGenerator.generate(workingDirectory);
+        jsonSchema = jsonSchemaGenerator.generate(workingDirectory);
+        return createJsonForm();
+    }
+
+    /**
+     * Assumes that JSON schema was set by {@link #setJsonSchema(JsonNode)} or {@link #setJsonSchema(String)}
+     *
+     * @return
+     * @throws Exception
+     * @see com.datacruncher.utils.schema.JsonSchemaGenerator
+     */
+    public JsonForm build() throws Exception {
+        return createJsonForm();
+    }
+
+    private JsonForm createJsonForm() {
         JsonForm jsonForm = new JsonForm();
         final JsonNode properties = jsonSchema.get("properties");
         jsonForm.setSchema(properties);
         final List<String> requiredFields = jsonSchema.has("required")
                 ? StreamSupport.stream(jsonSchema.get("required").spliterator(), false).map(a -> a.asText()).collect(Collectors.toList())
                 : Collections.EMPTY_LIST;
-        final ObjectMapper objectMapper = new ObjectMapper();
         final ArrayNode formNode = objectMapper.createArrayNode();
         final Iterator<Map.Entry<String, JsonNode>> propertyIterator = jsonSchema.get("properties").fields();
         while (propertyIterator.hasNext()) {
             final ObjectNode fieldNode = objectMapper.createObjectNode();
             final Map.Entry<String, JsonNode> propertyEntry = propertyIterator.next();
-            final ObjectNode property = (ObjectNode) propertyEntry.getValue();
-            String propertyName = propertyEntry.getKey();
-            // TODO Remove this when JSON Form will support JSON schema draft 04 or newer
-            if (requiredFields.contains(propertyName)) {
-                property.put("required", true);
-            }
-            fieldNode.put("key", propertyName);
+            fieldNode.put("key", propertyEntry.getKey());
             formNode.add(fieldNode);
         }
         if (formNode.size() > 0) {
@@ -69,5 +84,17 @@ public class JsonFormBuilder {
         }
         jsonForm.setForm(formNode);
         return jsonForm;
+    }
+
+    public JsonNode getJsonSchema() {
+        return jsonSchema;
+    }
+
+    public void setJsonSchema(JsonNode jsonSchema) {
+        this.jsonSchema = jsonSchema;
+    }
+
+    public void setJsonSchema(String jsonSchemaContent) throws IOException {
+        this.jsonSchema = objectMapper.readTree(jsonSchemaContent);
     }
 }

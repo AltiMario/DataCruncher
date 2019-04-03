@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
-    <xs:annotation/>
+    <xs:annotation>
+        <xs:appinfo/>
+    </xs:annotation>
     <xs:element name="jvSchemaName" fixed="sampleFormTest"/>
     <xs:element name="jvDataStreamType" fixed="5"/>
     <xs:element name="jvValidityStartDate" fixed=""/>

@@ -18,6 +18,8 @@
  */
 package com.datacruncher.validation;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -31,6 +33,13 @@ public class CompositeResultStepValidation extends ResultStepValidation {
 
     public void addResult(ResultStepValidation result) {
         results.add(result);
+    }
+
+    public List<String> getErrorMessages() {
+        return results.stream()
+                .filter(e -> !e.isValid() && StringUtils.isNotBlank(e.getMessageResult()))
+                .map(e -> e.getMessageResult())
+                .collect(Collectors.toList());
     }
 
     @Override

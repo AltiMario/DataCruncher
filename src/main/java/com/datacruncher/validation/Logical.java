@@ -19,14 +19,11 @@
 
 package com.datacruncher.validation;
 
-import com.datacruncher.datastreams.DatastreamDTO;
 import com.datacruncher.constants.StreamStatus;
+import com.datacruncher.datastreams.DatastreamDTO;
 import com.datacruncher.jpa.ReadList;
 import com.datacruncher.jpa.dao.DaoSet;
-import com.datacruncher.jpa.entity.ChecksTypeEntity;
-import com.datacruncher.jpa.entity.SchemaFieldEntity;
-import com.datacruncher.jpa.entity.SchemaXSDEntity;
-import com.datacruncher.jpa.entity.ValidationCheckInfo;
+import com.datacruncher.jpa.entity.*;
 import com.datacruncher.utils.generic.CommonUtils;
 import com.datacruncher.utils.generic.I18n;
 import com.datacruncher.utils.language.LanguagesList;
@@ -98,6 +95,8 @@ public class Logical implements DaoSet {
                 mapExtraCheck = schemaFieldsDao.getMapExtraCheck(idSchema);
             }
 
+            List<CustomErrorEntity> customErrors = (List<CustomErrorEntity>) customErrorsDao.read(idSchema).getResults();
+
             keys = mapExtraCheck.keySet();
             Map<String, List<String>> mapMultiClass = new HashMap<String, List<String>>();
 
@@ -107,7 +106,8 @@ public class Logical implements DaoSet {
                     Set<String> setClass = mapExtraCheck.get(fieldPath);
                     SchemaFieldEntity fieldEntity = schemaFieldsDao.getFieldByPath(fieldPath, idSchema, "/");
 
-                    String suggestions = "";
+//                    String suggestions = "";
+                    StringBuilder errorMessageBuilder = new StringBuilder();
                     String elementValue = CommonUtils.parseXMLandInvokeDoSomething(new ByteArrayInputStream(datastreamDTO
                             .getOutput().getBytes()), fieldPath, jaxbObject);
                     if (elementValue == null) {
@@ -142,7 +142,7 @@ public class Logical implements DaoSet {
                                         String suggestion = MessageFormat.format(I18n.getMessage("message.spellCheckError"),
                                                 getPrefix(fieldEntity), elementValue,
                                                 Arrays.toString(spellChecker.getSuggestions(elementValue))).concat("\n");
-                                        suggestions += suggestion;
+                                        errorMessageBuilder.append(suggestion);
                                     } else {
                                         isValid = true;
                                         break;
@@ -168,15 +168,26 @@ public class Logical implements DaoSet {
                                         SingleValidation singleValidation = (SingleValidation) validationObj;
                                         ResultStepValidation localRetValue = singleValidation.checkValidity(elementValue);
                                         if (localRetValue != null && !localRetValue.isValid()) {
-                                            suggestions += getPrefix(fieldEntity) + localRetValue.getMessageResult() + "\n";
+                                            addFieldError(fieldEntity, errorMessageBuilder, customErrors, new Object() {
+                                                @Override
+                                                public String toString() {
+                                                    return getPrefix(fieldEntity) + localRetValue.getMessageResult() + "\n";
+                                                }
+                                            });
                                         } else {
                                             isValid = true;
                                             break;
                                         }
                                     } else {
-                                        suggestions += getPrefix(fieldEntity)
-                                                + MessageFormat.format(I18n.getMessage("error.validationClass"), className)
-                                                + "\n";
+                                        final String realClassName = className;
+                                        addFieldError(fieldEntity, errorMessageBuilder, customErrors, new Object() {
+                                            @Override
+                                            public String toString() {
+                                                return getPrefix(fieldEntity)
+                                                        + MessageFormat.format(I18n.getMessage("error.validationClass"), realClassName)
+                                                        + "\n";
+                                            }
+                                        });
                                     }
                                 } else if (checkType.contains("multipleValidation")) {
                                     if (!className.contains("com.datacruncher.validation."))
@@ -188,8 +199,9 @@ public class Logical implements DaoSet {
                                             isValid = true;
                                             break;
                                         } else {
-                                            if (info.get(1) != null)
-                                                suggestions += info.get(1);
+                                            if (info.get(1) != null) {
+                                                addFieldError(fieldEntity, errorMessageBuilder, customErrors, info.get(1));
+                                            }
                                         }
                                     } else {
                                         validationClass = Class.forName(className);
@@ -200,10 +212,14 @@ public class Logical implements DaoSet {
                                             ResultStepValidation localRetValue = multipleValidation.checkValidity(datastreamDTO,
                                                     jaxbObject, schemaXSDEntity);
                                             if (!localRetValue.isValid()) {
-                                                String msg = localRetValue.getMessageResult();
-                                                String postfix = msg.endsWith("\n") ? msg.substring(0, msg.length() - 2) : msg;
-                                                msg = getPrefix(fieldEntity) + postfix + "\n";
-                                                suggestions += msg;
+                                                addFieldError(fieldEntity, errorMessageBuilder, customErrors, new Object() {
+                                                    @Override
+                                                    public String toString() {
+                                                        String msg = localRetValue.getMessageResult();
+                                                        String postfix = msg.endsWith("\n") ? msg.substring(0, msg.length() - 2) : msg;
+                                                        return getPrefix(fieldEntity) + postfix + "\n";
+                                                    }
+                                                });
                                                 info = new ArrayList<String>();
                                                 info.add(0, "false");
                                                 info.add(1, "");
@@ -217,9 +233,15 @@ public class Logical implements DaoSet {
                                                 break;
                                             }
                                         } else {
-                                            suggestions += getPrefix(fieldEntity)
-                                                    + MessageFormat.format(I18n.getMessage("error.validationClass"), className)
-                                                    + "\n";
+                                            final String realClassName = className;
+                                            addFieldError(fieldEntity, errorMessageBuilder, customErrors, new Object() {
+                                                @Override
+                                                public String toString() {
+                                                    return getPrefix(fieldEntity)
+                                                            + MessageFormat.format(I18n.getMessage("error.validationClass"), realClassName)
+                                                            + "\n";
+                                                }
+                                            });
                                         }
                                     }
                                 }
@@ -228,11 +250,10 @@ public class Logical implements DaoSet {
 
                         if (!isValid) {
                             // TODO Use CompositeResultStepValidation
+                            String suggestions = errorMessageBuilder.toString();
                             setErrorOrWarn(fieldEntity, retValue, suggestions);
                             if (!suggestions.equals("")) {
-                                if (suggestions.endsWith("\n"))
-                                    suggestions = suggestions.substring(0, suggestions.length() - 1);
-                                appendStrToResult(retValue, suggestions);
+                                appendStrToResult(retValue, StringUtils.removeEnd(suggestions, "\n"));
                             }
                         }
                     }
@@ -254,6 +275,28 @@ public class Logical implements DaoSet {
             return retValue;
         }
         return retValue;
+    }
+
+    /**
+     * @param field
+     * @param messageBuilder
+     * @param customErrors
+     * @param messageFormatter Object that overrides toString() method to format error message
+     */
+    private void addFieldError(SchemaFieldEntity field, StringBuilder messageBuilder, List<CustomErrorEntity> customErrors, Object messageFormatter) {
+        System.err.println(field.getName() + field.hasCustomError());
+        boolean messageAdded = false;
+        if (field != null && field.hasCustomError()) {
+            final Optional<CustomErrorEntity> customErrorEntity = customErrors.stream()
+                    .filter(e -> e.getId() == field.getIdCustomError())
+                    .findFirst();
+            customErrorEntity.ifPresent(c -> messageBuilder.append(c.getDescription()));
+            messageAdded = customErrorEntity.isPresent();
+            System.err.println("##" + messageAdded);
+        }
+        if (!messageAdded) {
+            messageBuilder.append(messageFormatter.toString());
+        }
     }
 
     public ResultStepValidation performSingleCheck(ChecksTypeEntity checkType, String elementValue) {

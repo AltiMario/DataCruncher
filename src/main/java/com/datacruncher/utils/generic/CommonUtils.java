@@ -28,6 +28,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.apache.velocity.app.VelocityEngine;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -146,10 +147,10 @@ public class CommonUtils implements DaoSet {
      * @param model
      * @return merged string
      */
-    public static String mergeVelocityTemplateForEmail(org.apache.velocity.app.VelocityEngine velocityEngine,
-                                                       String mailTemplate, Map<String, String> model) {
-        return VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, CommonUtils.getVelocityTemplateName(mailTemplate),
-                "UTF-8", model);
+    public static String mergeVelocityTemplateForEmail(
+            VelocityEngine velocityEngine, String mailTemplate, Map<String, Object> model) {
+        return VelocityEngineUtils.mergeTemplateIntoString(
+                velocityEngine, CommonUtils.getVelocityTemplateName(mailTemplate), "UTF-8", model);
     }
 
     public static File getResourceFile(String path) throws IOException {

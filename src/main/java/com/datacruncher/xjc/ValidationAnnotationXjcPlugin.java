@@ -74,7 +74,7 @@ public class ValidationAnnotationXjcPlugin extends Plugin {
                                 JAnnotationUse annotation = field.annotate(JsonSchemaInject.class);
                                 try {
                                     ObjectNode node = objectMapper.createObjectNode();
-                                    node.set("annotation", annotations);
+                                    node.set(DC_ANNO_TAG, annotations);
                                     annotation.param("json", objectMapper.writeValueAsString(node));
                                 } catch (JsonProcessingException e) {
                                     logger.error(e);

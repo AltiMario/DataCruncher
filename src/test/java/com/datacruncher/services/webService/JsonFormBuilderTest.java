@@ -74,7 +74,7 @@ public class JsonFormBuilderTest {
         assertNotNull(nameProperty);
         assertEquals(1, nameProperty.get("minLength").asInt());
         assertEquals(25, nameProperty.get("maxLength").asInt());
-        assertEquals("[a-zA-Z0-9\\s.\\-]+", nameProperty.get("pattern").asText());
+        assertEquals("[a-zA-Z0-9\\s.\\-]+", nameProperty.get("regex").asText());
         final JsonNode ipProperty = schema.get("ip");
         assertNotNull(ipProperty);
         final JsonNode ipAnnotations = ipProperty.get("annotation");

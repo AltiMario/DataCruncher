@@ -16,7 +16,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-
 package com.datacruncher.jpa.dao;
 
 import com.datacruncher.jpa.Create;
@@ -24,17 +23,14 @@ import com.datacruncher.jpa.Destroy;
 import com.datacruncher.jpa.Update;
 import com.datacruncher.jpa.entity.SchemaXSDEntity;
 import com.datacruncher.utils.generic.I18n;
-import com.datacruncher.jpa.*;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import java.util.ArrayList;
+import java.util.List;
 
 //@ReadOnlyTx
 public class SchemasXSDDao {
@@ -139,6 +135,7 @@ public class SchemasXSDDao {
 		SchemaXSDEntity ent = find(schemaId);
 		if (ent != null) {
 			ent.setIsVersIncreaseNeeded(isNeeded);
+			ent.setJsonForm(null);
 			update(ent);
 		}
 	}

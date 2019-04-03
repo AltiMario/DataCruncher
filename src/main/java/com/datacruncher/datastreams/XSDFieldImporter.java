@@ -19,7 +19,6 @@
 
 package com.datacruncher.datastreams;
 
-import com.datacruncher.datastreams.XSDentities.*;
 import com.datacruncher.constants.DateTimeType;
 import com.datacruncher.constants.FieldType;
 import com.datacruncher.constants.GenericType;
@@ -38,8 +37,8 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.namespace.QName;
 import java.io.StringReader;
-import java.util.*;
 import java.util.List;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -83,11 +82,12 @@ public class XSDFieldImporter implements DaoSet {
 
             list.add(field);
         }
+
         void updField(SchemaFieldEntity parent) {
             List<SchemaFieldEntity> list = fields.get(parent);
             if (list == null) {
                 fields.put(parent, list = new ArrayList<SchemaFieldEntity>());
-            } else{
+            } else {
                 fields.remove(parent);
                 fields.put(parent, list);
             }
@@ -202,7 +202,7 @@ public class XSDFieldImporter implements DaoSet {
         root.setAnnotation(findAnnotationTopLevelElement(includeList));
         XsdSchemaFieldInfo info = new XsdSchemaFieldInfo(schemaId);
 
-        topSimpleTypeOrComplexType = findTopSimpleTypeOrComplexType(elementList) ;
+        topSimpleTypeOrComplexType = findTopSimpleTypeOrComplexType(elementList);
 
         processChildOfComplexType(root, null, info, 1);
 
@@ -212,7 +212,7 @@ public class XSDFieldImporter implements DaoSet {
     }
 
     private void processChildOfComplexType(Element element,
-                                           SchemaFieldEntity parentField, 
+                                           SchemaFieldEntity parentField,
                                            XsdSchemaFieldInfo info,
                                            int elementOrder) {
 
@@ -220,25 +220,26 @@ public class XSDFieldImporter implements DaoSet {
 
         assert type != null : "Element is not of ComplexType";
         int idFieldType = determineIdFieldTypeFrom(type);
-        if (idFieldType == 0 ) {
-            processEmptyComplexType(element, parentField,info,elementOrder);
-        }else if (idFieldType <= 3 ) {
-            processOrderIndicators(element, parentField,info,elementOrder,idFieldType);
-        }else{
+        if (idFieldType == 0) {
+            processEmptyComplexType(element, parentField, info, elementOrder);
+        } else if (idFieldType <= 3) {
+            processOrderIndicators(element, parentField, info, elementOrder, idFieldType);
+        } else {
             SimpleContent simpleContent = type.getSimpleContent();
             ComplexContent complexContent = type.getComplexContent();
-            if (simpleContent  != null){
-                processSimpleContent(element, parentField, info,elementOrder,simpleContent);
+            if (simpleContent != null) {
+                processSimpleContent(element, parentField, info, elementOrder, simpleContent);
             } else if (complexContent != null) {
-                processComplexContent(element, parentField, info,elementOrder,complexContent);
+                processComplexContent(element, parentField, info, elementOrder, complexContent);
             }
         }
     }
+
     private void processEmptyComplexType(Element element,
-                                        SchemaFieldEntity parentField,
-                                        XsdSchemaFieldInfo info,
-                                        int elementOrder
-                                       ) {
+                                         SchemaFieldEntity parentField,
+                                         XsdSchemaFieldInfo info,
+                                         int elementOrder
+    ) {
 
         ComplexType type = element.getComplexType();
         String name = element.getName();
@@ -249,22 +250,23 @@ public class XSDFieldImporter implements DaoSet {
                 elementOrder, maxOccurs, false);
 
         info.addField(field, parentField);
-        if(type.getAttributeOrAttributeGroup() != null && !type.getAttributeOrAttributeGroup().isEmpty()) {
+        if (type.getAttributeOrAttributeGroup() != null && !type.getAttributeOrAttributeGroup().isEmpty()) {
             List<Annotated> list = type.getAttributeOrAttributeGroup();
             Iterator<Annotated> listIterator = list.iterator();
             List<Object> attributes = new ArrayList<Object>();
-            while(listIterator.hasNext()) {
+            while (listIterator.hasNext()) {
                 Annotated annotatedObject = listIterator.next();
-                if(annotatedObject instanceof Attribute) {
+                if (annotatedObject instanceof Attribute) {
                     attributes.add(annotatedObject);
-                } else if(annotatedObject instanceof AttributeGroup) {
+                } else if (annotatedObject instanceof AttributeGroup) {
 
                 }
             }
-            if(!attributes.isEmpty())
-                processAttributes(field,info, attributes);
+            if (!attributes.isEmpty())
+                processAttributes(field, info, attributes);
         }
     }
+
     private void processOrderIndicators(Element element,
                                         SchemaFieldEntity parentField,
                                         XsdSchemaFieldInfo info,
@@ -289,60 +291,61 @@ public class XSDFieldImporter implements DaoSet {
             ExplicitGroup group = type.getSequence();
             processParticles(field, info, group.getParticle());
         }
-        if(type.getAttributeOrAttributeGroup() != null && !type.getAttributeOrAttributeGroup().isEmpty()) {
+        if (type.getAttributeOrAttributeGroup() != null && !type.getAttributeOrAttributeGroup().isEmpty()) {
             List<Annotated> list = type.getAttributeOrAttributeGroup();
             Iterator<Annotated> listIterator = list.iterator();
             List<Object> attributes = new ArrayList<Object>();
-            while(listIterator.hasNext()) {
+            while (listIterator.hasNext()) {
                 Annotated annotatedObject = listIterator.next();
-                if(annotatedObject instanceof Attribute) {
+                if (annotatedObject instanceof Attribute) {
                     attributes.add(annotatedObject);
-                } else if(annotatedObject instanceof AttributeGroup) {
+                } else if (annotatedObject instanceof AttributeGroup) {
 
                 }
             }
-            if(!attributes.isEmpty())
-                processAttributes(field,info, attributes);
+            if (!attributes.isEmpty())
+                processAttributes(field, info, attributes);
         }
     }
+
     private void processSimpleContent(Element element,
                                       SchemaFieldEntity parentField,
                                       XsdSchemaFieldInfo info,
                                       int elementOrder,
-                                      SimpleContent simpleContent ) {
+                                      SimpleContent simpleContent) {
         boolean isBaseType = false;
         String baseLocalPart = null;
         SimpleExtensionType extension = simpleContent.getExtension();
         String name = element.getName();
         String desc = getDescriptionFrom(element);
         String maxOccurs = element.getMaxOccurs();
-        QName baseTypeName = new QName("http://www.w3.org/2001/XMLSchema","string","xs");
+        QName baseTypeName = new QName("http://www.w3.org/2001/XMLSchema", "string", "xs");
         TopLevelSimpleType topType;
         List<Annotated> list = null;
-        if (extension  != null) {
+        if (extension != null) {
             baseTypeName = extension.getBase();
-            list =  extension.getAttributeOrAttributeGroup();
-        }else{
+            list = extension.getAttributeOrAttributeGroup();
+        } else {
             SimpleRestrictionType restriction = simpleContent.getRestriction();
             if (restriction != null) {
                 baseTypeName = restriction.getBase();
-                list =  restriction.getAttributeOrAttributeGroup();
+                list = restriction.getAttributeOrAttributeGroup();
             }
         }
         int idFieldType = findIdFieldTypeByBaseName(baseTypeName);
-        if(idFieldType == 0){
+        if (idFieldType == 0) {
             topType = findTopLevelSimpleTypeByName(baseTypeName.getLocalPart());
-            if (topType != null){
+            if (topType != null) {
                 Restriction res = topType.getRestriction();
                 idFieldType = findIdFieldTypeByTypeName(res.getBase());
-                LocalSimpleType locType =new LocalSimpleType();
+                LocalSimpleType locType = new LocalSimpleType();
                 locType.setRestriction(res);
                 element.setSimpleType(locType);
-            }else{
+            } else {
                 idFieldType = FieldType.alphanumeric;
                 element.setSimpleType(createLocalsimpleType(baseTypeName));
             }
-        }else{
+        } else {
             isBaseType = true;
             baseLocalPart = baseTypeName.getLocalPart();
         }
@@ -351,36 +354,37 @@ public class XSDFieldImporter implements DaoSet {
                 idFieldType, elementOrder, maxOccurs, false);
         boolean isNillable = false;
         Restriction restriction = null;
-        if(isBaseType){
+        if (isBaseType) {
             isNillable = true;
-        }else{
+        } else {
             restriction = element.getSimpleType().getRestriction();
             if (element.isNillable() || element.getMinOccurs().intValue() == 0)
                 isNillable = true;
         }
-        populateFieldEntity (entityField,
+        populateFieldEntity(entityField,
                 restriction,
                 baseLocalPart,
                 element.getAnnotation(),
                 isNillable,
                 parentField,
                 info);
-        
-        if(list != null && !list.isEmpty()) {
+
+        if (list != null && !list.isEmpty()) {
             Iterator<Annotated> listIterator = list.iterator();
             List<Object> attributes = new ArrayList<Object>();
-            while(listIterator.hasNext()) {
+            while (listIterator.hasNext()) {
                 Annotated annotatedObject = listIterator.next();
-                if(annotatedObject instanceof Attribute) {
+                if (annotatedObject instanceof Attribute) {
                     attributes.add(annotatedObject);
-                } else if(annotatedObject instanceof AttributeGroup) {
+                } else if (annotatedObject instanceof AttributeGroup) {
 
                 }
             }
-            if(!attributes.isEmpty())
-                processAttributes(entityField,info, attributes);
+            if (!attributes.isEmpty())
+                processAttributes(entityField, info, attributes);
         }
     }
+
     private void processAttributes(SchemaFieldEntity parentField,
                                    XsdSchemaFieldInfo info, List<Object> particles) {
         int index = 1;
@@ -389,23 +393,25 @@ public class XSDFieldImporter implements DaoSet {
             processComplexOrSimpleAttribute(particle, parentField, info, index++);
         }
     }
+
     private void processComplexOrSimpleAttribute(Attribute attribute,
                                                  SchemaFieldEntity parentField, XsdSchemaFieldInfo info,
                                                  int elementOrder) {
 
-        SimpleType simpleType =  attribute.getSimpleType();
-        QName type =  attribute.getType();
+        SimpleType simpleType = attribute.getSimpleType();
+        QName type = attribute.getType();
         if (simpleType != null) {
-            processSimpleAttributeOrElement( attribute, parentField, info, elementOrder);
-        } else{
+            processSimpleAttributeOrElement(attribute, parentField, info, elementOrder);
+        } else {
             if (type == null) {
-                attribute.setType(new QName("http://www.w3.org/2001/XMLSchema","string","xs"));
-                fieldImporterResults.add("type information not found for attribute " + attribute.getName() +". Set default type (string)");
+                attribute.setType(new QName("http://www.w3.org/2001/XMLSchema", "string", "xs"));
+                fieldImporterResults.add("type information not found for attribute " + attribute.getName() + ". Set default type (string)");
             }
             processAttributeUsingBaseType(attribute, parentField, info, elementOrder);
 
         }
     }
+
     private boolean isCustomType(QName baseTypeName) {
         String uri = baseTypeName.getNamespaceURI();
         String name = baseTypeName.getLocalPart();
@@ -422,49 +428,49 @@ public class XSDFieldImporter implements DaoSet {
                                                int elementOrder) {
         QName type = attribute.getType();
         if (isSimpleType(type)) {
-            if(isCustomType(type)){
+            if (isCustomType(type)) {
                 TopLevelSimpleType topType = findTopLevelSimpleTypeByName(type.getLocalPart());
-                if (topType != null){
+                if (topType != null) {
                     Restriction ret = topType.getRestriction();
-                    LocalSimpleType locType =new LocalSimpleType();
+                    LocalSimpleType locType = new LocalSimpleType();
                     locType.setRestriction(ret);
                     attribute.setSimpleType(locType);
-                }else{
-                    type = new QName("http://www.w3.org/2001/XMLSchema","string","xs");
+                } else {
+                    type = new QName("http://www.w3.org/2001/XMLSchema", "string", "xs");
                     fieldImporterResults.add("type information not found for attribute: " + attribute.getName());
                     attribute.setSimpleType(createLocalsimpleType(type));
                 }
-            }else{
+            } else {
                 attribute.setSimpleType(createLocalsimpleType(type));
             }
-
 
 
             processSimpleAttributeOrElement(attribute, parentField, info, elementOrder);
         }
 
     }
-    private void populateFieldEntity (SchemaFieldEntity entityField,
-                                      Restriction restriction,
-                                      String baseLocalPart,
-                                      Annotation annotation,
-                                      boolean isNillable,
-                                      SchemaFieldEntity parentField,
-                                      XsdSchemaFieldInfo info){
+
+    private void populateFieldEntity(SchemaFieldEntity entityField,
+                                     Restriction restriction,
+                                     String baseLocalPart,
+                                     Annotation annotation,
+                                     boolean isNillable,
+                                     SchemaFieldEntity parentField,
+                                     XsdSchemaFieldInfo info) {
         List<String> appListInfo = null;
         Set<SchemaFieldCheckTypesEntity> schemaFieldCheckTypeSet;
         SchemaFieldCheckTypesEntity schemaFieldCheckTypesEntity;
 
-        if (baseLocalPart!= null){
+        if (baseLocalPart != null) {
             if (entityField.getIdFieldType() == FieldType.date) {
                 entityField.setIdDateFmtType(determineIdDateTypeFromFieldType(baseLocalPart));
-            }else if (entityField.getIdFieldType() == FieldType.numeric) {
+            } else if (entityField.getIdFieldType() == FieldType.numeric) {
                 entityField.setIdNumericType(determineIdNumberTypeFromFieldType(baseLocalPart));
             }
-        }else{
+        } else {
             if (entityField.getIdFieldType() == FieldType.date) {
                 entityField.setIdDateFmtType(determineIdDateTypeFromFieldType(restriction.getBase().getLocalPart()));
-            }else if (entityField.getIdFieldType() == FieldType.numeric) {
+            } else if (entityField.getIdFieldType() == FieldType.numeric) {
                 entityField.setIdNumericType(determineIdNumberTypeFromFieldType(restriction.getBase().getLocalPart()));
             }
         }
@@ -481,24 +487,18 @@ public class XSDFieldImporter implements DaoSet {
                     String arr[] = appInfo.split(":")[1].split("-");
                     entityField.setForecastAccuracy(Integer.parseInt(arr[0]));
                     entityField.setForecastSpeed(Integer.parseInt(arr[1]));
-                }else if(appInfo.startsWith("@unixDate")) {
-                    entityField.setIdFieldType(6);
+                } else if (appInfo.startsWith("@unixDate")) {
+                    entityField.setIdFieldType(DateTimeType.xsdTime);
                     entityField.setIdDateFmtType(DateTimeType.unixTimestamp);
-                }else if (appInfo.startsWith("@jvDate:")) {
-                    String arr[] = appInfo.split(":")[1].split("-");
-                    if (arr.length == 3){
-                        entityField.setIdFieldType(6);
-                        if(!arr[0].equals("0")){
-                            entityField.setIdDateFmtType(Integer.parseInt(arr[0]));
-                        }
-                        if(!arr[1].equals("0")){
-                            entityField.setIdDateType(Integer.parseInt(arr[1]));
-                        }
-                        if(!arr[2].equals("0")){
-                            entityField.setIdTimeType(Integer.parseInt(arr[2]));
-                        }
+                } else if (appInfo.startsWith(JvDate.RULE_PREFIX)) {
+                    final JvDate jvDate = JvDate.parse(appInfo);
+                    if (jvDate != null) {
+                        entityField.setIdFieldType(DateTimeType.xsdTime);
+                        entityField.setIdDateFmtType(jvDate.getDateTimeType());
+                        entityField.setIdDateType(jvDate.getDateType());
+                        entityField.setIdTimeType(jvDate.getTimeType());
                     }
-                }else{
+                } else {
                     ChecksTypeEntity checksTypeEntity = checksTypeDao
                             .getChecksTypeByDescr(appInfo);
                     if (checksTypeEntity != null
@@ -512,7 +512,7 @@ public class XSDFieldImporter implements DaoSet {
             }
             entityField.setSchemaFieldCheckTypeSet(schemaFieldCheckTypeSet);
         }
-        if(isNillable){
+        if (isNillable) {
             entityField.setNillable(true);
         } else {
             entityField.setNillable(false);
@@ -520,8 +520,8 @@ public class XSDFieldImporter implements DaoSet {
         // set default values
         entityField.setIdAlign(1);
         entityField.setFillChar(" ");
-        if (restriction!= null)
-        populateFieldFromRestriction(entityField, restriction, info);
+        if (restriction != null)
+            populateFieldFromRestriction(entityField, restriction, info);
 
         info.addField(entityField, parentField);
     }
@@ -537,11 +537,12 @@ public class XSDFieldImporter implements DaoSet {
 
         return type;
     }
+
     private void processComplexContent(Element element,
                                        SchemaFieldEntity parentField,
                                        XsdSchemaFieldInfo info,
                                        int elementOrder,
-                                       ComplexContent complexContent ) {
+                                       ComplexContent complexContent) {
         // TODO find a way to implement me
         fieldImporterResults.add("complex type " + element.getName() + " reference not yet supported");
         /*throw new UnsupportedOperationException(
@@ -553,7 +554,7 @@ public class XSDFieldImporter implements DaoSet {
                                   XsdSchemaFieldInfo info, List<Object> particles) {
         int index = 1;
         for (Object object : particles) {
-            Element particle = (Element)unwarpParticle(object);
+            Element particle = (Element) unwarpParticle(object);
             processComplexOrSimpleElement(particle, parentField, info, index++);
         }
     }
@@ -572,7 +573,7 @@ public class XSDFieldImporter implements DaoSet {
             processElementUsingBaseType(element, parentField, info,
                     elementOrder);
         } else {
-            element.setType(new QName("http://www.w3.org/2001/XMLSchema","string","xs"));
+            element.setType(new QName("http://www.w3.org/2001/XMLSchema", "string", "xs"));
             fieldImporterResults.add("type information not found for element: " + element.getName());
             processElementUsingBaseType(element, parentField, info, elementOrder);
             /*throw new IllegalStateException(
@@ -588,17 +589,17 @@ public class XSDFieldImporter implements DaoSet {
         if (isSimpleType(type)) {
             TopLevelSimpleType topSimpleType = findTopLevelSimpleTypeByName(type.getLocalPart());
             TopLevelComplexType topComplexType = findTopLevelComplexTypeByName(type.getLocalPart());
-            
-            if (topSimpleType != null){
+
+            if (topSimpleType != null) {
                 Restriction ret = topSimpleType.getRestriction();
-                LocalSimpleType locType =new LocalSimpleType();
+                LocalSimpleType locType = new LocalSimpleType();
                 locType.setRestriction(ret);
                 element.setSimpleType(locType);
                 processSimpleAttributeOrElement(element, parentField, info, elementOrder);
-            }else if (topComplexType != null){
-                element.setComplexType(createLocalComplexType(topComplexType ));
-                processChildOfComplexType(element, parentField,info,elementOrder);
-            }else{
+            } else if (topComplexType != null) {
+                element.setComplexType(createLocalComplexType(topComplexType));
+                processChildOfComplexType(element, parentField, info, elementOrder);
+            } else {
                 element.setSimpleType(createLocalsimpleType(type));
                 processSimpleAttributeOrElement(element, parentField, info, elementOrder);
             }
@@ -609,8 +610,9 @@ public class XSDFieldImporter implements DaoSet {
                     elementOrder);
         }
     }
-    private LocalComplexType createLocalComplexType(TopLevelComplexType topComplexType ) {
-        LocalComplexType localComplexType =   new LocalComplexType();
+
+    private LocalComplexType createLocalComplexType(TopLevelComplexType topComplexType) {
+        LocalComplexType localComplexType = new LocalComplexType();
         localComplexType.setAbstract(topComplexType.isAbstract());
         localComplexType.setSimpleContent(topComplexType.getSimpleContent());
         localComplexType.setComplexContent(topComplexType.getComplexContent());
@@ -622,21 +624,22 @@ public class XSDFieldImporter implements DaoSet {
         localComplexType.setMixed(topComplexType.isMixed());
         List<Annotated> attributes = topComplexType.getAttributeOrAttributeGroup();
         List<String> _final = topComplexType.getFinal();
-        List<String> block= topComplexType.getBlock();
-        if (attributes.size()>0){
+        List<String> block = topComplexType.getBlock();
+        if (attributes.size() > 0) {
             for (int i = attributes.size() - 1; i >= 0; i--)
                 localComplexType.getAttributeOrAttributeGroup().add(attributes.get(i));
         }
-        if (_final.size()>0){
+        if (_final.size() > 0) {
             for (int i = _final.size() - 1; i >= 0; i--)
                 localComplexType.getFinal().add(_final.get(i));
         }
-        if (block.size()>0){
+        if (block.size() > 0) {
             for (int i = block.size() - 1; i >= 0; i--)
                 localComplexType.getBlock().add(block.get(i));
         }
         return localComplexType;
     }
+
     private LocalComplexType findComplexTypeByName(QName type) {
         // TODO find a way to implement me
         fieldImporterResults.add("local complex type reference not yet supported");
@@ -659,42 +662,46 @@ public class XSDFieldImporter implements DaoSet {
             }
         };
     }
-    private TopLevelSimpleType findTopLevelSimpleTypeByName(String name){
+
+    private TopLevelSimpleType findTopLevelSimpleTypeByName(String name) {
         TopLevelSimpleType type = null;
         for (OpenAttrs openAttrs : topSimpleTypeOrComplexType) {
-            if (openAttrs instanceof TopLevelSimpleType && name.equals(((TopLevelSimpleType) openAttrs).getName()) ){
+            if (openAttrs instanceof TopLevelSimpleType && name.equals(((TopLevelSimpleType) openAttrs).getName())) {
                 type = ((TopLevelSimpleType) openAttrs);
                 break;
             }
         }
-        return  type;
+        return type;
     }
-    private TopLevelComplexType findTopLevelComplexTypeByName(String name){
+
+    private TopLevelComplexType findTopLevelComplexTypeByName(String name) {
         TopLevelComplexType type = null;
         for (OpenAttrs openAttrs : topSimpleTypeOrComplexType) {
-            if (openAttrs instanceof TopLevelComplexType && name.equals(((TopLevelComplexType) openAttrs).getName()) ){
+            if (openAttrs instanceof TopLevelComplexType && name.equals(((TopLevelComplexType) openAttrs).getName())) {
                 type = ((TopLevelComplexType) openAttrs);
                 break;
             }
         }
-        return  type;
+        return type;
     }
+
     private void processSimpleAttributeOrElement(Annotated annotated,
                                                  SchemaFieldEntity parentField, XsdSchemaFieldInfo info,
                                                  int elementOrder) {
-        if (annotated instanceof Element){
+        if (annotated instanceof Element) {
             Element element = (Element) annotated;
-            processSimpleElement(element, parentField,info,elementOrder);
-        }else if (annotated instanceof Attribute){
+            processSimpleElement(element, parentField, info, elementOrder);
+        } else if (annotated instanceof Attribute) {
             Attribute attribute = (Attribute) annotated;
-            processSimpleAttribute(attribute, parentField,info,elementOrder);
+            processSimpleAttribute(attribute, parentField, info, elementOrder);
         }
 
     }
+
     private void processSimpleAttribute(Attribute attribute,
                                         SchemaFieldEntity parentField, XsdSchemaFieldInfo info,
                                         int elementOrder) {
-        
+
         SimpleType type = attribute.getSimpleType();
         String name = attribute.getName();
         String desc = getDescriptionFrom(attribute);
@@ -705,21 +712,19 @@ public class XSDFieldImporter implements DaoSet {
         entityField.setNillable(true);
         if ((attribute.getUse()).equals("required"))
             isNillable = false;
-        
-        
-        
-                
-        if (entityField.getName().equals(Tag.TAG_SIZE)){
+
+
+        if (entityField.getName().equals(Tag.TAG_SIZE)) {
             entityField.setSize(attribute.getFixed());
             info.addField(entityField, parentField);
-        }else  if (entityField.getName().equals(Tag.TAG_ALIGN)) {
+        } else if (entityField.getName().equals(Tag.TAG_ALIGN)) {
             entityField.setIdAlign(Integer.parseInt(attribute.getFixed()));
             info.addField(entityField, parentField);
-        }else if (entityField.getName().equals(Tag.TAG_FILL)){
+        } else if (entityField.getName().equals(Tag.TAG_FILL)) {
             entityField.setFillChar(attribute.getFixed());
             info.addField(entityField, parentField);
-        }else {
-            populateFieldEntity (entityField,
+        } else {
+            populateFieldEntity(entityField,
                     type.getRestriction(),
                     null,
                     attribute.getAnnotation(),
@@ -727,13 +732,10 @@ public class XSDFieldImporter implements DaoSet {
                     parentField,
                     info);
         }
-               
-        
-        
-        
-        
+
 
     }
+
     private void processSimpleElement(Element element,
                                       SchemaFieldEntity parentField, XsdSchemaFieldInfo info,
                                       int elementOrder) {
@@ -748,7 +750,7 @@ public class XSDFieldImporter implements DaoSet {
         boolean isNillable = false;
         if (element.isNillable() || element.getMinOccurs().intValue() == 0)
             isNillable = true;
-        populateFieldEntity (entityField,
+        populateFieldEntity(entityField,
                 element.getSimpleType().getRestriction(),
                 null,
                 element.getAnnotation(),
@@ -768,7 +770,7 @@ public class XSDFieldImporter implements DaoSet {
                     List<Object> list = appInfo.getContent();
                     if (list != null && list.size() >= 0) {
                         for (Object obj : list)
-                            listApp.add( obj.toString());
+                            listApp.add(obj.toString());
                     }
                 }
             }
@@ -846,33 +848,36 @@ public class XSDFieldImporter implements DaoSet {
                     + " is not supported");
         }
     }
+
     private int determineIdNumberTypeFromFieldType(String baseLocalPart) {
         int idNumType = GenericType.integer;
         if (baseLocalPart != null) {
-            if ("integer".equals(baseLocalPart)){
+            if ("integer".equals(baseLocalPart)) {
                 idNumType = GenericType.integer;
-            }else if("decimal".equals(baseLocalPart)){
+            } else if ("decimal".equals(baseLocalPart)) {
                 idNumType = GenericType.decimal;
             }
         }
 
         return idNumType;
     }
+
     private int determineIdDateTypeFromFieldType(String baseLocalPart) {
         int idDateType = DateTimeType.xsdDate;
 
         if (baseLocalPart != null) {
-            if ("date".equals(baseLocalPart)){
+            if ("date".equals(baseLocalPart)) {
                 idDateType = DateTimeType.xsdDate;
-            }else if("time".equals(baseLocalPart)){
+            } else if ("time".equals(baseLocalPart)) {
                 idDateType = DateTimeType.xsdTime;
-            }else if("dateTime".equals(baseLocalPart)){
+            } else if ("dateTime".equals(baseLocalPart)) {
                 idDateType = DateTimeType.xsdDateTime;
             }
         }
 
         return idDateType;
     }
+
     private int determineIdFieldTypeFrom(SimpleType type) {
         int idFieldType = FieldType.alphanumeric;
 
@@ -898,7 +903,7 @@ public class XSDFieldImporter implements DaoSet {
         Integer type;
         if (map == null || (type = map.get(name)) == null) {
             // WARN not type match found in mapping.Using alphanumeric
-            fieldImporterResults.add("type "+name+"reference not yet supported.Set default alphanumeric type ");
+            fieldImporterResults.add("type " + name + "reference not yet supported.Set default alphanumeric type ");
             type = FieldType.alphanumeric;
         }
 
@@ -914,15 +919,15 @@ public class XSDFieldImporter implements DaoSet {
 
     private int determineIdFieldTypeFrom(ComplexType root) {
         int idFieldType = 0;
-        if(root.getAll() != null) {
+        if (root.getAll() != null) {
             idFieldType = FieldType.all;
         } else if (root.getChoice() != null) {
             idFieldType = FieldType.choice;
         } else if (root.getSequence() != null) {
             idFieldType = FieldType.sequence;
-        }else if (root.getSimpleContent() != null){
+        } else if (root.getSimpleContent() != null) {
             idFieldType = GenericType.simpleContent;
-        }else if (root.getComplexContent() != null){
+        } else if (root.getComplexContent() != null) {
             idFieldType = GenericType.complexContent;
         }
         return idFieldType;
@@ -940,14 +945,14 @@ public class XSDFieldImporter implements DaoSet {
             if (maxOccurs.equals("")) {
                 field.setMaxOccurs(1);
             } else {
-                if("unbounded".equals(maxOccurs)){
+                if ("unbounded".equals(maxOccurs)) {
                     field.setMaxOccurs(0);
-                }else{
+                } else {
                     field.setMaxOccurs(Integer.parseInt(maxOccurs));
                 }
             }
         }
-        if(idFieldType > 0){
+        if (idFieldType > 0) {
             field.setIdFieldType(idFieldType);
         }
         // how can we link custom error
@@ -991,6 +996,7 @@ public class XSDFieldImporter implements DaoSet {
         }
         return simpleTypeOrComplexType;
     }
+
     private Annotation findAnnotationTopLevelElement(List<OpenAttrs> elementList) {
         Annotation type = null;
         for (OpenAttrs openAttrs : elementList) {
@@ -999,13 +1005,14 @@ public class XSDFieldImporter implements DaoSet {
                 if (type != null) {
                     throw new IllegalStateException(
                             "multiple top Annotation found");
-                }else {
+                } else {
                     type = (Annotation) openAttrs;
                 }
             }
         }
         return type;
     }
+
     private Element findTopLevelElement(List<OpenAttrs> elementList) {
         Element type = null;
         for (OpenAttrs openAttrs : elementList) {
@@ -1014,7 +1021,7 @@ public class XSDFieldImporter implements DaoSet {
                 if (type != null) {
                     throw new IllegalStateException(
                             "multiple top level element found");
-                }else if(!((Tag.TAG_SCHEMA_NAME).equals(topElement.getName()) ||
+                } else if (!((Tag.TAG_SCHEMA_NAME).equals(topElement.getName()) ||
                         (Tag.TAG_DATA_STREAM_TYPE).equals(topElement.getName()) ||
                         (Tag.TAG_VALIDITY_START_DATE).equals(topElement.getName()) ||
                         (Tag.TAG_VALIDITY_END_DATE).equals(topElement.getName()) ||

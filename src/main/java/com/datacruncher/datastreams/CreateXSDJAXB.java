@@ -673,17 +673,17 @@ public class CreateXSDJAXB implements DaoSet {
                             qName = new QName("xs:dateTime");
                         } else {
                             Appinfo appInfo = objectFactory.createAppinfo();
-                            String tDateTime = aListChild.getIdDateTimeType() + "";
-                            String tDate = aListChild.getIdDateType() != null ? aListChild.getIdDateType() + "" : "0";
-                            String tTime = aListChild.getIdTimeType() != null ? aListChild.getIdTimeType() + "" : "0";
-
-                            appInfo.getContent().add("@jvDate:" + tDateTime + "-" + tDate + "-" + tTime);
-
-                            if (annotated)
+                            JvDate jvDate = new JvDate(
+                                    aListChild.getIdDateTimeType(),
+                                    aListChild.getIdDateType(),
+                                    aListChild.getIdTimeType());
+                            appInfo.getContent().add(jvDate.toString());
+                            if (annotated) {
                                 annotation = topLevelElement.getAnnotation();
+                            }
                             annotation.getAppinfoOrDocumentation().add(appInfo);
                             topLevelElement.setAnnotation(annotation);
-                            restricted = createRestriction(aListChild, restriction, topSympleType, localSympleTypeName);
+                            createRestriction(aListChild, restriction, topSympleType, localSympleTypeName);
                         }
                     }
                 }

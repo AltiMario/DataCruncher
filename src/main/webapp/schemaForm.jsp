@@ -26,12 +26,15 @@
     <script type="text/javascript">
 		var APPLICATION_CONTEXT_URL = '<%= StringUtils.removeEnd(request.getRequestURL().toString(), request.getServletPath()) %>';
     </script>
+    <style>
+        form .row { padding: 0 1em; }
+    </style>
 </head>
 <body>
-<div style="margin: 0 auto; width: 95%">
+<div style="margin: 1em auto">
+    <div id="formError" class="alert alert-warning"  role="alert" style="display: none"></div>
     <form></form>
 </div>
-<div id="res" class="alert"></div>
 <script type="text/javascript" src="js/jsonform/jquery.min.js"></script>
 <script type="text/javascript" src="js/jsonform/underscore.js"></script>
 <script type="text/javascript" src="js/jsonform/jsv.js"></script>

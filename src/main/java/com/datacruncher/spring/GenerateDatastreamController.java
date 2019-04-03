@@ -64,7 +64,7 @@ public class GenerateDatastreamController implements Controller, DaoSet {
             ServletOutputStream out;
             
             Validate instance = new Validate();
-                                   
+            // TODO Use DataStreamBuilder
             if(StreamType.JSON == schemaEntity.getIdStreamType()) {
             	List<SchemaFieldEntity> listSchemaFields = schemaFieldsDao.rootForNonXML(idSchema);
             	StringBuilder strData = new StringBuilder();

@@ -74,7 +74,7 @@ public class ContactsUpdateController implements Controller, DaoSet {
 		mailConfig.setMailFrom(mailFrom);
 		mailConfig.setSubject(mailSubject + " " + contactEntity.getEmailID());
 		
-		Map<String,String> model = new HashMap<String,String>();
+		Map<String,Object> model = new HashMap<>();
 		model.put("firstName", contactEntity.getFirstName());
 		model.put("lastName", contactEntity.getLastName());		
 		model.put("message", contactEntity.getMsgText().replaceAll("\n", "<br/>"));

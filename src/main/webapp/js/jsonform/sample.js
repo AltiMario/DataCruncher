@@ -22,7 +22,7 @@ var schemaName = (new URL(window.location.href)).searchParams.get('schema');
 
 function submitForm(event) {
     event.preventDefault();
-    makeRequest(validateForm);
+    makeRequest(validateTemporal);
 }
 
 function makeRequest(requestDelegate, params) {
@@ -47,12 +47,29 @@ function requestJsonForm(params) {
             var jsonFormData = data;
             schema = jsonFormData.schema;
             jsonFormData.form.forEach(function(item, i, arr) {
-                if ('key' in item && 'annotation' in schema[item.key]) {
+                if ('key' in item && ('annotation' in schema[item.key] || 'regex' in schema[item.key])) {
                     item.onChange = fieldChanged;
                 }
             });
             $('form').jsonForm(jsonFormData);
-            $('form input[type=submit]').click(submitForm);
+            $('form .form-group').addClass('col-md-4');
+            var rows = [];
+            $('form .form-group').each(function(i, element) {
+                var row;
+                var rowIndex = Math.floor(i / 3);
+                if (rowIndex >= rows.length) {
+                    rows[rowIndex] = $('<div>', { 'class': 'row'});
+                }
+                row = rows[rowIndex];
+                if (rowIndex % 2 !== 0) {
+                    row.css('background-color', 'lightgray');
+                }
+                row.append(element);
+            });
+            var button = $('form input[type=submit]');
+            button.css('margin', '1em 0 0 1em');
+            $('form div').empty().append(rows).append(button);
+            button.click(submitForm);
         } else if ('errors' in data) {
             alert(data.errors.join('\n'));
         }
@@ -70,6 +87,30 @@ function validateFieldValue(params) {
     });
 }
 
+function validateTemporal(params) {
+    $('#formError').hide().empty();
+    var jsonpFormField = new JSONP('jsonFormTemporal');
+    jsonpFormField.get(APPLICATION_CONTEXT_URL + '/rest/formvalidate/temporal', params, function(data) {
+        var errorMessage = '';
+        if ('errors' in data && data.errors.length > 0) {
+            errorMessage = data.errors.join('<br>');
+        } else if ('notFoundToken' in data) {
+            errorMessage = 'Token not found';
+        } else if ('serverException' in data) {
+            errorMessage = data.serverException;
+        } else if ('notActive' in data) {
+            errorMessage = 'Schema is not active';
+        } else if ('notAvail' in data) {
+            errorMessage = 'Schema is not available';
+        }
+        if (errorMessage) {
+            $('#formError').show().html(errorMessage);
+        } else {
+            makeRequest(validateForm);
+        }
+    });
+}
+
 function validateForm(params) {
     var form = $('form');
     if (!form.length) {
@@ -82,21 +123,23 @@ function validateForm(params) {
     }
     $('.jsonform-errortext').hide();
     $('.jsonform-errortext').prev('input').css('background-color', 'white');
-    var jsonpFormValidate = new JSONP('json2');
-    jsonpFormValidate.get(APPLICATION_CONTEXT_URL + '/rest/formvalidate', params, function(data) {
-        var msgNoToken = "Token not found";
-        if ('notFoundToken' in data) {
-            alert("Communication error: " + msgNoToken);
+    var jsonpFormValidate = new JSONP('jsonFormValidate');
+    jsonpFormValidate.get(APPLICATION_CONTEXT_URL + '/rest/formvalidate/validate-jsonform', params, function(data) {
+        if (typeof data === 'string') {
+            $('#formError').show().html(data);
+        } else if ('notFoundToken' in data) {
+            alert("Token not found");
             return;
-        }
-        var errors = data.errors;
-        if (errors) {
-            for (var fieldName in errors) {
-                displayFieldError(fieldName, errors[fieldName].split('<br>').join(' '));
+        } else if ('errors' in data) {
+            var errors = data.errors;
+            if (errors) {
+                for (var fieldName in errors) {
+                    displayFieldError(fieldName, errors[fieldName].split('<br>').join(' '));
+                }
             }
+            $('.jsonform-errortext:hidden').prev('input').css('background-color', '#5cb85c77');
+            $('.jsonform-errortext:visible').prev('input').css('background-color', '#eea23677');
         }
-        $('.jsonform-errortext:hidden').prev('input').css('background-color', '#5cb85c77');
-        $('.jsonform-errortext:visible').prev('input').css('background-color', '#eea23677');
     });
 }
 
@@ -112,14 +155,21 @@ function displayFieldError(fieldName, errorMessage) {
 
 function fieldChanged(event) {
     $(event.target).next('.jsonform-errortext').hide();
+    $(event.target).css('background-color', 'white');
     var name = $(event.target).attr('name');
     var value = $(event.target).val();
-    if (value) {
+    if (value !== null && value !== '') {
         var params = {
             'name': name,
             'value': value,
-            'annotation': schema[name].annotation
+
         };
+        if ('annotation' in schema[name]) {
+            params.annotation = schema[name].annotation;
+        }
+        if ('regex' in schema[name]) {
+            params.regex = schema[name].regex;
+        }
         makeRequest(validateFieldValue, params);
     }
 }

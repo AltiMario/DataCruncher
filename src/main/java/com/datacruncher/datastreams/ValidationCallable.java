@@ -45,6 +45,7 @@ import com.datacruncher.utils.generic.StreamsUtils;
 import com.datacruncher.validation.DatastreamsValidator;
 import com.datacruncher.validation.ForcastedFieldsValidation;
 import com.datacruncher.validation.IndexIncrementalValidation;
+import com.datacruncher.validation.ValidationUtils;
 
 public class ValidationCallable implements Callable<Map<String, Object>>, DaoSet {
 
@@ -102,16 +103,12 @@ public class ValidationCallable implements Callable<Map<String, Object>>, DaoSet
 		setupDatastream(idStreamType, datastreamDTO, datastreamEntity);
 
 		if (!isUnitTest) {
-			if (appEntity != null && appEntity.getIsActive() != null) {
-				if (appEntity.getIsActive() == 0) {
-					resMap.put(DatastreamsInput._SINGLE_STR_RESP, I18n.getMessage("error.deactivatedApplication"));
-					resMap.put(DatastreamsInput._SINGLE_SUCC_RESP, false);
-					return resMap;
-				} else if (schemaEntity.getIsActive() != null && schemaEntity.getIsActive() == 0) {
-					resMap.put(DatastreamsInput._SINGLE_STR_RESP, I18n.getMessage("error.deactivatedSchema"));
-					resMap.put(DatastreamsInput._SINGLE_SUCC_RESP, false);
-					return resMap;
-				}
+			try {
+				ValidationUtils.checkActive(appEntity, schemaEntity);
+			} catch (Exception e) {
+				resMap.put(DatastreamsInput._SINGLE_STR_RESP, e.getMessage());
+				resMap.put(DatastreamsInput._SINGLE_SUCC_RESP, false);
+				return resMap;
 			}
 		}
 

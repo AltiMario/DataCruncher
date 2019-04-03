@@ -152,7 +152,7 @@ public class UsersCreateController implements Controller, DaoSet {
 			mailConfig.setMailTo(this.userEntity.getEmail());
 			mailConfig.setMailFrom(this.mailFrom);
 			mailConfig.setSubject(this.subject);
-			Map<String,String> model = new HashMap<String,String>();
+			Map<String,Object> model = new HashMap<>();
 			model.put("name",this.userEntity.getName());
 			model.put("surname",this.userEntity.getSurname());
 			model.put("userName",this.userEntity.getUserName());

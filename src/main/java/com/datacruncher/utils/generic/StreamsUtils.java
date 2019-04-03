@@ -49,6 +49,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.MessageFormat;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Classe Singleton che fornisce dei metodi di Utility per l'applicazione
@@ -108,6 +110,25 @@ public class StreamsUtils implements DaoSet {
 		return path.toUpperCase()./*replaceAll("/", "_").*/substring(1);		
 	}
 	
+	/**
+	 * Formats xml element path for JSON nodes (they don't have root element)
+	 * Example: '/Path/branch/node' -> '/BRANCH/NODE'
+	 *
+	 * @param path
+	 * @return
+	 */
+	public static String formatJsonPathForXmlNode(String path) {
+		final Pattern pattern = Pattern.compile("/\\w+/(.+)");
+		final Matcher matcher = pattern.matcher(path);
+		String resultPath;
+		if (matcher.matches()) {
+			resultPath = matcher.group(1).toUpperCase();
+		} else {
+			resultPath = formatPathForXmlNode(path);
+		}
+		return resultPath;
+	}
+
 	private static String getFieldPathPrefix(int streamType) {
 		return streamType != StreamType.XML && streamType != StreamType.XMLEXI ? (Tag.TAG_ROOT).toUpperCase() + "/" : "";
 	}

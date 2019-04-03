@@ -16,7 +16,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-
 package com.datacruncher.jpa.entity;
 
 import java.io.Serializable;
@@ -30,30 +29,34 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
- *
  * @author danilo
  */
 @Entity
 @Table(name = "jv_schema_xsd")
 @NamedQueries({
-    @NamedQuery(name = "SchemaXSDEntity.findAll", query = "SELECT j FROM SchemaXSDEntity j"),
-    @NamedQuery(name = "SchemaXSDEntity.findByIdSchemaXSD", query = "SELECT j FROM SchemaXSDEntity j WHERE j.idSchemaXSD = :idSchemaXSD"),
-    @NamedQuery(name = "SchemaXSDEntity.findByIdCheckType", query = "SELECT j FROM SchemaXSDEntity j WHERE j.idSchemaXSD in (SELECT DISTINCT t.idSchema FROM SchemaFieldEntity t WHERE t.idCheckType = :idCheckType)")
+        @NamedQuery(name = "SchemaXSDEntity.findAll", query = "SELECT j FROM SchemaXSDEntity j"),
+        @NamedQuery(name = "SchemaXSDEntity.findByIdSchemaXSD", query = "SELECT j FROM SchemaXSDEntity j WHERE j.idSchemaXSD = :idSchemaXSD"),
+        @NamedQuery(name = "SchemaXSDEntity.findByIdCheckType", query = "SELECT j FROM SchemaXSDEntity j WHERE j.idSchemaXSD in (SELECT DISTINCT t.idSchema FROM SchemaFieldEntity t WHERE t.idCheckType = :idCheckType)")
 })
 public class SchemaXSDEntity implements Serializable {
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @Basic(optional = false)
     @Column(name = "id_schema_xsd")
     private Long idSchemaXSD;
-    
+
     @Lob
     @Column(name = "schema_xsd")
     private String schemaXSD;
-    
-	@Column(name = "is_schema_vers_inc_needed", nullable = false)
-	private Boolean isVersIncreaseNeeded = false;    
+
+    @Lob
+    @Column(name = "json_form")
+    private String jsonForm;
+
+
+    @Column(name = "is_schema_vers_inc_needed", nullable = false)
+    private Boolean isVersIncreaseNeeded = false;
 
     public SchemaXSDEntity() {
     }
@@ -78,15 +81,23 @@ public class SchemaXSDEntity implements Serializable {
         this.schemaXSD = schemaXSD;
     }
 
+    public String getJsonForm() {
+        return jsonForm;
+    }
+
+    public void setJsonForm(String jsonForm) {
+        this.jsonForm = jsonForm;
+    }
+
     public Boolean getIsVersIncreaseNeeded() {
-		return isVersIncreaseNeeded;
-	}
+        return isVersIncreaseNeeded;
+    }
 
-	public void setIsVersIncreaseNeeded(Boolean isVersIncreaseNeeded) {
-		this.isVersIncreaseNeeded = isVersIncreaseNeeded;
-	}
+    public void setIsVersIncreaseNeeded(Boolean isVersIncreaseNeeded) {
+        this.isVersIncreaseNeeded = isVersIncreaseNeeded;
+    }
 
-	@Override
+    @Override
     public int hashCode() {
         int hash = 0;
         hash += (idSchemaXSD != null ? idSchemaXSD.hashCode() : 0);

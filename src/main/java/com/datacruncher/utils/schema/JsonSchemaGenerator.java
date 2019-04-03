@@ -19,10 +19,13 @@
 package com.datacruncher.utils.schema;
 
 import com.datacruncher.constants.FileInfo;
+import com.datacruncher.datastreams.JvDate;
 import com.datacruncher.utils.JavaCompilerFacade;
 import com.datacruncher.xjc.ValidationAnnotationXjcPlugin;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.sun.tools.xjc.addon.krasa.JaxbValidationsPlugins;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
@@ -44,23 +47,29 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 public class JsonSchemaGenerator {
     private static final String JAXB_NS_PREFIX = "jaxb";
     private static final String JAXB_NS = "http://java.sun.com/xml/ns/jaxb";
     private final File xsdSchemaFile;
+    private final ObjectMapper objectMapper;
 
     public JsonSchemaGenerator(File xsdSchemaFile) {
         this.xsdSchemaFile = xsdSchemaFile;
+        this.objectMapper = new ObjectMapper();
     }
 
     public JsonNode generate(File workingDirectory) throws Exception {
         patchXsdSchema();
         compileXsdSchema(workingDirectory);
         JsonNode jsonSchema = generateJsonSchema(workingDirectory);
+        patchJsonSchema(jsonSchema);
         return jsonSchema;
     }
 
@@ -97,19 +106,28 @@ public class JsonSchemaGenerator {
      *
      * @throws Exception
      */
-    private void patchXsdSchema() throws Exception {
+    protected void patchXsdSchema() throws Exception {
         try (FileInputStream inputStream = new FileInputStream(xsdSchemaFile)) {
             DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
             builderFactory.setNamespaceAware(true);
             DocumentBuilder builder = builderFactory.newDocumentBuilder();
             Document xmlDocument = builder.parse(inputStream);
-            xmlDocument.getDocumentElement().setAttributeNS(
+            final Element rootElement = xmlDocument.getDocumentElement();
+            rootElement.setAttributeNS(
                     XMLConstants.XMLNS_ATTRIBUTE_NS_URI,
                     XMLConstants.XMLNS_ATTRIBUTE + ":" + ValidationAnnotationXjcPlugin.DC_NS_PREFIX,
                     ValidationAnnotationXjcPlugin.DC_NS_URI);
-            xmlDocument.getDocumentElement().setAttributeNS(
+            rootElement.setAttributeNS(
                     XMLConstants.XMLNS_ATTRIBUTE_NS_URI, XMLConstants.XMLNS_ATTRIBUTE + ":" + JAXB_NS_PREFIX, JAXB_NS);
-            xmlDocument.getDocumentElement().setAttributeNS(JAXB_NS, JAXB_NS_PREFIX + ":extensionBindingPrefixes", ValidationAnnotationXjcPlugin.DC_NS_PREFIX);
+            rootElement.setAttributeNS(JAXB_NS, JAXB_NS_PREFIX + ":extensionBindingPrefixes", ValidationAnnotationXjcPlugin.DC_NS_PREFIX);
+            // appinfo for root element is used to store macro, ignore it for JSON schema
+            final NodeList rootChildNodes = rootElement.getChildNodes();
+            for (int i = 0; i < rootChildNodes.getLength(); i++) {
+                final Node node = rootChildNodes.item(i);
+                if ("annotation".equals(node.getLocalName())) {
+                    rootElement.removeChild(node);
+                }
+            }
             NodeList nodeList = xmlDocument.getElementsByTagName("xs:appinfo");
             for (int i = 0; i < nodeList.getLength(); i++) {
                 final Node node = nodeList.item(i);
@@ -153,9 +171,41 @@ public class JsonSchemaGenerator {
         if (rootClass == null) {
             throw new Exception("Can't find root element class");
         }
-        final ObjectMapper objectMapper = new ObjectMapper();
         com.kjetland.jackson.jsonSchema.JsonSchemaGenerator schemaGenerator =
                 new com.kjetland.jackson.jsonSchema.JsonSchemaGenerator(objectMapper);
         return schemaGenerator.generateJsonSchema(rootClass);
+    }
+
+    private void patchJsonSchema(JsonNode jsonSchema) {
+        final List<String> requiredFields = jsonSchema.has("required")
+                ? StreamSupport.stream(jsonSchema.get("required").spliterator(), false).map(a -> a.asText()).collect(Collectors.toList())
+                : Collections.EMPTY_LIST;
+        final Iterator<Map.Entry<String, JsonNode>> propertyIterator = jsonSchema.get("properties").fields();
+        while (propertyIterator.hasNext()) {
+            final Map.Entry<String, JsonNode> propertyEntry = propertyIterator.next();
+            final ObjectNode property = (ObjectNode) propertyEntry.getValue();
+            String propertyName = propertyEntry.getKey();
+            // TODO Remove patch for required property when JSON Form will support JSON schema draft 04 or newer
+            if (requiredFields.contains(propertyName)) {
+                property.put("required", true);
+            }
+            // Replacing client-side pattern validation by AJAX check
+            if (property.has("pattern")) {
+                property.put("regex", property.get("pattern").asText());
+                property.remove("pattern");
+            }
+            if (property.has(ValidationAnnotationXjcPlugin.DC_ANNO_TAG)) {
+                final JsonNode annotationNode = property.get(ValidationAnnotationXjcPlugin.DC_ANNO_TAG);
+                // Force date type
+                if (annotationNode.isArray()) {
+                    final ArrayNode annotationValuesNode = (ArrayNode) annotationNode;
+                    if (annotationValuesNode.size() == 1
+                            && annotationValuesNode.get(0).asText().startsWith(JvDate.RULE_PREFIX)) {
+                        property.put("type", "date");
+                        property.remove(ValidationAnnotationXjcPlugin.DC_ANNO_TAG);
+                    }
+                }
+            }
+        }
     }
 }

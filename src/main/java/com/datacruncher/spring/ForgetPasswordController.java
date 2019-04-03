@@ -88,7 +88,7 @@ public class ForgetPasswordController implements Controller, DaoSet {
 				mailConfig.setMailTo(userEntity.getEmail());
 				mailConfig.setMailFrom(mailFrom);
 				mailConfig.setSubject(mailSubject);
-				Map<String,String> model = new HashMap<String,String>();
+				Map<String,Object> model = new HashMap<>();
 				model.put("name",userEntity.getUserName());
 				model.put("tempPassword",tempPassword);
 				String mailContent = CommonUtils.mergeVelocityTemplateForEmail(velocityEngine, mailTemplate, model);

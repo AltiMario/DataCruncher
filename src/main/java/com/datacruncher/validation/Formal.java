@@ -19,11 +19,13 @@
 
 package com.datacruncher.validation;
 
-import com.datacruncher.datastreams.DatastreamDTO;
 import com.datacruncher.constants.FileInfo;
 import com.datacruncher.constants.SchemaType;
 import com.datacruncher.constants.StreamStatus;
+import com.datacruncher.constants.StreamType;
+import com.datacruncher.datastreams.DatastreamDTO;
 import com.datacruncher.jpa.dao.DaoSet;
+import com.datacruncher.jpa.entity.CustomErrorEntity;
 import com.datacruncher.jpa.entity.SchemaFieldEntity;
 import com.datacruncher.jpa.entity.SchemaXSDEntity;
 import com.datacruncher.spring.AppContext;
@@ -31,6 +33,7 @@ import com.datacruncher.utils.generic.CommonUtils;
 import com.datacruncher.utils.generic.I18n;
 import com.datacruncher.utils.schema.SchemaParsingException;
 import com.datacruncher.utils.schema.SchemaValidator;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.xerces.parsers.DOMParser;
 import org.springframework.context.ApplicationContext;
@@ -64,28 +67,28 @@ public class Formal implements DaoSet {
             SchemaValidator schemaValidator = new SchemaValidator();
             resMap = schemaValidator.validateSchema(idSchema);
             SchemaXSDEntity schemaXSDEntity = schemasXSDDao.read(idSchema);
-            if(schemaValidator.isValidationSuccessful()){
+            if (schemaValidator.isValidationSuccessful()) {
                 if (schemaXSDEntity.getIsVersIncreaseNeeded()) {
                     schemasXSDDao.setVersIncreaseNeeded(idSchema, false);
                     schemasDao.increaseSchemaVersion(idSchema);
                 }
                 Object jaxbObj = validateXML(idSchema, datastreamDTO.getOutput());
-                if(jaxbObj != null){
+                if (jaxbObj != null) {
                     result.setMessageResult(I18n.getMessage("success.validationOK"));
                     result.setValid(true);
                     result.setJaxbObject(jaxbObj);
-                }else{
+                } else {
                     result.setValid(false);
                     result.setJaxbObject(null);
                 }
-            }else{
+            } else {
                 result.setMessageResult(resMap.get("responseMsg"));
                 result.setValid(false);
             }
         } catch (SAXException exception) {
             String msg = exception.getMessage();
             boolean isWarning = isWarning(msg, idSchema);
-            String errMsg = getErrorMessage(msg, idSchema, isWarning);
+            String errMsg = getErrorMessage(msg, idSchema, datastreamDTO.getIdStreamType(), isWarning);
             result.setMessageResult(errMsg);
             result.setWarning(isWarning);
             result.addFailedNodePath(getFailedNodePath(msg) + "$$" + errMsg);
@@ -98,35 +101,38 @@ public class Formal implements DaoSet {
         return result;
     }
 
-    protected String getErrorMessage(String msg, long idSchema, boolean isWarning) {
-        boolean isCustomErrorExists = getPrefix(msg, idSchema) != null;
-        return I18n.getMessage(isWarning ? "error.validationFormalWarn" : "error.validationFormal")
-                + (isCustomErrorExists ? ": " + getPrefix(msg, idSchema) : "") + ".<br><br>"
-                + I18n.getMessage("message.detailedError") + ": " + errorMsgFilter(msg);
+    protected String getErrorMessage(String msg, long idSchema, int streamType, boolean isWarning)  {
+        final String customErrorMessage = getCustomError(msg, idSchema, streamType);
+        final StringBuilder messageBuilder = new StringBuilder();
+        messageBuilder
+                .append(I18n.getMessage(isWarning ? "error.validationFormalWarn" : "error.validationFormal"))
+                .append(": ");
+        if (StringUtils.isNotBlank(customErrorMessage)) {
+            messageBuilder.append(customErrorMessage);
+        } else {
+            messageBuilder.append(I18n.getMessage("message.detailedError") + ": " + errorMsgFilter(msg));
+        }
+        return messageBuilder.toString();
     }
 
-    private String getPrefix(String exceptionMsg, long idSchema) {
-        String[] customErrorsPaths = exceptionMsg.split("%%");
-        String prefixMsg = "";
-        if (customErrorsPaths.length > 1) {
-            int i = 1;
-            List<SchemaFieldEntity> list = schemaFieldsDao.listSchemaFields(idSchema);
-            for (String elem : customErrorsPaths) {
-                for (SchemaFieldEntity ent : list) {
-                    if (ent.getPath("\\").toUpperCase().equals(elem)) {
-                        if (ent.getIdCustomError() != 0) {
-                            // ent.getIdCustomError() == 0 for root node
-                            prefixMsg += customErrorsDao.find(ent.getIdCustomError()).getDescription();
-                        }
-                    }
-                }
-                if (++i == customErrorsPaths.length)
-                    break;
-            }
-            if (!prefixMsg.isEmpty())
-                return prefixMsg;
+    private String getCustomError(String exceptionMsg, long idSchema, int streamType) {
+        if (!exceptionMsg.contains("%%")) {
+            return null;
         }
-        return null;
+        String errorFieldPath = exceptionMsg.split("%%")[0].toUpperCase();
+        // For JSON stream type root element isn't stored in DB
+        if (streamType == StreamType.JSON && errorFieldPath.contains("\\")) {
+            errorFieldPath = StringUtils.substring(errorFieldPath, errorFieldPath.indexOf("\\") + 1);
+        }
+        StringBuilder customErrorBuilder = new StringBuilder();
+        final String fieldPath = errorFieldPath;
+        schemaFieldsDao.listSchemaFields(idSchema).stream()
+                .filter(f -> f.hasCustomError() && fieldPath.equals( f.getPath("\\").toUpperCase()))
+                .forEach(f -> {
+                    CustomErrorEntity customErrorEntity = customErrorsDao.find(f.getIdCustomError());
+                    customErrorBuilder.append(customErrorEntity.getDescription());
+                });
+        return customErrorBuilder.toString();
     }
 
     protected String errorMsgFilter(String exceptionMessage) {
@@ -143,41 +149,41 @@ public class Formal implements DaoSet {
 
     /**
      * Checks whether problem field is warning.
-     * 
+     *
      * @param msg
      * @param idSchema
      * @return true: warning / false: error
      */
     private boolean isWarning(String msg, long idSchema) {
-		String[] customErrorsPaths = msg.split("%%");
-		if (customErrorsPaths.length > 1) {
-			List<SchemaFieldEntity> list = schemaFieldsDao.listSchemaFields(idSchema);
-			for (String elem : customErrorsPaths) {
-				for (SchemaFieldEntity ent : list) {
-					if (ent.getPath("\\").toUpperCase().equals(elem.toUpperCase())) {
-						if (ent.getErrorType() == StreamStatus.Warning.getCode()) {
-							return true;
-						}
-					}
-				}
-			}
-		}
-    	return false;
+        String[] customErrorsPaths = msg.split("%%");
+        if (customErrorsPaths.length > 1) {
+            List<SchemaFieldEntity> list = schemaFieldsDao.listSchemaFields(idSchema);
+            for (String elem : customErrorsPaths) {
+                for (SchemaFieldEntity ent : list) {
+                    if (ent.getPath("\\").toUpperCase().equals(elem.toUpperCase())) {
+                        if (ent.getErrorType() == StreamStatus.Warning.getCode()) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
     }
-    
+
     /**
      * Get failed node path from error message.
-     * 
+     *
      * @param msg
      * @return
      */
     private String getFailedNodePath(String msg) {
-		String[] arr = msg.split("%%");
-		String res = null;
-		if (arr.length > 1) {
-			res = arr[0];
-		}
-		return res;
+        String[] arr = msg.split("%%");
+        String res = null;
+        if (arr.length > 1) {
+            res = arr[0];
+        }
+        return res;
     }
 
     /**
@@ -191,7 +197,7 @@ public class Formal implements DaoSet {
      * @throws SAXException
      * @throws JAXBException
      */
-    public boolean  validateXML(long schemaId, byte[] xml) throws SchemaParsingException, JAXBException, SAXException,
+    public boolean validateXML(long schemaId, byte[] xml) throws SchemaParsingException, JAXBException, SAXException,
             IOException {
         Object jaxbObj = validateSchema(AppContext.getApplicationContext(), schemaId, null, xml, null);
         return jaxbObj != null;
@@ -224,7 +230,7 @@ public class Formal implements DaoSet {
         try {
             JAXBContext jc;
             String genLocation;
-            if (context.containsBean("testDummyBean") ) {
+            if (context.containsBean("testDummyBean")) {
                 //this branch used only in test cases. It loads class path of generated schema.
                 genLocation = FileInfo.TESTS_WORKING_PATH + "/";
             } else {
@@ -233,7 +239,7 @@ public class Formal implements DaoSet {
 
             File f = new File(genLocation);
             @SuppressWarnings("deprecation")
-            URL[] urls = new URL[] {f.toURL()};
+            URL[] urls = new URL[]{f.toURL()};
             ClassLoader loader = new URLClassLoader(urls);
             try {
                 loader.loadClass(FileInfo.GENERATED_PACKAGE + schemaId + ".ObjectFactory");
@@ -248,8 +254,8 @@ public class Formal implements DaoSet {
             String schemaFileStr = FileInfo.SCHEMA_LOCATION + File.separator + schemaId + File.separator + schemaId + ".xsd";
             File schemaFile = context.containsBean("testDummyBean") ? new File(FileInfo.TESTS_WORKING_PATH + schemaFileStr) : CommonUtils.getResourceFile(schemaFileStr);
             if (schemasDao.find(schemaId).getIdSchemaType() == SchemaType.STANDARD) {
-                schemaFileStr = FileInfo.SCHEMA_LIB_LOCATION + File.separator +schemaLibDao.find(schemasDao.find(schemaId).getIdSchemaLib()).getLibPath()+ File.separator + schemaLibDao.find(schemasDao.find(schemaId).getIdSchemaLib()).getLibFile()+".xsd";
-                schemaFile = new ClassPathResource(schemaFileStr).getFile() ;
+                schemaFileStr = FileInfo.SCHEMA_LIB_LOCATION + File.separator + schemaLibDao.find(schemasDao.find(schemaId).getIdSchemaLib()).getLibPath() + File.separator + schemaLibDao.find(schemasDao.find(schemaId).getIdSchemaLib()).getLibFile() + ".xsd";
+                schemaFile = new ClassPathResource(schemaFileStr).getFile();
             }
             Schema schema = sf.newSchema(schemaFile);
 
@@ -261,8 +267,8 @@ public class Formal implements DaoSet {
                 return u.unmarshal(xmlFile);
             } else if (xmlString != null) {
 
-                InputStream inStream= new ByteArrayInputStream(xmlString);
-                Reader reader = new InputStreamReader(inStream,"UTF-8");
+                InputStream inStream = new ByteArrayInputStream(xmlString);
+                Reader reader = new InputStreamReader(inStream, "UTF-8");
 
                 InputSource is = new InputSource(reader);
                 is.setEncoding("UTF-8");

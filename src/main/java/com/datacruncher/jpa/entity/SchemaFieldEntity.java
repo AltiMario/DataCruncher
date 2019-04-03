@@ -184,8 +184,11 @@ public class SchemaFieldEntity implements Serializable {
 	@JsonManagedReference
     @OneToMany(fetch = FetchType.EAGER,  cascade = {CascadeType.ALL},mappedBy="schemaFieldEntity")
     private Set<SchemaFieldCheckTypesEntity> schemaFieldCheckTypeSet = new HashSet<SchemaFieldCheckTypesEntity>();
-    
-	
+
+	public boolean hasCustomError() {
+        return idCustomError != 0;
+    }
+
 	public long getIdSchemaField() {
         return idSchemaField;
     }

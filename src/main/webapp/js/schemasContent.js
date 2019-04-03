@@ -625,7 +625,7 @@ function schemaDocuments() {
 function showForm() {
     var record = schemasGrid.getSelectionModel().getSelection()[0];
     var url = APPLICATION_CONTEXT_URL + '/schemaForm.jsp?schema=' + record.data.name;
-    window.open(url, '_blank', 'height=500,width=250,left=50,top=50,location=no,scrollbars=yes');
+    window.open(url, '_blank', 'width=' + screen.availWidth + ',height=' + screen.availHeight + ',left=0,top=0,location=no,scrollbars=yes,fullscreen=yes');
 };
 
 function schemaImportFromJv() {

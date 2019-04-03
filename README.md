@@ -59,6 +59,24 @@ admin:admin
 
 -XX:NewSize=256m
 
+### Tomcat fine tuning
+
+1. If you get an error: "The background cache eviction process was unable to free [10] percent of the cache for Context",
+increase cache size by adding Resources element (if none exist) and setting cacheMaxSize (in kilobytes) in TOMCAT_HOME/conf/context.xml:
+
+```
+<Context>
+<!-- This will increase the cache size  to 100Mb.  -->
+<Resources cachingAllowed="true" cacheMaxSize="100000" />
+</Context>
+```
+
+Don't forget to restart Tomcat after configuration change.
+
+
+
+## Development
+
 ### Dependencies
 
 Project uses many libraries, so to avoid conflicts on transitive dependencies we prefer to use version range dependencies.
