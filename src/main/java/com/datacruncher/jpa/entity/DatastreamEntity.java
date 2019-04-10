@@ -24,26 +24,24 @@ import com.datacruncher.datastreams.EXI;
 import com.datacruncher.utils.entity.IDGenerator;
 import com.datacruncher.utils.generic.CommonUtils;
 import com.datacruncher.utils.generic.DomToOtherFormat;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.siemens.ct.exi.exceptions.EXIException;
+import org.bson.BSON;
+import org.bson.BSONObject;
+import org.bson.BasicBSONObject;
+import org.xml.sax.SAXException;
 
+import javax.persistence.*;
+import javax.xml.transform.TransformerException;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.Map;
-
-import javax.persistence.*;
-import javax.xml.transform.TransformerException;
-
-import org.bson.BSON;
-import org.bson.BSONObject;
-import org.bson.BasicBSONObject;
-import org.codehaus.jackson.JsonParseException;
-import org.codehaus.jackson.map.JsonMappingException;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.xml.sax.SAXException;
-
-import com.siemens.ct.exi.exceptions.EXIException;
 
 
 
@@ -175,10 +173,10 @@ public class DatastreamEntity  {
 		} else if (CommonUtils.isJSON(datastream)){
 			//bson compression for json streams
 			try {
-				// FIXME JsonParseException: Unexpected character (''' (code 39)): was expecting double-quote to start field name
+				final ObjectMapper objectMapper = new ObjectMapper();
+				objectMapper.configure(JsonParser.Feature.ALLOW_SINGLE_QUOTES, true);
 				@SuppressWarnings("unchecked")
-				Map<String,Object> map =
-				        new ObjectMapper().readValue(datastream, Map.class);
+				Map<String,Object> map = objectMapper.readValue(datastream, Map.class);
 				BSONObject bson = new BasicBSONObject(map);
 				setCompressType(DSCompressType.BSON.getNum());
 				bArr = BSON.encode(bson);

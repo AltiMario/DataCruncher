@@ -697,4 +697,15 @@ public class CommonUtils implements DaoSet {
             return "";
         }
     }
+
+    public static String escapeJsonString(String string) {
+        String result;
+        try (StringWriter writer = new StringWriter()) {
+            new ObjectMapper().writer().writeValue(writer, string);
+            result = writer.toString();
+        } catch (Exception e) {
+            result = string;
+        }
+        return result;
+    }
 }

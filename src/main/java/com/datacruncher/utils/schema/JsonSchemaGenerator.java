@@ -18,14 +18,19 @@
  */
 package com.datacruncher.utils.schema;
 
+import com.datacruncher.constants.DateTimeType;
 import com.datacruncher.constants.FileInfo;
 import com.datacruncher.datastreams.JvDate;
 import com.datacruncher.utils.JavaCompilerFacade;
 import com.datacruncher.xjc.ValidationAnnotationXjcPlugin;
+import com.datacruncher.xjc.XsdDate;
+import com.datacruncher.xjc.XsdDateTime;
+import com.datacruncher.xjc.XsdTime;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.kjetland.jackson.jsonSchema.JsonSchemaConfig;
 import com.sun.tools.xjc.addon.krasa.JaxbValidationsPlugins;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
@@ -33,6 +38,8 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import scala.Predef;
+import scala.collection.JavaConverters;
 
 import javax.xml.XMLConstants;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -47,16 +54,17 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 public class JsonSchemaGenerator {
     private static final String JAXB_NS_PREFIX = "jaxb";
     private static final String JAXB_NS = "http://java.sun.com/xml/ns/jaxb";
+    private static final String INPUTTYPE_DATE = "date";
+    private static final String INPUTTYPE_TIME = "time";
+    private static final String INPUTTYPE_DATETIME = "datetime-local";
+    private static final String ANNOTATION_UNIXDATE = "@unixDate";
     private final File xsdSchemaFile;
     private final ObjectMapper objectMapper;
 
@@ -120,17 +128,61 @@ public class JsonSchemaGenerator {
             rootElement.setAttributeNS(
                     XMLConstants.XMLNS_ATTRIBUTE_NS_URI, XMLConstants.XMLNS_ATTRIBUTE + ":" + JAXB_NS_PREFIX, JAXB_NS);
             rootElement.setAttributeNS(JAXB_NS, JAXB_NS_PREFIX + ":extensionBindingPrefixes", ValidationAnnotationXjcPlugin.DC_NS_PREFIX);
-            // appinfo for root element is used to store macro, ignore it for JSON schema
+            rootElement.setAttributeNS(JAXB_NS, JAXB_NS_PREFIX + ":version", "2.1");
             final NodeList rootChildNodes = rootElement.getChildNodes();
             for (int i = 0; i < rootChildNodes.getLength(); i++) {
-                final Node node = rootChildNodes.item(i);
-                if ("annotation".equals(node.getLocalName())) {
-                    rootElement.removeChild(node);
+                final Node annoNode = rootChildNodes.item(i);
+                if ("annotation".equals(annoNode.getLocalName())) {
+                    //rootElement.removeChild(annoNode);
+                    Node appInfoNode = null;
+                    final NodeList annoChildNodes = annoNode.getChildNodes();
+                    for (int j = 0; j < annoChildNodes.getLength(); j++) {
+                        final Node annoChildNode = annoChildNodes.item(i);
+                        if (annoChildNode == null) {
+                            continue;
+                        }
+                        if ("appinfo".equalsIgnoreCase(annoChildNode.getLocalName())) {
+                            appInfoNode = annoChildNode;
+                            // appinfo for schema element is used to store macro, ignore it for JSON schema
+                            if (appInfoNode.hasChildNodes()) {
+                                appInfoNode.removeChild(appInfoNode.getFirstChild());
+                            }
+                        } else {
+                            annoNode.removeChild(annoChildNode);
+                        }
+                    }
+                    if (appInfoNode == null) {
+                        appInfoNode = xmlDocument.createElementNS(
+                                annoNode.getNamespaceURI(), annoNode.getPrefix() + ":appinfo");
+                        annoNode.appendChild(appInfoNode);
+                    }
+                    final Element bindingsNode = xmlDocument.createElementNS(
+                            JAXB_NS, JAXB_NS_PREFIX + ":globalBindings");
+                    appInfoNode.appendChild(bindingsNode);
+                    Element javaTypeNode = xmlDocument.createElementNS(
+                            JAXB_NS, JAXB_NS_PREFIX + ":javaType");
+                    javaTypeNode.setAttribute("name", XsdDate.class.getCanonicalName());
+                    javaTypeNode.setAttribute("xmlType", "xs:date");
+                    bindingsNode.appendChild(javaTypeNode);
+                    javaTypeNode = xmlDocument.createElementNS(
+                            JAXB_NS, JAXB_NS_PREFIX + ":javaType");
+                    javaTypeNode.setAttribute("name", XsdTime.class.getCanonicalName());
+                    javaTypeNode.setAttribute("xmlType", "xs:time");
+                    bindingsNode.appendChild(javaTypeNode);
+                    javaTypeNode = xmlDocument.createElementNS(
+                            JAXB_NS, JAXB_NS_PREFIX + ":javaType");
+                    javaTypeNode.setAttribute("name", XsdDateTime.class.getCanonicalName());
+                    javaTypeNode.setAttribute("xmlType", "xs:dateTime");
+                    bindingsNode.appendChild(javaTypeNode);
+
                 }
             }
             NodeList nodeList = xmlDocument.getElementsByTagName("xs:appinfo");
             for (int i = 0; i < nodeList.getLength(); i++) {
                 final Node node = nodeList.item(i);
+                if (StringUtils.isBlank(node.getTextContent())) {
+                    continue;
+                }
                 final Element newNode = xmlDocument.createElementNS(ValidationAnnotationXjcPlugin.DC_NS_URI,
                         ValidationAnnotationXjcPlugin.DC_NS_PREFIX + ":" + ValidationAnnotationXjcPlugin.DC_ANNO_TAG);
                 newNode.setTextContent(node.getTextContent());
@@ -171,8 +223,35 @@ public class JsonSchemaGenerator {
         if (rootClass == null) {
             throw new Exception("Can't find root element class");
         }
+        scala.collection.immutable.Map<String, String> customType2FormatMapping = JavaConverters.mapAsScalaMapConverter(
+                new HashMap<String, String>() {{
+                    put("com.datacruncher.xjc.XsdDate", "date");
+                    put("com.datacruncher.xjc.XsdTime", "time");
+                    put("com.datacruncher.xjc.XsdDateTime", "datetime-local");
+                }}
+        ).asScala().toMap(
+                Predef.$conforms()
+        );
+        final JsonSchemaConfig html5SchemaConfig = JsonSchemaConfig.vanillaJsonSchemaDraft4();
+        final JsonSchemaConfig jsonSchemaConfig = new JsonSchemaConfig(
+                html5SchemaConfig.autoGenerateTitleForProperties(),
+                html5SchemaConfig.defaultArrayFormat(),
+                html5SchemaConfig.useOneOfForOption(),
+                html5SchemaConfig.useOneOfForNullables(),
+                html5SchemaConfig.usePropertyOrdering(),
+                html5SchemaConfig.hidePolymorphismTypeProperty(),
+                html5SchemaConfig.disableWarnings(),
+                html5SchemaConfig.useMinLengthForNotNull(),
+                html5SchemaConfig.useTypeIdForDefinitionName(),
+                customType2FormatMapping,
+                html5SchemaConfig.useMultipleEditorSelectViaProperty(),
+                html5SchemaConfig.uniqueItemClasses(),
+                html5SchemaConfig.classTypeReMapping(),
+                html5SchemaConfig.jsonSuppliers(),
+                html5SchemaConfig.subclassesResolver(),
+                html5SchemaConfig.failOnUnknownProperties());
         com.kjetland.jackson.jsonSchema.JsonSchemaGenerator schemaGenerator =
-                new com.kjetland.jackson.jsonSchema.JsonSchemaGenerator(objectMapper);
+                new com.kjetland.jackson.jsonSchema.JsonSchemaGenerator(objectMapper, jsonSchemaConfig);
         return schemaGenerator.generateJsonSchema(rootClass);
     }
 
@@ -189,22 +268,49 @@ public class JsonSchemaGenerator {
             if (requiredFields.contains(propertyName)) {
                 property.put("required", true);
             }
-            // Replacing client-side pattern validation by AJAX check
-            if (property.has("pattern")) {
-                property.put("regex", property.get("pattern").asText());
-                property.remove("pattern");
+            if (property.has("format")) {
+                property.put("type", property.get("format").asText());
+                property.remove("format");
             }
             if (property.has(ValidationAnnotationXjcPlugin.DC_ANNO_TAG)) {
                 final JsonNode annotationNode = property.get(ValidationAnnotationXjcPlugin.DC_ANNO_TAG);
-                // Force date type
                 if (annotationNode.isArray()) {
                     final ArrayNode annotationValuesNode = (ArrayNode) annotationNode;
-                    if (annotationValuesNode.size() == 1
-                            && annotationValuesNode.get(0).asText().startsWith(JvDate.RULE_PREFIX)) {
-                        property.put("type", "date");
-                        property.remove(ValidationAnnotationXjcPlugin.DC_ANNO_TAG);
+                    if (annotationValuesNode.size() == 1) {
+                        String annotationValue = annotationValuesNode.get(0).asText().trim();
+                        // Force date type
+                        if (annotationValue.startsWith(JvDate.RULE_PREFIX)) {
+                            final JvDate jvDate = JvDate.parse(annotationValue);
+                            String type = property.has("type") ? property.get("type").asText() : "";
+                            switch (jvDate.getDateTimeType()) {
+                                case DateTimeType.FORMAT_DATETIME:
+                                    type = INPUTTYPE_DATETIME;
+                                    break;
+                                case DateTimeType.FORMAT_DATE:
+                                    type = "date";
+                                    break;
+                                case DateTimeType.FORMAT_TIME:
+                                    type = "time";
+                                    break;
+                            }
+                            property.put("type", type);
+                            property.remove(ValidationAnnotationXjcPlugin.DC_ANNO_TAG);
+                        } else if (ANNOTATION_UNIXDATE.equalsIgnoreCase(annotationValue)) {
+                            property.put("type", INPUTTYPE_DATETIME);
+                            property.remove(ValidationAnnotationXjcPlugin.DC_ANNO_TAG);
+                        }
                     }
                 }
+            }
+            // Replacing client-side pattern validation by AJAX check
+            if (property.has("pattern")) {
+                if (property.has("type")
+                        && !INPUTTYPE_DATETIME.equals(property.get("type").asText())
+                        && !INPUTTYPE_DATE.equals(property.get("type").asText())
+                        && !INPUTTYPE_TIME.equals(property.get("type").asText())) {
+                    property.put("regex", property.get("pattern").asText());
+                }
+                property.remove("pattern");
             }
         }
     }

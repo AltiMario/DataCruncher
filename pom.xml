@@ -308,11 +308,6 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.mashape.unirest</groupId>
-            <artifactId>unirest-java</artifactId>
-            <version>1.4.7</version>
-        </dependency>
-        <dependency>
             <groupId>com.hp.hpl.jena</groupId>
             <artifactId>json-jena</artifactId>
             <version>1.0</version>
@@ -328,14 +323,14 @@
             <version>4.3.6</version>
         </dependency>
         <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpmime</artifactId>
+            <version>4.3.6</version>
+        </dependency>
+        <dependency>
             <groupId>org.jsoup</groupId>
             <artifactId>jsoup</artifactId>
             <version>1.6.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.axis</groupId>
-            <artifactId>axis</artifactId>
-            <version>1.4</version>
         </dependency>
         <dependency>
             <groupId>commons-discovery</groupId>

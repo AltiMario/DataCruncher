@@ -16,18 +16,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-
 package com.datacruncher.datastreams;
 
-import com.datacruncher.datastreams.XSDentities.*;
 import com.datacruncher.constants.DateTimeType;
 import com.datacruncher.constants.FieldType;
 import com.datacruncher.constants.StreamType;
 import com.datacruncher.constants.Tag;
-import com.datacruncher.jpa.entity.*;
 import com.datacruncher.datastreams.XSDentities.*;
 import com.datacruncher.jpa.dao.DaoSet;
 import com.datacruncher.jpa.entity.*;
+import org.apache.commons.lang.StringUtils;
 import org.jsoup.Jsoup;
 
 import javax.xml.bind.JAXBContext;
@@ -42,9 +40,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import com.datacruncher.datastreams.XSDentities.Annotation;
-import com.datacruncher.datastreams.XSDentities.Appinfo;
-
 
 public class CreateXSDJAXB implements DaoSet {
 
@@ -55,7 +50,7 @@ public class CreateXSDJAXB implements DaoSet {
     private Schema schemaXSD;
     private int idStreamType;
 
-    public String createRoot (long idSchema) {
+    public String createRoot(long idSchema) {
         schemaXSD = objectFactory.createSchema();
         SchemaEntity schemaEntity = schemasDao.find(idSchema);
         idStreamType = schemaEntity.getIdStreamType();
@@ -63,55 +58,55 @@ public class CreateXSDJAXB implements DaoSet {
 
         schemaXSD.getSimpleTypeOrComplexTypeOrGroup().add(annotation);
         addMacroToDocument(annotation, idSchema);
-        
+
         TopLevelElement schemaNameElement = objectFactory.createTopLevelElement();
-		schemaNameElement.setName(Tag.TAG_SCHEMA_NAME);
-		schemaNameElement.setFixed(schemaEntity.getName());
+        schemaNameElement.setName(Tag.TAG_SCHEMA_NAME);
+        schemaNameElement.setFixed(schemaEntity.getName());
         schemaXSD.getSimpleTypeOrComplexTypeOrGroup().add(schemaNameElement);
-        
+
         TopLevelElement dataStreamTypeElement = objectFactory.createTopLevelElement();
         dataStreamTypeElement.setName(Tag.TAG_DATA_STREAM_TYPE);
         dataStreamTypeElement.setFixed(String.valueOf(schemaEntity.getIdStreamType()));
         schemaXSD.getSimpleTypeOrComplexTypeOrGroup().add(dataStreamTypeElement);
-        
-        if(schemaEntity.getIdStreamType() == StreamType.flatFileDelimited) {
-        	 TopLevelElement delimiterElement = objectFactory.createTopLevelElement();
-        	 delimiterElement.setName(Tag.TAG_DELIMITER_CHAR);
-        	 delimiterElement.setFixed(schemaEntity.getDelimiter());
-             schemaXSD.getSimpleTypeOrComplexTypeOrGroup().add(delimiterElement);
+
+        if (schemaEntity.getIdStreamType() == StreamType.flatFileDelimited) {
+            TopLevelElement delimiterElement = objectFactory.createTopLevelElement();
+            delimiterElement.setName(Tag.TAG_DELIMITER_CHAR);
+            delimiterElement.setFixed(schemaEntity.getDelimiter());
+            schemaXSD.getSimpleTypeOrComplexTypeOrGroup().add(delimiterElement);
         }
-        
-        if(schemaEntity.getStartDate() != null) {        	
-        	TopLevelElement validityStartDateElement = objectFactory.createTopLevelElement();
-        	validityStartDateElement.setName(Tag.TAG_VALIDITY_START_DATE);
-        	validityStartDateElement.setFixed(new SimpleDateFormat("yyyy-MM-dd").format(schemaEntity.getStartDate()));
-        	schemaXSD.getSimpleTypeOrComplexTypeOrGroup().add(validityStartDateElement);        	
-        } else {        	
-        	TopLevelElement validityStartDateElement = objectFactory.createTopLevelElement();
-        	validityStartDateElement.setName(Tag.TAG_VALIDITY_START_DATE);
-        	validityStartDateElement.setFixed("");
-        	schemaXSD.getSimpleTypeOrComplexTypeOrGroup().add(validityStartDateElement);        	
-        }
-        
-        if(schemaEntity.getEndDate() != null) {
-        	TopLevelElement validityEndDateElement = objectFactory.createTopLevelElement();
-        	validityEndDateElement.setName(Tag.TAG_VALIDITY_END_DATE);
-        	validityEndDateElement.setFixed(new SimpleDateFormat("yyyy-MM-dd").format(schemaEntity.getEndDate()));
-        	schemaXSD.getSimpleTypeOrComplexTypeOrGroup().add(validityEndDateElement);
+
+        if (schemaEntity.getStartDate() != null) {
+            TopLevelElement validityStartDateElement = objectFactory.createTopLevelElement();
+            validityStartDateElement.setName(Tag.TAG_VALIDITY_START_DATE);
+            validityStartDateElement.setFixed(new SimpleDateFormat("yyyy-MM-dd").format(schemaEntity.getStartDate()));
+            schemaXSD.getSimpleTypeOrComplexTypeOrGroup().add(validityStartDateElement);
         } else {
-        	TopLevelElement validityEndDateElement = objectFactory.createTopLevelElement();
-        	validityEndDateElement.setName(Tag.TAG_VALIDITY_END_DATE);
-        	validityEndDateElement.setFixed("");
-        	schemaXSD.getSimpleTypeOrComplexTypeOrGroup().add(validityEndDateElement);
+            TopLevelElement validityStartDateElement = objectFactory.createTopLevelElement();
+            validityStartDateElement.setName(Tag.TAG_VALIDITY_START_DATE);
+            validityStartDateElement.setFixed("");
+            schemaXSD.getSimpleTypeOrComplexTypeOrGroup().add(validityStartDateElement);
         }
-        
-        if(schemaEntity.getDescription().trim().length() > 0) {
-        	TopLevelElement descriptionElement = objectFactory.createTopLevelElement();
-        	descriptionElement.setName(Tag.TAG_DESCRIPTION);
-        	descriptionElement.setFixed(schemaEntity.getDescription());
-        	schemaXSD.getSimpleTypeOrComplexTypeOrGroup().add(descriptionElement);
+
+        if (schemaEntity.getEndDate() != null) {
+            TopLevelElement validityEndDateElement = objectFactory.createTopLevelElement();
+            validityEndDateElement.setName(Tag.TAG_VALIDITY_END_DATE);
+            validityEndDateElement.setFixed(new SimpleDateFormat("yyyy-MM-dd").format(schemaEntity.getEndDate()));
+            schemaXSD.getSimpleTypeOrComplexTypeOrGroup().add(validityEndDateElement);
+        } else {
+            TopLevelElement validityEndDateElement = objectFactory.createTopLevelElement();
+            validityEndDateElement.setName(Tag.TAG_VALIDITY_END_DATE);
+            validityEndDateElement.setFixed("");
+            schemaXSD.getSimpleTypeOrComplexTypeOrGroup().add(validityEndDateElement);
         }
-        
+
+        if (schemaEntity.getDescription().trim().length() > 0) {
+            TopLevelElement descriptionElement = objectFactory.createTopLevelElement();
+            descriptionElement.setName(Tag.TAG_DESCRIPTION);
+            descriptionElement.setFixed(schemaEntity.getDescription());
+            schemaXSD.getSimpleTypeOrComplexTypeOrGroup().add(descriptionElement);
+        }
+
         if (idStreamType == StreamType.XML || idStreamType == StreamType.XMLEXI) {
             SchemaFieldEntity root;
             root = schemaFieldsDao.root(idSchema);
@@ -128,25 +123,25 @@ public class CreateXSDJAXB implements DaoSet {
             if (root.getIdFieldType() == FieldType.all) {
                 All all = objectFactory.createAll();
 
-                createChild (0 , root.getIdSchemaField() , all.getParticle());
+                createChild(0, root.getIdSchemaField(), all.getParticle());
                 localComplexType.setAll(all);
             } else if (root.getIdFieldType() == FieldType.choice) {
                 ExplicitGroup explicitGroup = objectFactory.createExplicitGroup();
 
-                createChild (0 , root.getIdSchemaField() , explicitGroup.getParticle());
+                createChild(0, root.getIdSchemaField(), explicitGroup.getParticle());
                 localComplexType.setChoice(explicitGroup);
             } else if (root.getIdFieldType() == FieldType.sequence) {
 
                 ExplicitGroup explicitGroup = objectFactory.createExplicitGroup();
 
-                createChild (0 , root.getIdSchemaField() , explicitGroup.getParticle());
+                createChild(0, root.getIdSchemaField(), explicitGroup.getParticle());
                 localComplexType.setSequence(explicitGroup);
 
             }
             ArrayList<SchemaFieldEntity> listAttr;
-            listAttr =(ArrayList<SchemaFieldEntity>) schemaFieldsDao.listAttrChild(root.getIdSchemaField());
-            if (listAttr.size()>0)
-                createAttributes(listAttr,localComplexType.getAttributeOrAttributeGroup());
+            listAttr = (ArrayList<SchemaFieldEntity>) schemaFieldsDao.listAttrChild(root.getIdSchemaField());
+            if (listAttr.size() > 0)
+                createAttributes(listAttr, localComplexType.getAttributeOrAttributeGroup());
             topLevelElement.setComplexType(localComplexType);
             schemaXSD.getSimpleTypeOrComplexTypeOrGroup().add(topLevelElement);
         } else if (idStreamType == StreamType.flatFileFixedPosition || idStreamType == StreamType.flatFileDelimited ||
@@ -155,18 +150,18 @@ public class CreateXSDJAXB implements DaoSet {
             topLevelElement.setName(Tag.TAG_ROOT);
             LocalComplexType localComplexType = objectFactory.createLocalComplexType();
             ExplicitGroup sequence = objectFactory.createExplicitGroup();
-            createChild (idSchema , 0 , sequence.getParticle());
+            createChild(idSchema, 0, sequence.getParticle());
             localComplexType.setSequence(sequence);
             topLevelElement.setComplexType(localComplexType);
             schemaXSD.getSimpleTypeOrComplexTypeOrGroup().add(topLevelElement);
-        }else if (idStreamType == StreamType.JSON) {
+        } else if (idStreamType == StreamType.JSON) {
             TopLevelElement topLevelElement = objectFactory.createTopLevelElement();
             topLevelElement.setName(Tag.TAG_ROOT);
             LocalComplexType localComplexType = objectFactory.createLocalComplexType();
 
             All all = objectFactory.createAll();
 
-            createChild (idSchema, -1 , all.getParticle());
+            createChild(idSchema, -1, all.getParticle());
 
             localComplexType.setAll(all);
 
@@ -175,21 +170,21 @@ public class CreateXSDJAXB implements DaoSet {
         }
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         try {
-            JAXBContext context = JAXBContext.newInstance( "com.datacruncher.datastreams.XSDentities" );
+            JAXBContext context = JAXBContext.newInstance("com.datacruncher.datastreams.XSDentities");
             Marshaller marshaller = context.createMarshaller();
-            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT , Boolean.TRUE);
+            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
             marshaller.marshal(schemaXSD, byteArrayOutputStream);
         } catch (JAXBException exception) {
-            Logger.getLogger(CreateXSDJAXB.class.getName()).log(Level.SEVERE , null , exception);
+            Logger.getLogger(CreateXSDJAXB.class.getName()).log(Level.SEVERE, null, exception);
             return null;
         }
         return byteArrayOutputStream.toString();
     }
 
-    private boolean createRestriction(SchemaFieldEntity field ,Restriction restriction,TopLevelSimpleType topLevelSimpleType, String localSympleTypeName){
-        boolean restricted =false;
+    private boolean createRestriction(SchemaFieldEntity field, Restriction restriction, TopLevelSimpleType topLevelSimpleType, String localSympleTypeName) {
+        boolean restricted = false;
         Union unionAllowValues = null;
-        
+
         if (field.getIdFieldType() == FieldType.alphanumeric) {
 
             restriction.setBase(new QName("xs:string"));
@@ -212,7 +207,7 @@ public class CreateXSDJAXB implements DaoSet {
             NoFixedFacet enumeration;
             JAXBElement<?> enumElement;
             ArrayList<AlphanumericFieldValuesEntity> listAlphanumericFieldValues;
-            listAlphanumericFieldValues = (ArrayList<AlphanumericFieldValuesEntity>) alphaFieldDao.listAlphanumericFieldValues(field.getIdSchemaField()) ;
+            listAlphanumericFieldValues = (ArrayList<AlphanumericFieldValuesEntity>) alphaFieldDao.listAlphanumericFieldValues(field.getIdSchemaField());
             for (AlphanumericFieldValuesEntity listAlphanumericFieldValue : listAlphanumericFieldValues) {
                 enumeration = objectFactory.createNoFixedFacet();
                 enumeration.setValue(listAlphanumericFieldValue.getValue());
@@ -220,8 +215,8 @@ public class CreateXSDJAXB implements DaoSet {
                 restriction.getFacets().add(enumElement);
                 restricted = true;
             }
-            List<ChecksTypeEntity> list  = checksTypeDao.getChecksTypeBySchemaFiledId(field.getIdSchemaField());
-            if (list != null && list.size()>0) {
+            List<ChecksTypeEntity> list = checksTypeDao.getChecksTypeBySchemaFiledId(field.getIdSchemaField());
+            if (list != null && list.size() > 0) {
                 int i = 0;
                 while (i < list.size()) {
                     ChecksTypeEntity checksTypeEntity = list.get(i);
@@ -239,24 +234,24 @@ public class CreateXSDJAXB implements DaoSet {
             }
         } else if (field.getIdFieldType() == FieldType.numeric) {
             Integer fractionDigit = field.getFractionDigits();
-            int idNumericType= field.getIdNumericType();
+            int idNumericType = field.getIdNumericType();
             String minInclusive = null;
             String maxInclusive = null;
-            if(idNumericType == 1){
+            if (idNumericType == 1) {
                 restriction.setBase(new QName("xs:integer"));
-                if (field.getMinInclusive()!= null) {
-                	minInclusive = calcErrorToleratedValue(field.getMinInclusive(), field.getErrorToleranceValue(), true);                    
+                if (field.getMinInclusive() != null) {
+                    minInclusive = calcErrorToleratedValue(field.getMinInclusive(), field.getErrorToleranceValue(), true);
                 }
-                if (field.getMaxInclusive()!= null) {
-                	maxInclusive =  calcErrorToleratedValue(field.getMaxInclusive(), field.getErrorToleranceValue(), false);
+                if (field.getMaxInclusive() != null) {
+                    maxInclusive = calcErrorToleratedValue(field.getMaxInclusive(), field.getErrorToleranceValue(), false);
                 }
-            }else{
+            } else {
                 restriction.setBase(new QName("xs:decimal"));
-                if (field.getMinInclusive()!= null) {
-                	minInclusive = calcErrorToleratedValue(field.getMinInclusive(), field.getErrorToleranceValue(), true);
+                if (field.getMinInclusive() != null) {
+                    minInclusive = calcErrorToleratedValue(field.getMinInclusive(), field.getErrorToleranceValue(), true);
                 }
-                if (field.getMaxInclusive()!= null) {
-                	maxInclusive =  calcErrorToleratedValue(field.getMaxInclusive(), field.getErrorToleranceValue(), false);
+                if (field.getMaxInclusive() != null) {
+                    maxInclusive = calcErrorToleratedValue(field.getMaxInclusive(), field.getErrorToleranceValue(), false);
                 }
             }
 
@@ -277,7 +272,7 @@ public class CreateXSDJAXB implements DaoSet {
                 restricted = true;
             }
 
-            
+
             if (maxInclusive != null) {
                 NumFacet numFacet = objectFactory.createNumFacet();
                 numFacet.setValue(maxInclusive);
@@ -288,9 +283,9 @@ public class CreateXSDJAXB implements DaoSet {
             NoFixedFacet enumeration;
             JAXBElement<?> enumElem;
             ArrayList<NumericFieldValuesEntity> listNumericFieldValues = (ArrayList<NumericFieldValuesEntity>) numericFieldDao.listNumericFieldValues(field.getIdSchemaField());
-			if (listNumericFieldValues != null && listNumericFieldValues.size() > 0) {				
-				if(field.getErrorToleranceValue() > 0) { 
-					unionAllowValues = objectFactory.createUnion();
+            if (listNumericFieldValues != null && listNumericFieldValues.size() > 0) {
+                if (field.getErrorToleranceValue() > 0) {
+                    unionAllowValues = objectFactory.createUnion();
                     for (NumericFieldValuesEntity listNumericFieldValue : listNumericFieldValues) {
 
                         LocalSimpleType localSimpleType = new LocalSimpleType();
@@ -314,7 +309,7 @@ public class CreateXSDJAXB implements DaoSet {
                         topLevelSimpleType.setUnion(unionAllowValues);
                         restricted = true;
                     }
-				} else {
+                } else {
                     for (NumericFieldValuesEntity listNumericFieldValue : listNumericFieldValues) {
                         enumeration = objectFactory.createNoFixedFacet();
                         enumeration.setValue(listNumericFieldValue.getValue());
@@ -322,85 +317,91 @@ public class CreateXSDJAXB implements DaoSet {
                         restriction.getFacets().add(enumElem);
                         restricted = true;
                     }
-				}
-			}
+                }
+            }
 
         } else if (field.getIdFieldType() == FieldType.date) {
             String regDateType = "";
             String regTimeType = "";
             String delimiter;
-            Boolean isDate = true;
-            Boolean isTime = true;
+            boolean isDate = field.getIdDateType() != null && field.getIdDateType() != 0;
+            boolean isTime = field.getIdTimeType() != null && field.getIdTimeType() != 0;
 
-            if (field.getIdTimeType() !=  null){
+            if (isTime) {
                 switch (field.getIdTimeType()) {
                     case DateTimeType.dblpnthhmmss:  // hh:mm:ss
-                        regTimeType  = "(([2][1-3]|[01][0-9])[:]([0-5][0-9])[:]([0-5][0-9]))";
+                        regTimeType = "(([2][1-3]|[01][0-9])[:]([0-5][0-9])[:]([0-5][0-9]))";
                         break;
                     case DateTimeType.dothhmmss:  // hh.mm.ss
-                        regTimeType  = "(([2][1-3]|[01][0-9])[.]([0-5][0-9])[.]([0-5][0-9]))";
+                        regTimeType = "(([2][1-3]|[01][0-9])[.]([0-5][0-9])[.]([0-5][0-9]))";
                         break;
                     case DateTimeType.dblpnthmmss:  // h:mm:ss
-                        regTimeType  = "(([0-9]|[2][1-3]|[1][0-9])[:]([0-5][0-9])[:]([0-5][0-9]))";
+                        regTimeType = "(([0-9]|[2][1-3]|[1][0-9])[:]([0-5][0-9])[:]([0-5][0-9]))";
                         break;
                     case DateTimeType.dothmmss:  // h.mm.ss
-                        regTimeType  = "(([0-9]|[2][1-3]|[1][0-9])[.]([0-5][0-9])[.]([0-5][0-9]))";
+                        regTimeType = "(([0-9]|[2][1-3]|[1][0-9])[.]([0-5][0-9])[.]([0-5][0-9]))";
                         break;
                     case DateTimeType.dblpnthhmm:  // hh:mm
-                        regTimeType  = "(([2][1-3]|[01][0-9])[:]([0-5][0-9]))";
+                        regTimeType = "(([2][1-3]|[01][0-9])[:]([0-5][0-9]))";
                         break;
                     case DateTimeType.dothhmm:  // hh.mm
-                        regTimeType  = "(([2][1-3]|[01][0-9])[.]([0-5][0-9]))";
+                        regTimeType = "(([2][1-3]|[01][0-9])[.]([0-5][0-9]))";
                         break;
                     case DateTimeType.dblpntZhhmmss:  // hh:mm:ss AM/PM
-                        regTimeType  = "(([0][0-9]|[1][012])[:]([0-5][0-9])[:]([0-5][0-9])(\\s[AP]M))";
+                        regTimeType = "(([0][0-9]|[1][012])[:]([0-5][0-9])[:]([0-5][0-9])(\\s[AP]M))";
                         break;
                     case DateTimeType.dotZhhmmss:  // hh.mm.ss AM/PM
-                        regTimeType  = "(([0][0-9]|[1][012])[.]([0-5][0-9])[.]([0-5][0-9])(\\s[AP]M))";
+                        regTimeType = "(([0][0-9]|[1][012])[.]([0-5][0-9])[.]([0-5][0-9])(\\s[AP]M))";
                         break;
                 }
-            } else {
-                isTime = false;
             }
-            if (field.getIdDateType()!= null) {
-                if (field.getIdDateType() == 1 || field.getIdDateType() == 4 || field.getIdDateType() == 7){
+            if (isDate) {
+                if (field.getIdDateType() == 1 || field.getIdDateType() == 4 || field.getIdDateType() == 7) {
                     delimiter = "[/]";
-                } else if (field.getIdDateType() == 2 || field.getIdDateType() == 5 || field.getIdDateType() == 8){
+                } else if (field.getIdDateType() == 2 || field.getIdDateType() == 5 || field.getIdDateType() == 8) {
                     delimiter = "[-]";
-                } else if (field.getIdDateType() == 3 || field.getIdDateType() == 6 || field.getIdDateType() == 9){
+                } else if (field.getIdDateType() == 3 || field.getIdDateType() == 6 || field.getIdDateType() == 9) {
                     delimiter = "[.]";
                 } else {
                     delimiter = "";
                 }
 
                 switch (field.getIdDateType()) {
-                    case DateTimeType.slashDDMMYYYY :  // dd/MM/yyyy
-                    case DateTimeType.signDDMMYYYY :  // dd-MM-yyyy
+                    case DateTimeType.slashDDMMYYYY:  // dd/MM/yyyy
+                    case DateTimeType.signDDMMYYYY:  // dd-MM-yyyy
                     case DateTimeType.dotDDMMYYYY:  // dd.MM.yyyy
                     case DateTimeType.DDMMYYYY:  // ddMMyyyy
-                        regDateType  = "(((0[1-9]|[12]\\d|3[01])" + delimiter + "(0[13578]|1[02])" + delimiter + "(\\d{4}))|((0[1-9]|[12]\\d|30)" + delimiter + "(0[13456789]|1[012])" + delimiter + "(\\d{4}))|((0[1-9]|1\\d|2[0-8])" + delimiter + "02" + delimiter + "(\\d{4}))|((29)" + delimiter + "(02)" + delimiter + "(((\\d{2})00)|((\\d{2})[0][48])|((\\d{2})[2468][048])|((\\d{2})[13579][26]))))";
+                        regDateType = "(((0[1-9]|[12]\\d|3[01])" + delimiter + "(0[13578]|1[02])" + delimiter + "(\\d{4}))|((0[1-9]|[12]\\d|30)" + delimiter + "(0[13456789]|1[012])" + delimiter + "(\\d{4}))|((0[1-9]|1\\d|2[0-8])" + delimiter + "02" + delimiter + "(\\d{4}))|((29)" + delimiter + "(02)" + delimiter + "(((\\d{2})00)|((\\d{2})[0][48])|((\\d{2})[2468][048])|((\\d{2})[13579][26]))))";
                         break;
                     case DateTimeType.slashDDMMYY:  // dd/MM/yy
                     case DateTimeType.signDDMMYY:  // dd-MM-yy
                     case DateTimeType.dotDDMMYY:  // dd.MM.yy
                     case DateTimeType.DDMMYY:  // ddMMyy
-                        regDateType  = "(((0[1-9]|[12]\\d|3[01])" + delimiter + "(0[13578]|1[02])" + delimiter + "(\\d{2}))|((0[1-9]|[12]\\d|30)" + delimiter + "(0[13456789]|1[012])" + delimiter + "(\\d{2}))|((0[1-9]|1\\d|2[0-8])" + delimiter + "02" + delimiter + "(\\d{2}))|((29)" + delimiter + "(02)" + delimiter + "((00)|([0][48])|([2468][048])|([13579][26]))))";
+                        regDateType = "(((0[1-9]|[12]\\d|3[01])" + delimiter + "(0[13578]|1[02])" + delimiter + "(\\d{2}))|((0[1-9]|[12]\\d|30)" + delimiter + "(0[13456789]|1[012])" + delimiter + "(\\d{2}))|((0[1-9]|1\\d|2[0-8])" + delimiter + "02" + delimiter + "(\\d{2}))|((29)" + delimiter + "(02)" + delimiter + "((00)|([0][48])|([2468][048])|([13579][26]))))";
                         break;
                     case DateTimeType.slashYYYYMMDD:  // yyyy/MM/dd
                     case DateTimeType.signYYYYMMDD:  // yyyy-MM-dd
                     case DateTimeType.dotYYYYMMDD:  // yyyy.MM.dd
                     case DateTimeType.YYYYMMDD:  // yyyyMMdd
-                        regDateType  = "(((\\d{4})" + delimiter + "(0[13578]|1[02])" + delimiter + "(0[1-9]|[12]\\d|3[01]))|((\\d{4})" + delimiter + "(0[13456789]|1[012])" + delimiter + "(0[1-9]|[12]\\d|30))|((\\d{4})" + delimiter + "02" + delimiter + "(0[1-9]|1\\d|2[0-8]))|((((\\d{2})00)|((\\d{2})[0][48])|((\\d{2})[2468][048])|((\\d{2})[13579][26]))(" + delimiter + "02" + delimiter + "29)))";
+                        regDateType = "(((\\d{4})" + delimiter + "(0[13578]|1[02])" + delimiter + "(0[1-9]|[12]\\d|3[01]))|((\\d{4})" + delimiter + "(0[13456789]|1[012])" + delimiter + "(0[1-9]|[12]\\d|30))|((\\d{4})" + delimiter + "02" + delimiter + "(0[1-9]|1\\d|2[0-8]))|((((\\d{2})00)|((\\d{2})[0][48])|((\\d{2})[2468][048])|((\\d{2})[13579][26]))(" + delimiter + "02" + delimiter + "29)))";
                         break;
                 }
-            } else {
-                isDate = false;
             }
 
             restriction.setBase(new QName("xs:string"));
             Pattern pattern = objectFactory.createPattern();
             if (isTime && isDate) {
-                pattern.setValue("(" + regDateType + "(\\s)" + regTimeType +")");
+                final StringBuilder patternBuilder = new StringBuilder();
+                if (StringUtils.isNotBlank(regDateType)) {
+                    patternBuilder.append(regDateType);
+                }
+                if (StringUtils.isNotBlank(regTimeType)) {
+                    if (patternBuilder.length() > 0) {
+                        patternBuilder.append("(\\s)");
+                    }
+                    patternBuilder.append(regTimeType);
+                }
+                pattern.setValue(patternBuilder.toString());
             } else {
                 if (isDate) {
                     pattern.setValue(regDateType);
@@ -411,31 +412,32 @@ public class CreateXSDJAXB implements DaoSet {
             restriction.getFacets().add(pattern);
             restricted = true;
         }
-        if (restricted){
+        if (restricted) {
             topLevelSimpleType.setName(localSympleTypeName);
-            if(unionAllowValues == null) {
-            	topLevelSimpleType.setRestriction(restriction);
+            if (unionAllowValues == null) {
+                topLevelSimpleType.setRestriction(restriction);
             }
             schemaXSD.getSimpleTypeOrComplexTypeOrGroup().add(topLevelSimpleType);
         }
         return restricted;
 
     }
-    private void createFlatFileFixedAttributes(List<Annotated> attributes, SchemaFieldEntity field ){
+
+    private void createFlatFileFixedAttributes(List<Annotated> attributes, SchemaFieldEntity field) {
         Attribute attribute;
         attribute = objectFactory.createAttribute();
         attribute.setName(Tag.TAG_SIZE);
         attribute.setType(new QName("xs:string"));
         attribute.setFixed(field.getSize());
         attributes.add(attribute);
-        if(field.getIdAlign() != null){
+        if (field.getIdAlign() != null) {
             attribute = objectFactory.createAttribute();
             attribute.setName(Tag.TAG_ALIGN);
             attribute.setType(new QName("xs:string"));
             attribute.setFixed(field.getIdAlign().toString());
             attributes.add(attribute);
         }
-        if(field.getFillChar() != null){
+        if (field.getFillChar() != null) {
             attribute = objectFactory.createAttribute();
             attribute.setName(Tag.TAG_FILL);
             attribute.setType(new QName("xs:string"));
@@ -443,7 +445,8 @@ public class CreateXSDJAXB implements DaoSet {
             attributes.add(attribute);
         }
     }
-    private void createAttributes(ArrayList<SchemaFieldEntity> listAttr, List<Annotated> attributes){
+
+    private void createAttributes(ArrayList<SchemaFieldEntity> listAttr, List<Annotated> attributes) {
         Attribute attribute;
         for (SchemaFieldEntity aListAttr : listAttr) {
             attribute = objectFactory.createAttribute();
@@ -542,6 +545,7 @@ public class CreateXSDJAXB implements DaoSet {
         }
 
     }
+
     protected void addMacroToDocument(Annotation annotation, long idSchema) {
         @SuppressWarnings("rawtypes")
         List macros = macrosDao.read(idSchema).getResults();
@@ -557,15 +561,15 @@ public class CreateXSDJAXB implements DaoSet {
         }
     }
 
-    private void createChild (long idSchema , long idParent, List<Object> particle) {
+    private void createChild(long idSchema, long idParent, List<Object> particle) {
         ArrayList<SchemaFieldEntity> listChild;
         if (idParent == -1) { //Json schema type
-            listChild =(ArrayList<SchemaFieldEntity>) schemaFieldsDao.listElemChild(idSchema, 0);
-        }else{
+            listChild = (ArrayList<SchemaFieldEntity>) schemaFieldsDao.listElemChild(idSchema, 0);
+        } else {
             if (idParent != 0) {//xml schema type
-                listChild =(ArrayList<SchemaFieldEntity>) schemaFieldsDao.listElemChild(idParent);
+                listChild = (ArrayList<SchemaFieldEntity>) schemaFieldsDao.listElemChild(idParent);
             } else {   //not xml schema type
-                listChild =(ArrayList<SchemaFieldEntity>) schemaFieldsDao.listSchemaFields(idSchema);
+                listChild = (ArrayList<SchemaFieldEntity>) schemaFieldsDao.listSchemaFields(idSchema);
             }
         }
         for (SchemaFieldEntity aListChild : listChild) {
@@ -738,28 +742,27 @@ public class CreateXSDJAXB implements DaoSet {
             }
         }
     }
-    private String calcErrorToleratedValue(Double value, int errorToleranceValue, boolean isStartingValue) {
-    	String errorToleratedValue;
-    	long result;
-        if(errorToleranceValue > 0) {
-        	if(isStartingValue)
-        		value = value - ((errorToleranceValue * value ) / 100);
-        	else
-        		value = value + ((errorToleranceValue * value ) / 100);
-        	
-        	result = Math.round(value);
-        	errorToleratedValue = Long.toString(result);
-        } else {
-        	int temp = (int)value.doubleValue();
-            double d1 = value - temp;
-            
-            if(d1 == 0.0f) {
-            	errorToleratedValue = Long.toString(temp);
-           	} else {
-           		errorToleratedValue = value.toString();
-            }
-        }   
 
-    	return errorToleratedValue;
+    private String calcErrorToleratedValue(Double value, int errorToleranceValue, boolean isStartingValue) {
+        String errorToleratedValue;
+        long result;
+        if (errorToleranceValue > 0) {
+            if (isStartingValue)
+                value = value - ((errorToleranceValue * value) / 100);
+            else
+                value = value + ((errorToleranceValue * value) / 100);
+
+            result = Math.round(value);
+            errorToleratedValue = Long.toString(result);
+        } else {
+            int temp = (int) value.doubleValue();
+            double d1 = value - temp;
+            if (d1 == 0.0f) {
+                errorToleratedValue = Long.toString(temp);
+            } else {
+                errorToleratedValue = value.toString();
+            }
+        }
+        return errorToleratedValue;
     }
 }

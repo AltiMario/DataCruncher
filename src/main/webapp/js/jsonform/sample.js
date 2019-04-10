@@ -70,6 +70,8 @@ function requestJsonForm(params) {
             button.css('margin', '1em 0 0 1em');
             $('form div').empty().append(rows).append(button);
             button.click(submitForm);
+            $('form input[type="date"]').attr('max', '9999-12-31');
+            $('form input[type="datetime-local"]').attr('max', '9999-12-31T00:00:00');
         } else if ('errors' in data) {
             alert(data.errors.join('\n'));
         }
@@ -112,15 +114,7 @@ function validateTemporal(params) {
 }
 
 function validateForm(params) {
-    var form = $('form');
-    if (!form.length) {
-        return;
-    }
-    form = form[0];
-    var paramsObj = getParametersObject(form);
-    for (var attrname in paramsObj) {
-        params[attrname] = paramsObj[attrname];
-    }
+    readFormParams(params);
     $('.jsonform-errortext').hide();
     $('.jsonform-errortext').prev('input').css('background-color', 'white');
     var jsonpFormValidate = new JSONP('jsonFormValidate');
@@ -143,6 +137,30 @@ function validateForm(params) {
     });
 }
 
+function readFormParams(params) {
+    $('form input').each(function() {
+        var fieldType = $(this).attr('type');
+        if ($.inArray(fieldType, ['button', 'submit']) !== -1) {
+            return;
+        }
+        var value = $(this).val();
+        if (value != '') {
+            if (fieldType === 'date') {
+                value = Date.parse(value);
+            } else if (fieldType === 'datetime-local') {
+                value = Date.parse(value + ':00Z');
+            } else if (fieldType === 'time') {
+                value = Date.parse('1970-01-01T' + value + ':00Z');
+            }
+        }
+        params[$(this).attr('name')] = value;
+    });
+    $('form select').each(function() {
+        var value = $('option:selected', this).val();
+        params[$(this).attr('name')] = value ? value : '';
+    });
+}
+
 function displayFieldError(fieldName, errorMessage) {
     var fieldInput = $('input[name="' + fieldName + '"]');
     fieldInput.css('background-color', '#eea23677');
@@ -158,11 +176,11 @@ function fieldChanged(event) {
     $(event.target).css('background-color', 'white');
     var name = $(event.target).attr('name');
     var value = $(event.target).val();
+    var fieldType = $(this).attr('type');
     if (value !== null && value !== '') {
         var params = {
             'name': name,
-            'value': value,
-
+            'value': fieldType !== 'date'? value : (new Date(value)).getTime()
         };
         if ('annotation' in schema[name]) {
             params.annotation = schema[name].annotation;

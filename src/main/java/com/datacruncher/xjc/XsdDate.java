@@ -16,20 +16,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package com.datacruncher.streams;
+package com.datacruncher.xjc;
 
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
+public class XsdDate {
+    public XsdDate() {
+    }
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-        XMLStreamTest.class,
-        XMLEXIStreamTest.class,
-        DelimiterStreamTest.class,
-        FixedPosStreamTest.class,
-        ExcelStreamTest.class,
-        JsonDataStreamTest.class,
-        ZipStreamTest.class
-})
-public class AllStreamsTests {
+    public XsdDate(String value) {
+    }
 }

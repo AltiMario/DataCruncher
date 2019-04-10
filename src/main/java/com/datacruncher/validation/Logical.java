@@ -284,7 +284,6 @@ public class Logical implements DaoSet {
      * @param messageFormatter Object that overrides toString() method to format error message
      */
     private void addFieldError(SchemaFieldEntity field, StringBuilder messageBuilder, List<CustomErrorEntity> customErrors, Object messageFormatter) {
-        System.err.println(field.getName() + field.hasCustomError());
         boolean messageAdded = false;
         if (field != null && field.hasCustomError()) {
             final Optional<CustomErrorEntity> customErrorEntity = customErrors.stream()
@@ -292,7 +291,6 @@ public class Logical implements DaoSet {
                     .findFirst();
             customErrorEntity.ifPresent(c -> messageBuilder.append(c.getDescription()));
             messageAdded = customErrorEntity.isPresent();
-            System.err.println("##" + messageAdded);
         }
         if (!messageAdded) {
             messageBuilder.append(messageFormatter.toString());

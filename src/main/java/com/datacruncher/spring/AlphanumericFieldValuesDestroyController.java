@@ -16,40 +16,32 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-
 package com.datacruncher.spring;
 
 import com.datacruncher.jpa.dao.DaoSet;
-import com.datacruncher.jpa.entity.AlphanumericFieldValuesEntity;
-
-import java.io.IOException;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.Controller;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.codehaus.jackson.map.ObjectMapper;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.Controller;
+import java.io.IOException;
 
 public class AlphanumericFieldValuesDestroyController implements Controller, DaoSet {
 
-	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		String anfId = request.getParameter("anfId");
-		anfId = anfId.substring(1);
-		// String json = request.getParameter("results");
-		AlphanumericFieldValuesEntity alphanumericFieldValuesEntity = new AlphanumericFieldValuesEntity();
-		alphanumericFieldValuesEntity = alphaFieldDao.find(Long.parseLong(anfId));
-		schemasXSDDao.destroy(alphanumericFieldValuesEntity.getIdSchema());
-		ObjectMapper mapper = new ObjectMapper();
-		ServletOutputStream out = null;
-		response.setContentType("application/json");
-		out = response.getOutputStream();
-		out.write(mapper.writeValueAsBytes(alphaFieldDao.destroy(Long.parseLong(anfId))));
-		out.flush();
-		out.close();
-		return null;
-	}
+    public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        final ObjectMapper mapper = new ObjectMapper();
+        final AlphanumericFieldValuesDestroyPayload payload =
+                mapper.readValue(request.getInputStream(), AlphanumericFieldValuesDestroyPayload.class);
+        schemasXSDDao.destroy(payload.getIdSchema());
+        response.setContentType("application/json");
+        ServletOutputStream out = response.getOutputStream();
+        out.write(mapper.writeValueAsBytes(alphaFieldDao.destroy(payload.getIdAlphanumericFieldValue())));
+        out.flush();
+        out.close();
+        return null;
+    }
 }

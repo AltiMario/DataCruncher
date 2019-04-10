@@ -19,24 +19,32 @@
 package com.datacruncher.constants;
 
 public enum Servers {
-	FTP(1,"FTP"), JMS(2,"JMS"), WEBSERVICE(3,"WebServices"), SAMBA(4, "SAMBAWIN"), HTTP(5, "HTTP");
-	
-	int dbCode;
-	String name;
-	Servers(int dbCode,String name) {
+    FTP(1, "FTP"),
+    JMS(2, "JMS"),
+    WEBSERVICE(3, "WebServices"),
+    SAMBA(4, "SAMBAWIN"),
+    HTTP(5, "HTTP");
+
+    int dbCode;
+    String name;
+
+    Servers(int dbCode, String name) {
         this.dbCode = dbCode;
         this.name = name;
     }
+
     public int getDbCode() {
         return dbCode;
     }
-    public String getName(){
-    	return name;
+
+    public String getName() {
+        return name;
     }
+
     public static Servers getStatus(int dbCode) {
-    	Servers[] serversList = Servers.values();
+        Servers[] serversList = Servers.values();
         for (Servers server : serversList) {
-			if (dbCode == server.getDbCode()) {
+            if (dbCode == server.getDbCode()) {
                 return server;
             }
         }

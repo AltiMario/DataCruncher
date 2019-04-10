@@ -19,28 +19,16 @@
 
 package com.datacruncher.jpa.entity;
 
+import com.datacruncher.constants.DateTimeType;
 import com.datacruncher.jpa.dao.DaoServices;
+import org.codehaus.jackson.annotate.JsonManagedReference;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Lob;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
-import org.codehaus.jackson.annotate.JsonManagedReference;
 
 @SuppressWarnings("serial")
 @Entity
@@ -54,8 +42,9 @@ import org.codehaus.jackson.annotate.JsonManagedReference;
         @NamedQuery(name = "SchemaFieldEntity.findNumExtraCheck", query = "SELECT count(j) FROM ChecksTypeEntity j, SchemaFieldCheckTypesEntity S WHERE j.idCheckType = s.idCheckType AND j.tokenRule != null AND s.schemaFieldEntity.idSchemaField IN(SELECT t.idSchemaField FROM SchemaFieldEntity t Where t.idSchema = :idSchema)"),
         @NamedQuery(name = "SchemaFieldEntity.findFieldsWithExtraCheck", query = "SELECT DISTINCT s.idSchemaField FROM SchemaFieldEntity s, ChecksTypeEntity c , SchemaFieldCheckTypesEntity  t WHERE s.idSchema = :idSchema  AND s.idSchemaField = t.schemaFieldEntity.idSchemaField  AND t.idCheckType = c.idCheckType AND c.tokenRule != null AND (c.className != null OR c.tokenRule='@spellcheck')"),
         @NamedQuery(name = "SchemaFieldEntity.findFieldsExtraCheck", query = "SELECT s,c  FROM SchemaFieldEntity s, ChecksTypeEntity c , SchemaFieldCheckTypesEntity  t WHERE s.idSchema = :idSchema  AND s.idSchemaField = t.schemaFieldEntity.idSchemaField  AND t.idCheckType = c.idCheckType AND c.tokenRule != null AND (c.className != null OR c.tokenRule='@spellcheck') ORDER BY c.className ASC"),
-        @NamedQuery(name = "SchemaFieldEntity.findFieldsUnixDataType", query = "SELECT t FROM SchemaFieldEntity t WHERE t.idSchema = :idSchema AND t.idFieldType = 6 AND t.idDateTimeType = 7 "),
-        @NamedQuery(name = "SchemaFieldEntity.findNumUnixDataType", query = "SELECT count(t.idSchemaField) FROM SchemaFieldEntity t WHERE t.idSchema = :idSchema AND t.idFieldType = 6 AND t.idDateTimeType = 7 "),
+        @NamedQuery(name = "SchemaFieldEntity.findFieldsUnixDataType", query = "SELECT t FROM SchemaFieldEntity t WHERE t.idSchema = :idSchema AND t.idFieldType = 6 AND t.idDateTimeType = " + DateTimeType.FORMAT_UNIXTIMESTAMP),
+        @NamedQuery(name = "SchemaFieldEntity.findNumUnixDataType", query = "SELECT count(t.idSchemaField) FROM SchemaFieldEntity t WHERE t.idSchema = :idSchema AND t.idFieldType = 6 AND t.idDateTimeType = " + DateTimeType.FORMAT_UNIXTIMESTAMP),
+        @NamedQuery(name = "SchemaFieldEntity.findDateTimeFields", query = "SELECT t FROM SchemaFieldEntity t WHERE t.idSchema = :idSchema AND t.idFieldType = 6"),
         @NamedQuery(name = "SchemaFieldEntity.findExtraCheck", query = "SELECT j.tokenRule FROM ChecksTypeEntity j, SchemaFieldCheckTypesEntity S WHERE j.idCheckType = s.idCheckType AND j.tokenRule != null AND s.schemaFieldEntity.idSchemaField IN(SELECT t.idSchemaField FROM SchemaFieldEntity t Where t.idSchema = :idSchema)"),
         @NamedQuery(name = "SchemaFieldEntity.findSchemaRoot", query = "SELECT s FROM SchemaFieldEntity s WHERE s.idSchema = :idSchema AND s.idParent = 0"),
         @NamedQuery(name = "SchemaFieldEntity.findAllByParentId", query = "SELECT s FROM SchemaFieldEntity s WHERE s.idSchemaField != :idParent and s.idParent = :idParent  ORDER BY s.elementOrder ASC"),
@@ -189,7 +178,11 @@ public class SchemaFieldEntity implements Serializable {
         return idCustomError != 0;
     }
 
-	public long getIdSchemaField() {
+    public boolean isDateField() {
+        return getIdFieldType() == DateTimeType.xsdTime;
+    }
+
+    public long getIdSchemaField() {
         return idSchemaField;
     }
 
@@ -486,5 +479,43 @@ public class SchemaFieldEntity implements Serializable {
 	public void setSchemaFieldCheckTypeSet(
 			Set<SchemaFieldCheckTypesEntity> schemaFieldCheckTypeSet) {
 		this.schemaFieldCheckTypeSet = schemaFieldCheckTypeSet;
-	} 
+	}
+
+    @Override
+    public String toString() {
+        return "SchemaFieldEntity{" +
+                "idSchemaField=" + idSchemaField +
+                ", idSchema=" + idSchema +
+                ", idParent=" + idParent +
+                ", idFieldType=" + idFieldType +
+                ", idCheckType=" + idCheckType +
+                ", idCustomError=" + idCustomError +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", elementOrder=" + elementOrder +
+                ", minLength=" + minLength +
+                ", maxLength=" + maxLength +
+                ", minInclusive=" + minInclusive +
+                ", maxInclusive=" + maxInclusive +
+                ", fractionDigits=" + fractionDigits +
+                ", idDateTimeType=" + idDateTimeType +
+                ", idDateType=" + idDateType +
+                ", idTimeType=" + idTimeType +
+                ", nillable=" + nillable +
+                ", idAlign=" + idAlign +
+                ", fillChar='" + fillChar + '\'' +
+                ", size='" + size + '\'' +
+                ", isForecastable=" + isForecastable +
+                ", forecastSpeed=" + forecastSpeed +
+                ", forecastAccuracy=" + forecastAccuracy +
+                ", is_Attribute=" + is_Attribute +
+                ", maxOccurs=" + maxOccurs +
+                ", linkToDb='" + linkToDb + '\'' +
+                ", idNumericType=" + idNumericType +
+                ", errorToleranceValue=" + errorToleranceValue +
+                ", indexIncremental=" + indexIncremental +
+                ", errorType=" + errorType +
+                ", schemaFieldCheckTypeSet=" + schemaFieldCheckTypeSet +
+                '}';
+    }
 }

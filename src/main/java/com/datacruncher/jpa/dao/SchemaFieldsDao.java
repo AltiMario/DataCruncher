@@ -62,7 +62,7 @@ public class SchemaFieldsDao {
 		return schemaFieldEntity;
 	}
 
-    @Transactional(readOnly = true)
+	@Transactional(readOnly = true)
 	public Long findUnixDataType(long idSchema) {
 		long numElem = 0;
 		@SuppressWarnings("unchecked")
@@ -70,10 +70,24 @@ public class SchemaFieldsDao {
 				.setParameter("idSchema", idSchema).getResultList();
 		numElem = result.get(0).longValue();
 		return numElem;
-	
+
 	}
 
-    @Transactional(readOnly = true)
+	@Transactional(readOnly = true)
+	public List<SchemaFieldEntity> findDateTimeFields(long schemaId) {
+		return em.createNamedQuery("SchemaFieldEntity.findDateTimeFields")
+				.setParameter("idSchema", schemaId)
+				.getResultList();
+	}
+
+	@Transactional(readOnly = true)
+	public List<SchemaFieldEntity> querySchemaFields(long schemaId, String queryName) {
+		return em.createNamedQuery(queryName)
+				.setParameter("idSchema", schemaId)
+				.getResultList();
+	}
+
+	@Transactional(readOnly = true)
 	public long findNumExtraCheck(long idSchema) {
 		long numElem = 0;
 		long numUnixDate = 0;

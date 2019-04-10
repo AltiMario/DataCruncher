@@ -16,16 +16,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
+package com.datacruncher.validation;
 
-package com.datacruncher.utils;
+import com.datacruncher.jpa.entity.ApplicationEntity;
+import com.datacruncher.jpa.entity.SchemaEntity;
+import com.datacruncher.utils.generic.I18n;
 
-import com.datacruncher.utils.schema.JsonSchemaGenerationTest;
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
+public class ValidationUtils {
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-        JsonSchemaGenerationTest.class,
-})
-public class AllUtilsTests {
+    public static void checkActive(ApplicationEntity appEntity, SchemaEntity schemaEntity) throws Exception {
+        if (appEntity != null && appEntity.getIsActive() != null) {
+            if (appEntity.getIsActive() == 0) {
+                throw new Exception(I18n.getMessage("error.deactivatedApplication"));
+            } else if (schemaEntity.getIsActive() != null && schemaEntity.getIsActive() == 0) {
+                throw new Exception(I18n.getMessage("error.deactivatedSchema"));
+            }
+        }
+    }
 }

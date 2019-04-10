@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
     <xs:annotation>
-        <xs:appinfo/>
+        <xs:appinfo>@RuleCheck:qwerty;
+        </xs:appinfo>
     </xs:annotation>
     <xs:element name="jvSchemaName" fixed="sampleFormTest"/>
     <xs:element name="jvDataStreamType" fixed="5"/>
@@ -17,6 +18,9 @@
     <xs:element name="jvRoot">
         <xs:complexType>
             <xs:all>
+                <xs:element xmlns="" type="xs:date" name="xsddate" minOccurs="0"/>
+                <xs:element xmlns="" type="xs:time" name="xsdtime" minOccurs="0"/>
+                <xs:element xmlns="" type="xs:dateTime" name="xsddatetime" minOccurs="0"/>
                 <xs:element xmlns="" name="name" type="nameLength" minOccurs="0"/>
                 <xs:element xmlns="" name="ip" type="xs:string">
                     <xs:annotation>

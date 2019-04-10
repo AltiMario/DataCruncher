@@ -18,6 +18,7 @@
  */
 package com.datacruncher.services.webService;
 
+import com.datacruncher.constants.DateTimeType;
 import com.datacruncher.constants.Tag;
 import com.datacruncher.datastreams.DataStreamBuilder;
 import com.datacruncher.datastreams.DatastreamsInput;
@@ -29,10 +30,10 @@ import com.datacruncher.utils.generic.DomToOtherFormat;
 import com.datacruncher.utils.schema.SchemaValidator;
 import com.datacruncher.validation.*;
 import com.datacruncher.validation.common.RegexCheck;
+import com.fasterxml.jackson.core.io.JsonStringEncoder;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import org.apache.commons.collections.MapUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
@@ -253,8 +254,14 @@ public class FormValidationService implements DaoSet {
             if (token != null && !token.isEmpty() && tokenList.contains(token)) {
                 return formResponseOnError("notFoundToken", "Token not found");
             }
-            final String value = uriInfo.getQueryParameters().getFirst("value");
+            String value = uriInfo.getQueryParameters().getFirst("value");
+            final String fieldName = uriInfo.getQueryParameters().getFirst("name");
             final String regexPattern = uriInfo.getQueryParameters().getFirst("regex");
+            SchemaEntity schemaEntity = getSchemaEntity(uriInfo);
+            final SchemaFieldEntity field = schemaFieldsDao.getSchemaAllFieldByName(schemaEntity.getIdSchema(), fieldName);
+            if (field != null && field.isDateField()) {
+                value = formatDateFieldValue(field, value);
+            }
             CompositeResultStepValidation compositeResult = new CompositeResultStepValidation();
             if (StringUtils.isNotBlank(regexPattern)) {
                 final RegexCheck regexCheck = new RegexCheck(regexPattern);
@@ -364,14 +371,25 @@ public class FormValidationService implements DaoSet {
             if (schemaEntity.getIsAvailable() != 1) {
                 return formResponseOnError("notAvail", String.valueOf(schemaId));
             }
-            MapUtils.debugPrint(System.err, null, fieldValues);
+
+            // Date field should be converted from timestamp to formatted value
+            final List<SchemaFieldEntity> dateFields =
+                    schemaFieldsDao.findDateTimeFields(schemaId);
+            for (SchemaFieldEntity field : dateFields) {
+                String fieldName = field.getName().toUpperCase();
+                if (!fieldValues.containsKey(fieldName)) {
+                    continue;
+                }
+                fieldValues.put(fieldName, formatDateFieldValue(field, String.valueOf(fieldValues.get(fieldName))));
+            }
+
             String dataStreamContent = new DataStreamBuilder(schemaFieldsDao)
                     .setFieldValues(fieldValues)
                     .build(schemaEntity);
             resp = new DatastreamsInput().datastreamsInput(dataStreamContent, schemaId, null);
         } catch (Exception e) {
             log.error("FormValidationService :: Exception", e);
-            serverException = CommonUtils.getExceptionAsString(e);
+            serverException = CommonUtils.escapeJsonString(CommonUtils.getExceptionAsString(e));
         }
         if (serverException != null) {
             JSONObject jsonReturn = new JSONObject();
@@ -382,6 +400,23 @@ public class FormValidationService implements DaoSet {
             }
         }
         return createJsonpResult(FUNCTION_JSONFORMVALIDATE_RESPONSE, String.format("'%s'", resp));
+    }
+
+    private String formatDateFieldValue(SchemaFieldEntity field, String value) {
+        if (StringUtils.isBlank(value)) {
+            return null;
+        }
+        String result = value;
+        if (field != null && field.isDateField()) {
+            try {
+                long timestamp = Long.parseLong(value);
+                result = DateTimeType.formatDate(
+                        field.getIdDateTimeType(), field.getIdDateType(), field.getIdTimeType(), timestamp);
+            } catch (NumberFormatException e) {
+                log.warn(e);
+            }
+        }
+        return result;
     }
 
     /**
