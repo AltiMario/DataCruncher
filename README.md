@@ -13,11 +13,11 @@ It includes:
 * mobile interface
 
 ## What's new on the release 2.0
-After long time on idle, the *project is back on activity!!!*
+After long time on idle, a new version.
+Two big feature are released; the client side data validation and the automatic forms generation.
 
-Two big feature are just released; the client side data validation and the automatic forms generation.
-
-New things are coming to make it more updated, secure, stable and scalable.
+## Short video presentation
+https://youtu.be/-z-ID5s86mw
 
 -----------------------------
 ### To run manually
